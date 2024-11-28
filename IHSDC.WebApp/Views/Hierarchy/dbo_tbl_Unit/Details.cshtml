@@ -1,0 +1,53 @@
+@model AA7.Models.dbo_tbl_Unit
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_Unit</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.Unit_ID)
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitName)
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitLocation)
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitFormation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitFormation)
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedByUserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedByUserID)
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedDateTime)
+    </dl>
+</div>
+<p>
+            @Html.ActionLink("Edit", "Edit", new {
+ 						Unit_ID = Model.Unit_ID 
+ 						}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+ 

@@ -1,0 +1,657 @@
+﻿@model IHSDC.WebApp.Models.InboxCRUD
+@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+
+
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Sent";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+@{
+    var watermarkText = ViewBag.ipadd;
+}
+<head>
+    <style>
+        .clickable-div {
+            cursor: pointer;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+        }
+    </style>
+    <script src="~/Content/css/SweetAlert2.js"></script>
+
+    <style id="table_style" type="text/css">
+
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        #Comment {
+            width: 90%;
+            height: 15rem;
+            margin-left: 2rem;
+        }
+
+
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 26rem;
+            width: 36rem;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+
+        @@media print {
+
+            @@page {
+                size: A3 landscape;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            body::after {
+                content: none !important;
+            }
+
+            .card-page {
+                break-after: page;
+            }
+
+                .card-page:last-of-type {
+                    break-after: auto;
+                }
+
+            footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+    </style>
+
+    <style id="table_style1" type="text/css">
+
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        #Comment {
+            width: 90%;
+            height: 15rem;
+            margin-left: 2rem;
+        }
+
+
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 26rem;
+            width: 36rem;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+
+        @@media print {
+
+            @@page {
+                size: A4 portrait;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            body::after {
+                content: none !important;
+            }
+
+            .card-page {
+                break-after: page;
+            }
+
+                .card-page:last-of-type {
+                    break-after: auto;
+                }
+
+            footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+</head>
+<div class="container">
+    <div class="card">
+        <div class="col1">
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 headingtext">Sent</div>
+                <div class="col-md-4"></div>
+
+            </div>
+        </div>
+       
+      
+      
+        @using (Html.BeginForm("AddSentBox", "Sent", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <div class="card-body" style="min-height:150px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table border border-purple table-striped no-footer dataTable table-hover" id="Inbox">
+                                <thead class="bg-info text-white">
+                                    <tr>
+                                        <th>S/No</th>
+                                        <th>AP Id</th>
+                                        <th>Conf Title</th>
+                                        <th>Sponsor</th>
+                                        <th>Agenda Pt Title</th>
+                                        <th>Nodal Branch</th>
+                                        <th>Category (Organizer)</th>
+                                        <th>Sent To</th>
+                                        <th>Sent On</th>
+                                        <th>Read Status</th>
+                                        <th>Action</th>
+                                        <th class="d-none"></th>
+                                        <th class="d-none"></th>
+                                        @if (SessionManager.RoleId == enum1.GSO1)
+                                        {
+                                            <th>Change Nodal</th>
+                                        }
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    @if (ViewBag.count > 0)
+                                    {
+                                        foreach (var item in Model.ILInboxCRUD)
+                                        {
+                                            <tr class="@((item.IsRead == 0) ? "row-white" : "row-light")">
+                                                <td>
+                                                    @{ sno++; }
+                                                    @sno
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Inbox_ID)
+                                                </td>
+                                                <td>
+                                                    <div class="RefLetter-container">
+                                                        @Html.DisplayFor(modelItem => item.Conf)
+                                                        <div class="RefLetter">
+                                                            @Html.DisplayFor(modelItem => item.RefLetter)
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SponsorName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Title)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.BranchName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SentTo)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SentOn)
+                                                </td>
+                                                <td>
+                                                    @if (item.IsRead == 0)
+                                                    {
+                                                        <button class="btn" style="background-color: #ff0000; color: white; font-size: 11px; font-weight:bold;" disabled>Unread</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn" style="background-color: #008000; color: white; font-size: 11px; width: 65px; font-weight: bold; " disabled>Read</button>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @*@if (item.IsRead == 0 || item.Ord == 1)*@
+                                                    @if (item.IsRead == 0)
+                                                    {
+                                                        <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Ord.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FwdId.ToString())' onclick="MailRevertConfirmation(this,'/Sent/AddSentBox','Do you want to Delete','AddSentBox')">
+                                                            <i class="fa fa-trash-alt" aria-hidden="true" style="background-color: #ff3333; border-radius: 50%; width: 27px; height: 27px; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; "></i>
+                                                        </a>
+                                                    }
+                                                </td>
+                                                <td class="d-none"><span class="Forword_Id">@Html.DisplayFor(modelItem => item.FwdId)</span></td>
+                                                <td class="d-none"><span class="Schedule_ID">@Html.DisplayFor(modelItem => item.Schedule_ID)</span></td>
+
+                                                @if (SessionManager.RoleId == enum1.GSO1)
+                                                {
+                                                    <td>
+                                                        @if (item.Ord == 1)
+                                                        {
+                                                            @*<div class="changenodal" data-toggle="modal" id="btnChangeNodal" data-target="#changenodalPopup">
+                                                            </div>*@
+                                                            <button type="button" data-toggle="modal" data-target="#changenodalPopup" id="btnChangeNodal" class="changenodal btnChangeNodal">
+                                                            </button>
+                                                        }
+                                                    </td>
+                                                }
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.UploadPath))
+                                                    {
+                                                        <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ConfId.ToString()) })" target="_blank">
+                                                            <div class="pdf">
+                                                            </div>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.WordFile))
+                                                    {
+                                                        <a href="@item.WordFilePath" target="_blank" download="@item.AmendWordFileName">
+                                                            <div class="word">
+                                                            </div>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    </div>
+
+    @using (Html.BeginForm("ChangeNodal", "Sent", FormMethod.Post, new { enctype = "multipart/form-data", id = "myForm1" }))
+    {
+        @Html.HiddenFor(m => m.ForwardID)
+        <div class="modal fade" id="changenodalPopup" tabindex="-1" role="dialog" aria-labelledby="changenodalPopupLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content" style="width: 380mm;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changenodalPopupLabel">Change Nodal</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="forwardTo"><b>Select Nodal Branch(To):</b></label>
+                        @Html.DropDownListFor(m => m.NodalId, (new IHSDC.WebApp.Models.MasterModels()).LoadNodal(Model.Schedule_ID, Model.Inbox_ID), "--Select Nodal --", new { @data_show_subtext = "true", @class = "select form-control dropdownselect", @data_live_search = "true", @required = true, @id = "NodalId1", style = "width: 350px;"})
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Change</button>
+                        <button type="button" id="closefwd" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Content/CustomJS/GEBSubmit.js"></script>
+    <script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+    <script src="~/Content/CustomJS/AddUpdateFilter.js"></script>
+    <script src="~/Content/CustomJS/AviatorJS.js"></script>
+    <script src="~/Content/css/sweetalert.min.js"></script>
+    <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+    <script>      
+        $('#changenodalPopup').on('shown.bs.modal', function (e) {
+
+        });
+        $('#changenodalPopup').on('hidden.bs.modal', function (e) {
+
+            $('#ddlCivEdnId').multiselect('deselectAll', false);
+            $('#ddlCivEdnId').multiselect('updateButtonText');
+            $("#txtForward").val("");
+            $('#NodalId').val("0");
+            $('#NodalComment').val("");
+            $('#FwdComment').val("");
+        });
+        $("#closefwd").click(function () {
+
+            $('#ddlCivEdnId').multiselect('deselectAll', false);
+            $('#ddlCivEdnId').multiselect('updateButtonText');
+            $("#txtForward").val("");
+            $('#NodalId').val("0");
+            $('#NodalComment').val("");
+            $('#FwdComment').val("");
+        });
+
+        $("#clearfwd").click(function () {
+
+            $('#ddlCivEdnId').multiselect('deselectAll', false);
+            $('#ddlCivEdnId').multiselect('updateButtonText');
+            $("#txtForward").val("");
+            $('#NodalId').val("0");
+            $('#NodalComment').val("");
+            $('#FwdComment').val("");
+        });
+
+
+        $('#changenodalPopup').on('click', function (e) {
+            if (e.target === this) {
+
+                $('#ddlCivEdnId').multiselect('deselectAll', false);
+                $('#ddlCivEdnId').multiselect('updateButtonText');
+                $("#txtForward").val("");
+                $('#changenodalPopup').modal('hide');
+                $('#NodalId').val("0");
+                $('#NodalComment').val("");
+                $('#FwdComment').val("");
+            }
+        });
+
+        $("#clearOpenReason").click(function () {
+            $('#OpenReason').val("");
+        });
+        $("#clearCloseReason").click(function () {
+            $('#CloseReason').val("");
+        });
+
+    </script>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryui")
+        @Styles.Render("~/Content/cssjqryUi")
+
+        <script>
+        var watermarkText = @Html.Raw(Json.Encode(watermarkText));
+        </script>
+        <script>
+            $(document).ready(function () {
+                var table = $('#Inbox').DataTable({
+                    lengthChange: true,
+                    pageLength: 50,
+                    aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+                    /* dom: 'Bfrtip',*/
+                    dom: 'lBfrtip',
+                    colReorder: true,
+                    responsive: true,
+                    buttons: [
+                        'copy',
+                        'excel',
+                        'csv',
+                        /* 'print',*/
+                        {
+                            text: 'PDF',
+                            extend: 'pdfHtml5',
+                            action: function (e, dt, node, config) {
+                                PrintDiv();
+                            }
+                        },
+                        'colvis',
+                    ],
+                });
+
+                var buttonContainer = table.buttons().container().appendTo('#Inbox_wrapper .col-md-6:eq(0)');
+                var searchBuilderContainer = table.searchBuilder.container();
+                buttonContainer.insertBefore(table.table().container());
+                searchBuilderContainer.insertBefore(table.table().container());
+
+            });
+
+            function PrintDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                                            <style type="text/css">
+                                                                table {
+                                                                    width: 100%;
+                                                                    border-collapse: collapse;
+                                                                    margin-bottom: 20px;
+                                                                }
+
+                                                                th, td {
+                                                                    padding: 8px;
+                                                                    border: 1px solid #ddd;
+                                                                    text-align: center;
+                                                                }
+
+                                                                th {
+                                                                    background-color: #f2f2f2;
+                                                                    color: black;
+                                                                }
+                                                                @@media print {
+
+                                                                    @@page {
+                                                                        margin-top: 10px;
+                                                                        margin-bottom: 10px;
+                                                                    }
+
+                                                                    body::after {
+                                                                        content: none !important;
+                                                                    }
+
+                                                                    .card-page {
+                                                                        break-after: page;
+                                                                    }
+
+                                                                        .card-page:last-of-type {
+                                                                            break-after: auto;
+                                                                        }
+
+                                                                    footer {
+                                                                        position: fixed;
+                                                                        bottom: 0;
+                                                                        left: 0;
+                                                                        right: 0;
+                                                                        height: 10px;
+                                                                        background-color: gray;
+                                                                        color: white;
+                                                                        text-align: center;
+                                                                        padding: 10px;
+                                                                    }
+
+                                                                    header {
+                                                                        position: fixed;
+                                                                        top: 0;
+                                                                        left: 0;
+                                                                        right: 0;
+                                                                        height: 10px;
+                                                                        background-color: gray;
+                                                                        color: white;
+                                                                        text-align: center;
+                                                                        padding: 10px;
+                                                                    }
+                                                                }
+                                                            </style>
+                                                        `;
+
+                var table = $('#Inbox').DataTable();
+                var visibleColumns = table.columns(':visible').header().toArray();
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                visibleColumns.forEach(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        if (!table.column(j).visible()) {
+                            continue;
+                        }
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+                var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Sent</h1>';
+                popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+
+        </script>
+
+
+        <script>
+            $(document).ready(function () {
+                $('.clickable-div').click(function () {
+                    var href = $(this).data('href');
+                    window.location.href = href;
+                });
+
+                $('.dropdownselect').select2({
+                    dropdownParent: $('#changenodalPopup'),
+                    closeOnSelect: false
+                });
+            });
+        </script>
+        <script>
+            $('.btnChangeNodal').click(function () {
+                GetUserdropdown(12, $(this).closest("tr").find(".Forword_Id").html(), $(this).closest("tr").find(".Schedule_ID").html());
+            });
+
+
+
+            function GetUserdropdown(Procid, Forwordid, ScheduleID) {
+                $('#ForwardID').val(Forwordid);
+                $.ajax({
+                    url: '/Master/GetUserList',
+                    type: 'POST',
+                    data: { "Procid": Procid, "ForwardID": Forwordid, "scheduleId": ScheduleID },
+                    success: function (response) {
+                        if (response && response.length > 0) {
+
+                            var dropdown = $('#NodalId1');
+                            dropdown.empty();
+                            dropdown.append('<option value="">--Select Nodal--</option>');
+                            for (var j = 0; j < response.length; j++) {
+                                dropdown.append('<option value="' + response[j].SentId + '">' + response[j].SentName + '</option>');
+                            }
+                            dropdown.selectpicker('refresh');
+                        } else {
+
+                        }
+                    }
+
+
+                });
+            }
+
+
+
+            $('#NodalId1').change(function () {
+                $("#NodalId").val($('#NodalId1').val());
+            });
+
+
+        </script>
+
+
+        <script type="text/javascript">
+
+    var today = new Date();
+    var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus';
+    if (message)
+            sweetAlert(message, messagemidStatus, messageStatus);
+
+
+
+        </script>
+
+
+    }
+

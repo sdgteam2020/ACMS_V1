@@ -1,0 +1,1955 @@
+﻿@model IHSDC.WebApp.Models.AgendaPointCRUD
+@using IHSDC.WebApp.Connection
+@using IHSDC.WebApp.Helper
+
+@{
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Add Agenda Pgme";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+    //int sno1 = 0;
+    //int rowCount = 0;
+
+}
+@{
+    var watermarkText = ViewBag.ipadd;
+}
+<style>
+    .suggestionItem {
+        padding: 10px;
+        margin: 2px;
+        border: 1px solid #ccc;
+        /* border-radius: 5px; */
+        background-color: #f2f2f2;
+        width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        /*text-indent: 50px; */
+    }
+
+        .suggestionItem:nth-child(odd) {
+            /*background-color: #cfd5ea;*/
+            background-color: #044C92;
+            color: white;
+        }
+
+        .suggestionItem:nth-child(even) {
+            /*      background-color: #e9ebf5;*/
+            background-color: #044C92;
+            color: white;
+        }
+
+    .bar1 {
+        position: relative;
+    }
+
+    .searchbarPol {
+        width: calc(100% - 55px); /* Adjust width to accommodate icon */
+    }
+
+    .pdfup {
+        height: 25px;
+        cursor: pointer;
+        border-radius: 50%;
+        color: white;
+        /* margin-top: -45px;*/
+        left: calc(100% - 70px); /* Adjust position of PDF icon */
+        position: absolute;
+    }
+
+        .pdfup::before {
+            font-family: FontAwesome;
+            content: "\f1c1";
+            font-size: 15px;
+            /* position: absolute;*/
+        }
+
+
+
+    #suggestionBox {
+        display: flex;
+        flex-wrap: wrap;
+        position: absolute;
+        top: calc(100% + 0px); /* Adjust the distance from the input field */
+        left: 0;
+        width: 100%; /* Ensure it spans the full width */
+        z-index: 1;
+    }
+
+        #suggestionBox::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* width: 100%;*/
+            height: 100%;
+            /*    background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+            border-radius: 10px;
+            padding: 10px;
+            z-index: -1;
+            width: calc(100% - 55px);
+        }
+
+    /*
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 0.55rem !important;
+    }*/
+
+    .flip-card-link {
+        height: 7rem;
+        width: 9rem;
+        border-radius: 19px;
+        /*   box-shadow: 1px 1px 4px;*/
+    }
+
+    .flip-card-inner {
+        border-radius: 19px;
+        /*   box-shadow: 1px 1px 4px;*/
+    }
+
+    .dropdown-item:hover {
+        background: #4CAF50 !important;
+        /* font-size: 9px !important;*/
+        border-radius: 13px;
+    }
+
+
+    .flip-card-inner:hover {
+        /*   width: 100px;
+        height: 100px;*/
+        background: #4CAF50;
+        font-size: 19px !important;
+        /* transform: rotate(360deg);*/
+    }
+
+        .flip-card-inner:hover > .icon {
+            color: white !important;
+        }
+
+
+    .icon:hover {
+        color: white !important;
+    }
+
+    .flip-card-link {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    #div1 {
+        box-sizing: border-box;
+        width: 150px;
+        height: 100px;
+        padding: 3px;
+        border: 3px solid blue;
+    }
+
+    /*    .icon {
+        color: #044C92;
+        font-size: 100px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+    }*/
+
+
+
+    .border-left-primary {
+        border-left: .25rem solid #4e73df !important;
+    }
+
+    a {
+        text-decoration: none !important;
+        color: inherit;
+    }
+
+    .pb-2, .py-2 {
+        padding-bottom: .5rem !important;
+    }
+
+    .border-left-success {
+        border-left: .25rem solid #1cc88a !important;
+    }
+
+    .border-left-info {
+        border-left: .25rem solid #36b9cc !important;
+    }
+
+    .border-left-warning {
+        border-left: .25rem solid #f6c23e !important;
+    }
+
+    .text-gray-300 {
+        color: #dddfeb !important;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1.25rem;
+    }
+
+    .mb-3 {
+        margin-bottom: 0.3rem !important;
+    }
+
+    .clickable-div {
+        color: blue;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .container {
+        position: relative;
+        width: 100%;
+    }
+
+    .buttons {
+        margin-top: -50px;
+        float: right;
+        position: relative;
+        /*  margin-right: 410px;*/
+    }
+
+    #word-container {
+        min-height: 400px;
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+
+
+    .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    .btnUpload {
+        border: 2px solid #007bff;
+        color: #007bff;
+        background-color: white;
+        padding: 5px 8px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: revert-layer;
+    }
+
+    .upload-btn-wrapper input[type=file] {
+        font-size: 20px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+    .upload-btn-wrapperword {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        margin: 0px;
+    }
+
+        .upload-btn-wrapperword input[type=file] {
+            font-size: 20px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+
+
+
+    .bar1 {
+        margin: 0 auto;
+        width: 575px;
+        border-radius: 30px;
+        border: 1px solid #dcdcdc;
+    }
+
+        .bar1:hover {
+            box-shadow: 1px 1px 8px 1px #dcdcdc;
+        }
+
+        .bar1:focus-within {
+            box-shadow: 1px 1px 8px 1px #dcdcdc;
+            outline: none;
+        }
+
+    .buttons {
+        margin-top: -50px;
+        float: right;
+        position: relative;
+        /*  margin-right: 410px;*/
+    }
+
+    .button {
+        background-color: #f5f5f5;
+        border: none;
+        color: #707070;
+        font-size: 15px;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 4px;
+        outline: none;
+    }
+
+        .button:hover {
+            border: 1px solid #c8c8c8;
+            padding: 9px 19px;
+            color: #808080;
+        }
+
+        .button:focus {
+            border: 1px solid #4885ed;
+            padding: 9px 19px;
+        }
+
+    .searchbarPol {
+        height: 45px;
+        width: 575px;
+        border-radius: 30px;
+        border: 1px solid #dcdcdc;
+        font-size: 16px;
+        outline: none;
+        padding-left: 5px;
+        text-align: center
+    }
+
+    element.style {
+        display: block;
+        padding-right: 17px;
+    }
+
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 999; /* Sit on top */
+        /*padding-top: 100px;*/ /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        /*padding: 20px;*/
+        border: 1px solid #888;
+        width: 80%;
+    }
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .popover__title {
+        font-size: 24px;
+        /* line-height: 36px;*/
+        text-decoration: none;
+        color: rgb(228, 68, 68);
+        text-align: center;
+        /*  padding: 15px 0;*/
+    }
+
+    .popover__wrapper {
+        position: relative;
+        display: inline-block;
+        margin-left: 130px;
+        float: right;
+        z-index: 1;
+    }
+
+    .popover__content {
+        opacity: 0;
+        z-index: 100;
+        visibility: hidden;
+        position: absolute;
+        left: -100px;
+        top: 60px;
+        transform: translate(0, 10px);
+        background-color: #FFFFF7;
+        padding: 1rem;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        width: auto;
+        border: 1px solid #bfbfbf;
+    }
+
+        .popover__content:before {
+            position: absolute;
+            z-index: 100;
+            content: "";
+            right: calc(50% - 10px);
+            top: -8px;
+            border-style: solid;
+            border-width: 0 10px 10px 10px;
+            border-color: transparent transparent #bfbfbf transparent;
+            transition-duration: 0.3s;
+            transition-property: transform;
+        }
+
+    .popover__wrapper:hover .popover__content {
+        z-index: 100;
+        opacity: 1;
+        visibility: visible;
+        transform: translate(0, -20px);
+        transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+    }
+
+    .popover__message {
+        text-align: center;
+    }
+
+    .microphone {
+        border-top-right-radius: 32px !important;
+        border-bottom-right-radius: 32px !important;
+        background-color: #fff;
+    }
+
+    .acms {
+        border-top-left-radius: 32px !important;
+        border-bottom-left-radius: 32px !important;
+        background-color: #fff;
+    }
+
+    .input-group-prepend {
+        margin-right: -2px !important;
+    }
+
+    .input-group-append {
+        margin-left: -2px !important;
+    }
+
+    /*    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #ced4da;
+        outline: 0;
+        box-shadow: 0 0 0 0 !important;
+    }
+
+    .form-control {
+        border-right: 0 !important;
+        border-left: 0 !important;
+    }*/
+
+    footerPolicy {
+        display: flex;
+        background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .footerPolicy-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        /* margin: 0 auto;*/
+        padding: 0 20px;
+    }
+
+        .footerPolicy-content p {
+            margin: 0;
+            color: white;
+            margin-left: 230px;
+        }
+
+    .centered {
+        display: flex;
+        background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+        justify-content: center;
+        align-items: center;
+        /* margin-top:-19px;*/
+        /*height: 100vh; */
+    }
+</style>
+
+<head>
+    <link href="~/NewContent/css/sb-admin.css" rel="stylesheet">
+</head>
+
+
+
+<div class="container">
+
+
+
+    @using (Html.BeginForm("AddAgenda", "ACC", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <span id="spnScheduleId" style="display:none">@Model.Schedule_ID</span>
+        <span id="spnNode" style="display:none">@Model.NodalViewId</span>
+        <span id="spnsponsor" style="display:none">@Model.sponsorId</span>
+        <span id="spnUnFreeze" style="display:none">@Model.AllowEdit</span>
+        <span id="spnGSOId" style="display:none">@Model.ScheduleCreatedById</span>
+        <span id="SpnUploadFile" style="display:none">@ViewBag.UploadPath</span>
+        <span id="SpnWordFilePath" style="display:none">   @ViewBag.WordFilePath</span>
+        <span id="spnThumbprint" style="display:none"></span>
+        <span id="spnInboxId" style="display:none">@Model.Inbox_ID</span>
+        <span id="spnArmyNumber" style="display:none">@SessionManager.ArmyNo</span>
+        <span id="spnDefaultPolicy" style="display:none"></span>
+        <span id="spnConfTypeId" style="display:none"></span>
+
+        @Html.HiddenFor(m => m.Inbox_ID)
+        @Html.HiddenFor(m => m.FinalSubmitYN)
+        @Html.HiddenFor(m => m.FromInbox)
+        if (Convert.ToInt32(SessionManager.UserId) != Model.ScheduleCreatedById)
+        {
+            @Html.HiddenFor(m => m.IsVisibleToAll)
+            @Html.HiddenFor(m => m.AllowEdit)
+        }
+
+
+
+        if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
+        {
+            @Html.HiddenFor(m => m.Title)
+            @Html.HiddenFor(m => m.Summary)
+            @Html.HiddenFor(m => m.Schedule_ID)
+        }
+
+
+        <div class="card-body" style="box-shadow: -1px 1px 8px 1px; margin-top:5px;">
+            <div class="col">
+
+                <div class="row mb">
+                    <div class="col-md-4">
+                        <a style="margin-right:10px; margin-bottom:3px;" class="btn btn-success" id="btnNew" onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = string.Empty,Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                            @*<span style="color:white">Add New</span>*@
+                            <div class="addagenda">&nbsp; Add New</div>
+                        </a>
+                    </div>
+                    <div class="col-md-4 headingtext">Add / View Agenda Pt</div>
+                    <div class="col-md-4"></div>
+
+                </div>
+            </div>
+
+            @if (Model.IsEdit == "1")
+            {
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card1">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-lg-12 col-xl-6 d-flex">
+                                    <div class="card radius-10 w-100">
+                                        <div class="card-body">
+                                            <div class="uploadheadpdf">
+                                                Upload Agenda Pt Docu with in 5MB (Pdf & Word Format)
+                                            </div>
+
+                                            <div class="upload-btn-wrapper" style="margin-top:2px;">
+                                                @if (Model.IsView == false)
+                                                {
+
+                                                    <button class="btnUpload">Upload pdf file</button>
+                                                    @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", @onchange = "checkPDFHeader(this)", accept = ".pdf" })
+
+                                                }
+                                                else
+                                                {
+
+                                                    <button class="btnUpload">Upload pdf file</button>
+                                                    @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", @onchange = "checkPDFHeader(this)", accept = ".pdf", @disabled = "disabled" })
+
+                                                }
+                                            </div>
+
+                                            @if (ViewBag.UploadPath != "")
+                                            {
+                                                @*<a href="@ViewBag.UploadPath" target="_blank">
+                                                        <div class="pdfdownload" style="float:right; margin-right:20px;">&nbsp;Download</div>
+                                                    </a>*@
+
+
+                                                <div class="pdfdownload" style="color: white; text-decoration: none; margin-left: 125px; margin-top: -38px;padding:5px;">
+                                                    <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.ConfId.ToString()) })">
+                                                        Download
+                                                    </a>
+                                                </div>
+
+
+                                                @*<a href="@Url.Action("SignAgendaPoint", "ACC", new { path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString()) })" style="color: white; text-decoration: none; float: right; margin-right: 20px;">
+                                                        Sign Pdf
+                                                    </a>*@
+                                                <div><button type="button" id="btnSignAgendapoint" style="color: white; text-decoration: none; float: right; margin-right: 20px; margin-top:-37px;padding:5px; border: none; background-color: white;">Sign pdf</button></div>
+                                            }
+                                            @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
+                                            @Html.TextBoxFor(m => m.FileName, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
+                                            @Html.TextBoxFor(m => m.WordFile, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
+                                            <span id="PdfFileError" class="text-danger" style="display: none;">Please Upload a PDF file.</span>
+                                            <script>
+                                                function checkPDFHeader(input) {
+                                                    const file = input.files[0];
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.onloadend = function (e) {
+                                                            if (e.target.readyState === FileReader.DONE) {
+                                                                const arr = new Uint8Array(e.target.result).subarray(0, 4);
+                                                                const header = Array.from(arr).map(byte => byte.toString(16)).join("").toUpperCase();
+
+                                                                if (header === "25504446") {
+                                                                    PreviewPDF(file);
+                                                                } else {
+                                                                    sweetAlert("Please select a valid PDF file.");
+                                                                    input.value = "";
+                                                                }
+                                                            }
+                                                        };
+                                                        reader.readAsArrayBuffer(file);
+                                                    }
+                                                }
+
+                                                function PreviewPDF() {
+                                                    const input = document.getElementById("files");
+                                                    const pdfContainer = document.getElementById("pdf-container");
+                                                    const maxSizeInBytes = 5 * 1024 * 1024;
+
+                                                    if (input.files && input.files[0]) {
+                                                        const selectedFile = input.files[0];
+
+                                                        if (selectedFile.size > maxSizeInBytes) {
+                                                            sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
+                                                            input.value = "";
+                                                            pdfContainer.innerHTML = "";
+                                                            return;
+                                                        }
+                                                        if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
+                                                            const embed = document.createElement("object");
+                                                            embed.data = URL.createObjectURL(selectedFile);
+                                                            embed.type = "application/pdf";
+                                                            embed.width = "100%";
+                                                            embed.height = "350px";
+                                                            pdfContainer.innerHTML = "";
+                                                            pdfContainer.appendChild(embed);
+                                                        } else {
+                                                            alert("Please select a valid PDF file.");
+                                                            input.value = "";
+                                                            pdfContainer.innerHTML = "";
+                                                        }
+                                                    }
+                                                }
+                                            </script>
+                                            <div class="upload-btn-wrapper" style="width: 150px; margin-left: 240px; display: flex; margin-top: -36px;">
+                                                @if (Model.IsView == false)
+                                                {
+                                                    <button class="btnUpload">Upload Word file</button>
+                                                    @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", @onchange = "checkWordFile(this)", accept = ".Docx" })
+
+                                                }
+                                                else
+                                                {
+                                                    <button class="btnUpload">Upload Word file</button>
+                                                    @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", @onchange = "checkWordFile(this)", accept = ".Docx", @disabled = "disabled" })
+
+                                                }
+
+                                            </div>
+                                            @if (ViewBag.WordFilePath != "")
+                                            {
+
+
+                                                <div class="worddownload" style="color: white; text-decoration: none; margin-top:-33px; margin-left: 380px;padding:5px;"><a href="@ViewBag.WordFilePath" target="_blank" download="@Model.AmendWordFileName">Download</a></div>
+
+
+                                            }
+                                            @Html.TextBoxFor(m => m.WordFilePath, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
+                                            <span id="wordFileError" class="text-danger" style="display: none;">Please Upload a Word file.</span>
+                                            <script>
+                                                function checkWordFile(input) {
+                                                    const file = input.files[0];
+                                                    const maxSizeInBytes = 5 * 1024 * 1024;
+
+                                                    if (file.size > maxSizeInBytes) {
+                                                        sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
+                                                        input.value = "";
+                                                        return;
+                                                    }
+                                                    if (file) {
+                                                        const reader = new FileReader();
+
+                                                        reader.onloadend = function (e) {
+                                                            if (e.target.readyState === FileReader.DONE) {
+                                                                const arrayBuffer = e.target.result;
+
+                                                                mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
+                                                                    .then(result => {
+
+                                                                    })
+                                                                    .catch(error => {
+                                                                        sweetAlert("Please select a valid Word document (.docx only).");
+                                                                        input.value = "";
+                                                                    });
+                                                            }
+                                                        };
+
+                                                        reader.readAsArrayBuffer(file);
+                                                    }
+                                                }
+                                            </script>
+
+                                            <div id="pdf-container" style="margin-top:10px;"></div>
+
+                                        </div>
+                                        @*<div class="card-body">*@
+                                        @*<div class="uploadheadword">
+                                                Upload Agenda Pt Docu with in 5MB (Word Format)
+                                            </div>*@
+
+
+                                        @*</div>*@
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-12 col-lg-12 col-xl-6 d-flex">
+                                    <div class="card radius-10 w-100">
+                                        <div class="card-body">
+                                            <div class="agendahead">
+                                                Add Details of Agenda Pt
+                                            </div>
+                                            @if (SessionManager.IsPermission == 1 || SessionManager.IsPermission == 3 || SessionManager.IsPermission == 5)
+                                            {
+                                                <div class="rcorners">
+
+                                                    @if (Model.IsView == false)
+                                                    {
+
+                                                        <div class="row row-cols-2">
+                                                            <div class="col">
+                                                                <p class="mb-0 font-weight-bold">Conf&nbsp;<span style="color:red;text-align:center">*</span></p>
+                                                             
+                                                                @if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
+                                                                {
+                                                                    if (Model.Inbox_ID != 0)
+                                                                    {
+                                                                        @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(0), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true, @disabled = "disabled" })
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(1), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true, @disabled = "disabled" })
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (Model.Inbox_ID != 0)
+                                                                    {
+                                                                        @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(0), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true, @disabled = "disabled" })
+                                                                        @Html.HiddenFor(m => m.Schedule_ID)
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(1), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })
+                                                                    }
+                                                                }
+
+                                                           </div>
+
+                                                        </div>
+                                                        <div class="row row-cols-1 font-weight-bold">
+                                                            <div class="col">
+                                                                <p class="mb-0">Title(<span id="characterCount">500</span>&nbsp;Characters)&nbsp;<span style="color:red;text-align:center">*</span></p>
+                                                                @if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
+                                                                {
+                                                                    @*<p class="mb-0">Title(<span id="characterCount">500</span>&nbsp;Characters)&nbsp;<span style="color:red;text-align:center">*</span></p>*@
+                                                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @maxlength = "500", @onkeyup = "updateCharacterCount(this)", @onkeypress = "return onlyAlphaNumeric(event)", @required = true, @disabled = "disabled" })
+                                                                    <script>
+                                                                        function updateCharacterCount(input) {
+                                                                            var maxLength = 500;
+                                                                            var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
+                                                                            input.value = input.value.replace(regex, "");
+                                                                            var currentLength = input.value.length;
+                                                                            var charactersRemaining = maxLength - currentLength;
+                                                                            var countDisplay = document.getElementById('characterCount');
+                                                                            countDisplay.textContent = charactersRemaining;
+                                                                        }
+                                                                    </script>
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @maxlength = "500", @onkeyup = "updateCharacterCount(this)", @required = true })
+
+                                                                    <script>
+                                                                        function updateCharacterCount(input) {
+                                                                            var maxLength = 500;
+                                                                            var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
+                                                                            input.value = input.value.replace(regex, "");
+                                                                            var currentLength = input.value.length;
+                                                                            var charactersRemaining = maxLength - currentLength;
+                                                                            var countDisplay = document.getElementById('characterCount');
+                                                                            countDisplay.textContent = charactersRemaining;
+                                                                        }
+                                                                    </script>
+                                                                }
+                                                                <div class="PolicyModelOpen">
+                                                                    <a href="#" id="btnPopup" style="color: inherit; text-decoration: none;">
+                                                                        <div class="buttons">
+                                                                            <img src="~/Images/search_blue.png" style="width: 37px; height: 37px; margin-top:12px;" />
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                                <div id="suggestionBox"></div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-cols-2 font-weight-bold">
+                                                            <div class="col">
+                                                                <p class="mb-0">Nodal Branch</p>
+                                                                @Html.TextBoxFor(m => m.Branch, new { @class = "form-control d-none", @required = true })
+                                                                <select id="spnBranch" class="form-control" }></select>
+                                                            </div>
+
+                                                            <div class="col font-weight-bold">
+                                                                <p class="mb-0">Sponsor&nbsp;<span style="color:red;text-align:center">*</span></p>
+
+                                                                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row row-cols-2 font-weight-bold">
+                                                            <div class="col">
+                                                                <p class="mb-0">Summary(<span id="characterCountsum">1000</span>&nbsp;Characters)</p>
+                                                                @if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
+                                                                {
+                                                                    @*<p class="mb-0">Summary(<span id="characterCountsum">1000</span>&nbsp;Characters)</p>*@
+                                                                    @Html.TextAreaFor(m => m.Summary, new { @class = "form-control", @maxlength = "1000", @onkeyup = "updateCharacterCountSum(this)", @onkeypress = "return onlyAlphaNumeric(event)", @disabled = "disabled" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.TextAreaFor(m => m.Summary, new { @class = "form-control", @maxlength = "1000", @onkeyup = "updateCharacterCountSum(this)", @onkeypress = "return onlyAlphaNumeric(event)" })
+
+                                                                    <script>
+                                                                        function updateCharacterCountSum(input) {
+                                                                            var maxLength = 1000;
+                                                                            var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
+                                                                            input.value = input.value.replace(regex, "");
+                                                                            var currentLength = input.value.length;
+                                                                            var charactersRemaining = maxLength - currentLength;
+                                                                            var countDisplay = document.getElementById('characterCountsum');
+                                                                            countDisplay.textContent = charactersRemaining;
+                                                                        }
+                                                                    </script>
+                                                                }
+                                                            </div>
+
+                                                            <div class="col">
+                                                                <p class="mb-0">Organizer Category</p>
+                                                                @Html.TextBoxFor(m => m.CategoryId, new { @class = "form-control d-none", @required = true })
+                                                                <select id="spnCategoryId" class="form-control" }></select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-cols-2 font-weight-bold">
+                                                            <div class="col">
+                                                                <p class="mb-0">Sponsor Category</p>
+                                                                @Html.TextBoxFor(m => m.SponsorCategoryId, new { @class = "form-control d-none", @required = true })
+                                                                <select id="spnSponsorId" class="form-control" }></select>
+                                                            </div>
+                                                            <div class="col">
+                                                                <p class="mb-0">Nodal Category</p>
+                                                                @Html.TextBoxFor(m => m.NodalCategoryId, new { @class = "form-control d-none", @required = true })
+                                                                <select id="spnNodalId" class="form-control" }></select>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row row-cols-2 font-weight-bold">
+
+                                                            <div class="col">
+                                                                <p class="mb-0">Conf&nbsp;<span style="color:red;text-align:center">*</span></p>
+                                                                @if (Model.Inbox_ID != 0)
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(0), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true, @disabled = "disabled" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(1), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true, @disabled = "disabled" })
+                                                                }
+                                                            </div>
+
+                                                            <div class="col">
+                                                                <p class="mb-0">Sponsor&nbsp;<span style="color:red;text-align:center">*</span></p>
+
+                                                                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, @disabled = "disabled" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row row-cols-1 font-weight-bold">
+                                                            <div class="col">
+                                                                <p class="mb-0">Title&nbsp;<span style="color:red;text-align:center">*</span></p>
+                                                                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @required = true, @disabled = "disabled" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-cols-1 font-weight-bold">
+                                                            <div class="col">
+                                                                <p class="mb-0">Nodal Branch</p>
+                                                                @Html.DropDownListFor(m => m.Branch, (new IHSDC.WebApp.Models.MasterModels()).LoadBranch(), "--Select Branch --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @disabled = "disabled" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row row-cols-2 font-weight-bold">
+                                                            <div class="col-5">
+                                                                <p class="mb-0">Summary</p>
+                                                                @Html.TextAreaFor(m => m.Summary, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @disabled = "disabled" })
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <p class="mb-0">Organizer Category</p>
+                                                                @Html.DropDownListFor(m => m.CategoryId, (new IHSDC.WebApp.Models.MasterModels()).LoadCategory(), "--Select Category --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @disabled = "disabled" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-cols-2 font-weight-bold">
+                                                            <div class="col-5">
+                                                                <p class="mb-0">Sponsor Category</p>
+                                                                @Html.DropDownListFor(m => m.SponsorCategoryId, (new IHSDC.WebApp.Models.MasterModels()).LoadCategory(), "--Select Category --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @disabled = "disabled" })
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <p class="mb-0">Nodal Category</p>
+                                                                @Html.DropDownListFor(m => m.NodalCategoryId, (new IHSDC.WebApp.Models.MasterModels()).LoadCategory(), "--Select Category --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @disabled = "disabled" })
+                                                            </div>
+                                                        </div>
+                                                    }
+
+
+                                                    <div class="d-flex justify-content-center" style="margin-top: 10px;">
+                                                        @if (Model.IsView == false)
+                                                        {
+                                                            <button type="submit" value=@ViewBag.ButtonName name="btnval" id="btnSave" class="btn btn-success" style="margin-right:10px">1. @ViewBag.ButtonName</button>
+                                                            if (Model.Inbox_ID != 0)
+                                                            {
+                                                                if (Model.FinalSubmitYN == false || Model.AllowEdit == true)
+                                                                {
+                                                                    <a class="btn btn-success mr-2" id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' onclick="SubmitGEBConfirmation(this,'/ACC/FinalSubmitAgenda','Do you want to submit Agenda','FinalSubmitAgenda')">
+                                                                        <span style="color:white">2. Submit</span>
+                                                                    </a>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="btn btn-success mr-2 disabled" id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' onclick="SubmitGEBConfirmation(this,'/ACC/FinalSubmitAgenda','Do you want to submit Agenda','FinalSubmitAgenda')">
+                                                                    <span style="color:white">2. Submit</span>
+                                                                </a>
+                                                            }
+                                                        }
+
+                                                        @*@if (Model.Inbox_ID != 0)
+                                                            {
+                                                                if (Model.sponsorId == Convert.ToInt32(SessionManager.UserIntId))
+                                                                {
+                                                                    <a class="btn btn-success mr-2" id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' onclick="SubmitGEBConfirmation(this,'/ACC/FinalSubmitAgenda','Do you want to submit Agenda','FinalSubmitAgenda')">
+                                                                        <span style="color:white">Submit</span>
+                                                                    </a>
+                                                                }
+                                                            }*@
+
+                                                        <a class="btn btn-success mr-2" id="btnBack" onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = string.Empty,Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                            <span style="color:white">Clear</span>
+                                                        </a>
+
+                                                        <a class="btn btn-success mr-2" id="btnBack" onclick="location.href='@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })'">
+                                                            <span style="color:white">Back</span>
+                                                        </a>
+                                                        @if (Convert.ToInt32(SessionManager.UserId) == Model.ScheduleCreatedById)
+                                                        {
+                                                            if (Model.Inbox_ID != 0)
+                                                            {
+                                                                <div class="form-check mr-2" id="divVisible">
+                                                                    <label class="form-check-label">
+                                                                        @if (Model.IsView == false)
+                                                                        {
+                                                                            @Html.CheckBoxFor(m => m.IsVisibleToAll, new { @class = "form-check-input" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.CheckBoxFor(m => m.IsVisibleToAll, new { @class = "form-check-input", @disabled = "disabled" })
+                                                                        }
+                                                                        <label class="form-check-label">Visible to All</label>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check" id="divEdit">
+                                                                    <label class="form-check-label">
+                                                                        @if (Model.IsView == false)
+                                                                        {
+                                                                            @Html.CheckBoxFor(m => m.AllowEdit, new { @class = "form-check-input" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.CheckBoxFor(m => m.AllowEdit, new { @class = "form-check-input", @disabled = "disabled" })
+                                                                        }
+                                                                        <label class="form-check-label">UnFreeze Upload</label>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-sm-12">
+                    @*<div class="table-responsive">*@
+
+                    <table class="table border border-purple table-striped no-footer dataTable table-hover" id="Agenda">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th class="center">S/No</th>
+                                <th class="center">AP Id</th>
+                                <th class="center">Conf Title</th>
+                                <th class="center">Sponsor</th>
+                                <th class="center">Nodal Branch</th>
+                                <th class="center">Agenda Pt Title</th>
+                                @*<th class="center" style="width:250px;">Summary</th>*@
+                                <th class="center">Category</th>
+                                <th class="center">Sent On</th>
+                                <th class="center">Action</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            @if (ViewBag.count > 0)
+                            {
+                                foreach (var item in Model.ILInboxCRUD)
+                                {
+                                    <tr class="row-light">
+                                        <td>
+                                            @{ sno++; }
+                                            @sno
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.Inbox_ID)</td>
+                                        <td class="RefLetter-container">
+                                            @Html.DisplayFor(modelItem => item.Conf)
+                                            <div class="RefLetter">
+                                                @Html.DisplayFor(modelItem => item.RefLetter)
+                                            </div>
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.UnitName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.BranchName)</td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        @*<td>@Html.DisplayFor(modelItem => item.Summary)</td>*@
+                                        <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DateTimeOfUpdate)</td>
+                                        <td>
+                                            @if (item.CloseId == 0)
+                                            {
+                                                if (item.FinalSubmitYN == false)
+                                                {
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                        <div class="editbut"></div>
+                                                    </a>
+                                                }
+                                                else if (item.AllowEdit == true)
+                                                {
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                        <div class="editbut"></div>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    if (item.RequestForUnfreeze == false)
+                                                    {
+                                                        <a data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' onclick="SubmitGEBConfirmation(this,'/ACC/AddRequestUnfreezeAgendaPoint','Do you place request for Unfreeze Agenda point','AddRequestUnfreezeAgendaPoint')">
+                                                            <div class="unlockbut"></div>
+                                                        </a>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")})'">
+                                                <div class="viewbut"></div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+
+                            }
+                        </tbody>
+                    </table>
+
+
+
+
+                    @*</div>*@
+                </div>
+            </div>
+
+        </div>
+
+        <div id="ShowpdfModal" class="modal">
+            <div class="modal-dialog" style="max-width:500mm;">
+                <div class="modal-content" style="margin-top:120px;">
+                    <div class="modal-body">
+                        <button type="button" class="btn btn-danger CloseSearchpoup" data-dismiss="modal" style="float: right; margin-top: -10px; margin-bottom: 2px;">&times;</button>
+                        <div id="Searchpdf-container"></div>
+                        @*<div class="modal-footer">
+                                <div class="btn-group">
+                                    <a style="color:white;" class="btn btn-danger CloseSearchpoup">Close</a>
+                                </div>
+                            </div>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="PolicyModal" class="modal">
+            <div class="modal-content" style="margin-top:120px;">
+
+                <div class="centered">
+                    <img src="~/Images/searchEngine.png" height="70px" />
+
+                </div>
+
+                <div class="modal-header text-center">
+                    <p style="text-align:center;font-size:30px; font-weight:bold; font-family:Arial;">
+                        <span id="spnPolicyName" style="color:#FF0000"></span>
+                        <span id="spnDocType" class="d-none"></span>
+                        <span id="spnPId" class="d-none"></span>
+                        @*<span id="SpnArmyNumber1" class="d-none">@SessionManager.ArmyNo</span>*@
+                    </p>
+                    <div class="bar1">
+                        <input class="searchbarPol" type="text" id="searchTerm" title="Search" placeholder="Search here">
+                        <div class="buttons">
+                            <img src="~/Images/search_pol.png" id="searchSubmit" style="width: 45px; height: 45px; margin-top:4px;" onclick="SearchTitle()" />
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger Closepoup" data-dismiss="modal">&times;</button>
+                </div>
+                @*<hr />*@
+                <div class="modal-body" style="max-height: 600px; overflow: auto;" id="APLogData">
+
+                    <div class="table-responsive" id="dataAgenda">
+                        <table class="table d-none" id="dataTable1">
+                            <thead class="bg-info text-white">
+                                <tr>
+                                    <th class="center">S/No</th>
+                                    <th class="center" style="width:15%;">File</th>
+                                    <th class="center" style="width:60%;">Content</th>
+                                    <th class="center"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodySearch">
+                            </tbody>
+
+                        </table>
+                    </div>
+                    @*<div class="modal-footer">
+                            <div class="btn-group">
+                                <a style="color:white;" class="btn btn-danger Closepoup">Close</a>
+                            </div>
+                        </div>*@
+
+                </div>
+                <footerPolicy>
+                    <div class="footerPolicy-content">
+                        <p><img src="~/Images/asdc_logo.png" width="45px" height="45px" /> Copyright © 2023. Developed by Army Software Development Centre (ASDC), DGIS</p>
+                    </div>
+                </footerPolicy>
+            </div>
+        </div>
+    }
+
+</div>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/GEBSubmit.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+<script src="~/NewContent/mammoth.browser.min.js"></script>
+<script src="~/Content/CustomJS/DigitalSign.js"></script>
+<script>
+    var input = document.getElementById("searchTerm");
+    input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("searchSubmit").click();
+        }
+    });
+</script>
+<script>
+    const tooltipContainers = document.querySelectorAll('.tooltip-container');
+
+    tooltipContainers.forEach(container => {
+        container.addEventListener('mouseenter', () => {
+            const tooltip = container.querySelector('.tooltip');
+            tooltip.style.visibility = 'visible';
+            tooltip.style.opacity = '1';
+        });
+
+        container.addEventListener('mouseleave', () => {
+            const tooltip = container.querySelector('.tooltip');
+            tooltip.style.visibility = 'hidden';
+            tooltip.style.opacity = '0';
+        });
+    });
+
+
+    $('.Closepoup').on('click', function (e) {
+        var modal = document.getElementById("PolicyModal");
+        modal.style.display = "none";
+    });
+
+    $('.CloseShowFilepoup').on('click', function (e) {
+        var modal = document.getElementById("ShowFileModal");
+        modal.style.display = "none";
+    });
+
+
+    $('.PolicyModelOpen').on('click', function (e) {
+        if ($('#Schedule_ID').val() == "") {
+            sweetAlert('Please Select Conf !', '', 'error');
+        }
+        else {
+            var Policy = window.btoa($('#spnDefaultPolicy').html());
+            var Conf = window.btoa($('#spnConfTypeId').html());
+            var Term = window.btoa($('#Title').val());
+            $.ajax({
+                url: '/PolicyCorner/SearchTitle',
+                type: 'GET',
+                data: { Term: Term, PolicyID: Policy, ConType: Conf },
+                success: function (data) {
+                    var modal = document.getElementById("PolicyModal");
+                    modal.style.display = "block";
+                    $("#dataTable1").removeClass("d-none");
+
+                    $("#tbodySearch").html(data);
+                    $('#searchTerm').val("");
+                },
+                error: function () {
+                    $("#tbodySearch").html("");
+                    var modal = document.getElementById("PolicyModal");
+                    modal.style.display = "none";
+                }
+            });
+
+        }
+    });
+
+
+    function SearchTitle() {
+        var Policy = window.btoa($('#spnDefaultPolicy').html());
+        var Conf = window.btoa($('#spnConfTypeId').html());
+        var Term = window.btoa($('#searchTerm').val());
+        $.ajax({
+            url: '/PolicyCorner/SearchTitle',
+            type: 'GET',
+            data: { Term: Term, PolicyID: Policy, ConType: Conf },
+            success: function (data) {
+                var modal = document.getElementById("PolicyModal");
+                modal.style.display = "block";
+                $("#dataTable1").removeClass("d-none");
+                $("#tbodySearch").html(data);
+                $('#searchTerm').val("");
+            },
+            error: function () {
+                $("#tbodySearch").html("");
+                var modal = document.getElementById("PolicyModal");
+                modal.style.display = "none";
+            }
+        });
+    }
+</script>
+<script>
+        var watermarkText = @Html.Raw(Json.Encode(watermarkText));
+</script>
+<script>
+    $(document).ready(function () {
+        $('.dropdownsearch').select2();
+    });
+
+    $(document).ready(function () {
+        var table = $('#Agenda').DataTable({
+            lengthChange: true,
+            pageLength: 50,
+            aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+            /* dom: 'Bfrtip',*/
+            dom: 'lBfrtip',
+            buttons: [
+                'copy',
+                'excel',
+                'csv',
+                /* 'print',*/
+                {
+                    text: 'PDF',
+                    extend: 'pdfHtml5',
+                    action: function (e, dt, node, config) {
+                        PrintDiv();
+                    }
+                },
+                'colvis',
+            ],
+
+        });
+
+
+        var buttonContainer = table.buttons().container().appendTo('#Agenda_wrapper .col-md-6:eq(0)');
+        var searchBuilderContainer = table.searchBuilder.container();
+        buttonContainer.insertBefore(table.table().container());
+        searchBuilderContainer.insertBefore(table.table().container());
+
+    });
+
+
+    function PrintDiv() {
+        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+        popupWin.document.open();
+
+        var tableStyles = `
+                            <style type="text/css">
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 20px;
+                                }
+
+                                th, td {
+                                    padding: 8px;
+                                    border: 1px solid #ddd;
+                                    text-align: center;
+                                }
+
+                                th {
+                                    background-color: #f2f2f2;
+                                    color: black;
+                                }
+
+                                @@media print {
+
+                                    @@page {
+                                        margin-top: 10px;
+                                        margin-bottom: 10px;
+                                    }
+
+                                    body::after {
+                                        content: none !important;
+                                    }
+
+                                    .card-page {
+                                        break-after: page;
+                                    }
+
+                                        .card-page:last-of-type {
+                                            break-after: auto;
+                                        }
+
+                                    footer {
+                                        position: fixed;
+                                        bottom: 0;
+                                        left: 0;
+                                        right: 0;
+                                        height: 10px;
+                                        background-color: gray;
+                                        color: white;
+                                        text-align: center;
+                                        padding: 10px;
+                                    }
+
+                                    header {
+                                        position: fixed;
+                                        top: 0;
+                                        left: 0;
+                                        right: 0;
+                                        height: 10px;
+                                        background-color: gray;
+                                        color: white;
+                                        text-align: center;
+                                        padding: 10px;
+                                    }
+                                }
+                            </style>
+                        `;
+
+        var table = $('#Agenda').DataTable();
+        var visibleColumns = table.columns(':visible').header().toArray();
+        var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+        var tableHTML = '<table>';
+
+        tableHTML += '<thead>';
+        tableHTML += '<tr>';
+        visibleColumns.forEach(function (header) {
+            tableHTML += '<th>' + header.innerHTML + '</th>';
+        });
+        tableHTML += '</tr>';
+        tableHTML += '</thead>';
+
+        tableHTML += '<tbody>';
+        for (var i = 0; i < filteredData.length; i++) {
+            tableHTML += '<tr>';
+            for (var j = 0; j < filteredData[i].length; j++) {
+                if (!table.column(j).visible()) {
+                    continue;
+                }
+                tableHTML += '<td>' + filteredData[i][j] + '</td>';
+            }
+            tableHTML += '</tr>';
+        }
+        tableHTML += '</tbody>';
+
+        tableHTML += '</table>';
+
+
+        var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Agenda Point List</h1>';
+        popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
+
+        popupWin.document.close();
+    }
+
+
+</script>
+<script>
+
+      var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+			sweetAlert(message, messagemidStatus, messageStatus);
+
+
+    $(document).ready(function () {
+
+        BindOrganizerCategory($("#spnScheduleId").html());
+        GetOrganizerId($("#spnScheduleId").html());
+
+        $('#spnCategoryId').change(function () {
+            $("#CategoryId").val($('#spnCategoryId').val());
+        });
+
+        $('#spnSponsorId').change(function () {
+            $("#SponsorCategoryId").val($('#spnSponsorId').val());
+        });
+
+        $('#spnNodalId').change(function () {
+            $("#NodalCategoryId").val($('#spnNodalId').val());
+        });
+
+        $('#spnBranch').change(function () {
+            $("#Branch").val($('#spnBranch').val());
+        });
+
+        $('#Schedule_ID').change(function () {
+            BindOrganizerCategory($("#Schedule_ID").val());
+            GetOrganizerId($("#Schedule_ID").val())
+        });
+
+        if ($('#spnGSOId').val() ==@SessionManager.UserId)
+        {
+            if ($('#spnsponsor').val() !=@SessionManager.UserIntId)
+            {
+                $('#btnsubmit').attr('style', 'display: none;');
+            }
+        }
+
+    });
+
+    function GetOrganizerId(Schedule_ID) {
+        $.ajax({
+            url: '/Master/GetOrganizerId',
+            type: 'POST',
+            data: {"Schedule_ID": Schedule_ID },
+            success: function (result) {
+                if (result.length > 0) {
+
+                    if (result[0].OrganizerCatId != "") {
+                        if (result[0].LetterCreatedBy ==@SessionManager.UserIntId) {
+                            $('#spnCategoryId').prop('disabled', false);
+                        }
+                        else {
+                            if ($("#CategoryId").val() == 0)
+                            {
+                                $('#spnCategoryId').val('');
+                            }
+                            $('#spnCategoryId').prop('disabled', true);
+                        }
+                    }
+                    else
+                    {
+                            $('#spnCategoryId').val('');
+                            $('#spnCategoryId').prop('disabled', true);
+                    }
+
+
+
+                    if (result[0].BranchIds != "")
+                    {
+                        if (result[0].LetterCreatedBy ==@SessionManager.UserIntId) {
+                            $('#spnBranch').prop('disabled', false);
+                        }
+                        else {
+                            if ($("#Branch").val() == 0) {
+                                $('#spnBranch').val('');
+                            }
+                            $('#spnBranch').prop('disabled', true);
+                        }
+                    }
+                    else
+                    {
+                        $('#spnBranch').val('');
+                        $('#spnBranch').prop('disabled', true);
+                    }
+
+                    if (result[0].SponsorCatId != "") {
+                        if ($('#Inbox_ID').val() != 0) {
+                            if ($('#spnsponsor').html() == @SessionManager.UserIntId || result[0].LetterCreatedBy ==@SessionManager.UserIntId) {
+
+                                $('#spnSponsorId').prop('disabled', false);
+                            }
+                            else {
+                                if ($("#SponsorCategoryId").val() == 0) {
+                                    $('#spnSponsorId').val('');
+                                }
+                                $('#spnSponsorId').prop('disabled', true);
+                            }
+                        }
+                        else
+                        {
+                            $('#spnSponsorId').prop('disabled', false);
+                        }
+                    }
+                    else
+                    {
+                        $('#spnSponsorId').val('');
+                        $('#spnSponsorId').prop('disabled', true);
+                    }
+
+
+
+                    if (result[0].NodalCatId != "") {
+                        if ($('#spnNode').html() == @SessionManager.UserIntId || result[0].LetterCreatedBy ==@SessionManager.UserIntId) {
+                            $('#spnNodalId').prop('disabled', false);
+                        }
+                        else
+                        {
+                            if ($("#NodalCategoryId").val() == 0) {
+                                $('#spnNodalId').val('');
+                            }
+                            $('#spnNodalId').prop('disabled', true);
+                        }
+                    }
+                    else
+                    {
+                        $('#spnNodalId').val('');
+                        $('#spnNodalId').prop('disabled', true);
+                    }
+                }
+                else {
+                    $('#spnletterCreatedById').html("");
+                }
+            }
+        });
+
+    }
+
+    function BindOrganizerCategory(Schedule_ID) {
+        var list = '';
+        var list1 = '';
+        var list2 = '';
+        var list3 = '';
+        $.ajax({
+            url: '/Master/GetCategory',
+            type: 'POST',
+            data: { "Proc":"7","Schedule_ID": Schedule_ID },
+            success: function (result) {
+                if (result.length > 0) {
+                    list = '';
+                    list = '<option value="">Select Category</option>';
+                    for (var j = 0; j < result.length; j++) {
+                        list += '<option value=' + result[j].CategoryId + '>' + result[j].CategoryName + '</option>';
+                    }
+                    $('#spnCategoryId').html(list);
+                }
+                else
+                {
+                    list = '';
+                    list = '<option value="">Select Category</option>';
+                    $('#spnCategoryId').html(list);
+                }
+
+                if ($("#CategoryId").val() != 0)
+                {
+                    $('#spnCategoryId').val($("#CategoryId").val());
+                }
+
+            }
+        });
+
+        $.ajax({
+            url: '/Master/GetCategory',
+            type: 'POST',
+            data: { "Proc": "8", "Schedule_ID": Schedule_ID },
+            success: function (result) {
+                if (result.length > 0) {
+                    list1 = '';
+                    list1 = '<option value="">Select Category</option>';
+                    for (var j = 0; j < result.length; j++) {
+                        list1 += '<option value=' + result[j].CategoryId + '>' + result[j].CategoryName + '</option>';
+                    }
+                    $('#spnSponsorId').html(list1);
+                }
+                else {
+                    list1 = '';
+                    list1 = '<option value="">Select Category</option>';
+                    $('#spnSponsorId').html(list1);
+                }
+                if ($("#SponsorCategoryId").val() != 0) {
+                    $('#spnSponsorId').val($("#SponsorCategoryId").val());
+                }
+            }
+        });
+
+        $.ajax({
+            url: '/Master/GetCategory',
+            type: 'POST',
+            data: { "Proc": "9", "Schedule_ID": Schedule_ID },
+            success: function (result) {
+                if (result.length > 0) {
+                    list2 = '';
+                    list2 = '<option value="">Select Category</option>';
+                    for (var j = 0; j < result.length; j++) {
+                        list2 += '<option value=' + result[j].CategoryId + '>' + result[j].CategoryName + '</option>';
+                    }
+                    $('#spnNodalId').html(list2);
+                }
+                else {
+                    list2 = '';
+                    list2 = '<option value="">Select Category</option>';
+                    $('#spnNodalId').html(list2);
+                }
+                if ($("#NodalCategoryId").val() != 0) {
+                    $('#spnNodalId').val($("#NodalCategoryId").val());
+                }
+            }
+        });
+
+        $.ajax({
+            url: '/Master/GetBranch',
+            type: 'POST',
+            data: { "Proc": "5", "Schedule_ID": Schedule_ID },
+            success: function (result) {
+                if (result.length > 0) {
+                    list3 = '';
+                    list3 = '<option value="">Select Nodal Branch</option>';
+                    for (var j = 0; j < result.length; j++) {
+                        list3 += '<option value=' + result[j].BranchId + '>' + result[j].BranchName + '</option>';
+                    }
+                    $('#spnBranch').html(list3);
+                }
+                else {
+                    list3 = '';
+                    list3 = '<option value="">Select Nodal Branch</option>';
+                    $('#spnBranch').html(list3);
+                }
+                if ($("#Branch").val() != 0) {
+                    $('#spnBranch').val($("#Branch").val());
+                }
+            }
+        });
+
+
+        $.ajax({
+            url: '/Master/GetPolicyByConfId',
+            type: 'POST',
+            data: { "Proc": "4", "Id": Schedule_ID },
+            success: function (result) {
+                if (result.length > 0) {
+                    $('#spnDefaultPolicy').html(result[0].PolicyName);
+                    $('#spnConfTypeId').html(result[0].TypeOfConfId);
+                }
+                else {
+                    $('#spnDefaultPolicy').html("");
+                    $('#spnConfTypeId').html("");
+                }
+            }
+        });
+
+    }
+
+
+    $(document).ready(function () {
+
+        var pdfUrl = $("#files").attr('value');
+        if (pdfUrl !== undefined) {
+            if (pdfUrl) {
+                pdfUrl += "?t=" + new Date().getTime();
+                console.log("Converted File Object:", pdfUrl);
+                fetch(pdfUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Failed to load PDF document");
+                        }
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        const pdfFile = new File([blob], "aa.pdf", { type: 'application/pdf' });
+
+                        const pdfContainer = document.getElementById("pdf-container");
+
+                        if (pdfFile) {
+                            const selectedFile = pdfFile;
+
+                            if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
+                                const embed = document.createElement("object");
+                                embed.data = URL.createObjectURL(selectedFile);
+                                embed.type = "application/pdf";
+                                embed.width = "100%";
+                                embed.height = "350px";
+                                pdfContainer.innerHTML = "";
+                                pdfContainer.appendChild(embed);
+                            } else {
+                                alert("Please select a valid PDF file.");
+                                input.value = "";
+                                pdfContainer.innerHTML = "";
+                            }
+                        }
+
+                        console.log("Converted File Object:", pdfFile);
+
+                        const formData = new FormData();
+                    })
+                    .catch(error => {
+                        console.error("Failed to fetch or convert the PDF:", error);
+                        const pdfContainer = document.getElementById("pdf-container");
+                        pdfContainer.innerHTML = "Failed to load PDF document.";
+                    });
+            } }
+
+
+    });
+
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("myForm");
+        const btnSave = document.getElementById("btnSave");
+        const wordFileInput = document.getElementById("Wordfiles");
+        const wordFileError = document.getElementById("wordFileError");
+        const PdfFileInput = document.getElementById("files");
+        const PdfFileError = document.getElementById("PdfFileError");
+
+        function clearFileError(inputElement, errorElement) {
+            inputElement.addEventListener("change", function () {
+                if (inputElement.files.length) {
+                    errorElement.style.display = "none";
+                }
+            });
+        }
+
+
+        clearFileError(wordFileInput, wordFileError);
+        clearFileError(PdfFileInput, PdfFileError);
+
+        btnSave.addEventListener("click", function (e) {
+            let isValid = true;
+
+
+            if (!wordFileInput.files.length) {
+                wordFileError.style.display = "block";
+                isValid = false;
+            } else {
+                wordFileError.style.display = "none";
+            }
+
+
+            if (!PdfFileInput.files.length) {
+                PdfFileError.style.display = "block";
+                isValid = false;
+            } else {
+                PdfFileError.style.display = "none";
+            }
+
+
+
+              const buttonName = "@ViewBag.ButtonName";
+             const uploadPath = "@ViewBag.UploadPath";
+            if (buttonName === "Update" && uploadPath !== "") {
+
+                wordFileError.style.display = "none";
+                PdfFileError.style.display = "none";
+                return true;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+
+    $('#Title').keyup(function () {
+        if (event.keyCode === 32 || event.keyCode === 8) {
+            var searchTermValue = window.btoa($(this).val());
+            var Policy = window.btoa($('#spnDefaultPolicy').html());
+            var ConTypeId = window.btoa($('#spnConfTypeId').html());
+            $.ajax({
+                url: '/PolicyCorner/SearchAgendaPointTitle',
+                type: 'POST',
+                data: { "Term": searchTermValue, "PolicyID": Policy, "ConType": ConTypeId},
+                dataType: 'json',
+                timeout: 3000,
+                success: function (response) {
+                    displaySuggestions(response);
+                },
+                error: function (error) {
+                    /* sweetAlert(error.responseText);*/
+                }
+            });
+        }
+    });
+    //function displaySuggestions(suggestions) {
+    //    var suggestionBox = $("#suggestionBox");
+    //    suggestionBox.empty();
+    //    for (var i = 0; i < suggestions.length; i++) {
+    //        suggestionBox.append("<div class='suggestionItem' id=" + window.btoa(suggestions[i].FileName) + ">" + suggestions[i].paragraph + "</div>");
+    //    }
+    //    suggestionBox.show();
+        //}
+        function displaySuggestions(suggestions) {
+            var suggestionBox = $("#suggestionBox");
+            suggestionBox.empty();
+            for (var i = 0; i < suggestions.length; i++) {
+                var suggestionId = window.btoa(suggestions[i].FileName);
+                var suggestionItem = $("<div class='suggestionItem' id=" + suggestionId + "></div>");
+
+                // Check if the file name ends with '.pdf' and add the PDF icon class
+                var suggestionContent = suggestions[i].paragraph;
+                if (suggestions[i].FileName.toLowerCase().endsWith('.pdf')) {
+                    suggestionContent = "<div class='pdfup'></div>" + suggestionContent; // Add PDF icon
+                }
+
+                suggestionItem.html(suggestionContent);
+                suggestionBox.append(suggestionItem);
+            }
+            suggestionBox.show();
+        }
+
+
+
+
+    $("#suggestionBox").on("click", ".suggestionItem", function () {
+        var Id = window.atob($(this).attr("id"));
+        $('#ShowpdfModal').show();
+
+        if (Id) {
+            fetch(Id)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Failed to load PDF document");
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const pdfFile = new File([blob], "aa.pdf", { type: 'application/pdf' });
+
+                    const pdfContainer = document.getElementById("Searchpdf-container");
+
+                    if (pdfFile) {
+                        const selectedFile = pdfFile;
+
+                        if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
+                            const embed = document.createElement("object");
+                            embed.data = URL.createObjectURL(selectedFile);
+                            embed.type = "application/pdf";
+                            embed.width = "100%";
+                            embed.height = "600px";
+                            pdfContainer.innerHTML = "";
+                            pdfContainer.appendChild(embed);
+                        } else {
+                            alert("Please select a valid PDF file.");
+                            input.value = "";
+                            pdfContainer.innerHTML = "";
+                        }
+                    }
+
+                    console.log("Converted File Object:", pdfFile);
+
+                    const formData = new FormData();
+                })
+                .catch(error => {
+                    console.error("Failed to fetch or convert the PDF:", error);
+                    const pdfContainer = document.getElementById("Searchpdf-container");
+                    pdfContainer.innerHTML = "Failed to load PDF document.";
+                });
+        }
+
+    });
+        $('.CloseSearchpoup').on('click', function (e) {
+            var modal = document.getElementById("ShowpdfModal");
+            modal.style.display = "none";
+        });
+</script>

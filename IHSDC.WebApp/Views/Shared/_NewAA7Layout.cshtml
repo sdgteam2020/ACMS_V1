@@ -1,0 +1,1242 @@
+﻿@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Connection
+
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ACMS </title>
+    <!-- Bootstrap core CSS-->
+    <link href="~/NewContent/vendor/bootstrap/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <!-- Page level plugin CSS-->
+    <link href="~/NewContent/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="~/NewContent/css/sb-admin.css" rel="stylesheet">
+    @*// @Scripts.Render("~/bundles/modernizr")*@
+    <link href="~/NewContent/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/NewContent/css/Sidebar.css" rel="stylesheet">
+    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+    <link rel="icon" href="~/Images/dgis_ico.png" type="image/x-icon">
+
+    <!-- dataTable4-->
+    @*<link rel="stylesheet" href="~/NewContent/dataTable4/css/bootstrap.css">*@
+    <link rel="stylesheet" href="~/NewContent/dataTable4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/NewContent/dataTable4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/NewContent/dataTable4/css/responsive.bootstrap4.min.css">
+    <link href="~/NewContent/dataTable4/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/searchBuilder.dataTables.min.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/dataTables.dateTime.min.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/colReorder.dataTables.min.css" rel="stylesheet" />
+    <!--Notification bell-->
+    <link href="~/NewContent/vendor/bootstrap/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/NewContent/vendor/bootstrap/css/fonts/icomoon/style.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/select2.min.css" rel="stylesheet" />
+    <style>
+
+
+        .sidebar {
+        }
+
+        .danger {
+            color: red;
+        }
+
+        /*       sticky-footer {
+            width: 100%;
+            background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }*/
+
+        .header {
+            opacity: 3;
+            background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+            z-index: 10
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .form-control {
+            border: 1px solid #8d94a9 !important;
+        }
+
+        .dropdown-item:hover {
+            background: #4CAF50 !important;
+            /* font-size: 9px !important;*/
+            border-radius: 13px;
+        }
+
+        .content {
+            padding: 7rem 0;
+        }
+
+        .custom-dropdown .btn:active, .custom-dropdown .btn:focus {
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            outline: none;
+        }
+
+        .custom-dropdown .btn.btn-custom {
+            border: 1px solid #efefef;
+        }
+
+        .custom-dropdown .title-wrap {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .custom-dropdown .title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .custom-dropdown .dropdown-link {
+            color: #888;
+            display: inline-block;
+            padding-right: 0px;
+            position: relative;
+        }
+
+            .custom-dropdown .dropdown-link .wrap-icon {
+                font-size: 30px;
+            }
+
+            .custom-dropdown .dropdown-link .number {
+                width: 24px;
+                height: 24px;
+                line-height: 20px;
+                border-radius: 50%;
+                background: #007bff;
+                position: absolute;
+                font-size: 13px;
+                top: -10px;
+                right: -10px;
+                border: 2px solid #fff;
+                color: #fff;
+                text-align: center;
+            }
+
+        .custom-dropdown .dropdown-menu {
+            border: 1px solid transparent;
+            -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
+            /*margin-top: 0px !important;*/
+            padding-top: 0;
+            padding-bottom: 0;
+            padding: 10px;
+            opacity: 0;
+            /*left: 0 !important;*/
+            left: -350px;
+            -webkit-transition: .3s margin-top ease, .3s opacity ease, .3s visibility ease;
+            -o-transition: .3s margin-top ease, .3s opacity ease, .3s visibility ease;
+            transition: .3s margin-top ease, .3s opacity ease, .3s visibility ease;
+            visibility: hidden;
+            max-width: 380px;
+        }
+
+            .custom-dropdown .dropdown-menu.active {
+                opacity: 1;
+                visibility: visible;
+                margin-top: 10px !important;
+            }
+
+        .custom-dropdown .custom-notifications {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: 200px;
+            overflow-y: scroll;
+            border-bottom: 1px solid #efefef;
+        }
+
+            .custom-dropdown .custom-notifications > li {
+                display: block;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+                .custom-dropdown .custom-notifications > li:last-child {
+                    margin-bottom: 0;
+                }
+
+                .custom-dropdown .custom-notifications > li > a {
+                    display: block;
+                    padding: 20px;
+                    color: #bfbfbf;
+                }
+
+                    .custom-dropdown .custom-notifications > li > a:hover {
+                        background: #f9f9f9;
+                    }
+
+                    .custom-dropdown .custom-notifications > li > a .img {
+                        -webkit-box-flex: 0;
+                        -ms-flex: 0 0 40px;
+                        flex: 0 0 40px;
+                    }
+
+                        .custom-dropdown .custom-notifications > li > a .img img {
+                            width: 40px;
+                            border-radius: 50%;
+                        }
+
+                    .custom-dropdown .custom-notifications > li > a .text {
+                        margin-top: 0px;
+                    }
+
+                        .custom-dropdown .custom-notifications > li > a .text strong {
+                            font-weight: 700;
+                            color: #000;
+                        }
+
+                .custom-dropdown .custom-notifications > li.unread a {
+                    background: #fffaef;
+                }
+
+        .user-avatar {
+            width: 50px;
+            height: 40px;
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-left: -20px;
+            margin-right: 10px;
+        }
+
+        .item {
+            position: relative;
+            /* padding-top: 20px;*/
+            display: inline-block;
+        }
+
+        .notify-badge {
+            position: absolute;
+            right: -19px;
+            top: 0px;
+            background: red;
+            text-align: center;
+            border-radius: 30px 30px 30px 30px;
+            color: white;
+            padding: 5px 10px;
+            font-size: 16px;
+            margin-top: -14px;
+            font-weight: bold;
+        }
+
+        .infologin {
+            font-size: 6px;
+        }
+
+        .imglogo {
+            max-height: 10%;
+            max-width: 10%;
+        }
+
+        .imglogout {
+            max-height: 20px;
+            max-width: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            z-index: 1;
+            width: 150px;
+            color: white;
+            font-size: 14px;
+            background-color: #192733;
+            border-radius: 10px;
+            padding: 2px 5px 2px 5px;
+        }
+
+        .hover-text:hover .tooltip-text {
+            visibility: visible;
+        }
+
+        #top {
+            top: -40px;
+            left: -50%;
+        }
+
+        #bottom {
+            top: 45px;
+            left: -45%;
+        }
+
+        #left {
+            top: -8px;
+            right: 120%;
+        }
+
+        #right {
+            top: -8px;
+            left: 120%;
+        }
+
+        .hover-text {
+            position: relative;
+            display: inline-block;
+            margin: 40px;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        .card {
+            box-shadow: -1px 1px 16px 1px;
+            margin-top: 5px;
+        }
+
+        @@media only screen and (min-width: 700px) {
+            .infologin {
+                font-size: 18px;
+            }
+
+            .imglogo {
+                max-height: 100px;
+                max-width: 100px;
+            }
+
+            .imglogout {
+                max-height: 50px;
+                max-width: 50px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            .imgback {
+                margin-left: 100px;
+                margin-top: 0px;
+                height: 105px;
+            }
+
+            .footertitle {
+                font-size: 22px;
+            }
+            /*
+           .sticky-footer {
+                background-color: darkblue;
+            }*/
+
+            .footersubtitle {
+                font-size: 12px;
+            }
+        }
+
+        @@media only screen and (max-width: 690px) {
+            .infologin {
+                font-size: 4px;
+            }
+
+            .imglogo {
+                max-height: 26px;
+                max-width: 26px;
+            }
+
+            .imglogout {
+                margin-top: -10px;
+                max-height: 17px;
+                max-width: 17px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            .navbar {
+                padding: 0.1rem 0.1rem
+            }
+
+            .imgback {
+                margin-left: 5px;
+                margin-top: 0px;
+                max-height: 25px;
+                max-width: 135px;
+            }
+        }
+    </style>
+</head>
+<body id="page-top" class="sidebar-toggled">
+    <div class="header" id="myHeader">
+        @*<div id="loading" class="loader">
+                <div class="loader-container">
+                    <img src="/Images/load.gif" width="100">
+                    <div>
+                        <h4 style="margin-top: -20px;">Loading...</h4>
+                        <span>Please wait. This may take few seconds.</span>
+                    </div>
+                </div>
+            </div>*@
+        <nav class="navbar navbar-expand  static-top text-light">
+            <img src="~/Content/images/armylogo.png" class="imglogo" />   @*<span class="navbar-brand mr-1 text-light" href="#" style="color: white;font-weight:600;font-size: 28px;">AVIATORS AUTOMATION(GEB) - AA7</span>*@
+            <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#" style="margin-left:10px;">
+                <i class="fas fa-bars" style="color:white;font-size:18px"></i>
+            </button>
+            <img src="~/Content/images/acc.png" class="imgback" />
+
+            <!-- Navbar Search -->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"></form>
+
+
+            <div class="navbar-nav ml-auto ml-md-0">
+                <div class="nav-item dropdown no-arrow text-light d-flex" style="float:right;margin-top:0px;">
+
+                    @*<a class="nav-link" style="color:white" href='@Url.Action("EditProfile", "Master")'>*@
+                    @if (@SessionManager.Role != "Administrator")
+                    {
+                        <a href='@Url.Action("Edit", "Account", new { id = @SessionManager.UserEditId })'>
+                            <div class="hover-text">
+                                <span class="tooltip-text" id="bottom">Update Profile</span>
+                                <i class="fas fa-user-edit" style="color:white; font-size:26px;"></i>
+                            </div>
+                        </a>
+                    }
+                    &nbsp;&nbsp;
+                    <h4 class="text-light infologin">
+                        Welcome  @SessionManager.ArmyNo <br />
+
+
+
+                        <!--@SessionManager.UserName--> @*| Role : @SessionManager.Role*@ <!--<br />-->
+                        @SessionManager.RankName @SessionManager.UserFullName <br />
+                        Domain Id:  @SessionManager.UserName <br />
+                        Role : @SessionManager.Role
+                        @*| Unit : @SessionManager.UnitName*@
+                        @*| Unit Id : @SessionManager.Unit_ID*@
+                        @*| Role : @SessionManager.Role  | Id : @SessionManager.UserId*@
+                    </h4>
+                    <a href="@Url.Action("Logout", "Account")">
+                        <img src="~/Images/shutdown.png" class="imglogout" />
+                    </a>
+                </div>
+                @*<img src="~/Content/images/MYImage.png" style="height: 105px; width: 105px;" />*@
+
+            </div>
+        </nav>
+    </div>
+
+    <div id="wrapper" class="aj1">
+        <!-- Sidebar -->
+        <ul class="aj sidebar navbar-nav text-light toggled" id="myTab">
+            
+          
+            @if (Request.IsAuthenticated && (string.IsNullOrEmpty(SessionManager.Active.ToString()) || SessionManager.Active.ToString() != "0"))
+            {
+
+                if (SessionManager.RoleId == enum1.Administrator)
+                {
+
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("Index", "Home")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Dashboad
+                            </span>
+                        </a>
+                    </li>
+                    <!--Master Comd Corps Unit Add-->
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Comd /
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                PSOs
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Br
+                            </span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+
+                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='@Url.Action("AddComd", "Master")' )>Comd/PSOs</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='@Url.Action("AddCorps", "Master")' )>DGs</a>
+                            @*  <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='@Url.Action("AddBdeCat", "Master")' )>Bde</a>*@
+                            @*<a style=" font-size: 16px;" class="dropdown-item" id="master1" href='@Url.Action("AddSqn", "Master")' )>Sqn</a>*@
+                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='@Url.Action("AddUnit", "Master")' )>Branch</a>
+                        </div>
+                    </li>
+                    @*<li class="nav-item dropdown">
+                    <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-id-card" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                        <span style=" color: white; font-weight: 600; font-size: 16px;">Pers Detail</span>
+                    </a>
+                    <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                        <a style=" font-size: 16px;" class="dropdown-item" id="master2" href='@Url.Action("AddRank", "Master")' )>Rank</a>
+                    </div>
+                </li>*@
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("AddRank", "Master")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fas fa-id-card" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Rank
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("AddAppt", "Master")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fas fa-id-badge" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Appt
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("AddBranch", "Master")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fas fa-industry" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                AP Branch
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("AddCategory", "Master")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fa fa-cogs"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Category
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("AddTypeofConf", "Master")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fa fa-group"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Conf Type
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("AddPolicy", "Master")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fa fa-object-group"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Folder
+                            </span>
+                        </a>
+                    </li>
+
+
+
+                    <!--<li class="nav-item active">
+            <a class="nav-link" style="color:white" href='@Url.Action("AddUserPolicyControl", "Master")'>-->
+                    @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                    <!--<i class="fa fa-shield-alt"></i>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Policy
+                    </span>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Access
+                    </span>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Permission
+                    </span>
+                </a>
+            </li>-->
+
+
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("AddFolderControl", "Master")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fa fa-shield-alt"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Folder
+                            </span>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Access
+                            </span>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Permission
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("Hierarchy", "Account")'>
+                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                            <i class="fa fa-universal-access"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Users
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" id="Roles" href='@Url.Action("Index", "Roles")'>
+
+                            <i class="fa fa-edit"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                Role
+                            </span>
+                        </a>
+                    </li>
+
+                    @*<li class="nav-item active">
+                    <a class="nav-link" style="color:white" id="Roles" href='@Url.Action("UserLog", "AA7")'>
+
+                        <i class="fas fa-file-archive"></i>
+                        <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                            Log
+                        </span>
+                    </a>
+                </li>*@
+                    <!--<li class="nav-item dropdown">
+            <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdownlog" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-file-archive" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                <span style=" color: white; font-weight: 600; font-size: 17px;">Log</span>
+            </a>
+            <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("UserLog", "AA7")' )>User Log</a>-->
+                    @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AviatorLog", "AA7")' )>Aviator Log</a>*@
+                    <!--</div>
+            </li>-->
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" id="Roles" href='@Url.Action("UserLog", "Master")'>
+
+                            <i class="fa fa-edit"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                User Log
+                            </span>
+                        </a>
+                    </li>
+
+                }
+                //Admin Permission Menu Items End
+
+                if (SessionManager.RoleId == enum1.GSO1)
+                {
+
+                    <!--<li class="nav-item dropdown">
+            <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-group" style="color:white;"></i>
+                <span style="color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                    Master
+                </span>
+                <span style="color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                    Entry
+                </span>
+
+            </a>
+            <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">-->
+                    @*<a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddTypeofConf' )>Conf Type</a>*@
+                    <!--<a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddPolicy' )>Policy</a>
+                    <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddUserPolicyControl' )>Policy Access  Permission</a>
+                </div>
+            </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/Schedule/ScheduleLetter">
+                            <i class="fas fa-plus-circle"></i>
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Initiate
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; " class="navbar-brand text-light"> Conference</span>
+                        </a>
+                    </li>
+
+
+
+                    <!--<li class="nav-item active">
+            <a class="nav-link" style="color:white" href='@Url.Action("AddTypeofConf", "Master")'>-->
+                    @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                    <!--<i class="fa fa-group"></i>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Conf Type
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" style="color:white" href='@Url.Action("AddPolicy", "Master")'>-->
+                    @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                    <!--<i class="fa fa-object-group"></i>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Policy
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" style="color:white" href='@Url.Action("AddUserPolicyControl", "Master")'>-->
+                    @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
+                    <!--<i class="fa fa-shield-alt"></i>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Policy
+                    </span>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Access
+                    </span>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Permission
+                    </span>
+                </a>
+            </li>-->
+
+                    <!--<li class="nav-item">
+            <a class="nav-link" style="color:white" href="~/Report/Reports">
+                <i class="fas fa-print"></i>
+                <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                    Reports
+                </span>-->
+                    @*<span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; " class="navbar-brand text-light"> Conference</span>*@
+                    <!--</a>
+            </li>-->
+                    @*<li class="nav-item dropdown">
+                    <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-print"></i>
+                        <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                            Reports
+                        </span>
+                    </a>
+                    <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                        <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Report/Reports' )>Appx A&B</a>
+                        <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/ACC/Analysis' )>Analysis</a>
+                    </div>
+                </li>*@
+
+
+                }
+                if (SessionManager.RoleId == enum1.GSO1 || SessionManager.RoleId == enum1.Sponsor || SessionManager.RoleId == enum1.Nodal)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/ACC/AddAgenda">
+                            <i class="fas fa-check-circle"></i>
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Add /
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                View
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Agenda
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Pt
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-print" style="color:white;"></i>
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Reports
+                            </span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Report/Reports' )>View Report</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/ACC/Analysis' )>Analysis</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/ACC/AddInboxNotingFwd">
+                            <i class="fas fa-envelope-open" style="margin-left:10px;"></i>
+
+                            @if (ViewBag.UnReadMsg != 0)
+                            {
+                                <div class="newblink" href="#">
+                                    @ViewBag.UnReadMsg
+                                </div>
+                            }
+
+
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Inbox</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/AgendaPointMerge/SearchInboxNoting">
+                            <i class="fa fa-search"></i>
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Active
+                            </span>
+
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Agenda
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Pt
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/Sent/AddSentBox">
+
+                            <div class="item">
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Sent</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/ACC/ClosedAgendaList">
+                            <i class="fas fa-times-circle"></i>
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Closed
+                            </span>
+
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Agenda
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Pt
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/AgendaPointMerge/AgendaPointMerge">
+                            <i class="fas fa-files-o"></i>
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Merge
+                            </span>
+
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Agenda
+                            </span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Pt
+                            </span>
+                        </a>
+                    </li>
+
+                    @*<li class="nav-item">
+                    <a class="nav-link" style="color:white" href="~/ACC/Analysis">
+                        <i class="fa fa-gear"></i>
+                        <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Analysis</span>
+
+                    </a>
+                </li>*@
+                    if (SessionManager.RoleId == enum1.Sponsor || SessionManager.RoleId == enum1.Nodal)
+                    {
+                        @*<li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/PolicyCorner/PolicyCorner">
+                            <i class="fa fa-download" style="margin-left:10px;"></i>
+
+                            <div class="newblink" href="#">New</div>
+
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Policy &</span>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Resource</span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Corner
+                            </span>
+                        </a>
+                    </li>*@
+
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white" href="~/PolicyFolder/PolicyFolder">
+                                <i class="fa fa-download" style="margin-left:10px;"></i>
+
+                                <div class="newblink" href="#">New</div>
+
+                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Folder &</span>
+                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Resource</span>
+                                <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                    Corner
+                                </span>
+                            </a>
+                        </li>
+
+                    }
+                    if (SessionManager.RoleId == enum1.GSO1)
+                    {
+                        <li class="nav-item dropdown">
+                            <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-download" style="margin-left: 10px; color: white;"></i>
+                                <div class="newblink" href="#">New</div>
+                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Folder &</span>
+                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Resource</span>
+                                <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                    Corner
+                                </span>
+                            </a>
+                            <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                                @*<a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/PolicyCorner/PolicyCorner' )>View Policy & Resource</a>*@
+                                <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/PolicyFolder/PolicyFolder' )>View Folder & Resource</a>
+                                <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddPolicy' )>Upload Folder & Resource</a>
+                                @*<a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddUserPolicyControl' )>Manage Policy & Resource Access Permission</a>*@
+                                <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddFolderControl' )>Manage Folder & Resource Access Permission</a>
+                            </div>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white" href="~/Home/ContactUs">
+                            <i class="fa fa-address-book"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Contact</span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Us
+                            </span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+
+                }
+
+            }
+
+        </ul>
+
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <div class="card-body">
+                    @RenderBody()
+                </div>
+
+            </div>
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright my-auto justify-content-between">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 text-center footertitle"> <p class="mb-0  text-light">Copyright © 2023. Developed by <span class="text-danger text-light">Army Software Development Centre (ASDC), DGIS</span></div>
+                            <div class="col-md-2">
+                                @*<div class="text-right footersubtitle" style="font-size:18px;">*@
+                                <div class="footersubtitle text-nowrap mt-2" style="float: right; font-size: 18px;">
+                                    <label class="text-light mr-2">Visitors -</label>
+                                    <label class="text-light mr-2">Today : <span id="spnTodayCnt"></span></label>
+                                    <label class="text-light mr-2">Monthly : <span id="spnMonthlyCnt"></span></label>
+                                    <label class="text-light mr-2">Total : <span id="spnTotalCnt"></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <div style="display:none">
+        <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+        <script src="~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="~/NewContent/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="~/NewContent/vendor/datatables/jquery.dataTables.js"></script>
+        <script src="~/NewContent/vendor/datatables/dataTables.bootstrap4.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="~/NewContent/js/sb-admin.min.js"></script>
+        <!-- Demo scripts for this page-->
+        <script src="~/NewContent/js/demo/datatables-demo.js"></script>
+        <script src="~/NewContent/bootstrap-datepicker.min.js"></script>
+        <script src="~/NewContent/jszip.min.js"></script>
+        <script src="~/NewContent/docx-preview.js"></script>
+        <script src="~/NewContent/bootstrap.min.js"></script>
+        <!--dataTable4-->
+        <script src="~/NewContent/dataTable4/js/jquery.dataTables.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/dataTables.buttons.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/buttons.bootstrap4.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/jszip.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/pdfmake.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/vfs_fonts.js"></script>
+        <script src="~/NewContent/dataTable4/js/buttons.html5.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/buttons.print.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/buttons.colVis.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/dataTables.responsive.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/responsive.bootstrap4.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/dataTables.colReorder.min.js"></script>
+        @*<script src="~/NewContent/dataTable4/js/jquery-3.7.0.js"></script>*@
+        <script src="~/NewContent/dataTable4/js/dataTables.searchBuilder.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/dataTables.dateTime.min.js"></script>
+        <script src="~/NewContent/dataTable4/js/fnMultiFilter.js"></script>
+        <script src="~/NewContent/vendor/bootstrap/js/popper.min.js"></script>
+        <script src="~/NewContent/vendor/bootstrap/js/owl.carousel.min.js"></script>
+        <script src="~/NewContent/vendor/bootstrap/js/main.js"></script>
+        <script src="~/NewContent/dataTable4/js/select2.min.js"></script>
+        <script src="~/Content/CustomJS/SignUpfmReg.js"></script>
+    </div>
+    <script>
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script>
+    <script>
+        const currentPage = window.location.pathname;
+        // find the link that matches the current page URL and add the active class
+        const links = document.querySelectorAll(".sidebar a");
+        for (let i = 0; i < links.length; i++) {
+            if (links[i].href === currentPage) {
+                links[i].classList.add("active");
+            }
+        }
+    </script>
+    @*<script>
+            //$(document).ready(function () {
+                //if (window.location.href.replace("http://localhost:8080/", ""))
+                //alert(window.location.href.replace("http://localhost:8080/", ""));
+
+                $('.aj1 ul li').find('a').each(function () {
+                    var text = $(this).attr("href");
+
+                    if (window.location.pathname.replace(window.location.origin, "") == text) {
+                        var ss = (window.location.pathname.replace(window.location.origin, "")).replace("/", "").split("/")
+                        /* alert(ss[0]);*/
+
+                        $(this).addClass('active')
+                        /*  $(this).addClass('active')*/
+                    }
+                    else {
+                        $(this).removeClass("active");
+                    }
+                });
+                $('.aj1 ul li a').click(function () {
+                    $('li a').removeClass("active");
+                    $(this).addClass("active");
+                });
+            //});
+        </script>*@
+
+    <script>
+        $(document).ready(function () {
+            //if (window.location.href.replace("http://localhost:8080/", ""))
+            //alert(window.location.href.replace("http://localhost:8080/", ""));
+            $('.aj1 ul li ').find('a').each(function () {
+                var text = $(this).attr("href");
+                if (window.location.pathname.replace(window.location.origin, "") == text) {
+                    var ss = (window.location.pathname.replace(window.location.origin, "")).replace("/", "").split("/")
+                    /* alert(ss[0]);*/
+                    // alert(window.location.pathname.replace(window.location.origin, "") + '---' + text)
+                    /*alert($(this).html())*/
+                    $(this).addClass("active");
+
+                    if ($(this).html() == 'User Log' || $(this).html() == 'Aviator Log') {
+                        $("#pagesDropdownlog").addClass('active')
+                    }
+                    else if ($(this).html() == 'Comd' || $(this).html() == 'Corps' || $(this).html() == 'Bde' || $(this).html() == 'Sqn' || $(this).html() == 'Unit') {
+                        $("#MasterM1").addClass('active')
+                    }
+                    else if ($(this).html() == 'Rank' || $(this).html() == 'Gender' || $(this).html() == 'Posting Type' || $(this).html() == 'Foreign Visit' || $(this).html() == 'Honour Award' || $(this).html() == 'Arm Service' || $(this).html() == 'Civ Edn' || $(this).html() == 'Course' || $(this).html() == 'Examiner Appt' || $(this).html() == 'Appt' || $(this).html() == 'Course Grading') {
+                        $("#MasterM2").addClass('active')
+                    }
+                    else if ($(this).html() == 'Special Qual' || $(this).html() == 'Special Qual Status') {
+                        $("#pagesDropdown1").addClass('active')
+                    }
+                    else if ($(this).html() == 'Type of Medical' || $(this).html() == 'Medical Cat' || $(this).html() == 'Medical Institute' || $(this).html() == 'COPE Code' || $(this).html() == 'Status Medical') {
+                        $("#pagesDropdown2").addClass('active')
+                    }
+                    else if ($(this).html() == 'Aircraft Type(Heptr)' || $(this).html() == 'AC(Heptr) Master' || $(this).html() == 'CAT/IR' || $(this).html() == 'Instr CAT' || $(this).html() == 'Aviator Status(Heptr)') {
+                        $("#pagesDropdown3").addClass('active')
+                    }
+                    else if ($(this).html() == 'Aircraft Type(RPAS)' || $(this).html() == 'AC(RPAS) Master' || $(this).html() == 'RPAS Substream' || $(this).html() == 'RPAS CAT' || $(this).html() == 'RPAS Instr CAT' || $(this).html() == 'Aviator Status(RPAS)') {
+                        $("#pagesDropdown4").addClass('active')
+                    }
+                    //else if ($(this).html() == 'Accident Cat' || $(this).html() == 'Accident Sub Cat' || $(this).html() == 'Stages Ground Accident' || $(this).html() == 'Period Operation' || $(this).html() == 'Class Injury') {
+                    //    $("#pagesDropdown5").addClass('active')
+                    //}
+                }
+                else {
+                    $(this).removeClass("active");
+                }
+            });
+            //$('.aj1 ul li a').click(function () {
+            //    $('li a').removeClass("active");
+            //    $(this).addClass("active");
+
+            //});
+            //var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+            //$("#layoutSidenav_nav .sidenav a.nav-link").each(function () {
+            //    if (this.href === path) {
+            //        $(this).addClass("active");
+            //    }
+            // Add active state to sidbar nav links
+            //var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+            //$('.aj1 ul li').find('a').each(function () {
+            //    if (this.href === path) {
+            //        $(this).addClass("active");
+            //    }
+            //});
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        $('.datepicker').datepicker({
+            //format: "MM yyyy",
+            minViewMode: 1,
+            weekStart: 1,
+            daysOfWeekHighlighted: "6,0",
+            autoclose: true,
+            todayHighlight: true,
+            startDate: new Date(year - 15, month, '01'),
+            endDate: new Date(year, month, '31')
+        });
+        $('.datepicker3').datepicker({
+            format: "dd/M/yyyy",
+            autoclose: true,
+        });
+        /*  $('#Month').datepicker("setDate", new Date());*/
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Add click event to all sidenav links
+            $('.sidebar a').click(function () {
+                // Remove "active" class from all links
+                $('.sidebar a').removeClass('active');
+                // Add "active" class to the clicked link
+                $(this).addClass('active');
+            });
+        });
+    </script>
+
+    <script>
+        function ValInData(input) {
+            var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
+            input.value = input.value.replace(regex, "");
+        }
+    </script>
+    <script>
+        //function ValOnlyNum(event, element) {
+        //    var keyCode = event.keyCode || event.which;
+        //    if (keyCode < 48 || keyCode > 57) {
+        //        event.preventDefault();
+        //    }
+        //}
+        function ValOnlyNum(element) {
+            // Remove any non-numeric characters
+            element.value = element.value.replace(/\D/g, '');
+        }
+    </script>
+    <script src="~/Content/CustomJS/email.js"></script>
+    <script>
+        function ValInData1(input) {
+            var regex = /[^0-9]/g;
+            input.value = input.value.replace(regex, "");
+        }
+    </script>
+    <style>
+        #watermark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: red;
+            font-size: 18px;
+            pointer-events: none;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            position: relative;
+            overflow: hidden;
+        }
+        /*a:hover {
+                    background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);
+                }*/
+
+        .dropdown-item:hover {
+            background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);
+        }
+
+        .dropdown-item {
+            font-weight: 500;
+        }
+
+        .fix {
+            background-image: linear-gradient(120deg,#a1c4fd 0,#c2e9fb 100%);
+        }
+
+        .collapsCol {
+            background-image: linear-gradient(120deg,#a1c4fd 0,#c2e9fb 100%);
+            max-height: 44px;
+        }
+
+        .btnCol {
+            font-size: 22px;
+            color: white;
+            font-weight: 500;
+            margin-top: -14px;
+        }
+    </style>
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $("#loading").hide();
+            $(document).ajaxStart(function () {
+                $("#loading").show();
+            }).ajaxStop(function () {
+                $("#loading").hide();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Master/GetCounter',
+                type: 'POST',
+                data: { "Proc": "16" },
+                success: function (result) {
+                    if (result.length > 0) {
+                        $('#spnComdName').html(result[0].ComdName);
+                        $('#spnTodayCnt').html(result[0].Today);
+                        $('#spnMonthlyCnt').html(result[0].CurrentMonth);
+                        $('#spnTotalCnt').html(result[0].Total);
+                    }
+                    else {
+                        $('#spnComdName').html(result[0].ComdName);
+                        $('#spnTodayCnt').html("0");
+                        $('#spnMonthlyCnt').html("0");
+                        $('#spnTotalCnt').html("0");
+                    }
+                }
+            });
+        });
+    </script>
+</body>

@@ -1,0 +1,750 @@
+﻿@model IHSDC.WebApp.Models.ScheduleLetter
+@using IHSDC.WebApp.Models
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Connection
+@{
+    /**/
+
+    /**/
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Create Schedule";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+<div class="container">
+    <div class="card">
+        <div class="col mb-4">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 headingtext">Initiate Conference</div>
+                <div class="col-md-4"></div>
+
+            </div>
+
+        </div>
+
+        @using (Html.BeginForm("ScheduleLetter", "Schedule", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="card-body mt-4" style="min-height:150px;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.Hidden("oldid", Model.Subject)
+                        @if (SessionManager.RoleId == enum1.GSO1)
+                        {
+                            <div class="row" style="padding-left:10px;">
+                                <div class="col-md-4">
+                                    <label><b>Type of Conf</b></label>
+                                    @Html.DropDownListFor(m => m.TypeOfConfId, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfConf(), "--Select Type of Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })
+                                </div>
+                                <div class="col-md-4">
+                                    <label><b>Start Dt</b></label>
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control datepicker3", @onkeyup = "ValInData(this)", @required = true, @onchange = "CheckFromDate(this)", @placeholder = "dd/mmm/yyyy" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label><b>End Dt</b></label>
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control datepicker3", @onkeyup = "ValInData(this)", @required = true, @onchange = "CheckToDate(this)", @placeholder = "dd/mmm/yyyy" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label><b> Subject / Title of Conf</b></label>
+
+                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @maxlength = "200", @required = true, @onkeyup = "ValInData(this)" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label><b>Ref Letter No with Dt</b></label>
+                                    @Html.TextBoxFor(m => m.ScheduleRefNoDt, new { @class = "form-control", @maxlength = "100", @required = true, @onkeyup = "ValInData(this)" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label><b>Remark</b></label>
+                                    @Html.TextBoxFor(m => m.Remark, new { @class = "form-control", @maxlength = "100", @required = true, @onkeyup = "ValInData(this)" })
+                                </div>
+
+                            </div>
+                            <div class="row" style="padding-left:10px;">
+                                <div class="col-md-2">
+                                    @if (ViewBag.OrganizerCat.Count > 0)
+                                    {
+                                        <input type="checkbox" id="chkOrganizer" style="margin-right:10px" checked="checked"><label><b>Organizer Category</b></label>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="chkOrganizer" style="margin-right:10px"><label><b>Organizer Category</b></label>
+                                    }
+
+                                    @Html.TextBoxFor(m => m.OrganizerCatId, new { style = "display:none;" })
+                                    <div id="OrgId">
+                                        <select id="ddlOrganizerCat" multiple="multiple" name="OrganizerCat">
+                                            @if (Model.IOrganizerCatCRUD != null)
+                                            {
+                                                foreach (var item in Model.IOrganizerCatCRUD)
+                                                {
+                                                    if (item.CategoryName != null)
+                                                    {
+                                                        if (item.Msg == "Selected")
+                                                        {
+                                                            <option value="@item.CategoryId" selected="selected">
+                                                                @item.CategoryName
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.CategoryId">
+                                                                @item.CategoryName
+                                                            </option>
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    @if (ViewBag.SponsorCat.Count > 0)
+                                    {
+                                        <input type="checkbox" id="chkSponsor" style="margin-right:10px" checked="checked"><label><b>Sponsor Category</b></label>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="chkSponsor" style="margin-right:10px"><label><b>Sponsor Category</b></label>
+                                    }
+                                    @Html.TextBoxFor(m => m.SponsorCatId, new { style = "display:none;" })
+                                    <div id="SponId">
+                                        <select id="ddlSponsorCat" multiple="multiple" name="SponsorCat">
+                                            @if (Model.ISponsorCatCRUD != null)
+                                            {
+                                                foreach (var item in Model.ISponsorCatCRUD)
+                                                {
+                                                    if (item.CategoryName != null)
+                                                    {
+                                                        if (item.Msg == "Selected")
+                                                        {
+                                                            <option value="@item.CategoryId" selected="selected">
+                                                                @item.CategoryName
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.CategoryId">
+                                                                @item.CategoryName
+                                                            </option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    @if (ViewBag.NodalCat.Count > 0)
+                                    {
+                                        <input type="checkbox" id="chkNodal" style="margin-right:10px" checked="checked"><label><b>Nodal Category</b></label>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="chkNodal" style="margin-right:10px"><label><b>Nodal Category</b></label>
+                                    }
+                                    @Html.TextBoxFor(m => m.NodalCatId, new { style = "display:none;" })
+                                    <div id="NodeId">
+                                        <select id="ddlNodalCat" multiple="multiple" name="NodalCat">
+                                            @if (Model.INodalCatCRUD != null)
+                                            {
+                                                foreach (var item in Model.INodalCatCRUD)
+                                                {
+                                                    if (item.CategoryName != null)
+                                                    {
+                                                        if (item.Msg == "Selected")
+                                                        {
+                                                            <option value="@item.CategoryId" selected="selected">
+                                                                @item.CategoryName
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.CategoryId">
+                                                                @item.CategoryName
+                                                            </option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    @if (ViewBag.Branch.Count > 0)
+                                    {
+                                        <input type="checkbox" id="chkBranch" style="margin-right:10px" checked="checked"><label><b>Nodal Branch</b></label>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="chkBranch" style="margin-right:10px"><label><b>Nodal Branch</b></label>
+                                    }
+                                    @Html.TextBoxFor(m => m.BranchIds, new { style = "display:none;" })
+                                    <div id="BrId">
+                                        <select id="ddlBranchIds" multiple="multiple" name="Branch">
+                                            @if (Model.IBranchCRUD != null)
+                                            {
+                                                foreach (var item in Model.IBranchCRUD)
+                                                {
+                                                    if (item.BranchName != null)
+                                                    {
+                                                        if (item.Msg == "Selected")
+                                                        {
+                                                            <option value="@item.BranchId" selected="selected">
+                                                                @item.BranchName
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.BranchId">
+                                                                @item.BranchName
+                                                            </option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    @if (ViewBag.ParticipateUsers.Count > 0)
+                                    {
+                                        <input type="checkbox" id="chkParticipateUsers" style="margin-right:10px" checked="checked"><label><b>Create Closed User Gp for  Circulating Agenda Pt & taking their Comments (Fwd of Agenda Pt and Keep Carbon Copy)</b></label>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="chkParticipateUsers" style="margin-right:10px"><label><b>Create Closed User Gp for  Circulating Agenda Pt & taking their Comments (Fwd of Agenda Pt and Keep Carbon Copy)</b></label>
+                                    }
+                                    @Html.TextBoxFor(m => m.ParticipateUsers, new { style = "display:none;" })
+                                    <div id="PUserId">
+                                        <select id="ddlParticipateUsers" multiple="multiple" name="ParticipateUser">
+                                            @if (Model.IParticipateUsersCRUD != null)
+                                            {
+                                                foreach (var item in Model.IParticipateUsersCRUD)
+                                                {
+                                                    if (item.SentName != null)
+                                                    {
+                                                        if (item.Msg == "Selected")
+                                                        {
+                                                            <option value="@item.SentId" selected="selected">
+                                                                @item.SentName
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.SentId">
+                                                                @item.SentName
+                                                            </option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2">
+                                    @if (ViewBag.ParticipateNewUsers.Count > 0)
+                                    {
+                                        <input type="checkbox" id="chkParticipateNewUsers" style="margin-right:10px" checked="checked"><label><b>Nominate Users Who Can Upload Agenda Pt for this Conf</b></label>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="chkParticipateNewUsers" style="margin-right:10px"><label><b>Nominate Users Who Can Upload Agenda Pt for this Conf</b></label>
+                                    }
+                                    @Html.TextBoxFor(m => m.ParticipateNewUsers, new { style = "display:none;" })
+                                    <div id="PNewUserId">
+                                        <select id="ddlParticipateNewUsers" multiple="multiple" name="ParticipateNewUser">
+                                            @if (Model.IParticipateNewUsersCRUD != null)
+                                            {
+                                                foreach (var item in Model.IParticipateNewUsersCRUD)
+                                                {
+                                                    if (item.SentName != null)
+                                                    {
+                                                        if (item.Msg == "Selected")
+                                                        {
+                                                            <option value="@item.SentId" selected="selected">
+                                                                @item.SentName
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.SentId">
+                                                                @item.SentName
+                                                            </option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="row" style="padding-left:10px;">
+                                <div class="col-md-4" style="margin-top:1.8%">
+                                    <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                                </div>
+                            </div>
+                        }
+                        <hr />
+
+
+                        <div class="table-responsive">
+                            <table class="table table-striped align-top" id="ScheduleLetter" width="100%" cellspacing="0">
+                                <thead class="bg-info text-white">
+                                    <tr>
+                                        <th class="left">S/No</th>
+                                        <th class="left">Conf ID</th>
+                                        <th class="left">Type of Conf</th>
+                                        <th class="left">Start Dt</th>
+                                        <th class="left">End Dt</th>
+                                        <th class="left">Subject / Title of Conf</th>
+                                        <th class="left">Ref Letter No with Dt</th>
+                                        <th class="left">Remark</th>
+                                        <th class="center">Action</th>
+                                        <th class="left">Status (Open/Close)</th>
+                                        @*<th></th>
+                                            <th></th>*@
+
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    @if (ViewBag.count > 0)
+                                    {
+                                        foreach (var item in Model.ILScheduleLetter)
+                                        {
+                                            <tr>
+                                                <td class="center">
+                                                    @{ sno++; }
+                                                    @sno
+                                                </td>
+                                                <td class="center">@Html.DisplayFor(modelItem => item.ScheduleId)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.TypeOfConf)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.FromDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ToDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Subject)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ScheduleRefNoDt)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Remark)</td>
+                                                <td class="center">
+                                                    <a onclick="location.href='@Url.Action("ScheduleLetter", "Schedule", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ScheduleId.ToString())})'">
+                                                        <div class="editbut"></div>
+                                                    </a>
+                                                </td>
+                                                <td class="center">
+                                                    @if (item.StatusName == "LOCKED")
+                                                    {
+                                                        <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ScheduleId.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StatusName.ToString())' onclick="SubmitGEBConfirmation(this,'/Schedule/ScheduleLetterClose','Do you want to Re-open this Conf ','ScheduleLetterClose1')">
+                                                            <img src="~/images/Reject.png" width="20" height="15" border="0" />
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ScheduleId.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StatusName.ToString())' onclick="SubmitGEBConfirmation(this,'/Schedule/ScheduleLetterClose','Do you want to close this Conf','ScheduleLetterClose')">
+                                                            <img src="~/images/CheckSubmit.png" width="20" height="15" border="0" />
+                                                        </a>
+                                                    }
+                                                </td>
+                                                @*<td class="center">
+                                                        <a onclick="location.href='@Url.Action("AppxAReport", "Report", new {   Conf = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ScheduleId.ToString()),RefNo=IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ScheduleRefNoDt.ToString())})'">
+                                                            <button type="button" class="btn" style="background-color: #11a1fa; color: white; font-size: 11px; font-weight: bold; "> Appx A</button>
+                                                        </a>
+                                                    </td>
+                                                    <td class="center">
+                                                        <a onclick="location.href='@Url.Action("AppxBReport", "Report", new {   Conf = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ScheduleId.ToString()),RefNo=IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ScheduleRefNoDt.ToString())})'">
+                                                            <button type="button" class="btn" style="background-color: #08c26b; color: white; font-size: 11px; width: 65px; font-weight: bold; "> Appx B </button>
+                                                        </a>
+                                                    </td>*@
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @*<tr><td colspan="4" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>*@
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<style>
+    .center {
+        text-align: center;
+    }
+</style>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/GEBSubmit.js"></script>
+<script src="~/Content/CustomJS/AviatorJS.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+
+    <head runat="server">
+        <script src="~/Scripts/bootstrap-multiselect.js"></script>
+        <link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
+        <script>
+            $("body").addClass("loading");
+            $(document).ready(function () {
+                var table = $('#ScheduleLetter').DataTable({
+                    lengthChange: true,
+                    pageLength: 50,
+                    aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+                    /* dom: 'Bfrtip',*/
+                    /*dom: 'lBfrtip',*/
+                    //buttons: [
+                    //    'copy',
+                    //    'excel',
+                    //    'csv',
+                    //    /* 'print',*/
+                    //    {
+                    //        text: 'PDF',
+                    //        extend: 'pdfHtml5',
+                    //        action: function (e, dt, node, config) {
+                    //            PrintDiv();
+                    //        }
+                    //    },
+                    //    'colvis',
+                    //],
+                });
+                var buttonContainer = table.buttons().container().appendTo('#ScheduleLetter_wrapper .col-md-6:eq(0)');
+                var searchBuilderContainer = table.searchBuilder.container();
+                buttonContainer.insertBefore(table.table().container());
+                searchBuilderContainer.insertBefore(table.table().container());
+            });
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                $('#ddlOrganizerCat').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllValue: 'multiselect-all',
+                    enableFiltering: true,
+                    enableCaseInsensitiveFiltering: true,
+                    maxHeight: '300',
+                    buttonWidth: '230',
+                });
+
+                $('#ddlSponsorCat').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllValue: 'multiselect-all',
+                    enableFiltering: true,
+                    enableCaseInsensitiveFiltering: true,
+                    maxHeight: '300',
+                    buttonWidth: '230',
+                });
+
+                $('#ddlNodalCat').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllValue: 'multiselect-all',
+                    enableFiltering: true,
+                    enableCaseInsensitiveFiltering: true,
+                    maxHeight: '300',
+                    buttonWidth: '230',
+                });
+
+                $('#ddlBranchIds').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllValue: 'multiselect-all',
+                    enableFiltering: true,
+                    enableCaseInsensitiveFiltering: true,
+                    maxHeight: '300',
+                    buttonWidth: '230',
+                });
+
+                $('#ddlParticipateUsers').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllValue: 'multiselect-all',
+                    enableFiltering: true,
+                    enableCaseInsensitiveFiltering: true,
+                    maxHeight: '300',
+                    buttonWidth: '230',
+                });
+
+                $('#ddlParticipateNewUsers').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllValue: 'multiselect-all',
+                    enableFiltering: true,
+                    enableCaseInsensitiveFiltering: true,
+                    maxHeight: '300',
+                    buttonWidth: '230',
+                });
+            });
+
+            $("#ddlOrganizerCat").change(function () {
+                var selected = $("#ddlOrganizerCat option:selected");
+                var OrganizerCat = "";
+                var arrSelected = [];
+                selected.each(function () {
+                    arrSelected.push($(this).val());
+                    OrganizerCat += $(this).val() + ",";
+                });
+                OrganizerCat = OrganizerCat.slice(0, -1);
+                $('#OrganizerCatId').val(OrganizerCat);
+            });
+
+            $("#ddlSponsorCat").change(function () {
+                var selected = $("#ddlSponsorCat option:selected");
+                var SponsorCat = "";
+                var arrSelected = [];
+                selected.each(function () {
+                    arrSelected.push($(this).val());
+                    SponsorCat += $(this).val() + ",";
+                });
+                SponsorCat = SponsorCat.slice(0, -1);
+                $('#SponsorCatId').val(SponsorCat);
+            });
+
+            $("#ddlNodalCat").change(function () {
+                var selected = $("#ddlNodalCat option:selected");
+                var NodalCat = "";
+                var arrSelected = [];
+                selected.each(function () {
+                    arrSelected.push($(this).val());
+                    NodalCat += $(this).val() + ",";
+                });
+                NodalCat = NodalCat.slice(0, -1);
+                $('#NodalCatId').val(NodalCat);
+            });
+
+            $("#ddlBranchIds").change(function () {
+                var selected = $("#ddlBranchIds option:selected");
+                var BranchId = "";
+                var arrSelected = [];
+                selected.each(function () {
+                    arrSelected.push($(this).val());
+                    BranchId += $(this).val() + ",";
+                });
+                BranchId = BranchId.slice(0, -1);
+                $('#BranchIds').val(BranchId);
+            });
+
+            $("#ddlParticipateUsers").change(function () {
+                var selected = $("#ddlParticipateUsers option:selected");
+                var ParticipateUser = "";
+                var arrSelected = [];
+                selected.each(function () {
+                    arrSelected.push($(this).val());
+                    ParticipateUser += $(this).val() + ",";
+                });
+                ParticipateUse = ParticipateUser.slice(0, -1);
+                $('#ParticipateUsers').val(ParticipateUser);
+            });
+
+        $("#ddlParticipateNewUsers").change(function () {
+            var selected = $("#ddlParticipateNewUsers option:selected");
+            var ParticipateUser = "";
+            var arrSelected = [];
+            selected.each(function () {
+                arrSelected.push($(this).val());
+                ParticipateUser += $(this).val() + ",";
+            });
+            ParticipateUse = ParticipateUser.slice(0, -1);
+            $('#ParticipateNewUsers').val(ParticipateUser);
+        });
+
+            $("#chkOrganizer").on("click", function () {
+                var isChecked = $(this).prop("checked");
+                if (isChecked) {
+                    $("#OrgId").show();
+                } else {
+                    $("#OrgId").hide();
+                }
+            });
+
+            $("#chkSponsor").on("click", function () {
+                var isChecked = $(this).prop("checked");
+                if (isChecked) {
+                    $("#SponId").show();
+                } else {
+                    $("#SponId").hide();
+                }
+            });
+
+            $("#chkNodal").on("click", function () {
+                var isChecked = $(this).prop("checked");
+                if (isChecked) {
+                    $("#NodeId").show();
+                } else {
+                    $("#NodeId").hide();
+                }
+            });
+            $("#chkBranch").on("click", function () {
+                var isChecked = $(this).prop("checked");
+                if (isChecked) {
+                    $("#BrId").show();
+                } else {
+                    $("#BrId").hide();
+                }
+            });
+
+        $("#chkParticipateUsers").on("click", function () {
+
+                var isChecked = $(this).prop("checked");
+                if (isChecked) {
+                    $("#PUserId").show();
+                } else {
+                    $("#PUserId").hide();
+                }
+            });
+
+        $("#chkParticipateNewUsers").on("click", function () {
+
+                   var isChecked = $(this).prop("checked");
+                   if (isChecked) {
+                       $("#PNewUserId").show();
+                   } else {
+                       $("#PNewUserId").hide();
+                   }
+               });
+
+
+                $(document).ready(function () {
+                    var organizerCatId = "@Model.OrganizerCatId";
+                    if (organizerCatId !== "") {
+                        $("#OrgId").show();
+                    } else {
+                        $("#OrgId").hide();
+                    }
+                    var SponsorCatId = "@Model.SponsorCatId";
+                    if (SponsorCatId !== "") {
+                        $("#SponId").show();
+                    } else {
+                        $("#SponId").hide();
+                    }
+                    var NodalCatId = "@Model.NodalCatId";
+                    if (NodalCatId !== "") {
+                        $("#NodeId").show();
+                    } else {
+                        $("#NodeId").hide();
+                    }
+                    var BranchIds = "@Model.BranchIds";
+                    if (BranchIds !== "") {
+                        $("#BrId").show();
+                    } else {
+                        $("#BrId").hide();
+                    }
+                    var PUser = "@Model.ParticipateUsers";
+                    if (PUser !== "") {
+                        $("#PUserId").show();
+                    } else {
+                        $("#PUserId").hide();
+                    }
+
+                    var PNewUser = "@Model.ParticipateNewUsers";
+                    if (PNewUser !== "") {
+                        $("#PNewUserId").show();
+                    } else {
+                        $("#PNewUserId").hide();
+                    }
+
+                    var isOrgChecked = $("#chkOrganizer").prop("checked");
+                    if (isOrgChecked) {
+                        $("#OrgId").show();
+                    } else {
+                        $("#OrgId").hide();
+                    }
+                    var isSponChecked = $("#chkSponsor").prop("checked");
+                    if (isSponChecked) {
+                        $("#SponId").show();
+                    } else {
+                        $("#SponId").hide();
+                    }
+                    var isNodeChecked = $("#chkNodal").prop("checked");
+                    if (isNodeChecked) {
+                        $("#NodeId").show();
+                    } else {
+                        $("#NodeId").hide();
+                    }
+                    var isBranchChecked = $("#chkBranch").prop("checked");
+                    if (isBranchChecked) {
+                        $("#BrId").show();
+                    } else {
+                        $("#BrId").hide();
+                    }
+                    var isPUserChecked = $("#chkParticipateUsers").prop("checked");
+                    debugger;
+                    if (isPUserChecked) {
+                        $("#PUserId").show();
+                    } else {
+                        $("#PUserId").hide();
+                    }
+
+                    var isPNewUserChecked = $("#chkParticipateNewUsers").prop("checked");
+                    debugger;
+                    if (isPNewUserChecked) {
+                        $("#PNewUserId").show();
+                    } else {
+                        $("#PNewUserId").hide();
+                    }
+
+                });
+               $(document).ready(function () {
+                   $('.dropdownsearch').select2();
+               });
+
+        </script>
+    </head>
+
+    <script type="text/javascript">
+       var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+            sweetAlert(message, messagemidStatus, messageStatus);
+        function CheckFromDate(obj) {
+            document.getElementById("ToDate").value = null;
+            }
+
+   //     $('#ToDate').datepicker({
+   //     uiLibrary: 'bootstrap4',
+			//dateFormat: "dd/M/yy",
+   //         autoclose: true,
+   //         minDate: today
+   //     });
+        function CheckToDate(obj) {
+
+            var FromDate = $('#FromDate').val();
+            var ToDate = $(obj).val();
+            var F = new Date(FromDate)
+            var T = new Date(ToDate)
+            if (T < F) {
+                swal("To Date can't be Greater than From Date", "", "warning"); $(obj).val("");
+            }
+
+        }
+//function CancelConfirmation(obj, ActionName) {
+//	swal({
+//		title: "Are you want to sure Cancel this GEB Letter?",
+//		text: "",
+//		type: "warning",
+//		showCancelButton: true,
+//		confirmButtonColor: "#DD6B55",
+//		confirmButtonText: "Yes, Cancel it!",
+//		cancelButtonText: "No, cancel ",
+//		closeOnConfirm: false,
+//		closeOnCancel: false
+//	},
+//		function (isConfirm) {
+//			if (isConfirm) {
+//				var encrypted = $(obj).attr('data-id');
+//				location.href = ActionName + '?gid=' + encrypted;
+//			} else {
+//				swal("GEB Letter is  not Cancel", "", "info");
+//			}
+//		}
+//	);
+//}
+    </script>
+}

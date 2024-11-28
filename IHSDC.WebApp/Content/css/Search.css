@@ -1,0 +1,54 @@
+﻿
+body {
+   /* font-size: 20px;*/
+}
+
+.aj {
+    border: 1px solid;
+    padding: 9px;
+    width: 66rem;
+    box-shadow: 2px 1px 9px 1px;
+    margin-left: 3px;
+    background-color: rgba(0,211,255,1);
+}
+
+.as {
+    padding: 9px;
+    background-color: rgba(0,211,255,1);
+    width: 66rem;
+    margin-left: 2px;
+}
+
+.cardsearch {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+/* Responsive styles */
+
+@media (max-width: 992px) {
+    .aj, .as {
+        width: auto;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .aj, .as {
+        padding: 6px;
+        width: auto;
+        margin-left: 0;
+    }
+
+    .cardsearch {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        font-size: 18px;
+    }
+}
+

@@ -1,0 +1,287 @@
+﻿@model IHSDC.WebApp.Models.InboxCRUD
+@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@using System.Data
+
+@{ ViewBag.Title = "Appx A Report";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; }
+
+<style id="table_style" type="text/css" >
+
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    table {
+        border: 1px solid #a0a3a8;
+        border-collapse: collapse;
+    }
+
+        table th {
+            background-color: #0cafff !important;
+            print-color-adjust: exact;
+            color: white;
+            font-weight: bold;
+        }
+
+        table th, table td {
+            padding: 5px;
+            border: 1px solid #a0a3a8;
+        }
+
+    @@media print {
+        @@page {
+            size: A4 portrait;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        body::after {
+            content: none !important;
+        }
+
+        .card-page {
+            break-after: page;
+        }
+
+            .card-page:last-of-type {
+                break-after: auto;
+            }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background-color: gray;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background-color: gray;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        .dt-buttons{
+            display:none;
+        }
+        .dataTables_filter {
+            display: none;
+        }
+    }
+</style>
+
+
+
+<body>
+    @*<div class="card-body" style="box-shadow: -1px 2px 16px 3px; padding: 0.3rem;">*@
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-info float-right mb-1" href="javascript:history.back()" target="_top">Back</a>
+                @*<input type="button" class="btn btn-info float-left" id="btnExport" value="Export Pdf" onclick="PrintDiv()" />*@
+            </div>
+        </div>
+        <div class="card card-page">
+            <div class="card-body" id="PrintAppxA">
+                <header style="text-align:center"><span><b><u>RESTRICTED</u></b></span></header>
+                <br />
+                <br />
+                <div class="row" style="text-align:right;margin-right:10px">
+                    <div class="col-12">
+                        <b><u>Appx A</u></b>
+                        <br />
+                        <b>
+                            <span>(@ViewBag.RefNo)</span>
+                        </b>
+                    </div>
+                </div>
+                <div class="row" style="text-align:center">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <span style="font-size: 16px; font-weight: 700; text-decoration: underline; text-align: center;">SUMMARY : STAFF EXAM OF AGENDA PTS </span><br />
+                    </div>
+                    <br />
+                    <div class="col-1"></div>
+                </div>
+
+                <div class="container">
+
+                    <div class="row" style="    margin-top: 12px;">
+                        <div class="col-12" style="color:black;">
+                          
+                                <table width="100%" class="table table-striped align-top" style="margin-top: 10px;" id="AppxA">
+                                    @if (ViewBag.Record != 0)
+                                    {
+                                        <thead class="bg-info text-white">
+                                            <tr style="text-align:center">
+                                                @{
+                                                    int Head = 0;
+                                                }
+                                                @foreach (var dr in ViewBag.Header.Rows)
+                                                {
+                                                    if (Head == 0)
+                                                    {
+                                                        <th style="text-align:left">
+                                                            <span style="margin-left:1px;" id="spnNodal">Nodal <i class="fas fa-long-arrow-alt-right"></i></span><br />
+                                                            <span id="spnSponsor" style="margin-left: 0px">@dr["NodalName"].ToString() <i class="fas fa-long-arrow-alt-down"></i></span>
+
+                                                        </th>
+                                                    }
+                                                    else
+                                                    {
+                                                        <th style="text-align:left">@dr["NodalName"].ToString()</th>
+                                                    }
+                                                    Head = Head + 1;
+                                                }
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                for (int i = 0; i < ViewBag.tbl_Data.Rows.Count; i++)
+                                                {
+                                                    <tr style="text-align:left">
+                                                        @{
+                                                            int rowTotal = 0;
+                                                            for (int j = 0; j < ViewBag.tbl_Data.Columns.Count; j++)
+                                                            {
+                                                                <td>
+                                                                    @if (j == 0)
+                                                                    {
+                                                                        @ViewBag.tbl_Data.Rows[i][j].ToString()
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (ViewBag.tbl_Data.Rows[i][j].ToString() == "")
+                                                                        {
+                                                                            @: -
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            var cellValue = int.Parse(ViewBag.tbl_Data.Rows[i][j].ToString());
+                                                                            rowTotal += cellValue;
+                                                                            @cellValue
+                                                                        }
+                                                                    }
+                                                                </td>
+                                                            }
+                                                            <td>@rowTotal</td>
+                                                        }
+                                                    </tr>
+                                                }
+                                            }
+                                            <tr style="text-align:left">
+                                                @{
+                                                    var LastTotal = 0;
+                                                }
+                                                <td>Total</td>
+                                                @{
+                                                    for (int j = 1; j < ViewBag.tbl_Data.Columns.Count; j++)
+                                                    {
+                                                        var columnTotal = 0;
+                                                        for (int i = 0; i < ViewBag.tbl_Data.Rows.Count; i++)
+                                                        {
+                                                            if (ViewBag.tbl_Data.Rows[i][j].ToString() == "")
+                                                            {
+                                                                columnTotal += int.Parse("0");
+                                                                LastTotal += int.Parse("0");
+                                                            }
+                                                            else
+                                                            {
+                                                                columnTotal += int.Parse(ViewBag.tbl_Data.Rows[i][j].ToString());
+                                                                LastTotal += int.Parse(ViewBag.tbl_Data.Rows[i][j].ToString());
+                                                            }
+
+                                                        }
+                                                        <td>@columnTotal</td>
+                                                    }
+                                                }
+                                                <td>@LastTotal</td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                </table>
+                              
+                            </div>
+                        </div>
+                </div>
+                <footer style="text-align:center"><span style="text-align:center"><b><u>RESTRICTED</u></b></span></footer>
+            </div>
+        </div>
+        <form action="~/Home/Upload" method="post" id="myForm">
+            <input type="hidden" name="data1" id="data1">
+            <input type="hidden" name="filename" id="filename" value="AppxA">
+
+        </form>
+    @*</div>*@
+</body>
+
+
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/pdfmake.min.js"></script>
+<script src="~/Scripts/html2canvas.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#AppxA').DataTable({
+            lengthChange: true,
+            /*pageLength: 50,*/
+            aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+            /* dom: 'Bfrtip',*/
+            dom: 'lBfrtip',
+            colReorder: true,
+            responsive: true,
+            paging: false,
+            ordering: false,
+            info: false,
+            buttons: [
+                'copy',
+                'excel',
+                'csv',               
+                {
+                    text: 'PDF',
+                    className: "d-print-none",
+                    extend: 'pdfHtml5',
+                    action: function (e, dt, node, config) {
+                        PrintDiv();
+                    }
+                },
+                'colvis',
+            ],
+        });
+        var buttonContainer = table.buttons().container().appendTo('#AppxA_wrapper .col-md-6:eq(0)');
+       
+        $(".dt-buttons").addClass("d-print-none");
+        var searchBuilderContainer = table.searchBuilder.container();
+        buttonContainer.insertBefore(table.table().container());
+        searchBuilderContainer.insertBefore(table.table().container());
+
+    });
+
+    function PrintDiv() {
+        var divToPrint = document.getElementById('PrintAppxA');
+        var popupWin = window.open('', 'AppxA', 'top=100,width=1000,height=500,location=no');
+        popupWin.document.open();
+        var table_style = document.getElementById("table_style").innerHTML;
+        popupWin.document.write('<style type = "text/css">');
+        popupWin.document.write(table_style);    
+        popupWin.document.write('</style>')
+        popupWin.document.title = 'AppxA';
+        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + '@(ViewBag.ipadd)' + "" + '</html>');
+        popupWin.document.close();
+    }
+
+</script>

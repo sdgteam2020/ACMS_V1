@@ -1,0 +1,144 @@
+﻿@model IHSDC.WebApp.Models.RegisterViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Add User";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+}
+<p>
+    @Html.ActionLink("View Users", "Hierarchy", "Account", new object { }, new { @class = "btn btn-primary" })
+</p>
+@*<h4>@ViewBag.Title.</h4>*@
+
+@using (Html.BeginForm("Add", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <h4>Create a new user account @*for @User.Identity.Name.*@</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.Username, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.Roles, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @*@Html.ListBoxFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewBag.Roles, new { @class = "listbox form-control" })*@
+
+                    @Html.DropDownList("Roles", (IEnumerable<SelectListItem>)ViewData["Roles"], new { style = "width:320px;height:33px" })
+
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.EstablishmentFull, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+
+                    @*<a style="font-size:20px;padding-top:4px;"> @Html.DropDownList("FullName")</a>*@
+                    @Html.DropDownList("EstablishmentFull", (IEnumerable<SelectListItem>)ViewData["EstablishmentFull"], new { style = "width:320px;height:33px" })
+
+                    @*@Html.TextBoxFor(m => m.EstablishmentFull, new { @class = "form-control" })*@
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.DEFwdAuth, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @*@Html.TextBoxFor(m => m.DEFwdAuth, new { @class = "form-control" })*@
+                    @Html.DropDownListFor(m => m.DEFwdAuth, (new IHSDC.WebApp.Models.MasterModels()).LoadUserList(""), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true"})
+
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.GEBFwdAuth, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(m => m.GEBFwdAuth, (new IHSDC.WebApp.Models.MasterModels()).LoadUserList(""), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true"})
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.EstablishmentAbbreviation, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.EstablishmentAbbreviation, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.Appointment, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.Appointment, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.Number, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.Rank, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+
+                    @Html.DropDownListFor(m => m.Rank, (new IHSDC.WebApp.Models.MasterModels()).LoadRanks(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+
+
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.FullName, new { @class = "col-md-12 control-label" })
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group" style="width:350px;">
+                @Html.LabelFor(m => m.ASCON, new { @class = "col-md-12 control-label" })
+                <div class="col-md-11">
+                    @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group" style="width:235px;">
+                @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Active, (new IHSDC.WebApp.Models.MasterModels()).LoadActive(), "--Select --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary" value="Add" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

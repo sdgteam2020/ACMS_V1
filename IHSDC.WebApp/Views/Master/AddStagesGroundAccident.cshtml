@@ -1,0 +1,176 @@
+﻿
+@model IHSDC.WebApp.Models.StagesGroundAccidentCRUD
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+
+    ViewBag.Title = "Add Stages Ground Accident";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+
+@{
+    string myValue = @ViewBag.ButtonName;
+}
+
+@using (Html.BeginForm("AddStagesGroundAccident", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
+        <h3 style="text-align: center; box-shadow: 0px 1px 1px;">
+            Stages Ground Accident
+        </h3>
+        <div class="row">
+            @Html.Hidden("id", "model.StagesGroundAccidentId")
+
+            @Html.Hidden("btnval", myValue)
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "danger" })
+            <div class="col" style="margin-left:1rem;">
+                <label><b> Stages Ground Accident :</b></label>
+                @Html.TextBoxFor(m => m.StagesGroundAccident, new { @class = "form-control", @required = "required", @maxlength = "25" })
+
+                @Html.ValidationMessageFor(model => model.StagesGroundAccident, "", new { @class = "danger" })
+            </div>
+            <div class="col-sm-6" style="margin-left:10%">
+                <button type="button" style="margin-top: 2.5rem;" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddStagesGroundAccident','AddStagesGroundAccident')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        @*<div class="col-12" style="margin-left:35%">
+            <div class="form-group">
+                <div class="col-sm-6" style="margin-left:10%">
+                    <button type="submit" style="margin-top: 2rem;"  value="@ViewBag.ButtonName" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                </div>
+            </div>
+        </div>*@
+
+        <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th class="center">S/No</th>
+                        <th class="center">Stages Ground Accident</th>
+                        <th class="center">Edit</th>
+                        @*<th class="center">Delete</th>*@
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @if (ViewBag.count > 0)
+                    {
+                        foreach (var item in Model.ILStagesGroundAccidentCRUD)
+                        {
+                            <tr>
+                                <td>
+                                    @{ sno++; }
+                                    @sno
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.StagesGroundAccident)</td>
+                                <td>
+                                    <a onclick="location.href='@Url.Action("AddStagesGroundAccident", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StagesGroundAccidentId.ToString()) })'">
+                                        <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                                    </a>
+                                </td>
+                                @*<td>
+                                    <a id="btndel" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StagesGroundAccidentId.ToString())' onclick="DeleteConfirmation(this,'/Master/DeleteStagesGroundAccident')">
+                                        <img src="~/Content/images/Delete.png" width="30" height="30" border="0" />
+                                    </a>
+                                </td>*@
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="4" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+        var messaget = '@ViewBag.ButtonName';
+
+
+    function AddConfirmation(obj, ActionName, Submit) {
+        event.preventDefault();
+
+        // Remove any existing error labels
+        $('.error-label').remove();
+
+        // Check if all required form fields are filled in
+        var emptyFields = [];
+        $('form').find(':input[required]').each(function () {
+            if ($.trim($(this).val()) === '') {
+                emptyFields.push(this);
+            }
+        });
+
+        // If there are empty fields, display an error message for the first empty field
+        if (emptyFields.length > 0) {
+            var firstEmptyField = emptyFields[0];
+            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            return;
+        }
+
+        // If all fields are filled, display the confirmation dialog
+        if (messaget == "Add") {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+
+                showCancelButton: true,
+                cancelButtonText: "Cancel",
+                cancelButtonColor: "#FF0000",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Add",
+
+                closeOnCancel: true,
+                closeOnConfirm: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        } else {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Update",
+                cancelButtonText: "Cancel",
+
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        }
+    }
+
+
+   var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+</script>
+

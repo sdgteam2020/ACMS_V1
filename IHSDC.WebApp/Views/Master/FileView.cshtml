@@ -1,0 +1,32 @@
+﻿@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Models
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    int sno = 0;
+}
+
+@model IEnumerable<FileList>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @{ sno++; }
+            @sno
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            <a href="@Url.Action("DeletePolicyFile", "Master", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FilePath.ToString())})">
+                <i class="fa fa-trash-alt" aria-hidden="true" style="background-color: #ff3333; border-radius: 50%; width: 27px; height: 27px; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; "></i>
+            </a>
+        </td>
+    </tr>
+}
+

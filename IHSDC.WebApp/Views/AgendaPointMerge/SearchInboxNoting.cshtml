@@ -1,0 +1,484 @@
+﻿@model IHSDC.WebApp.Models.InboxCRUD
+@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+
+
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Inbox Noting Fwd";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+@{
+    var watermarkText = ViewBag.ipadd;
+}
+
+<style>
+    .clickable-div {
+        cursor: pointer;
+    }
+
+    .container {
+        position: relative;
+        width: 100%;
+    }
+</style>
+
+
+
+
+<div class="container">
+    <div class="card">
+        @*<div class="col1">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 headingtext">Search</div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>*@
+
+        @using (Html.BeginForm("AddInboxNotingFwd", "AgendaPointMerge", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="card-body" style="min-height:150px;">
+                <div class="col">
+                    <div class="row mb">
+                        <div class="col-md-4">
+                            @*<b>Select Conf Type</b>
+                            <span style="color: red; text-align: center;">*</span>
+                            @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(1), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })*@
+                       
+                        </div>
+                        <div class="col-md-4 headingtext">Search</div>
+                        <div class="col-md-4">
+                            <div class="conf-section">
+                                @*<a style="margin-right:10px; color:white; margin-bottom:3px;" class="btn btn-success" data-toggle="modal" data-target="#DocuUpload">
+                                        Upload Docu
+                                    </a>*@
+                                <button class="btn btn-success" id="sortButton" type="button">Merge Pdf</button>
+                                &nbsp; <input id="ChkWithoutWatermark" name="Without WaterMark" type="checkbox" value="false" />
+                                &nbsp; <label style="margin-top:10px;">Without WaterMark</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive" style="min-height:150px;">
+                            <table class="table table-striped" id="Analysis" width="100%" cellspacing="0">
+                                <thead class="bg-info text-white">
+                                    <tr>
+                                        <th class="center"></th>
+                                        <th class="center">All<br /><input type="checkbox" id="ChkAll"></th>
+                                        <th class="center">Add<br />Hdr/Ftr</th>
+                                        <th class="center">S/No</th>
+                                        <th class="center">AP Id</th>
+                                        <th class="center">Conf Title</th>
+                                        <th class="center">Sponsor</th>
+                                        <th class="center">Agenda Pt Title</th>
+                                        <th class="center">Nodal Branch</th>
+                                        <th class="center">Organizer Category</th>
+                                        <th class="center">Created On</th>
+                                        <th class="center"></th>
+                                        <th class="center"></th>
+                                        <th class="center">View</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    @if (ViewBag.count > 0)
+                                    {
+                                        foreach (var item in Model.ILInboxCRUD)
+                                        {
+                                            <tr class="row-light" draggable='true' ondragstart='start()' ondragover='dragover()'>
+                                                <td>
+                                                    <i class="fa fa-sort"></i>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" id="ChkMerge" class="ChkMergeClass">
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" id="ChkHFP" class="ChkHFPClass">
+                                                </td>
+                                                <td>
+                                                    @{ sno++; }
+                                                    @sno
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Inbox_ID)
+
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Conf)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SponsorName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Title)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.BranchName)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DateTimeOfUpdate)
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.Upload))
+                                                    {
+                                                        <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ConfId.ToString()) })" target="_blank">
+                                                            <div class="pdf">
+                                                                <input type="text" style="display:none" id="ItemUpload" value="@item.Upload" />
+                                                            </div>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.WordFile))
+                                                    {
+                                                        <a href="@item.WordFilePath" target="_blank" download="@item.AmendWordFileName">
+                                                            <div class="word">
+                                                            </div>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")})'">
+                                                        <div class="viewbut"></div>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/CustomJS/AddUpdateFilter.js"></script>
+<script src="~/Content/CustomJS/AviatorJS.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="~/Content/CustomJS/SearchAgendaPoint.js"></script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+    <script>
+        var watermarkText = @Html.Raw(Json.Encode(watermarkText));
+    </script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#Analysis').DataTable({
+                lengthChange: true,
+                pageLength: 50,
+                aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function () {
+                            PrintDiv();
+                        }
+                    },
+                    'colvis',
+                    {
+                        text: 'Advanced Search',
+                        className: "buttons-Search",
+                        action: function () {
+                            $(".dtsb-searchBuilder").removeClass("d-none");
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            var dropdownContainer = $('<div class="dropdown ml-3"></div>').insertAfter($(".buttons-Search"));
+
+            var select = $('<select class="form-control custom-dropdown" multiple="multiple"></select>').appendTo(dropdownContainer);
+
+            table.columns(5).every(function () {
+                var column = this;
+                column.data().unique().sort().each(function (d, j) {
+                    select.append('<option value="' + d + '">' + d + '</option>')
+                });
+            });
+
+            select.prepend('<option value="__reset__">-- Reset --</option>');
+
+            select.select2({
+                placeholder: "-- Select Conf Type --",
+                width: '100%',
+            });
+
+            select.on('change', function () {
+                var selectedValues = $(this).val();             
+                if (selectedValues.includes('__reset__')) {                    
+                    selectedValues = select.find('option').not(':selected[value="__reset__"]').map(function () { return this.value; }).get();                    
+                    var index = selectedValues.indexOf('__reset__');
+                    if (index !== -1) {
+                        selectedValues.splice(index, 1);
+                    }               
+                    select.val(null).trigger('change');
+                }
+                table.column(5).search(selectedValues ? '^(' + selectedValues.join('|') + ')$' : '', true, false).draw();
+            });
+            
+            var buttonContainer = table.buttons().container().appendTo('#Analysis_wrapper .col-md-6:eq(0)');
+            var searchBuilderContainer = table.searchBuilder.container();
+            buttonContainer.insertBefore(table.table().container());
+            searchBuilderContainer.insertBefore(table.table().container());
+        });
+
+
+        function PrintDiv() {
+            var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+            popupWin.document.open();
+
+            var tableStyles = `
+                                        <style type="text/css">
+                                            table {
+                                                width: 100%;
+                                                border-collapse: collapse;
+                                                margin-bottom: 20px;
+                                            }
+
+                                            th, td {
+                                                padding: 8px;
+                                                border: 1px solid #ddd;
+                                                text-align: center;
+                                            }
+
+                                            th {
+                                                background-color: #f2f2f2;
+                                                color: black;
+                                            }
+
+                                        @@media print {
+
+                                            @@page {
+                                                margin-top: 10px;
+                                                margin-bottom: 10px;
+                                            }
+
+                                            body::after {
+                                                content: none !important;
+                                            }
+
+                                            .card-page {
+                                                break-after: page;
+                                            }
+
+                                                .card-page:last-of-type {
+                                                    break-after: auto;
+                                                }
+
+                                            footer {
+                                                position: fixed;
+                                                bottom: 0;
+                                                left: 0;
+                                                right: 0;
+                                                height: 10px;
+                                                background-color: gray;
+                                                color: white;
+                                                text-align: center;
+                                                padding: 10px;
+                                            }
+
+                                            header {
+                                                position: fixed;
+                                                top: 0;
+                                                left: 0;
+                                                right: 0;
+                                                height: 10px;
+                                                background-color: gray;
+                                                color: white;
+                                                text-align: center;
+                                                padding: 10px;
+                                            }
+                                        }
+                                        </style>
+                                    `;
+
+            var table = $('#Analysis').DataTable();
+            var visibleColumns = table.columns(':visible').header().toArray();
+            var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+            var tableHTML = '<table>';
+
+            tableHTML += '<thead>';
+            tableHTML += '<tr>';
+            visibleColumns.forEach(function (header) {
+                tableHTML += '<th>' + header.innerHTML + '</th>';
+            });
+            tableHTML += '</tr>';
+            tableHTML += '</thead>';
+
+            tableHTML += '<tbody>';
+            for (var i = 0; i < filteredData.length; i++) {
+                tableHTML += '<tr>';
+                for (var j = 0; j < filteredData[i].length; j++) {
+                    if (!table.column(j).visible()) {
+                        continue;
+                    }
+                    tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                }
+                tableHTML += '</tr>';
+            }
+            tableHTML += '</tbody>';
+
+            tableHTML += '</table>';
+            var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Search</h1>';
+            popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
+
+            popupWin.document.close();
+        }
+        $(document).ready(function () {
+            $('.dropdownsearch').select2();
+        });
+
+
+        const ChkMergeCL = document.querySelectorAll('.ChkMergeClass');
+        ChkMergeCL.forEach(ChkMergeCL => {
+            ChkMergeCL.onclick = function () {
+                const ChkHFPCL = this.parentNode.parentNode.querySelector('.ChkHFPClass');
+                ChkHFPCL.checked = this.checked;
+            };
+        });
+        $(document).ready(function () {
+            $('.dropdownsearch').select2();
+        });
+
+    </script>
+
+    <script>
+
+
+$('#Schedule_ID').change(function () {
+    var id = $('#Schedule_ID').val();
+    var encrypt = window.btoa(id);
+    var url = "@Url.Action("SearchInboxNoting", "AgendaPointMerge")" + "?Conf=" + encrypt;
+    window.location.href = url;
+});
+         
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.clickable-div').click(function () {
+                var href = $(this).data('href');
+                window.location.href = href;
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            var table = $('#Search').DataTable();
+            $('#ChkAll').on('click', function () {
+                var rows = table.rows({ 'search': 'applied' }).nodes();
+                $('input[type="checkbox"]', rows).prop('checked', this.checked);
+                if (!this.checked) {
+                    $('#ChkAll').prop('checked', false);
+                }
+            });
+            $('#Search tbody').on('change', 'input[type="checkbox"]', function () {
+                if (!this.checked) {
+                    var el = $('#ChkAll').get(0);
+                    if (el && el.checked && ('indeterminate' in el)) {
+                        el.indeterminate = true;
+                    }
+                }
+            });
+        });
+
+        var row;
+        function start() {
+            row = event.target;
+        }
+        function dragover() {
+            var e = event;
+            e.preventDefault();
+
+            let children = Array.from(e.target.parentNode.parentNode.children);
+            if (children.indexOf(e.target.parentNode) > children.indexOf(row))
+                e.target.parentNode.after(row);
+            else
+                e.target.parentNode.before(row);
+        }
+       
+    </script>
+
+
+    <script type="text/javascript">
+
+    var today = new Date();
+    var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus';
+    if (message)
+            sweetAlert(message, messagemidStatus, messageStatus);
+
+
+
+    </script>
+
+
+}
+

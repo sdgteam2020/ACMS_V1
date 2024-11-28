@@ -1,0 +1,234 @@
+﻿a.my-class {
+    color: #333333
+}
+
+    a.my-class:active {
+        color: #666666
+    }
+
+    a.my-class:link {
+        color: #999999
+    }
+
+    a.my-class:visited {
+        color: #CCCCCC
+    }
+body {
+    background: linear-gradient(to bottom,#00c4cc 10%, #3333cc 99%);
+}
+
+.button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: blueviolet;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 21px;
+    padding: 8px;
+    width: 200px;
+    height: 80px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+    .button:hover span {
+        padding-right: 15px;
+    }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+#rcorners1 {
+    border-radius: 10px;
+    background: #c5d3ba;
+    padding: 20px;
+    width: 1050px;
+    height: 50px;
+}
+.button1 {
+    /*background-color: blue;*/
+    text-align: center;
+    height: 30px;
+    width: 100px;
+    color: white;
+    background:linear-gradient(to bottom,#00c4cc 10%, #3333cc 99%); 
+    border: 2px solid #108175;
+    border-radius: 6px;
+    padding-bottom:15px;
+    padding-top: 2px;
+}
+
+.button4 {
+    background: linear-gradient(to bottom,#00c4cc 10%, #3333cc 99%);
+    text-align: center;
+    height: 30px;
+    width: 150px;
+    color: white;
+    color: black;
+    border: 2px solid #108175;
+    border-radius: 6px;
+    padding-bottom: 15px;
+    padding-top: 2px;
+}
+.point td {
+    background-color: white;
+    border-style: solid;
+    border: Thin double Black;
+    border-top: Thin double Black;
+    padding-left: 20px;
+    text-align: center;
+}
+
+a:link {
+    color: red;
+}
+
+a:visited {
+    color: red;
+    font-size:large;
+}
+
+a:hover {
+    color: #FF3300;
+} 
+select .lt {
+    text-align: left;
+}
+
+.point th {
+    padding: 1px;
+    background-color: lightyellow;
+    color: black;
+    text-align: center;
+    border-style: solid;
+    border: thin double black;
+    width: 230px;
+}
+.button1:hover {
+    background-color: blue;
+    color: red;
+   
+}
+
+.button2 {
+    background-color: goldenrod;
+    height: 30px;
+    text-align: center;
+    width: 70px;
+    color: black;
+    border: 2px solid #108175;
+    border-radius: 6px;
+    padding-bottom: 15px;
+    padding-top: 2px;
+}
+
+.button3 {
+    background-color: goldenrod;
+    height: 30px;
+    text-align: center;
+    width: 180px;
+    color: black;
+    border: 2px solid #108175;
+    border-radius: 6px;
+    padding-bottom: 15px;
+    padding-top: 2px;
+}
+
+.button2:hover {
+    background-color: #108175;
+    color: white;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.7);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 60%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 5.3s;
+}
+
+    .overlay a:hover, .overlay a:focus {
+        color: #f1f1f1;
+    }
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+.beta {
+    padding: 1px;
+}
+
+    .beta td {
+        background-color: white;
+        border-style: solid;
+        border: Thin double Black;
+        border-top: Thin double Black;
+        padding-left: 5px;
+        padding-top:0px;
+     vertical-align:top;
+    }
+
+    .beta th {
+        padding: 1px;
+        background-color: lightyellow;
+        color: black;
+        text-align: center;
+        border-style: solid;
+        border: thin double black;
+    }
+
+
+
+    .beta tr:hover {
+        background-color: #ffff99;
+    }

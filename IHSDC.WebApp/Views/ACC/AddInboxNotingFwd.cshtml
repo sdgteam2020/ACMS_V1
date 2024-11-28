@@ -1,0 +1,476 @@
+﻿@model IHSDC.WebApp.Models.InboxCRUD
+@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+
+
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Inbox Noting Fwd";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+@{
+    var watermarkText = ViewBag.ipadd;
+}
+<style>
+
+    .clickable-div {
+        cursor: pointer;
+    }
+
+    .container {
+        position: relative;
+        width: 100%;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+</style>
+<script src="~/NewContent/vendor/jquery/jquery-3.6.0.min.js"></script>
+<div class="container">
+    <div class="card">
+        <!--<div class="col" style="position: absolute;margin-top:-8px; margin-bottom: 3px;">-->
+        @*<div class="col">*@
+        <!--<div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 headingtext">Inbox</div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>-->
+        <div class="col1">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 headingtext">Inbox</div>
+                <div class="col-md-4"></div>
+            </div>
+            @*<button class="btn btn-success" id="closeAP" type="button">Close All</button>*@
+        </div>
+        @using (Html.BeginForm("AddInboxNotingFwd", "ACC", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="table-responsive">
+                            <table class="table" id="Inbox">
+                                <thead class="bg-info text-white">
+                                    <tr>
+                                        <th>S/No</th>
+                                        @*<th class="center">Close<input type="checkbox" id="ChkAll"></th>*@
+                                        @if (SessionManager.RoleId == enum1.GSO1)
+                                        {
+                                            <th></th>
+                                        }
+                                        <th>AP Id</th>
+                                        <th>Conf Title</th>
+                                        <th>Sponsor</th>
+                                        <th> Agenda Pt Title</th>
+                                        @*<th>Branch</th>
+                                            <th>Category (Organizer)</th>*@
+                                        <th>Sent By</th>
+                                        <th>Recd On</th>
+                                        <th>Nodal (Other)</th>
+                                        @*<th>Other Branch</th>*@
+                                        <th>Sent On</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    @if (ViewBag.count > 0)
+                                    {
+                                        foreach (var item in Model.ILInboxCRUD)
+                                        {
+                                            <tr class="@((item.Status == 0 || item.RequestForUnfreeze == true) ? "row-white" : "row-light")">
+                                                <td>
+                                                    @{ sno++; }
+                                                    @sno
+                                                </td>
+                                                @*<td>
+                                                    <input type="checkbox" id="ChkAPClose" class="ChkAPClose1">
+                                                </td>*@
+                                                @if (SessionManager.RoleId == enum1.GSO1)
+                                                {
+                                                    <td>
+                                                        @if (item.RequestForUnfreeze == true)
+                                                        {
+                                                            <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                                <div class="warning" data-tooltip="Request Unfreeze AP">
+                                                                    <i class="fa fa-exclamation-triangle rotate"></i>
+                                                                </div>
+                                                            </a>
+
+                                                        }
+                                                    </td>
+                                                }
+                                                <td>
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+
+                                                        <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+
+                                                            @Html.DisplayFor(modelItem => item.Inbox_ID)
+                                                            <input type="text" style="display:none" id="CloseAPId" value="@item.Inbox_ID" />
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <div class="RefLetter-container">
+                                                        <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+
+                                                            <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                                @Html.DisplayFor(modelItem => item.Conf)
+                                                            </div>
+                                                        </a>
+                                                        <div class="RefLetter">
+                                                            @Html.DisplayFor(modelItem => item.RefLetter)
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+
+                                                        <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                            @Html.DisplayFor(modelItem => item.SponsorName)
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                        <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                            @Html.DisplayFor(modelItem => item.Title)
+                                                        </div>
+                                                    </a>
+                                                </td>
+
+                                                @*<td>
+                                                        <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                            <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                                @Html.DisplayFor(modelItem => item.BranchName)
+                                                            </div>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                            <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                                @Html.DisplayFor(modelItem => item.CategoryName)
+                                                            </div>
+                                                        </a>
+                                                    </td>*@
+                                                <td>
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                        <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                            @Html.DisplayFor(modelItem => item.SentBy)
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                        <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                            @Html.DisplayFor(modelItem => item.ReceivedOn)
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <div class="RefLetter-container">
+                                                        <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                            <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                                @Html.DisplayFor(modelItem => item.FwdTo)
+                                                            </div>
+                                                            <div class="RefLetter">
+                                                                @Html.DisplayFor(modelItem => item.CCToText)
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <!--<td>
+                                                <div class="RefLetter-container">
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                        <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>-->
+                                                @*@Html.DisplayFor(modelItem => item.CCToText)*@
+                                                <!--@{
+                                                                    string ccfullText = item.CCToText ?? "";
+                                                                    int maxLength = 8;
+                                                                    string ccdisplayText = ccfullText.Length > maxLength ? ccfullText.Substring(0, maxLength) + "..." : ccfullText;
+                                                                }
+
+                                                                <div class="tooltip-container" data-ccfulltext="@ccfullText">
+                                                                    @Html.DisplayFor(modelItem => ccdisplayText)
+                                                                </div>
+
+
+                                                                <script>
+                                                                    $(document).ready(function () {
+                                                                        $(document).on('mouseenter', '.tooltip-container', function () {
+                                                                            var ccfullText = $(this).data('ccfulltext');
+                                                                            $(this).attr('title', ccfullText);
+                                                                        });
+                                                                        $(document).on('mouseleave', '.tooltip-container', function () {
+                                                                            $(this).removeAttr('title');
+                                                                        });
+                                                                    });
+                                                                </script>
+
+
+                                                            </div>
+
+                                                        </a>
+                                                    </div>
+                                                </td>-->
+                                                <td>
+                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+
+                                                        <div class="clickable-div" data-href='@Url.Action("AddAgenda", "ACC", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()), View = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"), Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"), FromInbox = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),MarkasRead = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+                                                            @Html.DisplayFor(modelItem => item.SentOn)
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.Upload))
+                                                    {
+                                                        @*<a href="@item.UploadPath" target="_blank">*@
+                                                        <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ConfId.ToString()) })" target="_blank">
+                                                            <div class="pdf">
+                                                            </div>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.WordFile))
+                                                    {
+                                                        <a href="@item.WordFilePath" target="_blank" download="@item.AmendWordFileName">
+                                                            <div class="word">
+                                                            </div>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a onclick="location.href='@Url.Action("AddNoting", "Noting", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString())})'">
+                                                        <div class="addcom" data-tooltip="Add Comments"></div>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/CustomJS/AddUpdateFilter.js"></script>
+<script src="~/Content/CustomJS/AviatorJS.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+
+<script src="~/Content/CustomJS/CloseAll.js"></script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script>
+        var watermarkText = @Html.Raw(Json.Encode(watermarkText));
+    </script>
+    <script>
+        $("body").addClass("loading");
+        $(document).ready(function () {
+            var table = $('#Inbox').DataTable({
+                lengthChange: true,
+                pageLength: 50,
+                aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+                /* dom: 'Bfrtip',*/
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    /* 'print',*/
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PrintDiv();
+                        }
+                    },
+                    'colvis',
+                ],
+            });
+            var buttonContainer = table.buttons().container().appendTo('#Inbox_wrapper .col-md-6:eq(0)');
+            var searchBuilderContainer = table.searchBuilder.container();
+            buttonContainer.insertBefore(table.table().container());
+            searchBuilderContainer.insertBefore(table.table().container());
+        });
+        function PrintDiv() {
+            var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+            popupWin.document.open();
+
+            var tableStyles = `<style type="text/css">
+                                                        table {
+                                                            width: 100%;
+                                                            border-collapse: collapse;
+                                                            margin-bottom: 20px;
+                                                        }
+                                                        th, td {
+                                                            padding: 8px;
+                                                            border: 1px solid #ddd;
+                                                            text-align: center;
+                                                        }
+                                                        th {
+                                                            background-color: #f2f2f2;
+                                                            color: black;
+                                                        }
+                                                        @@media print {
+
+                                                            @@page {
+                                                                margin-top: 10px;
+                                                                margin-bottom: 10px;
+                                                            }
+
+                                                            body::after {
+                                                                content: none !important;
+                                                            }
+                                                            .card-page {
+                                                                break-after: page;
+                                                            }
+                                                                .card-page:last-of-type {
+                                                                    break-after: auto;
+                                                                }
+                                                            footer {
+                                                                position: fixed;
+                                                                bottom: 0;
+                                                                left: 0;
+                                                                right: 0;
+                                                                height: 10px;
+                                                                background-color: gray;
+                                                                color: white;
+                                                                text-align: center;
+                                                                padding: 10px;
+                                                            }
+                                                            header {
+                                                                position: fixed;
+                                                                top: 0;
+                                                                left: 0;
+                                                                right: 0;
+                                                                height: 10px;
+                                                                background-color: gray;
+                                                                color: white;
+                                                                text-align: center;
+                                                                padding: 10px;
+                                                            }
+                                                        }
+                                                    </style>`;
+            var table = $('#Inbox').DataTable();
+            var visibleColumns = table.columns(':visible').header().toArray();
+            var filteredData = table.rows({ search: 'applied' }).data().toArray();
+            var tableHTML = '<table>';
+            tableHTML += '<thead>';
+            tableHTML += '<tr>';
+            visibleColumns.forEach(function (header) {
+                tableHTML += '<th>' + header.innerHTML + '</th>';
+            });
+            tableHTML += '</tr>';
+            tableHTML += '</thead>';
+            tableHTML += '<tbody>';
+            for (var i = 0; i < filteredData.length; i++) {
+                tableHTML += '<tr>';
+                for (var j = 0; j < filteredData[i].length; j++) {
+                    if (!table.column(j).visible()) {
+                        continue;
+                    }
+                    tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                }
+                tableHTML += '</tr>';
+            }
+            tableHTML += '</tbody>';
+
+            tableHTML += '</table>';
+            var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Inbox</h1>';
+            popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
+            popupWin.document.close();
+        }
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.clickable-div').click(function () {
+                var href = $(this).data('href');
+                window.location.href = href;
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            var table = $('#Inbox').DataTable();
+            $('#ChkAll').on('click', function () {
+                var rows = table.rows({ 'search': 'applied' }).nodes();
+                $('input[type="checkbox"]', rows).prop('checked', this.checked);
+                if (!this.checked) {
+                    $('#ChkAll').prop('checked', false);
+                }
+            });
+            $('#Inbox tbody').on('change', 'input[type="checkbox"]', function () {
+                if (!this.checked) {
+                    var el = $('#ChkAll').get(0);
+                    if (el && el.checked && ('indeterminate' in el)) {
+                        el.indeterminate = true;
+                    }
+                }
+            });
+        });
+
+        var row;
+        function start() {
+            row = event.target;
+        }
+        function dragover() {
+            var e = event;
+            e.preventDefault();
+
+            let children = Array.from(e.target.parentNode.parentNode.children);
+            if (children.indexOf(e.target.parentNode) > children.indexOf(row))
+                e.target.parentNode.after(row);
+            else
+                e.target.parentNode.before(row);
+        }
+    </script>
+    <script type="text/javascript">
+    var today = new Date();
+    var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus';
+    if (message)
+            sweetAlert(message, messagemidStatus, messageStatus);
+    </script>
+
+}
+

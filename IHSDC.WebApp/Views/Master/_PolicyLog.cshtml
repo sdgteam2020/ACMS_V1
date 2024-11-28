@@ -1,0 +1,84 @@
+﻿@model IHSDC.WebApp.Models.downloadLog
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    int sno = 0;
+}
+
+@foreach (var item in Model.ILdownloadLogCRUD)
+{
+    <tr>
+        <td>
+            @{ sno++; }
+            @sno
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.downloadUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ICNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IpAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.downloadDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccessDownload)
+        </td>
+    </tr>
+}
+@*<script>
+    let minDate, maxDate;
+    let table;
+
+    // Custom filtering function which will search data in column four between two values
+    DataTable.ext.search.push(function (settings, data, dataIndex) {
+        let min = minDate.val();
+        let max = maxDate.val();
+        let date = new Date(data[4]);
+
+        if (
+            (min === null && max === null) ||
+            (min === null && date <= max) ||
+            (min <= date && max === null) ||
+            (min <= date && date <= max)
+        ) {
+            return true;
+        }
+        return false;
+    });
+
+    // Create date inputs
+    minDate = new DateTime('#min', {
+        format: 'DD-MM-YYYY'
+    });
+    maxDate = new DateTime('#max', {
+        format: 'DD-MM-YYYY'
+    });
+
+    // Initialize DataTable
+    function initializeDataTable() {
+        if (!table) {
+            table = new DataTable('#DownloadLog');
+        }
+    }
+
+    // Refilter the table
+    document.querySelectorAll('#min, #max').forEach((el) => {
+        el.addEventListener('change', () => {
+            if (table) {
+                table.draw();
+            }
+        });
+    });
+
+    // Initialize DataTable on page load
+    initializeDataTable();
+</script>*@
+
+
+

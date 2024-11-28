@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataroot xmlns:od="urn:schemas-microsoft-com:officedata" generated="2019-01-14T12:58:09">
+<ExportSplQualQuery>
+<ArmyNumber>IC56056Y</ArmyNumber>
+<SpecialQual_ID>1</SpecialQual_ID>
+<SpecialQualDate>2018-12-13T00:00:00</SpecialQualDate>
+<Validation>Validated By 2IC</Validation>
+<ValidationDate>2018-12-23T00:00:00</ValidationDate>
+<CounterValidation>Validated by Flt Cdr</CounterValidation>
+<CounterValidationDate>2018-12-23T00:00:00</CounterValidationDate>
+<IsDeleted>0</IsDeleted>
+<IsActive>1</IsActive>
+<EditDeleteBy>0</EditDeleteBy>
+<EditDeleteDate>2018-12-23T09:02:24</EditDeleteDate>
+<DateTimeOfUpdate>2018-12-23T09:02:24</DateTimeOfUpdate>
+</ExportSplQualQuery>
+<ExportSplQualQuery>
+<ArmyNumber>IC56056Y</ArmyNumber>
+<SpecialQual_ID>2</SpecialQual_ID>
+<SpecialQualDate>2018-12-14T00:00:00</SpecialQualDate>
+<Validation>Validated By 2IC</Validation>
+<ValidationDate>2018-12-23T00:00:00</ValidationDate>
+<CounterValidation>Validated by Flt Cdr</CounterValidation>
+<CounterValidationDate>2018-12-23T00:00:00</CounterValidationDate>
+<IsDeleted>0</IsDeleted>
+<IsActive>1</IsActive>
+<EditDeleteBy>0</EditDeleteBy>
+<EditDeleteDate>2018-12-23T09:02:40</EditDeleteDate>
+<DateTimeOfUpdate>2018-12-23T09:02:40</DateTimeOfUpdate>
+</ExportSplQualQuery>
+<ExportSplQualQuery>
+<ArmyNumber>IC56053L</ArmyNumber>
+<SpecialQual_ID>3</SpecialQual_ID>
+<SpecialQualDate>2018-12-15T00:00:00</SpecialQualDate>
+<Validation>Validated By 2IC</Validation>
+<ValidationDate>2018-12-23T00:00:00</ValidationDate>
+<CounterValidation>Validated by Flt Cdr</CounterValidation>
+<CounterValidationDate>2018-12-23T00:00:00</CounterValidationDate>
+<IsDeleted>0</IsDeleted>
+<IsActive>1</IsActive>
+<EditDeleteBy>0</EditDeleteBy>
+<EditDeleteDate>2018-12-23T19:07:50</EditDeleteDate>
+<DateTimeOfUpdate>2018-12-23T19:07:50</DateTimeOfUpdate>
+</ExportSplQualQuery>
+<ExportSplQualQuery>
+<ArmyNumber>IC56053L</ArmyNumber>
+<SpecialQual_ID>2</SpecialQual_ID>
+<SpecialQualDate>2018-12-13T00:00:00</SpecialQualDate>
+<Validation>Validated By 2IC</Validation>
+<ValidationDate>2018-12-23T00:00:00</ValidationDate>
+<CounterValidation>Validated by Flt Cdr</CounterValidation>
+<CounterValidationDate>2018-12-23T00:00:00</CounterValidationDate>
+<IsDeleted>0</IsDeleted>
+<IsActive>1</IsActive>
+<EditDeleteBy>0</EditDeleteBy>
+<EditDeleteDate>2018-12-23T20:29:08</EditDeleteDate>
+<DateTimeOfUpdate>2018-12-23T20:29:08</DateTimeOfUpdate>
+</ExportSplQualQuery>
+<ExportSplQualQuery>
+<ArmyNumber>IC56067L</ArmyNumber>
+<SpecialQual_ID>1</SpecialQual_ID>
+<SpecialQualDate>2018-12-12T00:00:00</SpecialQualDate>
+<Validation>Validated By 2IC</Validation>
+<ValidationDate>2018-12-24T00:00:00</ValidationDate>
+<CounterValidation>Validated by Flt Cdr</CounterValidation>
+<CounterValidationDate>2018-12-24T00:00:00</CounterValidationDate>
+<IsDeleted>0</IsDeleted>
+<IsActive>1</IsActive>
+<EditDeleteBy>0</EditDeleteBy>
+<EditDeleteDate>2018-12-24T14:55:32</EditDeleteDate>
+<DateTimeOfUpdate>2018-12-24T14:55:32</DateTimeOfUpdate>
+</ExportSplQualQuery>
+</dataroot>

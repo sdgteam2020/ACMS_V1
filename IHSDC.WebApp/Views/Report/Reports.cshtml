@@ -1,0 +1,158 @@
+﻿@model IHSDC.WebApp.Models.ReportsModels
+@using IHSDC.WebApp.Models
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Connection
+@{
+    /**/
+
+    /**/
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Create Schedule";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+
+<div class="col">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 headingtext">Reports</div>
+        <div class="col-md-4"></div>
+    </div>
+
+</div>
+
+@using (Html.BeginForm("Reports", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="card-body" style="box-shadow: -1px 1px 16px 1px; margin-top:5px;">
+        <div class="row" style="padding-left:10px;padding-right:10px">
+            <div class="col">
+            </div>
+            <div class="col">
+                <label><b>Type of Conf</b></label>
+                @Html.DropDownListFor(m => m.TypeOfConfId, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfConf(), "--Select Type of Conf --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+            </div>
+            <div class="col">
+                <label><b>Subject / Title of Conf</b></label>
+                @Html.TextBoxFor(m => m.ScheduleId, new { @class = "form-control d-none", @required = true })
+                <select id="spnScheduleId" class="form-control" }></select>
+                
+            </div>
+            <div class="col">
+                <label><b>Appx</b></label>
+                @Html.DropDownListFor(m => m.Type, (new IHSDC.WebApp.Models.MasterModels()).LoadReportType(), "--Select Type --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+            </div>
+            <div class="col">
+                @Html.TextBoxFor(m => m.ConfRefNo, new { @class = "form-control d-none", @required = true })
+            </div>
+        </div>
+            <div class="row" style="padding-left:10px;">
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                    <button type="submit" value="Generate Report" class="btn btn-success" style="margin-right:10px">Generate Report</button>
+                    <a class="btn btn-success mr-2" onclick="location.href='@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })'">
+                        <span style="color:white">Back</span>
+                    </a>
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        <br/>
+        <br/>
+    </div>
+}
+
+<style>
+    .center {
+        text-align: center;
+    }
+</style>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/GEBSubmit.js"></script>
+<script src="~/Content/CustomJS/AviatorJS.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+
+
+    <script type="text/javascript">
+       var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+            sweetAlert(message, messagemidStatus, messageStatus);
+        
+    </script>
+    <script>
+
+         $(document).ready(function () {
+             $('#spnScheduleId').change(function () {
+                 $("#ScheduleId").val($('#spnScheduleId').val());
+
+                 var typeofConf = $("#TypeOfConfId").val();
+                 var scheduleid = $("#ScheduleId").val();
+                 $.ajax({
+                     url: '/Master/GetConf',
+                     type: 'POST',
+                     data: { "Proc": "12", "TypeOfConf": typeofConf, "ScheduleId": scheduleid },
+                     success: function (result) {
+                         if (result.length > 0) {
+                             $('#ConfRefNo').val(result[0].ScheduleRefNoDt);
+                         }
+                         else {
+                             $('#ConfRefNo').val("");
+                         }
+                     }
+                 });
+            });
+         });
+
+        $('#TypeOfConfId').change(function () {
+            BindConf($("#TypeOfConfId").val());
+        });
+
+
+
+        function BindConf(TypeOfConfId) {
+            var list = '';
+            var list1 = '';
+            var list2 = '';
+            var list3 = '';
+            $.ajax({
+                url: '/Master/GetConf',
+                type: 'POST',
+                data: { "Proc": "12", "TypeOfConf": TypeOfConfId,"ScheduleId":"0" },
+                success: function (result) {
+                    if (result.length > 0) {
+                        list = '';
+                        list = '<option value="">Select Conf</option>';
+                        for (var j = 0; j < result.length; j++) {
+                            list += '<option value=' + result[j].ScheduleId + '>' + result[j].Subject + '</option>';
+                        }
+                        $('#spnScheduleId').html(list);
+                    }
+                    else {
+                        list = '';
+                        list = '<option value="">Select Conf</option>';
+                        $('#spnScheduleId').html(list);
+                    }
+
+                    if ($("#ScheduleId").val() != 0) {
+                        $('#spnScheduleId').val($("#ScheduleId").val());
+                    }
+                }
+            });
+        }
+
+    </script>
+}

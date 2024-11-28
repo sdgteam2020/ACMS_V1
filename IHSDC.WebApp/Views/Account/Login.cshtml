@@ -1,0 +1,194 @@
+﻿@using IHSDC.WebApp.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+
+}
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ACMS - Login</title>
+    <!-- Bootstrap core CSS-->
+    <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/CustomJS/AviatorJS.js"></script>
+    <link href="~/Content/css/dashboard.css" rel="stylesheet">
+    <script type="text/javascript">
+        $("#chk").click(function () {
+            if ($(this).prop("checked")) {
+                $("#pass").attr("type", "text");
+            }
+            else {
+
+                $("#pass").attr("type", "password");
+            }
+        });
+        $(document).ready(function () {
+            $("#pass").val("");
+        });
+        var message = '@message';
+        var messageStatus = '@messageStatus';
+        var messagemidStatus = '@messagemidStatus';
+        if (message)
+            sweetAlert(message, messagemidStatus, messageStatus);
+    </script>
+
+</head>
+<header class="masthead">
+    <nav class="navbar navbar-expand-sm bg-dark" style="margin-top: -5rem;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="~/Content/images/armylogo.png" style="height: 105px; min-height: 105px; width: 105px; min-width: 105px;" />
+            </a>
+
+            @*<img src="~/Content/images/MYImage.png" style="height: 105px; width: 105px; max-width: 105px; max-height: 105px; min-width: 105px; min-height: 105px;" />*@
+        </div>
+        <div class="container-fluid">
+            <img src="~/Content/images/acc.png" style="height: 110px;margin-left:-155px;" />
+</div>
+
+    </nav>
+    <div class="body-content">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-12">
+                <div class="card ca" style="min-width: 779px; border-radius: 1rem; width: 1rem; height: 338px; min-height: 330px !important; ">
+                    <div class="row g-0" style="width:50rem;">
+
+                        <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <img src="~/Images/meet.png" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem; margin-left: 1px; height: 301px; max-width: 319px; max-height: 321px; ">
+                        
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center" style="height:22rem;">
+                            <div class=" p-3 p-lg-3 text-black card " style="border-radius: 1rem; height: 19rem; margin-top: -2rem; margin-right:5px; ">
+
+                                @*margin-right: -18px; margin-left: -21px;*@
+
+
+
+                                @*<div class="">*@
+                                <!-- Modal -->
+                                <div class="card-header d-flex align-items-center mb-3 pb-1">
+
+                                    <span class="h5 fw-bold mb-0">Login Here</span>
+                                </div>
+                                <div class="card-body" style="max-height: 222px; width: 447px; max-width: 496px; margin-top: -17px">
+
+                                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @*@Html.HiddenFor(m => m.IpAddress);*@
+                                        <div class="form-group">
+                                            <div class="form-label-group" style="width: 263px; max-width: 263px;">
+                                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @autofocus = "autofocus" })
+                                                <label for="inputEmail">User Name </label>
+                                                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-label-group" style="width: 263px; max-width: 263px;">
+                                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "pass", @autocomplete = "off" })
+                                                <label for="inputPassword">Password</label>
+                                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-bottom: 0.5rem !important; ">
+                                            <div class="checkbox" style="margin-top: -1rem;">
+                                                @Html.CheckBoxFor(m => m.RememberMe)
+                                                <label>Remember Me</label>
+                                                &nbsp;&nbsp;<label><input type="checkbox" id="chk" class="btn btn-outline-secondary" />&nbsp;Show password</label>
+
+                                                @*<a href="~/Account/forgotpassword" class="btn btn-link" style="margin-left: -1px;">
+                                        Forgot Password
+                                    </a>*@
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center">
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-10" style=" margin-top: -1rem;">
+                                                    <input type="submit" value="Log in" style="margin-right: 9rem; margin-top: 15px; " class="btn btn-primary" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    <footer class="sticky-footer" style="background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%); opacity: 3.8; position: fixed; border-bottom: 2px; width: 100%; height: 36px; ">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+            
+
+                <p class="mb-0  text-light" style="font-size:22px;">Copyright © 2023. Developed by <span class="text-danger text-light">ASDC , DGIS</span> </p>
+            </div>
+        </div>
+    </footer>
+</header>
+
+
+<script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="only screen">
+<link href="~/NewContent/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="only screen">
+<link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" media="only screen">
+<link href="~/NewContent/css/sb-admin.css" rel="stylesheet" media="only screen">
+
+
+<script type="text/javascript">
+
+      var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+
+    //$("#Username").change(function () {
+
+    //    $("#pass").val("Admin123!");
+    //});
+
+        $("#chk").click(function () {
+            if ($(this).prop("checked")) {
+                $("#pass").attr("type", "text");
+            }
+            else {
+
+                $("#pass").attr("type", "password");
+            }
+        });
+        $(document).ready(function () {
+            $("#pass").val("");
+        });
+
+        var message = '@message';
+        var messageStatus = '@messageStatus';
+        var messagemidStatus = '@messagemidStatus';
+        if (message) {
+            if (message == "s") {
+                SubmitToken(this, '/Account/Login', 'Your Token is not connected. Connect Token and Login again', 'SubmitGEB2IC')
+            }
+            if (message == "b") {
+                SubmitToken(this, '/Account/Login', 'Public Key not Found. Ask Admin to install your public key.', 'SubmitGEB2IC')
+            }
+        }
+</script>

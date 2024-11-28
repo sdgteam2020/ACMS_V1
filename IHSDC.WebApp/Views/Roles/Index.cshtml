@@ -1,0 +1,83 @@
+﻿@model IEnumerable<IHSDC.WebApp.Models.RoleViewModel>
+
+@{
+    ViewBag.Title = "Roles";
+}
+<style>
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<div class="card-body" style="box-shadow: -1px 2px 16px 3px; padding: 0.5rem;">
+
+    @*<p>
+        @Html.ActionLink("Create New", "Create", new object { }, new { @class = "btn btn-primary" })
+    </p>*@
+    <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoleName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsPermission)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+
+                        @{
+                            if (item.IsPermission == 0)
+                            {
+                                <span class="fa fa-shield text-danger">Administrator</span>
+                            }
+                            else if (item.IsPermission == 1)
+                            {
+                                <span class="fa fa-shield text-success">Sponsor</span>
+                            }
+                            else if (item.IsPermission == 2)
+                            {
+                                <span class="fa fa-shield text-primary">View</span>
+                            }
+                            else if (item.IsPermission == 3)
+                            {
+                                <span class="fa fa-shield">Nodal</span>
+                            }
+                            else if (item.IsPermission == 4)
+                            {
+                                <span class="fa fa-shield">Unit Level View</span>
+                            }
+                            else if (item.IsPermission == 5)
+                            {
+                                <span class="fa fa-shield">GSO1</span>
+                            }
+                        }
+
+
+
+                    </td>
+                    @*<td>
+                        <a onclick="location.href='@Url.Action("Create", "Roles", new { id = item.RoleName })'">
+                            <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                        </a>
+                    </td>*@
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

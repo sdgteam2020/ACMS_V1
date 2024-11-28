@@ -1,0 +1,128 @@
+﻿@model IEnumerable<IHSDC.Common.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Accounts";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+     var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+}
+
+
+<p>
+    @Html.ActionLink("Add Subordinate", "Add", "Account", new object { }, new { @class = "btn btn-primary" })
+    @*@if (User.Identity.Name == IHSDC.Common.Configurations.Application.AdminUsername)
+    {
+        @Html.ActionLink("//TODO: Add Superior", "AddSuperior", "Account", new object { }, new { @class = "btn btn-outline-danger" })
+    }
+    <button type="button" class="btn btn-outline-primary">
+        Requests <span class="badge badge-light">@Model.Count()</span>
+    </button>*@
+</p>
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.Count() > 1)
+    {
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <tr>
+                <th>
+                    Integer Id
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName), @Html.DisplayNameFor(model => model.Email) & @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+
+                <th>
+                    Establishment
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PersonnelNumber)<br />
+                    @Html.DisplayNameFor(model => model.Rank) &
+                    @Html.DisplayNameFor(model => model.FullName)<br />
+                    (@Html.DisplayNameFor(model => model.Appointment))
+
+                </th>
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Lock Out
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+        {
+            if (item.UserName != User.Identity.Name)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IntId)
+                    </td>
+                    <td>
+                        <span class="fa fa-user"></span> @Html.DisplayFor(modelItem => item.UserName)
+                        <br />
+                        <span class="fa fa-envelope-o"></span> @Html.DisplayFor(modelItem => item.Email)
+                        <br />
+                        <span class="fa fa-phone"></span> @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstablishmentAbbreviation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PersonnelNumber)<br />
+                        @Html.DisplayFor(modelItem => item.Rank)<br />
+                        @Html.DisplayFor(modelItem => item.FullName)<br />
+                        <i>@Html.DisplayFor(modelItem => item.Appointment)</i>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+
+
+                        @if (User.Identity.Name == IHSDC.Common.Configurations.Application.AdminUsername)
+                    {
+                        <br />
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+                    </td>
+                    <td>
+                        @if (item.LockoutEnabled == false)
+                    {
+
+                        <a onclick="location.href='@Url.Action("LockoutEnable", "Account", new { id = item.Id })'">
+
+                            <i class="fa fa-lock" style=" color: #5bc0de;  font-size: 26px;   padding-top: 17%;"></i>
+
+
+                        </a>
+                }
+
+
+
+                    </td>
+                </tr>
+        }
+    }
+
+        </table>
+}
+else
+{
+    <div class="alert alert-primary" role="alert"><div class="lead"><span class="fa fa-id-card"></span> No Subordinates! Please add a Subordinate.</div></div>
+}
+    </div>
+    
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script type="text/javascript">   
+
+    var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+</script>
+

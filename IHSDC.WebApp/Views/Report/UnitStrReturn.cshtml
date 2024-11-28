@@ -1,0 +1,376 @@
+﻿@model IHSDC.WebApp.Models.TransationStrengthReturn
+@using IHSDC.WebApp.Connection
+@{
+
+                var message = TempData["Message"] ?? string.Empty;
+                var messageStatus = TempData["messageStatus"] ?? string.Empty;
+                var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+                int sno = 0;
+                ViewBag.Title = "Unit Str Return";
+                Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+}
+
+<div class="card-body">
+    <div class="card-body">
+
+
+        @using (Html.BeginForm("UnitStrReturn", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.StrId)
+            <div class="row">
+                <div class="col-4">
+                    <label><b>SUS No</b></label>
+                    @Html.TextBoxFor(m => m.SUSNo, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+                <div class="col-2">
+                    <label><b>Posn As On</b></label>
+                    @Html.TextBoxFor(m => m.PosnAs, new { @class = "form-control", required = true })
+                </div>
+                <div class="col-4">
+                    <label><b>Present Return Ser No</b></label>
+                    @Html.TextBoxFor(m => m.PresentReturnSerNo, new { @class = "form-control", required = true, onkeypress = "return blockSpecialChar(event)" })
+                </div>
+                <div class="col-2">
+                    <label><b>Present Return Date </b></label>
+                    @Html.TextBoxFor(m => m.PresentReturnDate, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label><b>Last Return Ser No</b></label>
+                    @Html.TextBoxFor(m => m.LastReturnSerNo, new { @class = "form-control", onkeypress = "return blockSpecialChar(event)", required = true, })
+                </div>
+                <div class="col-2">
+                    <label><b>Last Return Date </b></label>
+                    @Html.TextBoxFor(m => m.LastReturnDate, new { @class = "form-control", required = true })
+                </div>
+                <div class="col-4">
+                    <label><b>Last Part IAFF 3010 </b></label>
+                    @Html.TextBoxFor(m => m.LastIAFF, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+                <div class="col-2">
+                    <label><b> IAFF 3010  Date </b></label>
+                    @Html.TextBoxFor(m => m.LastIAFFDate, new { @class = "form-control", required = true })
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col">
+                    <label><b>CO Remarks</b></label>
+                    @Html.TextBoxFor(m => m.CoRemarks, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+
+
+                <div class="col">
+                    <label><b>Fmn Of Unit </b></label>
+                    @Html.TextBoxFor(m => m.FmnOfUnit, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+
+                <div class="col">
+                    <label><b>Location</b></label>
+                    @Html.DropDownListFor(m => m.Location, (new IHSDC.WebApp.Models.MasterModels()).LoadLocation(), new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+
+                </div>
+
+                <div class="col-2">
+                    <label><b>Est No</b></label>
+                    @Html.TextBoxFor(m => m.EstNo, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+
+                <div class="col-2">
+                    <label><b>Est Date</b></label>
+                    @Html.TextBoxFor(m => m.EstDate, new { @class = "form-control", required = true })
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label><b>PSC Qualifed</b></label>
+                    @Html.TextBoxFor(m => m.PSCQualified, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+
+                <div class="col">
+                    <label><b>Re- Emp Offrs</b></label>
+                    @Html.TextBoxFor(m => m.ReEmpOffrs, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+
+
+                <div class="col">
+                    <label><b>Offrs On Supernumerary Str</b></label>
+                    @Html.TextBoxFor(m => m.OffrsOnSuperStr, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+
+                <div class="col">
+                    <label><b>Remarks</b></label>
+                    @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", @onchange = "Case(this)", required = true })
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label><b>Month</b></label>
+                    @Html.DropDownListFor(m => m.Month, (new IHSDC.WebApp.Models.MasterModels()).LoadMonth(), "--Select Month --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                </div>
+                <div class="col">
+                    <label><b>Year</b></label>
+                    @Html.TextBoxFor(m => m.Year, new { @class = "form-control", @required = true, onkeypress = "return blockSpecialChar(event)", @maxlength = "4", @minlength = "4" })
+                </div>
+
+                <div class="col-4" style="margin-top:2.5%;text-align:center">
+                    <button type="submit" id="btnName" value="@ViewBag.ButtonName" name="btnName" class="btn btn-success">@ViewBag.ButtonName</button>
+                   </div>
+            </div>
+        }
+
+    </div>
+    <br />
+    <br />
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th class="center">S/No</th>
+                    <th class="center">SUS No</th>
+                    <th class="center">Unit Name</th>
+                    <th class="center">Fmn Of  Unit  </th>
+                    <th class="center">Location</th>
+                    <th class="center">Present Return Ser No</th>
+                    <th class="center">Present Return Date	</th>
+                    <th class="center">Month | Year	</th>
+                    <th class="center">Generate Report</th>
+                    <th class="center">Action </th>
+                    <th class="center">Status</th>
+
+
+
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                @if (ViewBag.count > 0)
+                {
+
+                    foreach (var item in Model.ILTransationStrengthReturn)
+                    {
+                        <tr>
+                            <td>
+                                @{ sno++; }
+                                @sno
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.SUSNo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.UnitName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FmnOfUnit)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PresentReturnSerNo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PresentReturnDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Month)  <span> |</span> @Html.DisplayFor(modelItem => item.Year) </td>
+                            <td>
+                                <a onclick="location.href='@Url.Action("GenerateIAFZ", "Report", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString()) })'">
+                                    Generate
+                                </a>
+                            </td>
+
+                            @if (Convert.ToString(SessionManager.Role) == "Unit" || Convert.ToString(SessionManager.Role) == "SecondInCommand" || Convert.ToString(SessionManager.Role) == "FlightCommander")
+                            {
+                                <td>
+                                    @if (Convert.ToString(SessionManager.Role) == "Unit")
+                                    {
+                                        if (item.Validation == null)
+                                        {
+                                            <a onclick="location.href='@Url.Action("UnitStrReturn", "Report", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString()) })'">
+                                                <img src="~/images/Editnew.png" width="30" height="30" border="0">
+                                            </a>
+
+                                            <span>|</span>
+                                            <a id="btndel" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString())' onclick="DeleteConfirmation(this,'/Report/DeleteUnitStrReturn')">
+                                                <img src="~/images/Delete.png" width="30" height="30" border="0" />
+                                            </a><span>|</span>
+
+                                            <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString())' onclick="SubmitConfirmation(this,'/Report/SubmitAviator','Do you want to Submit to 2IC ','SubmitClk')">
+                                                <img src="~/images/CheckSubmit.png" width="30" height="30" border="0" />
+                                            </a>
+
+
+                                        }
+
+                                        if (item.Validation == "Rejected by 2IC")
+
+                                        {
+                                            <a onclick="location.href='@Url.Action("UnitStrReturn", "Report", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString()) })'">
+                                                <img src="~/images/Editnew.png" width="30" height="30" border="0">
+                                            </a><span>|</span>
+
+                                            <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString())' onclick="SubmitConfirmation(this,'/Report/SubmitAviator','Do you want to Submit to 2IC ','SubmitClk')">
+                                                <img src="~/images/CheckSubmit.png" width="30" height="30" border="0" />
+                                            </a>
+
+                                        }
+
+
+                                    }
+                                    @if (Convert.ToString(SessionManager.Role) == "SecondInCommand")
+                                    {
+
+                                        if (item.Validation == "Submitted to 2IC" || item.Validation == "Rejected by Flt Cdr")
+                                        {
+                                            <a onclick="location.href='@Url.Action("UnitStrReturn", "Report", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString()) })'">
+                                                <img src="~/images/Editnew.png" width="30" height="30" border="0">
+                                            </a><span>|</span>
+                                            <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString())' onclick="SubmitConfirmation(this,'/Report/SubmitAviator','Do you want to Submit to Flt Cdr','Validate2IC')">
+                                                <img src="~/images/CheckSubmit.png" width="30" height="30" border="0" />
+                                            </a>
+                                            <span>|</span>
+                                            <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString())' onclick="SubmitConfirmation(this,'/Report/SubmitAviator','Do you want to Reject ','Reject2IC')">
+                                                <img src="~/images/Reject.png" width="30" height="30" border="0" />
+                                            </a>
+                                        }
+                                    }
+                                    @if (Convert.ToString(SessionManager.Role) == "FlightCommander")
+                                    {
+                                        if (item.Validation != "Rejected by Flt Cdr")
+                                        {
+                                            <a onclick="location.href='@Url.Action("UnitStrReturn", "Report", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString()) })'">
+                                                <img src="~/images/Editnew.png" width="30" height="30" border="0">
+                                            </a><span>|</span>
+                                            <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString())' onclick="SubmitConfirmation(this,'/Report/SubmitAviator','Do you want to Counter Validate','ValidateFltCdr')">
+                                                <img src="~/images/CheckSubmit.png" width="30" height="30" border="0" />
+                                            </a>
+                                            <span>|</span>
+                                            <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString())' onclick="SubmitConfirmation(this,'/Report/SubmitAviator','Do you want to Reject ','RejectFltCdr')">
+                                                <img src="~/images/Reject.png" width="30" height="30" border="0" />
+                                            </a>
+                                            <span>|</span>
+                                            <a id="btndel" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StrId.ToString())' onclick="DeleteConfirmation(this,'/Report/DeleteUnitStrReturn')">
+                                                <img src="~/images/Delete.png" width="30" height="30" border="0" />
+                                            </a>
+                                        }
+                                    }
+
+                                </td>
+                                <td>
+                                    @if (Convert.ToString(SessionManager.Role) == "Unit")
+                                    {
+
+                                        if (item.Validation != null)
+                                        {<label><b>  @item.Validation</b></label>}
+
+                                    if (item.CounterValidation != null)
+                                    {<label><b> @item.CounterValidation</b></label>}
+
+                                if (item.CounterValidation == null && item.Validation == null)
+                                {<label><b> New Data</b></label>}
+
+
+                            }
+                                    @if (Convert.ToString(SessionManager.Role) == "SecondInCommand")
+                                    {
+                                        if (item.CounterValidation != "Rejected by Flt Cdr")
+                                        {
+                                            if (item.Validation == "Submitted to 2IC")
+                                            {<label><b>  Submitted By Clk</b></label>}
+
+                                            if (item.CounterValidation == "Submitted to Flt Cdr")
+                                            {<label><b>  @item.CounterValidation</b></label>}
+                                    }
+
+                                    if (item.Validation == "Rejected by Flt Cdr")
+                                    {<label><b>  @item.Validation</b></label>}
+                                if (item.Validation == "Rejected by 2IC")
+                                {<label><b>  @item.Validation</b></label>}
+
+                        }
+
+
+
+                                    @if (Convert.ToString(SessionManager.Role) == "FlightCommander")
+                                    {
+
+                                        <label><b>  @item.Validation</b></label>
+
+
+                                    }
+
+
+                                </td>
+
+                            }
+
+
+
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="4" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</div>
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/CustomJS/AviatorJS.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+    <script type="text/javascript">
+
+
+
+
+
+      var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+            sweetAlert(message, messagemidStatus, messageStatus);
+        var today = new Date();
+        $('#PosnAs').datepicker({
+                uiLibrary: 'bootstrap4',
+                dateFormat: "dd/M/yy",
+                autoclose: true,
+                maxDate: today
+            });
+        $('#EstDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                dateFormat: "dd/M/yy",
+                autoclose: true,
+                maxDate: today
+            });
+        $('#LastReturnDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                dateFormat: "dd/M/yy",
+                autoclose: true,
+                maxDate: today
+            });
+        $('#PresentReturnDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                dateFormat: "dd/M/yy",
+                autoclose: true,
+                maxDate: today
+            });
+            $('#LastIAFFDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                dateFormat: "dd/M/yy",
+                autoclose: true,
+                maxDate: today
+            });
+
+
+
+
+    </script>
+}

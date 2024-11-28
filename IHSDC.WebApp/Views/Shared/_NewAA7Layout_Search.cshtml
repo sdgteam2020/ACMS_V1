@@ -1,0 +1,811 @@
+﻿@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Connection;
+@{
+    Layout = null;
+
+}
+<style>
+    .danger {
+        color: red;
+    }
+
+    sticky-footer {
+        width: 100%;
+        background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
+
+    .header {
+        opacity: 3;
+        background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+        z-index: 10
+    }
+
+  
+
+    .cards {
+        padding: 6px;
+        background: #fefffe;
+        height: 1100px;
+    }
+
+    .rcorners {
+        border-radius: 5px;
+        border: 1px solid #89CFF0;
+        padding: 10px;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    .form-control {
+        border: 1px solid #8d94a9 !important;
+    }
+
+    .mani ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #0CAFFF;
+        text-decoration: none;
+        color: white;
+        width: auto;
+        display: flex;
+    }
+
+
+        .mani ul li {
+            float: left;
+            text-decoration: none;
+            color: white;
+            border-right: thin solid lightgray;
+            font-size: 14px;
+            padding: 0px;
+        }
+
+    .mani .active {
+        background-color: #4CAF50;
+    }
+
+    .mani a:target {
+        background-color: #FF8F2B;
+    }
+
+    .droptab {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .mani li a {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px 10px;
+        text-decoration: none;
+    }
+
+        .mani li a:hover, .dropdown:hover .droptab {
+            background-color: #0c478a;
+            text-decoration: none;
+            color: white;
+        }
+
+    .mani li.dropdown {
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .dropdown-item:hover {
+        background: #4CAF50 !important;
+        /* font-size: 9px !important;*/
+        border-radius: 13px;
+    }
+</style>
+
+<style>
+    #suggesstion-box {
+        display: block;
+        position: relative
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+    }
+</style>
+
+<!DOCTYPE html>
+
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>AA7 </title>
+    <!-- Bootstrap core CSS-->
+    <link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="~/NewContent/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="~/NewContent/css/sb-admin.css" rel="stylesheet">
+    @*// @Scripts.Render("~/bundles/modernizr")*@
+    <script src="~/Scripts/jquery.min.js"></script>
+    <link href="~/NewContent/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <link href="~/NewContent/css/Sidebar.css" rel="stylesheet">
+	<link rel="icon" href="~/Images/dgis_ico.png" type="image/x-icon">
+</head>
+
+
+<body id="page-top" class="sidebar-toggled">
+
+
+    <div class="header" id="myHeader">
+
+
+
+        <nav class="navbar navbar-expand  static-top text-light">
+            <img src="~/Content/images/armylogo.png" style="height: 100px;  width: 100px; margin-top: 0px;  margin-left: 0px;margin-right:2px;" />   @*<span class="navbar-brand mr-1 text-light" href="#" style="color: white;font-weight:600;font-size: 28px;">AVIATORS AUTOMATION(GEB) - AA7</span>*@
+
+
+            <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#" style="margin-left:100px;">
+                <i class="fas fa-bars" style="color:white;font-size:18px"></i>
+            </button>
+            <img src="~/Content/images/ams.png" style="margin-left: 100px; margin-top: 0px; height: 105px; " />
+            <!-- Navbar Search -->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"></form>
+            <!-- Navbar -->
+            <div class="navbar-nav ml-auto ml-md-0">
+
+                <div class="nav-item dropdown no-arrow text-light d-flex" style="float:right;margin-top:50px;">
+
+
+                    <h4 class="text-light" style="color: white; font-size: 18px; margin-top:10px;margin-right:30px;">
+                        Welcome  @SessionManager.UserName @*| Role : @SessionManager.Role*@
+
+
+
+                        @*| Unit : @SessionManager.UnitName*@
+                        @*| Unit Id : @SessionManager.Unit_ID*@
+                        @*| Role : @SessionManager.Role  | Id : @SessionManager.UserId*@
+
+                    </h4>
+
+                    @*<div class="frmSearch mr-4">
+                        <input type="text" id="txtsearch" class="form-control mb-2" placeholder="Search Aviator Name" value="@SessionManager.AviatorName" style="width:300px;" />
+
+                        <div id="suggesstion-box" class="mt-2" style="width:300px;"></div>
+                    </div>*@
+
+
+                    <a href="@Url.Action("LogOut", "Account")">
+                        <img src="~/Images/shutdown.png" style="width:45px;height:45px; display:flex; margin-right:20px;" />
+                    </a>
+
+
+
+
+                </div>
+                <img src="~/Content/images/MYImage.png" style="height: 105px; width: 105px;" />
+
+            </div>
+
+        </nav>
+    </div>
+
+
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav text-light toggled">
+            <li class="nav-item">
+                <a class="nav-link" style="color:white" href="~/Home/Index">
+
+                    <i class="fas fa-home"></i>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Dashboard</span>
+                </a>
+            </li>
+
+            @if (Request.IsAuthenticated)
+            {
+
+                if (SessionManager.RoleId != enum1.Administrator)
+
+                {
+
+                    <li class="nav-item active">
+                        <a class="nav-link " style="color:white" href='@Url.Action("AddAviator", "AA7",new { DashVal = string.Empty,UnitId=IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>
+
+                            <i class="fas fa-user-edit"></i>
+
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Aviator
+                            </span>
+
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light"> Records</span>
+
+
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:white" href='@Url.Action("AASQNReport", "AA7")'>
+
+                            <i class="fas fa-user-edit"></i>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                                AASQN(UH)
+                            </span>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white; font-size: 16px; margin-top: -9px; font-weight: 500">
+                                Report
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @if (SessionManager.RoleId == enum1.GSO1)
+                        {
+                            <a class="nav-link" style="color:white" href="~/GEB/GEBLetter">
+                                <i class="fas fa-check-circle"></i>
+                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">GEB Exam</span>
+                            </a>
+                        }
+                        else
+                        {
+
+                            <a class="nav-link" style="color:white" href="~/GEB/UserGEBList">
+                                <i class="fas fa-check-circle"></i>
+                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">GEB Exam</span>
+                            </a>
+
+                        }
+
+
+
+                    </li>
+
+
+                    <li class="nav-item active">
+                        <a class="nav-link active" style="color:white" href='@Url.Action("AviatorList", "Search")'>
+
+                            <i class="fas fa-user-edit"></i>
+                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                                Search
+                            </span>
+
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">Aviator List</span>
+
+                        </a>
+                    </li>
+
+
+                }
+
+
+
+                if (SessionManager.RoleId == enum1.Administrator)
+                {
+
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span style=" color: white; font-weight: 600; font-size: 16px;">fmn/unit </span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddComd", "Master")' )>Comd</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddBdeCat", "Master")' )>Bde</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddSqn", "Master")' )>SQN</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddUnit", "Master")' )>Unit</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCorps", "Master")' )>Corps</a>
+                        </div>
+                    </li>
+
+
+
+
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-id-card" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span style=" color: white; font-weight: 600; font-size: 16px;">Pers Detail</span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddRank", "Master")' )>Rank </a>
+
+                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddGender", "Master")' )>Gender </a>*@
+                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddPostingType", "Master")' )>Posting Type </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddForeignPostingType", "Master")' )>Foreign Posting </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddHonourAward", "Master")' )>Honour Award </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddArmService", "Master")' )>Arm Service </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCivEdn", "Master")' )>Civ Edn</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCourse", "Master")' )>Course</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddFlgWithAppt", "Master")' )>Examiner Appt</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddAppt", "Master")' )>Appt </a>
+
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCourseGrading", "Master")' )>Course Grading </a>*@
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span style=" color: white; font-weight: 600; font-size: 17px;">Spl </span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddSpecialEqpt", "Master")' )>Special Eqpt </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddSpecialQual", "Master")' )>Special Qual</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddSpecialQualStatus", "Master")' )>Special Qual Status</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span style=" color: white; font-weight: 600; font-size: 17px;">Medical</span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddPlaceMedical", "Master")' )>Place of Medical</a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCopeCode", "Master")' )>COPE Code </a>
+                        </div>
+                    </li>
+
+
+
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span style=" color: white; font-weight: 600; font-size: 16px;">Heptr</span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddAircraftType", "Master")' )>Aircraft Type </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCatIR", "Master")' )>CAT/IR </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddInstrCAT", "Master")' )>Instr CAT </a>
+
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span style=" color: white; font-weight: 600; font-size: 16px;">RPAS</span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddAircraftType", "Master")' )>Aircraft Type </a>
+
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddRPASubstream", "Master")' )>RPAS Substream </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddRPACat", "Master")' )>RPAS CAT </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                            <span style=" color: white; font-weight: 600; font-size: 17px;">Accident</span>
+                        </a>
+                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddStagesGroundAccident", "Master")' )>Stages Ground Accident </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddPeriodOperation", "Master")' )>Period Operation </a>
+                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddClassInjury", "Master")' )>Class Injury</a>
+
+                        </div>
+                    </li>
+
+
+                }
+
+
+
+                <li class="nav-item active">
+                    <a class="nav-link" style="color:white" href='@Url.Action("ChangePassword", "Manage")'>
+
+                        <i class="fas fa-user-lock"></i>
+                        <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                            Password
+                        </span>
+
+                    </a>
+
+                    @if (SessionManager.UserName == "Admin")
+                    {
+                        <a class="nav-link" style="color:white" href='@Url.Action("Hierarchy", "Account")'>Accounts</a>
+                    }
+
+
+                </li>
+
+
+
+            }
+
+
+
+
+
+        </ul>
+
+        <div id="content-wrapper">
+            <div class="container-fluid">
+
+
+                <div class="cards mb-3">
+                    @if (Request.IsAuthenticated)
+                    {
+
+
+
+
+                        if (SessionManager.RoleId != enum1.Administrator)
+                        {
+
+                            <div class="mani">
+                                <ul class="mani">
+
+
+
+                                    <li><a href='@Url.Action("AviatorList", "Search")'><i class="fas fa-box"></i> Aviator </a></li>
+
+                                    @*<li><a href='@Url.Action("Index", "AdvSearch")'><i class="fas fa-box"></i> Aviator Master Search</a></li>*@
+
+                                    <li>
+                                        <a href='@Url.Action("AviatorHeptrRPAList", "Search")'><i class="fas fa-envelope"></i>  Heptr/RPAS</a>
+                                    </li>
+
+                                    <li> <a href='@Url.Action("AviatorCourseList", "Search")' )><i class="fas fa-check-circle"></i> Courses</a></li>
+                                    <li>
+                                        <a href='@Url.Action("AviatorHonourAwardsList", "Search")' )><i class="fas fa-award"></i> Awards</a>
+                                    </li>
+                                    <li> <a href='@Url.Action("AviatorMedicalList", "Search")' )><i class="fas fa-clipboard"></i>Medical</a></li>
+                                    <li><a href='@Url.Action("AviatorForeignVisitList", "Search")' )><i class="fas fa-edit"></i> Foreign Visit</a></li>
+
+                                    <li> <a href='@Url.Action("AviatorAccidentList", "Search")' )><i class="fas fa-bars"></i>Accident</a></li>
+                                    <li>  <a href='@Url.Action("AviatorQualificationList", "Search")' )><i class="fas fa-mars"></i>Spl Pilot Qual</a></li>
+                                    @*<li>  <a href='@Url.Action("AviatorApptList", "Search")' )><i class="fas fa-check-square"></i> Aviator Appt</a></li>
+                                        <li>   <a href='@Url.Action("AviatorRankList", "Search")' )><i class="fas fa-expand"></i> Aviator Rank</a></li>*@
+                                    <li>   <a href='@Url.Action("AviatorContactDetailsList", "Search")' )><i class="fas fa-palette"></i> Contact</a></li>
+                                    <li>  <a href='@Url.Action("AviatorFlyingHrsList", "Search")' )><i class="fas fa-id-card"></i>  Flying Hrs</a></li>
+                                    <li>  <a href='@Url.Action("AviatorPostingList", "Search")' )><i class="fas fa-id-card"></i>  Posting In/Out</a></li>
+
+
+
+                                </ul>
+                            </div>
+                            <script>
+                                $(document).ready(function () {
+                                    $('.mani ul li').find('a').each(function () {
+                                        var text = $(this).attr("href");
+
+                                        if (window.location.href.replace(window.location.origin, "") == text) {
+
+                                            $(this).addClass('active')
+                                        }
+                                        else {
+                                            $(this).removeClass("active");
+                                        }
+                                    });
+
+                                    $('.mani ul li a').click(function () {
+
+
+                                        $('li a').removeClass("active");
+                                        $(this).addClass("active");
+
+                                    });
+
+                                });
+                            </script>
+
+
+
+
+                            <script>
+                                $(document).ready(function () {
+                                    //if (window.location.href.replace("http://localhost:8080/", ""))
+                                    //alert(window.location.href.replace("http://localhost:8080/", ""));
+
+                                    $('.mani ul li').find('a').each(function () {
+                                        var text = $(this).attr("href");
+
+                                        if (window.location.pathname.replace(window.location.origin, "") == text) {
+
+                                            $(this).addClass('active')
+                                        }
+                                        else {
+                                            $(this).removeClass("active");
+                                        }
+                                    });
+
+                                    $('.mani ul li a').click(function () {
+
+
+                                        $('li a').removeClass("active");
+                                        $(this).addClass("active");
+
+                                    });
+
+                                });
+                            </script>
+
+
+                        }
+
+
+
+
+
+
+
+                    }
+
+
+
+                    <br />
+
+                    <div class="card-body">
+
+                        @RenderBody()
+                    </div>
+
+
+
+
+                </div>
+
+                <!-- DataTables Example -->
+
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer" style=" background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%); opacity: 3.8; position: fixed; border-bottom: 2px; width: 100%; height: 36px;">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        @*<span>Copyright © Your Website 2022</span>*@
+
+                        <p class="mb-0  text-light" style="font-size:22px;">Copyright © 2023. Developed by <span class="text-danger text-light">ASDC , DGIS :</span> Sponsor Dte : <span class="text-light">Aviation Dte </span> </p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <div style="display:none">
+        <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+        <script src="~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="~/NewContent/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="~/NewContent/vendor/datatables/jquery.dataTables.js"></script>
+        <script src="~/NewContent/vendor/datatables/dataTables.bootstrap4.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="~/NewContent/js/sb-admin.min.js"></script>
+        <!-- Demo scripts for this page-->
+        <script src="~/NewContent/js/demo/datatables-demo.js"></script>
+        <script src="~/NewContent/bootstrap-datepicker.min.js"></script>
+        <script src="~/Content/CustomJS/SearchAvitor.js"></script>
+    </div>
+
+
+    <script type="text/javascript">
+
+
+
+    </script>
+    <script>
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script>
+
+    <script src="~/Content/CustomJS/email.js"></script>
+
+    <script>
+        function ValInData(input) {
+            var regex = /[^a-zA-Z0-9& ]/g;
+            input.value = input.value.replace(regex, "");
+        }
+    </script>
+    <script>
+        function ValInData1(input) {
+            var regex = /[^0-9]/g;
+            input.value = input.value.replace(regex, "");
+        }
+    </script>
+    <script>
+        //function ValOnlyNum(event, element) {
+        //    var keyCode = event.keyCode || event.which;
+        //    if (keyCode < 48 || keyCode > 57) {
+        //        event.preventDefault();
+        //    }
+        //}
+        function ValOnlyNum(element) {
+            // Remove any non-numeric characters
+            element.value = element.value.replace(/\D/g, '');
+        }
+    </script>
+
+
+    <script type="text/javascript">
+
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var date = date.getDate();
+
+        $('.datepicker').datepicker({
+            //format: "MM yyyy",
+
+            minViewMode: 1,
+
+            weekStart: 1,
+            daysOfWeekHighlighted: "6,0",
+            autoclose: true,
+            todayHighlight: true,
+            startDate: new Date(year - 15, month, '01'),
+
+            endDate: new Date(year, month, '31')
+        });
+        /*  $('#Month').datepicker("setDate", new Date());*/
+        $('.datepicker2').datepicker({
+            format: "dd/MM/yyyy",
+
+            minViewMode: 1,
+
+            weekStart: 1,
+            daysOfWeekHighlighted: "6,0",
+            autoclose: true,
+            todayHighlight: true,
+            startDate: new Date(year - 15, month, date),
+
+            endDate: new Date(year, month, date)
+        });
+
+
+        $('.datepicker3').datepicker({
+
+            format: "dd/M/yyyy",
+            autoclose: true,
+
+        });
+
+
+
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Add click event to all sidenav links
+            $('.sidebar a').click(function () {
+                // Remove "active" class from all links
+                $('.sidebar a').removeClass('active');
+                // Add "active" class to the clicked link
+                $(this).addClass('active');
+            });
+        });
+    </script>
+
+
+    <style>
+
+
+
+        #watermark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: red;
+            font-size: 18px;
+            pointer-events: none;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+
+
+        /*a:hover {
+                    background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);
+                }*/
+
+        .dropdown-item:hover {
+            background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);
+        }
+
+        .dropdown-item {
+            font-weight: 500;
+        }
+
+        .fix {
+            background-image: linear-gradient(120deg,#a1c4fd 0,#c2e9fb 100%);
+        }
+
+        .collapsCol {
+            background-image: linear-gradient(120deg,#a1c4fd 0,#c2e9fb 100%);
+            max-height: 44px;
+        }
+
+        .btnCol {
+            font-size: 22px;
+            color: white;
+            font-weight: 500;
+            margin-top: -14px;
+        }
+    </style>
+    @RenderSection("scripts", required: false)
+    </body>

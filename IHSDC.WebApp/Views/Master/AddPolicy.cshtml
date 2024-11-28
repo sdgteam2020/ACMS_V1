@@ -1,0 +1,562 @@
+﻿
+@model IHSDC.WebApp.Models.PolicyCRUD
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+
+    ViewBag.Title = "Add Policy";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+    int sno = 0;
+    int sno1 = 0;
+}
+
+@{
+    string myValue = @ViewBag.ButtonName;
+}
+<head>
+    <style>
+        .clickable-div {
+            cursor: pointer;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+        }
+
+        .horizontal-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-left: 650px;
+            margin-top: 15px;
+        }
+
+        .conf-section {
+            position: absolute;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 999; /* Sit on top */
+            /*padding-top: 100px;*/ /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            /*padding: 20px;*/
+            border: 1px solid #888;
+            /*   width: 80%;*/
+        }
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+
+
+</head>
+<div class="container">
+    @using (Html.BeginForm("AddPolicy", "Master", FormMethod.Post, new { id = "form", enctype = "multipart/form-data" }))
+    {
+
+        <div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
+            <h3 style="text-align: center;">
+                Folder
+            </h3>
+            <hr />
+            <div class="row" style="margin-top:10px; margin-left:25px;">
+
+
+                @Html.Hidden("id", "model.PolicyId")
+                @Html.Hidden("oldid", Model.PolicyName)
+                @Html.Hidden("btnval", myValue)
+                <div class="row">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "danger" })
+                    <div class="col">
+                        <label><b> Folder Name:</b></label>
+                        @Html.TextBoxFor(m => m.PolicyName, new { @class = "form-control", @maxlength = "100", @onkeyup = "ValInData(this)", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.PolicyName, "", new { @class = "danger" })
+
+                    </div>
+                    <div class="col">
+                        <label><b>Type of Docu:</b></label>
+                        @Html.DropDownListFor(m => m.TypeOfDocu, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfDocu(), "--Select Type of Docu --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @required = "required", @data_live_search = "true", @style = "height:40px;width: 400px;", @onkeyup = "ValInData(this)" })
+                        @Html.ValidationMessageFor(model => model.TypeOfDocu, "", new { @class = "danger" })
+                    </div>
+                    <div class="col">
+                        <label><b>Remarks:</b></label>
+                        @Html.TextAreaFor(m => m.PolicyRemarks, new { @class = "form-control", @style = "height:40px;width: 400px;", @onkeyup = "ValInData(this)", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.PolicyRemarks, "", new { @class = "danger" })
+                    </div>
+
+                    <div class="col">
+                        <button type="submit" style="margin-top: 2rem;" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+            <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="bg-info text-white">
+                        <tr>
+                            <th class="center">S/No</th>
+                            <th class="center">Folder Name</th>
+                            <th class="center">Type of Docu</th>
+                            <th class="center">Remarks</th>
+                            <th class="center">Edit</th>
+                            <th class="center">Upload Docu</th>
+                            <th class="center">Log</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.count > 0)
+                        {
+                            foreach (var item in Model.ILPolicyCRUD)
+                            {
+                                <tr>
+                                    <td>
+                                        @{ sno++; }
+                                        @sno
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.PolicyName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TypeOfDocuName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PolicyRemarks)</td>
+                                    <td>
+                                        @*<a onclick="location.href='@Url.Action("AddPolicy", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.PolicyId.ToString()) })'">*@
+                                        <a href='@Url.Action("AddPolicy", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.PolicyId.ToString()) })'>
+
+                                            <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                                        </a>
+                                    </td>
+                                    <td class="DocuUpload">
+                                        <span id="spncardid" class="d-none">@Html.DisplayFor(modelItem => item.PolicyName)</span>
+                                        <a id="DocuUpload1" href="#" style=" color: inherit; text-decoration: none;">
+                                            <i class="fa fa-upload" aria-hidden="true"></i>
+                                        </a>
+                                        <a id="fileCountLink" href="#" style="color: inherit; text-decoration: none; display: inline-block; margin-left: 5px;">
+                                            <p style="display: inline;">(<span id="fileCountDisplay">0</span>)</p>
+                                        </a>
+
+                                    </td>
+                                    @if (item.TypeOfDocu == 2)
+                                    {
+                                        <td class="DocuLog">
+                                            <span id="spnLogcardid" class="d-none">@Html.DisplayFor(modelItem => item.PolicyName)</span>
+                                            <span id="spnLogPolicyid" class="d-none">@Html.DisplayFor(modelItem => item.PolicyId)</span>
+                                            <a id="DocuLog1" href="#" style=" color: inherit; text-decoration: none;">
+                                                <i class="fa fa-history" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="DocuLog">
+                                            <span id="spnLogcardid" class="d-none">@Html.DisplayFor(modelItem => item.PolicyName)</span>
+                                            <span id="spnLogPolicyid" class="d-none">@Html.DisplayFor(modelItem => item.PolicyId)</span>
+                                            <a id="DocuLog1" href="#" style=" color: inherit; text-decoration: none;">
+                                                <i class="fa fa-history" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+
+
+
+    @using (Html.BeginForm("AddPolicyDocu", "Master", FormMethod.Post, new { id = "form1", enctype = "multipart/form-data" }))
+    {
+        <div class="modal" id="DocuUpload">
+            <div class="modal-dialog" style="margin-top: 130px; width: 400mm; max-height: 450px; max-width: 100%; box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5); ">
+                <div class="modal-content">
+                    <div class="container">
+                        <p style="text-align:center;font-size:25px; font-weight:bold; font-family:Arial;">
+                            <span id="spnPolicyName" style="color:#FF0000"></span>
+                            @Html.TextBoxFor(m => m.PolicyFolder, new { @class = "d-none" })
+                        </p>
+                        <hr />
+
+
+                        @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", @onchange = "checkPDFHeader(this)", accept = ".pdf", multiple = "multiple" })
+
+                        <button type="submit" class="btn btn-primary" style="font-weight:bold;">Upload</button>
+                        <hr />
+                    </div>
+
+                    <div class="modal-body" style="max-height: 450px; overflow: auto;" id="DocuUploadData">
+
+                        <table class="table table-striped align-top" id="dataTable2" width="100%" cellspacing="0">
+                            <thead class="bg-info text-white">
+                                <tr>
+                                    <th class="center">S/No</th>
+                                    <th class="center">File Name</th>
+                                    <th class="center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-group">
+                            <a style="color:white;" class="btn btn-danger Closepoup">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+
+<script src="~/scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+@*<link href="~/NewContent/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="only screen">*@
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+<link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
+
+<link href="~/NewContent/SearchDate/dataTables.dataTables.css" rel="stylesheet" />
+@*<link href="~/NewContent/SearchDate/dataTables.dateTime.min.css" rel="stylesheet" />*@
+@*<script src="~/NewContent/SearchDate/dataTables.dateTime.min.js"></script>*@
+@*<script src="~/NewContent/SearchDate/dataTables.js"></script>*@
+<script src="~/NewContent/SearchDate/jquery-3.7.1.js"></script>
+<script src="~/NewContent/SearchDate/moment.min.js"></script>
+
+<div class="modal" id="DocuLog">
+    <div class="modal-dialog" style="margin-top: 130px; width: 400mm; max-width: 100%; box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5); ">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <p style="font-size:25px; font-weight:bold; font-family:Arial; text-align: center;">
+                    <span id="spnLogPolicyName" style="color:#FF0000"></span>
+                </p>
+                <button type="button" class="btn btn-danger CloseLogpoup" data-dismiss="DocuLog1">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 650px; overflow: auto;" id="DocuLogData">
+
+                <table border="0" cellspacing="5" cellpadding="5">
+                    <tbody>
+                        <tr>
+                            <td>Date Fm</td>
+                            <td><input type="text" id="min" class="date-input" name="min"></td>
+                            <td>Date To:</td>
+                            <td><input type="text" id="max" class="date-input" name="max"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <table class="table table-striped align-top" id="DownloadLog" width="100%" cellspacing="0">
+                    <thead class="bg-info text-white">
+                        <tr>
+                            <th class="center">S/No</th>
+                            <th class="center">Domain ID</th>
+                            <th class="center">Pers Number</th>
+                            <th class="center">Ip Address</th>
+                            <th class="center">Download Date</th>
+                            <th class="center">Type of Access</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tLogbody">
+                    </tbody>
+                </table>
+            </div>
+            @*<div class="modal-footer">
+                    <div class="btn-group">
+                        <a style="color:white;" class="btn btn-danger CloseLogpoup">Close</a>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+    // Iterate over each row in the table to get the file counts
+    $('#dataTable tr').each(function () {
+        var policyName = $(this).find('td.DocuUpload').find('#spncardid').text().trim();
+        if (policyName && policyName.length > 0) {
+            var FName = window.btoa(policyName);
+            var countUrl = '@Url.Action("GetFilesCount", "Master")' + '?FName=' + encodeURIComponent(FName);
+            var $fileCountDisplay = $(this).find('#fileCountDisplay');
+            $.getJSON(countUrl, function (data) {
+            $fileCountDisplay.text(data.fileCount);
+            });
+            }
+            });
+            });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdownsearch').select2();
+    });
+
+    $('.Closepoup').on('click', function (e) {
+        var modal = document.getElementById("DocuUpload");
+        modal.style.display = "none";
+    });
+    $('.CloseLogpoup').on('click', function (e) {
+        var modal = document.getElementById("DocuLog");
+        modal.style.display = "none";
+    });
+
+    $('.DocuUpload').on('click', function (e) {
+
+        $('#spnPolicyName').text($(this).closest("td").find('#spncardid').html());
+        var fileText = window.btoa($('#spnPolicyName').html());
+        $.ajax({
+            url: '/Master/GetFiles',
+            type: 'GET',
+            data: { FName: fileText },
+            success: function (data) {
+                $("#tbody").html(data);
+                $('#PolicyFolder').val($('#spnPolicyName').html());
+                var modal = document.getElementById("DocuUpload");
+                modal.style.display = "block";
+            },
+            error: function () {
+                $("#tbody").html("");
+                //var modal = document.getElementById("DocuUpload");
+                //modal.style.display = "none";
+            }
+        });
+    });
+
+    $('.DocuLog').on('click', function (e) {
+        $('#spnLogPolicyName').text($(this).closest("td").find('#spnLogcardid').html());
+        var Pid = window.btoa($(this).closest("td").find('#spnLogPolicyid').html());
+        $.ajax({
+            url: '/Master/GetPolicyLog',
+            type: 'GET',
+            data: { Id: Pid },
+            success: function (data) {
+                DataTable.ext.search.push(function (settings, data, dataIndex) {
+                    let min = minDate.val();
+                    let max = maxDate.val();
+                    let date = new Date(data[4]);
+                    if (
+                        (min === '' && max === '') ||
+                        (min === '' && date <= max) ||
+                        (min <= date && max === '') ||
+                        (min <= date && date < adjustMaxDate(max)) // adjustMaxDate function excludes the maximum date
+                    ) {
+                        return true;
+                    }
+                    return false;
+                });
+
+                minDate = new DateTime('#min', {
+                    format: 'DD-MM-YYYY'
+                });
+                maxDate = new DateTime('#max', {
+                    format: 'DD-MM-YYYY'
+                });
+
+                $('#DownloadLog').DataTable().destroy();
+                $("#tLogbody").html(data);
+                var modal = document.getElementById("DocuLog");
+                modal.style.display = "block";
+
+                $('#DownloadLog').DataTable({
+                    scrollY: "40vh",
+                    scrollCollapse: true,
+                    scroller: true,
+                    responsive: true,
+
+                });
+
+                $('#min, #max').on('change keyup', function () {
+                    $('#DownloadLog').DataTable().draw();
+                });
+            },
+            error: function () {
+                $("#tLogbody").html("");
+            }
+        });
+    });
+
+
+    function adjustMaxDate(max) {
+
+        if (max !== '') {
+            let adjustedMaxDate = new Date(max);
+            adjustedMaxDate.setDate(adjustedMaxDate.getDate() + 1); // Add one day
+            // alert(adjustedMaxDate);
+            return adjustedMaxDate;
+
+        }
+        return null;
+    }
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var currentDate = new Date();
+        var day = currentDate.getDate();
+        var month = currentDate.getMonth() + 1;
+        var year = currentDate.getFullYear();
+        var formattedDate = (day < 10 ? '0' : '') + day + '-' + (month < 10 ? '0' : '') + month + '-' + year;
+        $('.date-input').val(formattedDate); // Set current date as default
+    });
+</script>
+
+<script type="text/javascript">
+
+
+    function checkPDFHeader(input) {
+        const files = input.files;
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+            reader.onloadend = function (e) {
+                if (e.target.readyState === FileReader.DONE) {
+                    const arr = new Uint8Array(e.target.result).subarray(0, 4);
+                    const header = Array.from(arr).map(byte => byte.toString(16)).join("").toUpperCase();
+
+                    if (header === "25504446") {
+
+                    } else {
+                        sweetAlert("Please select a valid PDF file.");
+                        input.value = "";
+                    }
+                }
+            };
+        }
+    }
+
+        var messaget = '@ViewBag.ButtonName';
+
+    $(".OrderbyId").off("click").click(function () {
+        var orderby = $(this).closest("td").find(".spnOrderbyId").html();
+        updateorder(orderby);
+
+    });
+    function updateorder(orderby) {
+
+        $.ajax({
+            url: '/Master/PolicyOrderby',
+            type: 'POST',
+            data: { "OrderbyId": orderby },
+            success: function (result) {
+
+
+                if (result.length > 0) {
+
+                    swal("Successfully!", "Update Order Successfully", "success");
+                    location.reload();
+
+                }
+
+            }
+        });
+
+
+
+    }
+
+    function AddConfirmation(obj, ActionName, Submit) {
+        event.preventDefault();
+
+        $('.error-label').remove();
+
+        var emptyFields = [];
+        $('form').find(':input[required]').each(function () {
+            if ($.trim($(this).val()) === '') {
+                emptyFields.push(this);
+            }
+        });
+
+        if (emptyFields.length > 0) {
+            var firstEmptyField = emptyFields[0];
+            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            return;
+        }
+
+        if (messaget == "Add") {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+
+                showCancelButton: true,
+                cancelButtonText: "Cancel",
+                cancelButtonColor: "#FF0000",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Add",
+
+                closeOnCancel: true,
+                closeOnConfirm: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        } else {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Update",
+                cancelButtonText: "Cancel",
+
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        }
+    }
+
+   var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+</script>

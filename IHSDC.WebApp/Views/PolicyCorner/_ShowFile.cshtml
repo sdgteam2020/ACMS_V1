@@ -1,0 +1,37 @@
+﻿@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Models
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    int sno = 0;
+}
+
+@model IEnumerable<FileList>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @{ sno++; }
+            @sno
+        </td>
+        <td>
+            @if (item.FileType != 2)
+            {
+            <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FileName.ToString()), path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FilePath.ToString()) })" target="_blank">
+                @Html.DisplayFor(modelItem => item.FileName)
+            </a>
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.FileName)
+            }
+        </td>
+    </tr>
+}
+
+

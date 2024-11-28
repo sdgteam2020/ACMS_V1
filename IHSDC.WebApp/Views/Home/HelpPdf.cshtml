@@ -1,0 +1,54 @@
+﻿
+@model System.Web.Mvc.FormCollection
+@{
+    ViewBag.Title = "Help";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    @*<iframe src="~/Help/aa7helpfile.pdf" width="100%" height="600px"></iframe>*@
+    @*<object data="@Url.Action("HelpPdf", "Home")" type="application/pdf" width="100%" height="600px">
+        </object>*@
+    @*<a href="@Url.Action("HelpPdf", "Home")">View PDF</a>*@
+
+    <div id="pdfContainer"></div>
+
+    <script>
+        document.getElementById("pdfLink").addEventListener("click", function (event) {
+            event.preventDefault();
+            showPdf();
+        });
+
+        function showPdf() {
+            var pdfURL = '@Url.Action("HelpPdf", "Home")';
+            var pdfContainer = document.getElementById("pdfContainer");
+
+            pdfjsLib.getDocument(pdfURL).promise.then(function (pdfDoc) {
+                var pageNum = 1;
+                pdfDoc.getPage(pageNum).then(function (page) {
+                    var canvas = document.createElement("canvas");
+                    var context = canvas.getContext("2d");
+                    var viewport = page.getViewport({ scale: 1.5 });
+
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                    };
+
+                    pdfContainer.innerHTML = "";
+                    pdfContainer.appendChild(canvas);
+                    page.render(renderContext);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

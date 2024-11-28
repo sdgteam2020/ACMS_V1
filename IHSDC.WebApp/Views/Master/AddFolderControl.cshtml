@@ -1,0 +1,284 @@
+﻿@model IHSDC.WebApp.Models.FolderControlPermissionCRUD
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Connection
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+
+    ViewBag.Title = "Conf Type";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+
+@{
+    string myValue = @ViewBag.ButtonName;
+}
+<style>
+    .select2-selection__choice__remove {
+        display: none !important;
+    }
+    .table-striped tbody tr:hover td {
+        background-color: #f1f1f1; 
+    }
+
+    .table td, .table th {
+        text-align: left; 
+        padding: 8px; 
+    }
+    .user-column {
+   /*     word-wrap: break-word;
+        white-space: normal;*/
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 0; /* Adjust this value to control the visible width */
+    }
+
+  
+</style>
+
+
+@using (Html.BeginForm("AddFolderControl", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.FolderControlId)
+
+    @Html.Hidden("btnval", myValue)
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "danger" })
+
+<div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
+    <h3 style="text-align: center; box-shadow: 0px 1px 1px;">
+        Folder Access Permission
+    </h3>
+    <div class="container mt-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label><b>Name of Folder (Created By/ Name of Br):</b></label>
+                @Html.DropDownListFor(m => m.PolicyId, (new IHSDC.WebApp.Models.MasterModels()).LoadFolders(), "--Select Folder --", new { @data_show_subtext = "true", @class = "form-control select dropdownsearch", @data_live_search = "true", @required = "required", @maxlength = "20" })
+                @Html.ValidationMessageFor(model => model.PolicyId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                <label><b>Users:</b></label>
+                @Html.TextBoxFor(m => m.Users, new { style = "display:none;" })
+                <div id="OrgId">
+                    <select id="ddlUsers" multiple="multiple" name="UserPolicies" class="form-control">
+                        @if (Model.ILFolderUserCRUD != null)
+                        {
+                            foreach (var item in Model.ILFolderUserCRUD)
+                            {
+                                if (item.UserName != null)
+                                {
+                                    if (item.Msg == "Selected")
+                                    {
+                                        <option value="@item.PUserId" selected="selected">
+                                            @item.UserName
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.PUserId">
+                                            @item.UserName
+                                        </option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="button" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddFolderControl','AddFolderControl')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="dropdown-divider"></div>
+    <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+       
+<table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+    <thead class="bg-info text-white">
+        <tr>
+            <th class="center">S/No</th>
+            <th class="center">Name of Folder (Created By/ Name of Br)</th>
+            <th class="center">Users</th>
+            <th class="center">Edit</th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        @if (ViewBag.count > 0)
+        {
+            foreach (var item in Model.ILFolderControlPermissionCRUD)
+            {
+                <tr>
+                    <td style="width: 5%;">
+                        @{ sno++; }
+                        @sno
+                    </td>
+                    <td style="width: 25%;">
+                        <div class="RefLetter-container">
+                            @Html.DisplayFor(modelItem => item.PolicyName)
+                            <div class="RefLetter">
+                                @Html.DisplayFor(modelItem => item.RefLetter)
+                            </div>
+                        </div>
+                    </td>
+                    <td class="user-column" style="width: 65%;"  title="@item.UsersName">
+                        @Html.DisplayFor(modelItem => item.UsersName)
+                    </td>
+                    <td style="width: 5%;">
+                        <a href='@Url.Action("AddFolderControl", "Master", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FolderControlId.ToString()) })'>
+                            <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+    </div>
+
+</div>
+}
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+
+    <head runat="server">
+        <script src="~/Scripts/bootstrap-multiselect.js"></script>
+        <link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.optselected').prop('disabled', true);
+                $('#PolicyId').select2({
+                    allowClear: false
+                });
+                $('.dropdownsearch').select2();
+                function removeSelectedValue() {
+                    $('#mySelect2').val(null).trigger('change');
+                }
+                $(".select2-search__field").on('keydown', function (e) {
+                    if (e.which === 8 && !e.target.value.length) {
+                        e.stopImmediatePropagation();
+                        e.preventDefault();
+                    }
+                });
+
+                $("#removeSelectedValueButton").click(function () {
+                    removeSelectedValue();
+                });
+            });
+
+            $(function () {
+                $('#ddlUsers').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllValue: 'multiselect-all',
+                    enableFiltering: true,
+                    enableCaseInsensitiveFiltering: true,
+                    maxHeight: '300',
+                    buttonWidth: '230',
+                });
+            });
+
+            $("#ddlUsers").change(function () {
+
+                var selected = $("#ddlUsers option:selected");
+                var Users = "";
+                var arrSelected = [];
+                selected.each(function () {
+                    arrSelected.push($(this).val());
+                    Users += $(this).val() + ",";
+                });
+                Users = Users.slice(0, -1);
+
+                $('#Users').val(Users);
+            });
+
+        </script>
+    </head>
+
+    <script type="text/javascript">
+            var messaget = '@ViewBag.ButtonName';
+
+    function AddConfirmation(obj, ActionName, Submit) {
+        event.preventDefault();
+
+        // Remove any existing error labels
+        $('.error-label').remove();
+
+        // Check if all required form fields are filled in
+        var emptyFields = [];
+        $('form').find(':input[required]').each(function () {
+            if ($.trim($(this).val()) === '') {
+                emptyFields.push(this);
+            }
+        });
+      
+        // If there are empty fields, display an error message for the first empty field
+        if (emptyFields.length > 0) {
+            var firstEmptyField = emptyFields[0];
+            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            return;
+        }
+
+        // If all fields are filled, display the confirmation dialog
+        if (messaget == "Add") {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+
+                showCancelButton: true,
+                cancelButtonText: "Cancel",
+                cancelButtonColor: "#FF0000",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Add",
+
+                closeOnCancel: true,
+                closeOnConfirm: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        } else {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Update",
+                cancelButtonText: "Cancel",
+
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        }
+    }
+   var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+    </script>
+
+}

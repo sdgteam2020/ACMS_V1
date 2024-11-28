@@ -1,0 +1,102 @@
+﻿
+body,
+html {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+header.masthead {
+    background-color: lightskyblue;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+    height: 100vh;
+    min-height: 40rem;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+}
+
+    header.masthead p {
+        font-size: 1.15rem;
+    }
+
+    header.masthead h1 {
+        font-size: 3rem;
+    }
+
+@media (min-width: 1200px) {
+    header.masthead h1 {
+        font-size: 3.5rem;
+    }
+}
+
+
+.navbar-nav .nav-item:first-child {
+    margin-right: 1rem;
+}
+
+.navbar-nav .nav-item:last-child {
+    margin-left: auto;
+}
+
+
+
+
+.ca {
+    border-radius: 1rem;
+    margin: 170px auto;
+    box-shadow: 3px 2px 6px -1px;
+    max-width: 993px;
+    min-height: 397px;
+}
+
+.ca1 {
+    border-radius: 1rem 0 0 1rem;
+    height: 396px;
+    max-width: 319px;
+}
+
+.navbar-nav {
+    margin-right: 282px;
+}
+
+    .navbar-nav img {
+        height: 105px;
+        min-height: 105px;
+        width: 105px;
+        min-width: 105px;
+        margin-top: 0;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+        .navbar-nav img:last-child {
+            margin-left: 230px;
+        }
+
+        .navbar-nav img:nth-child(3) {
+            margin-left: 750px;
+        }
+
+.card.ca {
+    min-width: 836px;
+    border-radius: 1rem;
+}
+
+    .card.ca img.img-fluid {
+        border-radius: 1rem 0 0 1rem;
+        margin-left: 1px;
+        height: 379px;
+        max-width: 319px;
+    }
+
+    .card.ca .card-body {
+        max-height: 222px;
+        width: 447px;
+        max-width: 496px;
+        margin-top: -17px;
+    }
+
+.sticky-footer {
+    background: linear-gradient(90deg, rgba(0, 211, 255, 1) 0%, rgba(12, 141, 242, 1) 66

@@ -1,0 +1,153 @@
+08-08-2024 11:47:22:  test log...
+model FileName invoice20240808113616861.pdf
+
+
+08-08-2024 11:47:25: proc_AP_CRUD @procId='1',@id='6140',@Inbox_ID='6140',@RefId='4046',@ComdId='1178',@Branch='0',@Title='TEST123',@Upload='invoice20240808113616861.pdf',@UploadPath='http://localhost:8080/Uploads/6_test conf by RSC/pdf/invoice20240808113616861.pdf',@Summary='Summary(1000 Characters)',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '1178',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='ACMS2024040916030381520240808113616864.docx',@WordFilePath='http://localhost:8080/Uploads/6_test conf by RSC/Word/ACMS2024040916030381520240808113616864.docx'
+08-08-2024 11:47:26: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 11:48:02: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 11:48:07:  test log...
+model FileName invoice20240808113616861.pdf
+
+
+08-08-2024 11:48:19: proc_AP_CRUD @procId='1',@id='6140',@Inbox_ID='6140',@RefId='4046',@ComdId='1178',@Branch='0',@Title='TEST123',@Upload='invoice20240808113616861.pdf',@UploadPath='http://localhost:8080/Uploads/6_test conf by RSC/pdf/invoice20240808113616861.pdf',@Summary='Summary(1000 Characters)',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '1178',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='ACMS2024040916030381520240808113616864.docx',@WordFilePath='http://localhost:8080/Uploads/6_test conf by RSC/Word/ACMS2024040916030381520240808113616864.docx'
+08-08-2024 11:48:20: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 11:52:28: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 11:53:38:  test log...
+model Upload Lorem ipsum20240808115248550.pdf
+
+model FileName invoice20240808113616861.pdf
+
+
+08-08-2024 11:53:56: proc_AP_CRUD @procId='1',@id='6140',@Inbox_ID='6140',@RefId='4046',@ComdId='1178',@Branch='0',@Title='TEST123',@Upload='Lorem ipsum20240808115248550.pdf',@UploadPath='http://localhost:8080/Uploads/6_test conf by RSC/pdf/Lorem ipsum20240808115248550.pdf',@Summary='Summary(1000 Characters)',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '1178',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='ACMS2024040916030381520240808113616864.docx',@WordFilePath='http://localhost:8080/Uploads/6_test conf by RSC/Word/ACMS2024040916030381520240808113616864.docx'
+08-08-2024 11:53:57: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 12:01:08: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 12:01:37:  test log...
+model FileName Lorem ipsum20240808115248550.pdf
+
+
+08-08-2024 12:01:43: proc_AP_CRUD @procId='1',@id='6140',@Inbox_ID='6140',@RefId='4046',@ComdId='1178',@Branch='0',@Title='TEST123',@Upload='Lorem ipsum20240808115248550.pdf',@UploadPath='http://localhost:8080/Uploads/6_test conf by RSC/pdf/Lorem ipsum20240808115248550.pdf',@Summary='Summary(1000 Characters)',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '1178',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='ACMS2024040916030381520240808113616864.docx',@WordFilePath='http://localhost:8080/Uploads/6_test conf by RSC/Word/ACMS2024040916030381520240808113616864.docx'
+08-08-2024 12:01:44: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 12:02:45: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 12:06:16:  test log...
+model Upload invoice20240808120302593.pdf
+
+model FileName Lorem ipsum20240808115248550.pdf
+
+
+08-08-2024 12:06:18: proc_AP_CRUD @procId='1',@id='6140',@Inbox_ID='6140',@RefId='4046',@ComdId='1178',@Branch='0',@Title='TEST123',@Upload='invoice20240808120302593.pdf',@UploadPath='http://localhost:8080/Uploads/6_test conf by RSC/pdf/invoice20240808120302593.pdf',@Summary='Summary(1000 Characters)',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '1178',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='ACMS2024040916030381520240808113616864.docx',@WordFilePath='http://localhost:8080/Uploads/6_test conf by RSC/Word/ACMS2024040916030381520240808113616864.docx'
+08-08-2024 12:06:19: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 12:06:44: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+08-08-2024 12:08:02:  test log...
+model Upload invoice20240808120656097.pdf
+
+model FileName invoice20240808120302593.pdf
+
+
+08-08-2024 12:08:04: proc_AP_CRUD @procId='1',@id='6140',@Inbox_ID='6140',@RefId='4046',@ComdId='1178',@Branch='0',@Title='TEST123',@Upload='invoice20240808120656097.pdf',@UploadPath='http://localhost:8080/Uploads/6_test conf by RSC/pdf/invoice20240808120656097.pdf',@Summary='Summary(1000 Characters)',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '1178',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='ACMS2024040916030381520240808113616864.docx',@WordFilePath='http://localhost:8080/Uploads/6_test conf by RSC/Word/ACMS2024040916030381520240808113616864.docx'
+08-08-2024 12:08:05: proc_AP_CRUD @procId='8',@id='6140',@Inbox_ID='6140',@RefId='0',@ComdId='0',@Branch='0',@Title='',@Upload='',@UploadPath='',@Summary='',@Status='0',@DateTimeOfUpdate='',@LastUpdatedBy='',@IsVisibleToAll='False' ,@AllowEdit='False' , @UserId='1423',@Unit_ID  = '0',@CategoryId='0',@SponsorCategoryId='0',@NodalCategoryId='0',@WordFile='',@WordFilePath=''
+27-08-2024 10:29:24: False
+27-08-2024 10:29:38: False
+27-08-2024 10:29:59: False
+27-08-2024 10:45:57: False
+27-08-2024 10:46:22: False
+27-08-2024 10:49:35: False
+27-08-2024 10:53:21: True
+27-08-2024 10:53:31: True
+27-08-2024 10:53:45: False
+27-08-2024 10:54:12: False
+27-08-2024 10:54:17: False
+27-08-2024 10:56:49: False
+27-08-2024 10:56:50: False
+27-08-2024 10:57:07: False
+27-08-2024 10:57:37: False
+27-08-2024 10:57:45: False
+27-08-2024 11:01:22: False
+27-08-2024 11:01:27: False
+27-08-2024 11:02:27: False
+27-08-2024 11:02:34: False
+27-08-2024 11:03:01: False
+27-08-2024 11:03:02: False
+27-08-2024 11:05:08: False
+27-08-2024 11:05:33: False
+27-08-2024 11:05:52: False
+27-08-2024 11:06:12: False
+27-08-2024 11:06:26: False
+27-08-2024 11:08:38: False
+27-08-2024 11:09:40: False
+27-08-2024 11:09:53: False
+27-08-2024 11:10:00: False
+27-08-2024 11:10:27: False
+27-08-2024 11:10:58: False
+27-08-2024 11:12:09: False
+27-08-2024 11:12:33: False
+27-08-2024 11:13:40: False
+27-08-2024 11:14:43: False
+27-08-2024 11:16:56: False
+27-08-2024 11:25:12: True
+27-08-2024 11:33:16: True
+27-08-2024 11:39:43: True
+27-08-2024 11:40:04: False
+27-08-2024 11:45:57: False
+27-08-2024 11:51:22: False
+27-08-2024 11:55:04: False
+27-08-2024 12:19:09: True
+27-08-2024 12:39:03: False
+28-08-2024 09:30:50: False
+28-08-2024 09:37:50: False
+23-10-2024 16:47:43:  Session active value on GSO1 ---> 1
+23-10-2024 16:59:41:  Session active value on GSO1 ---> 1
+23-10-2024 17:10:25:  Session active value on GSO1 ---> 1
+24-10-2024 10:02:22:  Session active value on GSO1 ---> 1
+24-10-2024 10:15:44:  Session active value on GSO1 ---> 1
+24-10-2024 10:19:12:  Session active value on GSO1 ---> 1
+24-10-2024 10:45:27:  Session active value on GSO1 ---> 1
+24-10-2024 10:55:27:  Session active value on GSO1 ---> 1
+24-10-2024 10:56:24:  Session active value on GSO1 ---> 1
+24-10-2024 10:58:18:  Session active value on GSO1 ---> 1
+24-10-2024 11:07:22:  Session active value on GSO1 ---> 1
+24-10-2024 11:20:44:  Session active value on GSO1 ---> 1
+24-10-2024 11:21:45:  Session active value on GSO1 ---> 1
+24-10-2024 11:26:11:  Session active value on GSO1 ---> 1
+24-10-2024 11:27:05:  Session active value on GSO1 ---> 1
+24-10-2024 11:30:47:  Session active value on GSO1 ---> 1
+24-10-2024 11:35:20:  Session active value on GSO1 ---> 1
+24-10-2024 11:44:13:  Session active value on GSO1 ---> 1
+24-10-2024 11:45:19:  Session active value on GSO1 ---> 1
+24-10-2024 11:47:39:  Session active value on GSO1 ---> 1
+24-10-2024 11:49:26:  Session active value on GSO1 ---> 1
+24-10-2024 11:54:29:  Session active value on GSO1 ---> 1
+24-10-2024 12:04:20:  Session active value on GSO1 ---> 1
+24-10-2024 12:04:43:  Session active value on GSO1 ---> 1
+24-10-2024 12:16:30:  Session active value on GSO1 ---> 1
+24-10-2024 12:17:46:  Session active value on GSO1 ---> 1
+24-10-2024 14:12:55:  Session active value on GSO1 ---> 1
+24-10-2024 14:15:58:  Session active value on GSO1 ---> 1
+24-10-2024 14:16:22:  Session active value on GSO1 ---> 1
+24-10-2024 14:21:15:  Session active value on GSO1 ---> 1
+24-10-2024 14:29:10:  Session active value on GSO1 ---> 1
+24-10-2024 14:40:33:  Session active value on GSO1 ---> 1
+24-10-2024 14:40:50:  Session active value on GSO1 ---> 1
+24-10-2024 14:55:40:  Session active value on GSO1 ---> 1
+24-10-2024 15:39:14:  Session active value on GSO1 ---> 1
+24-10-2024 15:40:11:  Session active value on GSO1 ---> 1
+24-10-2024 15:40:52:  Session active value on GSO1 ---> 1
+24-10-2024 15:42:23:  Session active value on GSO1 ---> 1
+28-10-2024 10:37:26:  Session active value on GSO1 ---> 1
+28-10-2024 10:38:39:  Session active value on GSO1 ---> 1
+28-10-2024 10:38:47:  Session active value on GSO1 ---> 1
+28-10-2024 10:49:34:  Session active value on GSO1 ---> 1
+28-10-2024 15:39:37:  Session active value on GSO1 ---> 1
+28-10-2024 15:56:34:  Session active value on GSO1 ---> 1
+28-10-2024 16:17:29:  Session active value on GSO1 ---> 1
+28-10-2024 16:42:23:  Session active value on GSO1 ---> 1
+28-10-2024 17:00:41:  Session active value on GSO1 ---> 1
+28-10-2024 17:01:16:  Session active value on GSO1 ---> 1
+28-10-2024 17:08:41:  Session active value on GSO1 ---> 1
+28-10-2024 17:09:50:  Session active value on GSO1 ---> 1
+28-10-2024 17:13:25:  Session active value on GSO1 ---> 1
+28-10-2024 17:37:52:  Session active value on GSO1 ---> 1
+29-10-2024 09:56:46:  Session active value on GSO1 ---> 1
+04-11-2024 14:35:14:  Session active value on GSO1 ---> 1
+20-11-2024 12:09:00:  Session active value on GSO1 ---> 1
+20-11-2024 12:10:24:  Session active value on register user ---> 0
+20-11-2024 15:33:38:  Session active value on GSO1 ---> 1

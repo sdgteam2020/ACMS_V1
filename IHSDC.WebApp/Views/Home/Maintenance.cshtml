@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Maintenance";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            overflow-y: scroll;
+            scrollbar-width: none; /* For Firefox */
+            -ms-overflow-style: none; /* For Internet Explorer and Microsoft Edge */
+        }
+
+            body::-webkit-scrollbar {
+                display: none; /* For Chrome, Safari, and Opera */
+            }
+
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            height: 100vh;
+            width: 100vw;
+            /* Add your desired styles for the container */
+        }
+
+        .center {
+            display: block;
+            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            width: 12%;
+        }
+
+        #textContainer {
+            /* Replace with your desired color */
+            display: inline;
+        }
+        img {
+            border-radius: 50%;
+        }
+    </style>
+    <script>
+        window.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                e.preventDefault();
+            }
+        });
+
+        window.addEventListener("wheel", function (e) {
+
+            e.preventDefault();
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container card border-left-primary shadow h-100 py-2;" style="height: 60% !important; box-shadow: 1px 1px 9px 2px !important; background-color: #46bdf4;">
+        <div class="row">
+            <div class="col-md-12" style="align-content:center;">
+
+                <div class="row" style="margin-bottom:3rem;">
+                    <img src="~/Content/images/Maintain.png" alt="Maintenance" style="margin-top: 1rem; width: 340px; margin-left: 27rem;" />
+
+                </div>
+                <div class="row">
+                    <h1 style="font-family: Arial; color: white; text-align: center; font-size: 24px; font-family: Arial;">
+
+                        <strong style="justify-content: center; margin-left: 30rem;">
+
+                            <u style="color: white; ">Page Under Maintenance </u>
+
+                        </strong>
+                    </h1>
+                </div>
+                <div class="col-md-12">
+                    <h3 style="font-family: Arial; color: white; text-align: center; font-size: 24px; font-family: Arial;">
+
+                        <strong style="color: white; ">
+
+
+                            We are currently updating our service and adding some cool new features
+                            We will be back shortly. Thank you for your patience
+
+
+
+
+                        </strong>
+                    </h3>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <script>
+        // Function to disable all page links and tab links except the logout link
+        function disableLinks() {
+            var allLinks = document.querySelectorAll('a'); // Get all 'a' elements
+
+            // Loop through all links and disable them except the logout link
+            for (var i = 0; i < allLinks.length; i++) {
+                var link = allLinks[i];
+
+                // Check if the link is the logout link (you may need to adjust this selector based on your HTML structure)
+                if (link.getAttribute('href') !== '@Url.Action("Logout", "Account")') {
+                    link.addEventListener('click', preventDefaultAndAlert); // Disable link click behavior
+                    link.style.pointerEvents = 'none'; // Disable pointer events to make it visually disabled
+                    link.style.color = 'gray'; // Change the color to indicate it's disabled
+                }
+            }
+        }
+
+        // Function to show an alert when a disabled link is clicked
+        function preventDefaultAndAlert(event) {
+            event.preventDefault();
+            alert('This link is disabled while the site is under maintenance.');
+        }
+
+        // Call the disableLinks function when the page loads
+        window.onload = disableLinks;
+    </script>
+</body>
+
+</html>

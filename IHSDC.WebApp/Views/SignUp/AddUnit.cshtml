@@ -1,0 +1,303 @@
+﻿@model IHSDC.WebApp.Models.UnitCRUD
+@{
+    ViewBag.Title = "Add Branch";
+    Layout = null;
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+
+    int sno = 0;
+    string myValue = @ViewBag.ButtonName;
+}
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ACMS - SignUp</title>
+    <!-- Bootstrap core CSS-->
+    <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/CustomJS/AviatorJS.js"></script>
+    <link href="~/Content/css/dashboard.css" rel="stylesheet">
+    <link href="~/NewContent/vendor/bootstrap/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <!-- Page level plugin CSS-->
+    <link href="~/NewContent/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="~/NewContent/css/sb-admin.css" rel="stylesheet">
+
+    <link href="~/NewContent/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/NewContent/css/Sidebar.css" rel="stylesheet">
+
+    <link rel="icon" href="~/Images/dgis_ico.png" type="image/x-icon">
+
+    <!-- dataTable4-->
+
+    <link rel="stylesheet" href="~/NewContent/dataTable4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/NewContent/dataTable4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/NewContent/dataTable4/css/responsive.bootstrap4.min.css">
+    <link href="~/NewContent/dataTable4/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/searchBuilder.dataTables.min.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/dataTables.dateTime.min.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/colReorder.dataTables.min.css" rel="stylesheet" />
+    <!--Notification bell-->
+    <link href="~/NewContent/vendor/bootstrap/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/NewContent/vendor/bootstrap/css/fonts/icomoon/style.css" rel="stylesheet" />
+    <link href="~/NewContent/dataTable4/css/select2.min.css" rel="stylesheet" />
+
+</head>
+
+
+
+<div class="card-body" style="padding: 0.3rem; border: 0px solid #89CFF0; width: 600px;">
+
+    @using (Html.BeginForm("AddUnit", "SignUp", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="col">
+            @Html.Hidden("id", "model.Unit_ID")
+
+            @Html.Hidden("btnval", myValue)
+
+            <input id="Command" name="Command" class="d-none" value="0" />
+
+            <div class="row" style="margin-left:1rem;">
+                <div class="col-md-12">
+                    <label><b>Branch Name</b></label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                    @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @maxlength = "50" , onkeyup = "ValInData(this)" })
+
+                    @*@Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "danger" })*@
+                </div>
+            </div>
+
+            <div class="row" style="margin-left:1rem;">
+                <div class="col-md-12">
+                    <label><b>Comd/PSOs Name</b></label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                    @Html.DropDownListFor(m => m.ComdIdUnit, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @class = "select form-control ComdIdUnit" })
+                </div>
+            </div>
+
+            <div class="row" style="margin-left:1rem;">
+                <div class="col-md-12">
+                    <label><b>DGs Name</b></label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                    @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none" })
+                    <select id="spnCorpUnit" class="form-control d-flex"></select>
+                </div>
+
+                <div class="col-md-12 text-right">
+                    <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" onclick="AddConfirmationBranch(this,'/SignUp/AddUnit','SignUp',event)" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th class="center">S/No</th>
+                        <th class="center">Branch Name</th>
+                        <th class="center">DGs Name</th>
+                        <th class="center">Comd/PSOs Name</th>
+
+
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @if (ViewBag.count > 0)
+                    {
+                        foreach (var item in Model.ILUnitCRUD)
+                        {
+                            <tr>
+                                <td>
+                                    @{ sno++; }
+                                    @sno
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.UnitName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Corps)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Command)</td>
+
+
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+
+
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Content/CustomJS/SignUpfmReg.js"></script>
+
+<script type="text/javascript">
+     var messaget = '@ViewBag.ButtonName';
+
+    $('#ComdIdUnit').change(function () {
+
+        alert($('#ComdIdUnit').val());
+        $('#CorpId').val(1);
+        $('#BdeId').val(1);
+
+        BindCorpUnit($("#ComdIdUnit").val());
+        BindBde($("#ComdIdUnit").val(), $("#CorpId").val());
+        BindUnitUnit($("#ComdIdUnit").val(), $("#CorpId").val(), $("#BdeId").val());
+    });
+
+
+    $('#spnCorpUnit').change(function () {
+
+        $("#CorpId").val($('#spnCorpUnit').val());
+        BindBde($("#ComdIdUnit").val(), $("#CorpId").val());
+        BindUnitUnit($("#ComdIdUnit").val(), $("#CorpId").val(), $("#BdeId").val());
+    });
+
+    $('#spnBde').change(function () {
+        $("#BdeId").val($('#spnBde').val());
+        BindUnitUnit($("#ComdIdUnit").val(), $("#CorpId").val(), $("#BdeId").val());
+    });
+
+    $('#spnUnit').change(function () {
+        $("#Unit_ID").val($('#spnUnit').val());
+    });
+
+    function goBack() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = '@Url.Action("SignUp", "Account")';
+
+
+        }
+    }
+
+    function AddConfirmationBranch(obj, ActionName, Submit) {
+        event.preventDefault();
+
+        // Remove any existing error labels
+        $('.error-label').remove();
+
+        // Check if all required form fields are filled in
+        var emptyFields = [];
+        $('form').find(':input[required]').each(function () {
+            if ($.trim($(this).val()) === '') {
+                emptyFields.push(this);
+            }
+        });
+
+        // If there are empty fields, display an error message for the first empty field
+        if (emptyFields.length > 0) {
+            var firstEmptyField = emptyFields[0];
+            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            return;
+        }
+
+        // If all fields are filled, display the confirmation dialog
+        if (messaget == "Add") {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+
+                showCancelButton: true,
+                cancelButtonText: "Cancel",
+                cancelButtonColor: "#FF0000",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Add",
+
+                closeOnCancel: true,
+                closeOnConfirm: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        } else {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Update",
+                cancelButtonText: "Cancel",
+
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        }
+    }
+
+    var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+</script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="only screen">
+<link href="~/NewContent/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="only screen">
+<link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" media="only screen">
+<link href="~/NewContent/css/sb-admin.css" rel="stylesheet" media="only screen">
+<script src="~/Content/CustomJS/SignUpfmReg.js"></script>
+<script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+<script src="~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ Core plugin JavaScript
+<script src="~/NewContent/vendor/jquery-easing/jquery.easing.min.js"></script>
+ Page level plugin JavaScript
+<script src="~/NewContent/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/NewContent/vendor/datatables/dataTables.bootstrap4.js"></script>
+ Custom scripts for all pages
+<script src="~/NewContent/js/sb-admin.min.js"></script>
+ Demo scripts for this page
+<script src="~/NewContent/js/demo/datatables-demo.js"></script>
+<script src="~/NewContent/bootstrap-datepicker.min.js"></script>
+<script src="~/NewContent/bootstrap.min.js"></script>
+dataTable4
+<script src="~/NewContent/dataTable4/js/jquery.dataTables.min.js"></script>
+<script src="~/NewContent/dataTable4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/NewContent/dataTable4/js/dataTables.buttons.min.js"></script>
+<script src="~/NewContent/dataTable4/js/buttons.bootstrap4.min.js"></script>
+<script src="~/NewContent/dataTable4/js/vfs_fonts.js"></script>
+<script src="~/NewContent/dataTable4/js/buttons.html5.min.js"></script>
+<script src="~/NewContent/dataTable4/js/dataTables.responsive.min.js"></script>
+<script src="~/NewContent/dataTable4/js/responsive.bootstrap4.min.js"></script>
+<script src="~/NewContent/dataTable4/js/dataTables.colReorder.min.js"></script>
+<script src="~/NewContent/dataTable4/js/dataTables.searchBuilder.min.js"></script>
+<script src="~/NewContent/dataTable4/js/dataTables.dateTime.min.js"></script>
+<script src="~/NewContent/vendor/bootstrap/js/popper.min.js"></script>
+<script src="~/NewContent/vendor/bootstrap/js/owl.carousel.min.js"></script>
+<script src="~/NewContent/vendor/bootstrap/js/main.js"></script>
+<script src="~/NewContent/dataTable4/js/select2.min.js"></script>

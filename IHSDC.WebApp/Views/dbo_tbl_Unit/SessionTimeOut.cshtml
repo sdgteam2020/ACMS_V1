@@ -1,0 +1,15 @@
+﻿
+@{
+	ViewBag.Title = "SessionTimeOut";
+	Layout = null;
+}
+<link href="~/Content/nobackground.css" rel="stylesheet" />
+<div class="bobmodal">
+	<div class="bobmodal2" style="width:450px;top:200px;height:100px">
+		
+		<h2 style="color:#C70039 ;">Session Time Out. Please Login Again</h2>
+		
+		<button class="btn-outline-secondary btn-lg" id="btnhover" style="float:right;color:black;position:relative;right:10px;" onclick="location.href='@Url.Action("Login", "Account")'"><span>OK</span></button>
+
+	</div>
+</div>

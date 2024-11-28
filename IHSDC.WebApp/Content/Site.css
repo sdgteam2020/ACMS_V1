@@ -1,0 +1,130 @@
+﻿body {
+    /*padding-top: 53px;*/
+    padding-bottom: 18px;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue","Helvetica", Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+
+
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 400px;
+
+}
+
+
+.content {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    background-color: lightGray;
+    padding: 10px;
+}
+
+.content-subContent {
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    cursor: pointer;
+    display: inline-block;
+}
+#button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 30px;
+    background-color: #eee;
+    border: solid #ccc 1px;
+    cursor: pointer;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+   
+    background: rgba(0,0,0,0.6);
+}
+
+.cv-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px #ddd solid;
+    border-top: 4px #2e93e6 solid;
+    border-radius: 50%;
+    animation: sp-anime 0.5s infinite linear;
+}
+
+@keyframes sp-anime {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.is-hide {
+    display: none;
+}
+
+
+.loader {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: middle;
+    background-color: rgba(255, 255, 255, 0.75);
+    position: fixed;
+    display: table;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    min-height: 100%;
+    z-index: 99999;
+    left: 0;
+}
+
+.loader-container {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    z-index: 12;
+    text-align: center;
+}
+
+    .loader-container img {
+        width: 60px;
+    }
+
+.loader {
+    vertical-align: top;
+}
+
+.text-font1 {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.text-font2 {
+    font-family: 'Roboto', sans-serif;
+}

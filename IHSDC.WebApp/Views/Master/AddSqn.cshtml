@@ -1,0 +1,236 @@
+﻿
+@model IHSDC.WebApp.Models.SqnCRUD
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    //var ActionName = "/Master/DeleteSqn";
+
+    ViewBag.Title = "Add SQN ";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+@{
+    string myValue = @ViewBag.ButtonName;
+}
+@using (Html.BeginForm("AddSqn", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
+        <h3 style="text-align: center; box-shadow: 0px 1px 1px;">
+            Squadron
+        </h3>
+        <div class="row">
+            @Html.Hidden("id", "model.SqnId")
+
+            @Html.Hidden("btnval", myValue)
+
+            <span id="corpsidbind" class="d-none">@ViewBag.corpsId</span>
+            <span id="BdeCatIdbind" class="d-none">@ViewBag.BdeCatId</span>
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "danger" })
+            <div class="col" style="margin-left:10px">
+                <label><b>Command</b></label>
+                @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd --", new { @data_show_subtext = "true", @class = "select form-control", @required = "required" , @data_live_search = "true", @maxlength = "20" })
+                @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "danger" })
+            </div>
+            <div class="col">
+                <label><b>Corps</b></label>
+
+                <select name="CorpsId" id="CorpsId" class="select form-control" required></select>
+            </div>
+            <div class="col">
+                <label><b>Bde/CATS</b></label>
+
+                <select name="BdeCatId" id="BdeCatId" class="select form-control" required></select>
+            </div>
+            <div class="col">
+                <label><b> SQN  Name:</b></label>
+                @Html.TextBoxFor(m => m.SqnName, new { @class = "form-control", @maxlength = "40", @required = "required" , @onkeyup = "ValInData(this)" })
+
+                @Html.ValidationMessageFor(model => model.SqnName, "", new { @class = "danger" })
+
+
+            </div>
+            <div class="col" style="margin-left:10%">
+                <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddSqn','AddSqn')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        @*<div class="col-12" style="margin-left:35%">
+                <div class="form-group">
+                    <div class="col-sm-6" style="margin-left:10%">
+                        <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                    </div>
+                </div>
+            </div>*@
+
+        <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th class="center">S/No</th>
+                        <th class="center">SQN  Name</th>
+                        <th class="center">Command Name</th>
+                        <th class="center">Corps Name</th>
+                        <th class="center">Bde/CATS Name</th>
+                        <th class="center">Edit</th>
+                        <th class="center">Order</th>
+                        <th class="center">Shorting</th>
+                        @*<th class="center">Delete</th>*@
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @if (ViewBag.count > 0)
+                    {
+                        foreach (var item in Model.ILSqnCRUD)
+                        {
+                    <tr>
+                        <td>
+                            @{ sno++; }
+                            @sno
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.SqnName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ComdName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CorpsName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.BdeCatName)</td>
+                        <td>
+                            <a onclick="location.href='@Url.Action("AddSqn", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.SqnId.ToString()) })'">
+                                <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                            </a>
+                        </td>
+                        @*<td>
+            <a id="btndel" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.SqnId.ToString())' onclick="DeleteConfirmation(this,'/Master/DeleteSqn')">
+                <img src="~/Content/images/Delete.png" width="30" height="30" border="0" />
+            </a>
+        </td>*@
+                        <td><span>@item.Orderby</span></td>
+                        <td>
+                            @if (sno != 1)
+                            {
+                                <div class="spnOrderbyId d-none">@item.Orderby</div>
+                                <i class="fas fa-2x fa-arrow-circle-up OrderbyId" style="color: #f00a0a;"></i>
+                            }
+                    </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="4" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+
+<script src="~/scripts/jquery-3.3.1.js"></script>
+
+
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+@*<link href="~/NewContent/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="only screen">*@
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Content/CustomJS/Filter.js"></script>
+<script type="text/javascript">
+     var messaget = '@ViewBag.ButtonName';
+
+    $(".OrderbyId").off("click").click(function () {
+        var orderby = $(this).closest("td").find(".spnOrderbyId").html();
+        updateorder(orderby);
+        // CorpsOrderby
+    });
+    function updateorder(orderby) {
+
+        $.ajax({
+            url: '/Master/sqnOrderby',
+            type: 'POST',
+            data: { "OrderbyId": orderby }, //get the search string
+            success: function (result) {
+
+
+                if (result == 0) {
+
+                    swal("Successfully!", "Update Order Successfully", "success");
+                    location.reload();
+
+                }
+
+            }
+        });
+
+
+
+    }
+    function AddConfirmation(obj, ActionName, Submit) {
+        event.preventDefault();
+
+        // Remove any existing error labels
+        $('.error-label').remove();
+
+        // Check if all required form fields are filled in
+        var emptyFields = [];
+        $('form').find(':input[required]').each(function () {
+            if ($.trim($(this).val()) === '') {
+                emptyFields.push(this);
+            }
+        });
+
+        // If there are empty fields, display an error message for the first empty field
+        if (emptyFields.length > 0) {
+            var firstEmptyField = emptyFields[0];
+            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            return;
+        }
+
+        // If all fields are filled, display the confirmation dialog
+        if (messaget == "Add") {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+
+                showCancelButton: true,
+                cancelButtonText: "Cancel",
+                cancelButtonColor: "#FF0000",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Add",
+
+                closeOnCancel: true,
+                closeOnConfirm: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        } else {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Update",
+                cancelButtonText: "Cancel",
+
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        }
+    }
+
+   var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+</script>

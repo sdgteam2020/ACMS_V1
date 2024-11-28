@@ -1,0 +1,231 @@
+﻿
+@model IHSDC.WebApp.Models.UnitCRUD
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Add Branch";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
+}
+@{
+    string myValue = @ViewBag.ButtonName;
+}
+@using (Html.BeginForm("AddUnit", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
+        <h3 style="text-align: center; box-shadow: 0px 1px 1px;">
+            Branch
+        </h3>
+        <div class="row">
+            @Html.Hidden("id", "model.Unit_ID")
+
+            @Html.Hidden("btnval", myValue)
+            <span id="corpsidbind" class="d-none">@ViewBag.corpsId</span>
+            <span id="BdeCatIdbind" class="d-none">@ViewBag.BdeCatId</span>
+            <span id="SqnIdbind" class="d-none">@ViewBag.SqnIdbind</span>
+
+            <input id="Command" name="Command" class="d-none" value="0" />
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "danger" })
+            <div class="col" style="margin-left:10px">
+                <label><b>Branch Name</b></label>
+                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @maxlength = "50", @required = "required", @onkeyup = "ValInData(this)" })
+
+                @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "danger" })
+            </div>
+            <div class="col">
+                <label><b>Comd/PSOs Name</b></label>
+                @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd/PSOs --", new { @data_show_subtext = "true", @class = "select form-control", @required = "required", @data_live_search = "true", @maxlength = "20" })
+                @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "danger" })
+            </div>
+            <div class="col">
+                <label><b>DGs Name</b></label>
+                @* @Html.DropDownListFor(m => m.Corps, (new IHSDC.WebApp.Models.MasterModels()).LoadCorpsName(), "--Select Corps --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true" })*@
+                @Html.TextBoxFor(m => m.CorpsId, new { @class = "form-control d-none", @required = true })
+                <select name="Corps" id="spnCorpsId" class="select form-control" required>
+                    <option value=0>-Select DGs-</option>
+                </select>
+            </div>
+    <!--     <div class="col">
+             <label><b>Bde</b></label>-->
+                @* @Html.DropDownListFor(m => m.BdeCat, (new IHSDC.WebApp.Models.MasterModels()).LoadBdeCatName(), "--Select Bde --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true" })*@
+                <!--<select name="BdeCat" id="BdeCatId" class="select form-control" required>
+            <option value=0>-Select Bde-</option>
+        </select>
+    </div>-->
+                <!--<div class="col">
+        <label><b>SQN</b></label>-->
+                @* @Html.DropDownListFor(m => m.Sqn, (new IHSDC.WebApp.Models.MasterModels()).LoadSqnName(), "--Select SQN --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true" })*@
+                <!--<select name="Sqn" id="SqnId" class="select form-control" required>
+            <option value=0>-Select SQN-</option>
+        </select>
+    </div>
+
+    <div class="col">
+        <label><b>Type of Flt</b></label>
+        @Html.DropDownListFor(m => m.TypeOfUnit, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfFlight(), "--Type of Flt --", new { @data_show_subtext = "true", @class = "select form-control", @required = "required", @data_live_search = "true", @maxlength = "25" })
+        @Html.ValidationMessageFor(model => model.TypeOfUnit, "", new { @class = "danger" })
+    </div>
+    <div class="col">
+        <label><b>Is Flight</b></label>
+        @Html.DropDownListFor(m => m.IsFlight, (new IHSDC.WebApp.Models.MasterModels()).LoadYesNOVal(), "--Select Yes/No --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = "required" })
+    </div>-->
+
+                <div class="col" style="margin-left:10%">
+                    <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddUnit','AddUnit')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                </div>
+            </div>
+        <div class="dropdown-divider"></div>
+        @*<div class="col-12" style="margin-left:35%">
+                <div class="form-group">
+                    <div class="col-sm-6" style="margin-left:10%">
+                        <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                    </div>
+                </div>
+            </div>*@
+
+        <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th class="center">S/No</th>
+                        <th class="center">Branch Name</th>
+                        @*<th class="center">SQN</th>*@
+                        @*<th class="center">Bde</th>*@
+                        <th class="center">DGs Name</th>
+                        <th class="center">Comd/PSOs Name</th>
+                        @*<th class="center">Type of Unit</th>*@
+                        <th class="center">Edit</th>
+                        @*<th class="center">Delete</th>*@
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @if (ViewBag.count > 0)
+                    {
+                        foreach (var item in Model.ILUnitCRUD)
+                        {
+                            <tr>
+                                <td>
+                                    @{ sno++; }
+                                    @sno
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.UnitName)</td>
+                                @*<td>@Html.DisplayFor(modelItem => item.Sqn)</td>*@
+                                @*<td>@Html.DisplayFor(modelItem => item.BdeCat)</td>*@
+                                <td>@Html.DisplayFor(modelItem => item.Corps)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Command)</td>
+                                @*<td>@Html.DisplayFor(modelItem => item.TypeOfUnit)</td>*@
+                                <td>
+                                    <a onclick="location.href='@Url.Action("AddUnit", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Unit_ID.ToString()) })'">
+                                        <img src="~/Content/images/Editnew.png" width="20" height="20" border="0">
+                                    </a>
+                                </td>
+                                @*<td>
+
+            <a id="btndel" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Unit_ID.ToString())' onclick="DeleteConfirmation(this,'/Master/DeleteUnit')">
+                <img src="~/Content/images/Delete.png" width="20" height="20" border="0" />
+            </a>
+        </td>*@
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="4" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@*<link href="~/NewContent/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="only screen">*@
+<script src="~/Content/CustomJS/Filter1.js"></script>
+
+<script type="text/javascript">
+     var messaget = '@ViewBag.ButtonName';
+
+    $('#spnCorpsId').change(function () {
+        $("#CorpsId").val($('#spnCorpsId').val());
+    });
+
+
+    function AddConfirmation(obj, ActionName, Submit) {
+        event.preventDefault();
+
+        // Remove any existing error labels
+        $('.error-label').remove();
+
+        // Check if all required form fields are filled in
+        var emptyFields = [];
+        $('form').find(':input[required]').each(function () {
+            if ($.trim($(this).val()) === '') {
+                emptyFields.push(this);
+            }
+        });
+
+        // If there are empty fields, display an error message for the first empty field
+        if (emptyFields.length > 0) {
+            var firstEmptyField = emptyFields[0];
+            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            return;
+        }
+
+        // If all fields are filled, display the confirmation dialog
+        if (messaget == "Add") {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+
+                showCancelButton: true,
+                cancelButtonText: "Cancel",
+                cancelButtonColor: "#FF0000",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Add",
+
+                closeOnCancel: true,
+                closeOnConfirm: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        } else {
+            swal({
+                title: "Please Confirm",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Update",
+                cancelButtonText: "Cancel",
+
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $('form').submit();
+                    }
+                });
+        }
+    }
+
+    var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+</script>
+

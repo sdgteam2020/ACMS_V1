@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataroot xmlns:od="urn:schemas-microsoft-com:officedata" generated="2019-01-14T12:58:09">
+<ExportHonourAward>
+<ArmyNumber>IC56053L</ArmyNumber>
+<HonourAward_ID>1</HonourAward_ID>
+<HonourAwardsDate>2018-12-14T00:00:00</HonourAwardsDate>
+<HonourAwardsPlace>qwwg</HonourAwardsPlace>
+<Remarks>NULL</Remarks>
+<Validation>Validated By 2IC</Validation>
+<ValidationDate>2018-12-23T00:00:00</ValidationDate>
+<CounterValidation>Validated by Flt Cdr</CounterValidation>
+<CounterValidationDate>2018-12-23T00:00:00</CounterValidationDate>
+<IsDeleted>0</IsDeleted>
+<IsActive>1</IsActive>
+<EditDeleteBy>0</EditDeleteBy>
+<EditDeleteDate>2018-12-23T00:00:00</EditDeleteDate>
+<UpdatedByUserId>26</UpdatedByUserId>
+<DateTimeOfUpdate>2018-12-23T11:24:41</DateTimeOfUpdate>
+</ExportHonourAward>
+<ExportHonourAward>
+<ArmyNumber>IC56053L</ArmyNumber>
+<HonourAward_ID>2</HonourAward_ID>
+<HonourAwardsDate>2018-12-14T00:00:00</HonourAwardsDate>
+<HonourAwardsPlace>hjg</HonourAwardsPlace>
+<Remarks>NULL</Remarks>
+<Validation>Validated By 2IC</Validation>
+<ValidationDate>2018-12-23T00:00:00</ValidationDate>
+<CounterValidation>Validated by Flt Cdr</CounterValidation>
+<CounterValidationDate>2018-12-23T00:00:00</CounterValidationDate>
+<IsDeleted>0</IsDeleted>
+<IsActive>1</IsActive>
+<EditDeleteBy>0</EditDeleteBy>
+<EditDeleteDate>2018-12-23T00:00:00</EditDeleteDate>
+<UpdatedByUserId>26</UpdatedByUserId>
+<DateTimeOfUpdate>2018-12-23T12:03:05</DateTimeOfUpdate>
+</ExportHonourAward>
+<ExportHonourAward>
+<ArmyNumber>IC56067L</ArmyNumber>
+<HonourAward_ID>1</HonourAward_ID>
+<HonourAwardsDate>2018-12-14T00:00:00</HonourAwardsDate>
+<HonourAwardsPlace>ioh</HonourAwardsPlace>
+<Remarks>NULL</Remarks>
+<Validation>Validated By 2IC</Validation>
+<ValidationDate>2018-12-23T00:00:00</ValidationDate>
+<CounterValidation>Validated by Flt Cdr</CounterValidation>
+<CounterValidationDate>2018-12-23T00:00:00</CounterValidationDate>
+<IsDeleted>0</IsDeleted>
+<IsActive>1</IsActive>
+<EditDeleteBy>0</EditDeleteBy>
+<EditDeleteDate>2018-12-23T00:00:00</EditDeleteDate>
+<UpdatedByUserId>26</UpdatedByUserId>
+<DateTimeOfUpdate>2018-12-23T12:03:21</DateTimeOfUpdate>
+</ExportHonourAward>
+</dataroot>

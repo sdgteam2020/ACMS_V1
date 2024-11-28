@@ -1,0 +1,275 @@
+﻿@model IHSDC.WebApp.Models.RegisterViewModel
+@{
+    /**/
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Add User";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+}
+
+<style>
+    .form-group {
+        margin-bottom: 0rem !important;
+    }
+
+    
+</style>
+
+
+    @using (Html.BeginForm("Add", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="card-body" style="width:50%; box-shadow: -1px 1px 8px 1px; margin-top:5px; margin-left:450px;">
+            <div class="card-body">
+                <div class="card-body" style="padding: 0.3rem; border: 0px solid #89CFF0;">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 headingtext">NEW USER</div>
+                        <div class="col-md-4"></div>
+
+                    </div>
+                    <hr />
+
+
+                    <div class="container">
+
+                        <div class="form-row row-cols-3">
+                            <!-- First Row -->
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.Username, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @onkeyup = "ValInData(this)" })
+                                </div>
+                            </div>
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row row-cols-3">
+                            <!-- Second Row -->
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.Rank, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(m => m.Rank, (new IHSDC.WebApp.Models.MasterModels()).LoadRanks(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                </div>
+                            </div>
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.Number, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @maxlength = "10", @onkeyup = "ValInData(this)" })
+                                </div>
+                            </div>
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.FullName, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @onkeyup = "ValInData(this)" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row row-cols-3">
+                            <!-- Third Row -->
+                            <div class="form-group required" style="width:300px;">
+                                <label style="margin-top:8px;margin-left:12px">Comd/PSOs</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                </div>
+                            </div>
+                            <div class="form-group required" style="width:300px;">
+                                <label style="margin-top:8px;margin-left:12px">DGs</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @required = true })
+                                    <select id="spnCorp" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="form-group d-none">
+                                <label style="margin-top:8px;margin-left:12px">Bde</label>
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @required = true })
+                                    <select id="spnBde" class="form-control" }></select>
+                                </div>
+                            </div>
+                            <div class="form-group required" style="width:300px;">
+                                <label style="margin-top:8px;margin-left:12px">Branch</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @required = true })
+                                    <select id="spnUnit" class="form-control" required></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row row-cols-3">
+
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.Appointment, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(m => m.Appointment, (new IHSDC.WebApp.Models.MasterModels()).LoadAppointment(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                </div>
+                            </div>
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.Roles, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.DropDownList("Roles", (IEnumerable<SelectListItem>)ViewData["Roles"], new { id = "rolesDropdown", style = "width:280px;height:35px;background-color:#f2f2f2" })
+                                </div>
+                            </div>
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.ASCON, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control", @maxlength = "10", @oninput = "validateInput(this)", @onkeyup = "ValInData(this)" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row row-cols-3">
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.Active, (new IHSDC.WebApp.Models.MasterModels()).LoadActive(), "--Select --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                </div>
+                            </div>
+
+                            <div class="form-group required" style="width:300px;">
+                                @Html.LabelFor(m => m.MobNo, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control", @oninput = "ValInData1(this)", @maxlength = "10", @required = true })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 text-center">
+                                    <input type="submit" class="btn btn-primary" onclick="AddConfirmation(this,'/Account/Add','Add')" value="Add" />
+                                    <span>
+                                        @Html.ActionLink("View Users", "Hierarchy", "Account", new object { }, new { @class = "btn btn-primary" })
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+    }
+             
+                <script src="~/Scripts/jquery-3.3.1.js"></script>
+                <script src="~/Content/CustomJS/SignUp.js"></script>
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                }
+<script>
+
+                    $(document).ready(function () {
+
+                        $('#spnUnit_ID').change(function () {
+
+                            $("#Unit_ID").val($('#spnUnit_ID').val());
+                        });
+
+                        $('#UserTypeId').change(function () {
+                            Bindunit($("#UserTypeId").val());
+
+                        });
+
+                        $('#Username').change(function () {
+                            $("#Password").val('Admin123!')
+                            $("#ConfirmPassword").val('Admin123!')
+                        });
+
+                    });
+
+          
+                    $('#ComdId').change(function () {
+                        $('#CorpId').val(1);
+                        $('#BdeId').val(1);
+
+                        BindCorp($("#ComdId").val());
+                        BindBde($("#ComdId").val(), $("#CorpId").val());
+                        BindUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
+                    });
+
+
+                    $('#spnCorp').change(function () {
+                        $("#CorpId").val($('#spnCorp').val());
+                        BindBde($("#ComdId").val(), $("#CorpId").val());
+                        BindUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
+                    });
+
+                    $('#spnBde').change(function () {
+                        $("#BdeId").val($('#spnBde').val());
+                        BindUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
+                    });
+
+                    $('#spnUnit').change(function () {
+                        $("#Unit_ID").val($('#spnUnit').val());
+                    });
+
+                    //function Bindunit(UserTypeId) {
+
+                    //    var list = '';
+
+
+                    //    $.ajax({
+                    //        url: '/Master/GetUnitByhierarchy',
+                    //        type: 'POST',
+                    //        data: { "Unit_ID": UserTypeId }, //get the search string
+                    //        success: function (result) {
+
+
+                    //            if (result.length > 0) {
+
+                    //                list = '';
+
+                    //                list = '<option value="">Select Unit</option>';
+
+
+                    //                for (var j = 0; j < result.length; j++) {
+
+
+                    //                    list += '<option value=' + result[j].Value + '>' + result[j].Text + '</option>';
+                    //                }
+
+
+                    //                $('#spnUnit_ID').html(list);
+                    //            }
+
+                    //            // $('#SqnId').html(list);
+
+                    //        }
+                    //    });
+
+
+
+
+                    //}
+
+
+                    var dropdown = document.getElementById("rolesDropdown");
+                    dropdown.addEventListener("keydown", function (event) {
+                        event.preventDefault();
+                    });
+                    var message = '@message';
+                    var messageStatus = '@messageStatus';
+                    var messagemidStatus = '@messagemidStatus';
+                    if (message)
+                    sweetAlert(message, messagemidStatus, messageStatus);
+</script>

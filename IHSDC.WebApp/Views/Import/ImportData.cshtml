@@ -1,0 +1,66 @@
+﻿
+
+@{
+    ViewBag.Title = "ImportData";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+
+}
+
+@using (Html.BeginForm("ImportData", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <input type="file" id="fileBase" class="form-control" name="fileBase" multiple="true" />
+            </div>
+            <div class="col" style="margin-top:2%">
+                <input type="submit" value="Upload" class="btn btn-success" />
+
+            </div>
+        </div>
+    </div>
+
+
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script type="text/javascript">
+      var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus';
+    if (message) {
+        if (messageStatus == "info") {            
+            swal({
+                title: "Do You want  you want to Import Data in '" + message +"'this Unit?",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Import it!",
+                cancelButtonText: "No, cancel ",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        //debugger;        
+                        location.href = "/Import/UploadAviator?c="  + 'con';
+                    } else {
+                        swal("Data will be not Imported because proccess is Cancelled!", "", "info");
+                    }
+                }
+            );
+
+        }
+        else {
+
+            sweetAlert(message, messagemidStatus, messageStatus);
+        }
+    }
+</script>

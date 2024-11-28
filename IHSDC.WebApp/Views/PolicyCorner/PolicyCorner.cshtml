@@ -1,0 +1,602 @@
+﻿@model IHSDC.WebApp.Models.PolicyCRUD
+
+@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+
+    ViewBag.Title = "Policy";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+    int sno = 0;
+    int sno1 = 0;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+
+        .policy {
+            border-radius: 4px;
+            background: #fff;
+            box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+            transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+            padding: 14px 80px 18px 36px;
+            cursor: pointer;
+            margin: 20px 20px 20px 40px;
+            border: 1px solid #D3D3D3;
+        }
+
+            .policy:hover {
+                /* transform: scale(1.05);*/
+                box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+            }
+
+            .policy h3 {
+                font-weight: 600;
+            }
+
+            .policy img {
+                position: absolute;
+                top: 0px;
+                right: 100px;
+                max-height: 120px;
+            }
+
+        .card-1 {
+            background-image: url('../../images/search-card.png');
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: 80px;
+        }
+
+        .card-2 {
+            background-image: url('../../images/search-card1.png');
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: 80px;
+        }
+
+        .bar1 {
+            margin: 0 auto;
+            width: 575px;
+            border-radius: 30px;
+            border: 1px solid #dcdcdc;
+        }
+
+            .bar1:hover {
+                box-shadow: 1px 1px 8px 1px #dcdcdc;
+            }
+
+            .bar1:focus-within {
+                box-shadow: 1px 1px 8px 1px #dcdcdc;
+                outline: none;
+            }
+
+        .buttons {
+            margin-top: -50px;
+            float: right;
+            position: relative;
+            /*  margin-right: 410px;*/
+        }
+
+        .button {
+            background-color: #f5f5f5;
+            border: none;
+            color: #707070;
+            font-size: 15px;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            outline: none;
+        }
+
+            .button:hover {
+                border: 1px solid #c8c8c8;
+                padding: 9px 19px;
+                color: #808080;
+            }
+
+            .button:focus {
+                border: 1px solid #4885ed;
+                padding: 9px 19px;
+            }
+
+        .searchbarPol {
+            height: 45px;
+            width: 575px;
+            border-radius: 30px;
+            border: 1px solid #dcdcdc;
+            font-size: 16px;
+            outline: none;
+            padding-left: 5px;
+            text-align: center
+        }
+
+        element.style {
+            display: block;
+            padding-right: 17px;
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 999; /* Sit on top */
+            /*padding-top: 100px;*/ /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            /*padding: 20px;*/
+            border: 1px solid #888;
+            width: 80%;
+        }
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+        .popover__title {
+            font-size: 24px;
+            /* line-height: 36px;*/
+            text-decoration: none;
+            color: rgb(228, 68, 68);
+            text-align: center;
+            /*  padding: 15px 0;*/
+        }
+
+        .popover__wrapper {
+            position: relative;
+            display: inline-block;
+            margin-left: 130px;
+            float: right;
+            z-index: 1;
+        }
+
+        .popover__content {
+            opacity: 0;
+            z-index: 100;
+            visibility: hidden;
+            position: absolute;
+            left: -100px;
+            top: 60px;
+            transform: translate(0, 10px);
+            background-color: #FFFFF7;
+            padding: 1rem;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+            width: auto;
+            border: 1px solid #bfbfbf;
+        }
+
+            .popover__content:before {
+                position: absolute;
+                z-index: 100;
+                content: "";
+                right: calc(50% - 10px);
+                top: -8px;
+                border-style: solid;
+                border-width: 0 10px 10px 10px;
+                border-color: transparent transparent #bfbfbf transparent;
+                transition-duration: 0.3s;
+                transition-property: transform;
+            }
+
+        .popover__wrapper:hover .popover__content {
+            z-index: 100;
+            opacity: 1;
+            visibility: visible;
+            transform: translate(0, -20px);
+            transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+        }
+
+        .popover__message {
+            text-align: center;
+        }
+
+        .microphone {
+            border-top-right-radius: 32px !important;
+            border-bottom-right-radius: 32px !important;
+            background-color: #fff;
+        }
+
+        .acms {
+            border-top-left-radius: 32px !important;
+            border-bottom-left-radius: 32px !important;
+            background-color: #fff;
+        }
+
+        .input-group-prepend {
+            margin-right: -2px !important;
+        }
+
+        .input-group-append {
+            margin-left: -2px !important;
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #ced4da;
+            outline: 0;
+            box-shadow: 0 0 0 0 !important;
+        }
+
+        .form-control {
+            border-right: 0 !important;
+            border-left: 0 !important;
+        }
+
+        footerPolicy {
+            display: flex;
+            background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .footerPolicy-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            /* margin: 0 auto;*/
+            padding: 0 20px;
+        }
+
+            .footerPolicy-content p {
+                margin: 0;
+                color: white;
+                margin-left: 230px;
+            }
+
+        .centered {
+            display: flex;
+            background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+            justify-content: center;
+            align-items: center;
+            /* margin-top:-19px;*/
+            /*height: 100vh; */
+        }
+    </style>
+    <script>
+        window.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                e.preventDefault();
+            }
+        });
+
+        window.addEventListener("wheel", function (e) {
+
+            e.preventDefault();
+        });
+    </script>
+
+</head>
+
+@using (Html.BeginForm("AddPolicy", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <body>
+        <div class="col">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 headingtext">Policy Corner</div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+        <div class="card-body" style="box-shadow: -1px 1px 8px 1px; margin-top:5px;">
+
+            <div class="col">
+                <div class="row">
+                    <marquee id="marquee" width="100%" direction="left" height="30px;" style="background-color: #0cafff; margin-top: -7px; color: white; font-weight:bold; ">
+                        <p> *** Please upload PSO Booklet ***</p>
+                    </marquee>
+                </div>
+            </div>
+
+
+            <div class="row">
+                @functions {
+                    List<string> GetFilesInFolder(string folderName)
+                    {
+                        var folderPath = Server.MapPath("~/Policy/" + folderName);
+                        var files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+                        var fileList = new List<string>();
+                        foreach (var filePath in files)
+                        {
+                            var fileName = Path.GetFileName(filePath);
+                            var fullPath = filePath;
+                            fileList.Add(fullPath);
+                        }
+                        return fileList;
+                    }
+                }
+                @if (ViewBag.count > 0)
+                {
+                    foreach (var item in Model.ILPolicyCRUD)
+                    {
+                        if (item.TypeOfDocu == 2)
+                        {
+                            <div class="policy card-2 col-md-3">
+                                <div class="PolicyModelOpen">
+                                    <span class="spncardid d-none">@Html.DisplayFor(modelItem => item.PolicyName)</span>
+                                    <span class="spnTypeofdocu d-none">@Html.DisplayFor(modelItem => item.TypeOfDocu)</span>
+                                    <span class="spnPolicyId d-none">@Html.DisplayFor(modelItem => item.PolicyId)</span>
+                                    <span class="spnArmyNumber d-none">@SessionManager.ArmyNo</span>
+
+                                    <h4 style="color: #1E90FF; font-size:17px;">
+                                        @Html.DisplayFor(modelItem => item.PolicyName)
+                                    </h4>
+
+                                    <a href="#" id="btnPopup" style="color: inherit; text-decoration: none;">
+                                        <div style="text-align: center; float:right;">
+                                            <img src="~/Images/search_pol.png" style="width: 40px; height: 40px;" />
+                                            <h3 class="animate-charcter"> Click to Search</h3>
+                                        </div>
+                                    </a>
+                                    <p style="font-size:12px;">
+                                        @Html.DisplayFor(modelItem => item.PolicyRemarks)
+                                    </p>
+
+                                </div>
+                                <button type="button" class="btn showpopupFile" style="background-color: #11a1fa; color: white; font-size: 11px; font-weight: bold; ">
+                                    Show File
+                                </button>
+                                <br />
+                                <div class="col" style="padding-top: 20px; margin-left: -15px; font-size:13px;">
+                                    <a href="https://dgis.army.mil/App_Data/online.zip">Download DGIS App and run setup.</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="policy card-1 col-md-3">
+                                <div class="PolicyModelOpen">
+                                    <span class="spncardid d-none">@Html.DisplayFor(modelItem => item.PolicyName)</span>
+                                    <span class="spnTypeofdocu d-none">@Html.DisplayFor(modelItem => item.TypeOfDocu)</span>
+                                    <span class="spnPolicyId d-none">@Html.DisplayFor(modelItem => item.PolicyId)</span>
+                                    <span class="spnArmyNumber d-none">@SessionManager.ArmyNo</span>
+
+                                    <h4 style="color: #1E90FF;font-size:17px;">
+                                        @Html.DisplayFor(modelItem => item.PolicyName)
+                                    </h4>
+                                    <a href="#" id="btnPopup" style="color: inherit; text-decoration: none;">
+                                        <div style="text-align: center; float:right;">
+                                            <img src="~/Images/search_pol.png" style="width: 40px; height: 40px;" />
+                                            <h3 class="animate-charcter"> Click to Search</h3>
+                                        </div>
+                                    </a>
+                                    <p style="font-size:12px;">
+                                        @Html.DisplayFor(modelItem => item.PolicyRemarks)
+                                    </p>
+
+                                </div>
+
+                                <button type="button" class="btn showpopupFile" style="background-color: #11a1fa; color: white; font-size: 11px; font-weight: bold; ">
+                                    Show File
+                                </button>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            @*</div>*@
+
+            <div class="row">
+                <p style="text-align: justify; margin: 30px 30px 30px 30px; color: #1E90FF; ">
+                    * To view, search and download Confd Docus, 2FA (Two Factor Authentication) is mandatory. Pl apch GSO-1, SD-2(32919) for enabling the access of confd docus on your Domain ID. Once access permission is granted,<br />
+                    &nbsp;&nbsp;pl download Online ver of DGIS App and run setup to install it on ADN PC.<br /><br />
+                    Note : <a href="https://dgis.army.mil/dgisapp.html" target="_blank"><strong><u>DGIS App</u></strong></a> instl is reqd on your ADN PC for 2FA. Request pl download the Online setup of DGIS App(for ADN PC only) and run it.<br />
+                    * Pl apch Army Software Devp Centre(ASDC) at 39644 for asst wrt "DGIS App".
+                </p>
+            </div>
+
+
+
+
+        </div>
+
+    </body>
+
+}
+</html>
+<div id="ShowFileModal" class="modal">
+    <div class="modal-dialog" style="margin-top: 120px; width: 400mm; max-width: 100%;">
+        <div class="modal-content">
+
+            <div class="modal-header text-center">
+                <p style="text-align:center;font-size:22px; font-weight:bold; font-family:Arial;">
+                    <span id="spnShowFilePolicyName" style="color:#FF0000"></span>
+                    <span id="spnShowFileDocType" class="d-none"></span>
+                </p>
+                <button type="button" class="btn btn-danger CloseShowFilepoup" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 600px; overflow: auto;" id="ShowFileData">                
+               
+                    <table class="table" id="dataTable2">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th class="center">S/No</th>
+                                <th class="center">FileName</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tShowFilebody">
+                        </tbody>
+                    </table>
+             
+                @*<div class="modal-footer">
+                    <div class="btn-group">
+                        <a style="color:white;" class="btn btn-danger CloseShowFilepoup">Close</a>
+                    </div>
+                </div>*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="PolicyModal" class="modal">
+    <div class="modal-content" style="margin-top:120px;">
+        <div class="centered">
+            <img src="~/Images/searchEngine.png" height="70px" />
+        </div>
+        <div class="modal-header text-center">
+            <p style="text-align:center;font-size:22px; font-weight:bold; font-family:Arial;">
+                <span id="spnPolicyName" style="color:#FF0000"></span>
+                <span id="spnDocType" class="d-none"></span>
+                <span id="spnPId" class="d-none"></span>
+                <span id="SpnArmyNumber1" class="d-none">@SessionManager.ArmyNo</span>
+            </p>
+            <div class="bar1">
+                <input class="searchbarPol" type="text" id="searchTerm" title="Search" placeholder="Search here">
+                <div class="buttons">
+                    <img src="~/Images/search_pol.png" id="searchSubmit" style="width: 45px; height: 45px; margin-top:4px;" onclick="navigateToSearch()" />
+
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger Closepoup" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body" style="max-height: 450mm; overflow: auto;" id="APLogData">         
+            @*<button type="button" class="close Closepoup" aria-label="Close" style="margin-top:-60px; font-weight:bold;">
+            </button>*@
+            <div class="table-responsive ">
+                <table class="table d-none" id="dataTable1">
+                    <thead class="bg-info text-white">
+                        <tr>
+                            <th class="center">S/No</th>
+                            <th class="center" style="width:15%;">File</th>
+                            <th class="center" style="width:60%;">Content</th>
+                            <th class="center"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+
+                </table>
+            </div>
+            @*<div class="modal-footer">
+                <div class="btn-group">
+                    <a style="color:white;" class="btn btn-danger Closepoup">Close</a>
+                </div>
+            </div>*@
+
+        </div>
+        <footerPolicy>
+            <div class="footerPolicy-content">
+                <p><img src="~/Images/asdc_logo.png" width="45px" height="45px" /> Copyright © 2023. Developed by Army Software Development Centre (ASDC), DGIS</p>
+            </div>
+        </footerPolicy>
+    </div>
+</div>
+
+
+@*<div id="PolicyModal" class="modal">
+    <div class="modal-content" style="margin-top:120px;">
+        <div class="centered">
+            <img src="~/Images/searchEngine.png" height="70px" />
+        </div>
+        <div class="modal-header text-center">
+            <p style="text-align:center;font-size:30px; font-weight:bold; font-family:Arial;">
+                <span id="spnPolicyName" style="color:#FF0000"></span>
+                <span id="spnDocType" class="d-none"></span>
+                <span id="spnPId" class="d-none"></span>
+                <span id="SpnArmyNumber1" class="d-none">@SessionManager.ArmyNo</span>
+            </p>
+            <div class="bar1">
+                <input class="searchbarPol" type="text" id="searchTerm" title="Search" placeholder="Search here">
+                <div class="buttons">
+                    <img src="~/Images/search_pol.png" id="searchSubmit" style="width: 45px; height: 45px; margin-top:4px;" onclick="navigateToSearch()" />
+
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger Closepoup" data-dismiss="modal">&times;</button>
+        </div>     
+        <div class="modal-body" style="max-height: 600px; overflow: auto;" id="APLogData">
+            <table class="table d-none" id="dataTable1">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th class="center">S/No</th>
+                        <th class="center" style="width:15%;">File</th>
+                        <th class="center" style="width:60%;">Content</th>
+                        <th class="center"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
+        <footerPolicy>
+            <div class="footerPolicy-content">
+                <p><img src="~/Images/asdc_logo.png" width="45px" height="45px" /> Copyright © 2023. Developed by Army Software Development Centre (ASDC), DGIS</p>
+            </div>
+        </footerPolicy>
+    </div>
+</div>*@
+
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/GEBSubmit.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/CustomJS/AddUpdateFilter.js"></script>
+<script src="~/Content/CustomJS/AviatorJS.js"></script>
+<script src="~/Content/CustomJS/PolicyCorner.js"></script>
+<script>
+    var input = document.getElementById("searchTerm");
+    input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("searchSubmit").click();
+        }
+    });
+</script>
+<script>
+    var marquee = document.getElementById('marquee');
+
+    marquee.addEventListener('mouseover', function () {
+        this.stop();
+    });
+
+    marquee.addEventListener('mouseout', function () {
+        this.start();
+    });
+</script>
+<script>
+    var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+
+
+</script>
+
+<script type="text/javascript">
+
+
+</script>

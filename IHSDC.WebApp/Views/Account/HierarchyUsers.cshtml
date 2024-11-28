@@ -1,0 +1,212 @@
+﻿@model IEnumerable<IHSDC.Common.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "View Users";
+    int sno = 0;
+}
+
+@*<h2>@ViewBag.Title.</h2>*@
+@*<h4>Displaying all Users of @User.Identity.Name.</h4>*@
+<p>
+    @Html.ActionLink("Add Users", "Add", "Account", new object { }, new { @class = "btn btn-primary" })
+    @*@if (User.Identity.Name == IHSDC.Common.Configurations.Application.AdminUsername)
+    {
+        @Html.ActionLink("//TODO: Add Superior", "AddSuperior", "Account", new object { }, new { @class = "btn btn-outline-danger" })
+    }*@
+    @*<button type="button" class="btn btn-outline-primary">
+        Requests <span class="badge badge-light">@Model.Count()</span>
+    </button>*@
+</p>
+<div class="row">
+    @*<div class="col-md-12">
+        @if (Model.Count() > 1)
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        Integer Id
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserName), @Html.DisplayNameFor(model => model.Email) & @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+
+                    <th>
+                        Establishment
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PersonnelNumber)<br />
+                        @Html.DisplayNameFor(model => model.Rank) &
+                        @Html.DisplayNameFor(model => model.FullName)<br />
+                        (@Html.DisplayNameFor(model => model.Appointment))
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    if (item.UserName != User.Identity.Name)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IntId)
+                            </td>
+                            <td>
+                                <span class="fa fa-user"></span> @Html.DisplayFor(modelItem => item.UserName)
+                                <br />
+                                <span class="fa fa-envelope-o"></span> @Html.DisplayFor(modelItem => item.Email)
+                                <br />
+                                <span class="fa fa-phone"></span> @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EstablishmentAbbreviation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PersonnelNumber)<br />
+                                @Html.DisplayFor(modelItem => item.Rank)<br />
+                                @Html.DisplayFor(modelItem => item.FullName)<br />
+                                <i>@Html.DisplayFor(modelItem => item.Appointment)</i>
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                @if (User.Identity.Name == IHSDC.Common.Configurations.Application.AdminUsername)
+                                {
+                                    <br />
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-primary" role="alert"><div class="lead"><span class="fa fa-id-card"></span> No Subordinates! Please add a Subordinate.</div></div>
+        }
+    </div>*@
+
+
+
+    <div class="table-responsive">
+        @if (Model.Count() > 1)
+
+        {
+            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th class="center">S/No</th>
+                        <th class="center">Username</th>
+
+                        <th class="center">Pers Details/Contact No</th>
+                        <th class="center">Unit</th>
+                       
+                        <th class="center">Data Entry Fwd Auth</th>
+                        <th class="center">GEB Fwd Auth</th>
+                        <th class="center">Status</th>
+                        <th>Edit</th>
+                        <th>Del</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbody">
+
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.UserName != User.Identity.Name)
+                        {
+                            <tr>
+                                <td>
+                                    @{ sno++; }
+                                    @sno
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Rank) @Html.DisplayFor(modelItem => item.FullName)
+                                    @Html.DisplayFor(modelItem => item.Appointment) <br />
+                                    @Html.DisplayFor(modelItem => item.Email) <br />
+                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EstablishmentFull)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DEFwdAuth)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GEBFwdAuth)
+                                </td>
+                                <td>
+
+                                    @if (item.Active.ToString() == "1")
+                                    {
+                                    @*@Html.DisplayFor(modelItem => item.Active, new { htmlAttributes = new { @class = "active-item" } })*@
+                                    <span class="green"></span>
+                                    }
+                                    else
+                                    {
+                                    @*@Html.DisplayFor(modelItem => item.Active, new { htmlAttributes = new { @class = "inactive-item" } })*@
+                                    <span class="red"></span>
+                                    }
+
+                                </td>
+                                <td>
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id })*@
+
+                                    <a onclick="location.href='@Url.Action("Edit", "Account", new { id = item.Id })'">
+                                        <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                                    </a>
+                                </td>
+                                <td>
+                                    @if (User.Identity.Name == IHSDC.Common.Configurations.Application.AdminUsername)
+                                    {
+                                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                                        <a onclick="location.href='@Url.Action("Delete", "Account", new { id = item.Id })'">
+                                            <img src="~/Content/images/Delete.png" width="30" height="30" border="0" />
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @*<tr><td colspan="4" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>*@
+                        }
+
+                    }
+
+
+                </tbody>
+            </table>
+        }
+
+        <br /><br /><br /><br />
+
+
+    </div>
+
+</div>
+
+<style>
+    .green {
+        height: 30px;
+        width: 30px;
+        background-color: #008000;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .red {
+        height: 30px;
+        width: 30px;
+        background-color: #ff0000;
+        border-radius: 50%;
+        display: inline-block;
+    }
+</style>

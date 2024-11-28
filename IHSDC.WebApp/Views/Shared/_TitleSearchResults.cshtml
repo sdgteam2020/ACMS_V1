@@ -1,0 +1,51 @@
+﻿@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Models
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    int sno = 0;
+}
+
+@model IEnumerable<SearchData>
+@foreach (var item in Model)
+{
+    <tr>
+         @{ 
+                var FileWithoutPath = Path.GetFileNameWithoutExtension(item.FileName);
+         }
+        <td>
+            @{ sno++; }
+            @sno
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => FileWithoutPath)
+        </td>
+        <td>
+            <b>@Html.DisplayFor(modelItem => item.paragraph)</b>
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.FileName))
+            {
+                <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(FileWithoutPath),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FileName.ToString()) })" target="_blank">
+                    <div class="pdf">
+                    </div>
+                </a>
+            }
+            else
+            {
+            }
+        </td>
+    </tr>
+}
+@if (sno == 0)
+{
+        <tr class="text-center">
+            <td colspan=4 class="text-center"> 
+                No Record Found
+            </td>
+        </tr>
+        }

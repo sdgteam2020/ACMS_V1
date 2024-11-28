@@ -1,0 +1,978 @@
+﻿@model IHSDC.WebApp.Models.InboxCRUD
+@using IHSDC.WebApp.Connection
+
+@{
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    ViewBag.Title = "Add Noting";
+    // Layout = "~/Views/Shared/_NewAA7LayoutMenu.cshtml";
+    // int sno = 0;
+    //int sno1 = 0;
+    int rowCount = 0;
+    int sno = 0;
+    int sno1 = 0;
+}
+
+<head>
+    <link href="~/NewContent/dataTable4/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Content/css/SweetAlert2.js"></script>
+    <style id="table_style" type="text/css">
+
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        #Comment {
+            width: 90%;
+            height: 15rem;
+            margin-left: 2rem;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 26rem;
+            width: 36rem;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        @@media print {
+
+            @@page {
+                size: A3 landscape;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            body::after {
+                content: none !important;
+            }
+
+            .card-page {
+                break-after: page;
+            }
+
+                .card-page:last-of-type {
+                    break-after: auto;
+                }
+
+            footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+    </style>
+
+    <style id="table_style1" type="text/css">
+
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        #Comment {
+            width: 90%;
+            height: 15rem;
+            margin-left: 2rem;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 26rem;
+            width: 36rem;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        @@media print {
+
+            @@page {
+                size: A4 portrait;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            body::after {
+                content: none !important;
+            }
+
+            .card-page {
+                break-after: page;
+            }
+
+                .card-page:last-of-type {
+                    break-after: auto;
+                }
+
+            footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+    </style>
+
+</head>
+<div class="col">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 headingtext">Add Noting</div>
+        <div class="col-md-4"></div>
+
+    </div>
+</div>
+
+@using (Html.BeginForm("AddComment", "Noting", FormMethod.Post, new { enctype = "multipart/form-data", id = "myForm" }))
+{
+    @Html.HiddenFor(m => m.Inbox_ID)
+
+    <div class="card-body" style="box-shadow: -1px 1px 8px 1px; margin-top:5px;">
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg text-left">
+                        <label style="color:blue;"><u>Title</u> :</label>
+                        <font style="font-weight:bold;color:blue;">    @Html.DisplayFor(m => m.Title)   </font>
+                    </div>
+                </div>
+                <div class="row">
+
+
+                    <div class="col-md-2 text-left">
+                        <label style="color:blue;"> <u>Conf</u> :</label>
+                        <font style="font-weight:bold;color:blue;">  @Html.DisplayFor(m => m.Conf)  </font>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <label style="color:blue;"><u>Unit</u> :</label>
+                        <font style="font-weight: bold; color: blue;">  @Html.DisplayFor(m => m.UnitName) </font>
+                    </div>
+                    <div class="col-md-2 text-left">
+                        <label style="color:blue;"><u>Branch</u> :</label>
+
+                        <font style="font-weight: bold; color: blue;"> @Html.DisplayFor(m => m.BranchName) </font>
+                    </div>
+
+                    <div class="col-md-2 text-left">
+                        <label style="color:blue;"><u>Category</u> :</label>
+
+                        <font style="font-weight:bold;color:blue;">   @Html.DisplayFor(m => m.CategoryName) </font>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-xl-6 d-flex">
+                        <div class="card radius-10 w-100">
+                            <div class="card-body">
+                                <div class="uploadheadpdf">
+                                    Agenda Pt Docu (Pdf & Word Format)
+                                </div>
+                                <br />
+                                @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", @onchange = "PreviewPDF()", accept = ".pdf", disabled = "disabled", style = "display:none" })
+                                @if (ViewBag.UploadPath != "")
+                                {
+                                    <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.ConfId.ToString()) })" class="pdfdownload" style="color: white; text-decoration: none; float: left; margin-right: 20px; margin-top: -20px;">
+                                        Download
+                                    </a>
+                                }
+                                @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
+
+                                @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", @onchange = "PreviewWordDoc()", accept = ".Doc,.Docx", disabled = "disabled", style = "display:none" })
+
+                                @if (ViewBag.WordFilePath != "")
+                                {
+                                    <a href="@ViewBag.WordFilePath" target="_blank" download="@Model.AmendWordFileName">
+                                        <div class="worddownload" style="float:left; margin-right:20px; margin-top:-20px;">&nbsp;Download</div>
+                                    </a>
+                                }
+                                @Html.TextBoxFor(m => m.WordFilePath, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
+
+
+
+                                <div id="pdf-container"></div>
+
+                                <script>
+                                    function PreviewPDF() {
+                                        const input = document.getElementById("files");
+                                        const pdfContainer = document.getElementById("pdf-container");
+                                        const maxSizeInBytes = 5 * 1024 * 1024;
+
+                                        if (input.files && input.files[0]) {
+                                            const selectedFile = input.files[0];
+
+                                            if (selectedFile.size > maxSizeInBytes) {
+                                                sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
+                                                input.value = "";
+                                                pdfContainer.innerHTML = "";
+                                                return;
+                                            }
+
+                                            if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
+                                                const embed = document.createElement("object");
+                                                embed.data = URL.createObjectURL(selectedFile);
+                                                embed.type = "application/pdf";
+                                                embed.width = "100%";
+                                                embed.height = "470px";
+                                                pdfContainer.innerHTML = "";
+                                                pdfContainer.appendChild(embed);
+                                            } else {
+                                                alert("Please select a valid PDF file.");
+                                                input.value = "";
+                                                pdfContainer.innerHTML = "";
+                                            }
+                                        }
+                                    }
+                                </script>
+                              
+                            </div>
+
+                            <!--<div class="card-body">-->
+                                @*<div class="uploadheadword">
+                                    Upload Agenda Pt Docu (Word Format)
+                                </div>
+                                <br />*@
+
+                               
+                            <!--</div>-->
+                            
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-lg-12 col-xl-6 d-flex">
+                        <div class="card radius-10 w-100">
+
+                            <div class="card-body">
+                                <div class="chathead">
+                                    &nbsp;   Noting about Agenda Pgme
+                                </div>
+
+
+
+                                @if (SessionManager.IsPermission == 1 || SessionManager.IsPermission == 3 || SessionManager.IsPermission == 5)
+                                {
+                                    <div class="container p-0">
+
+                                        <div class="row g-0">
+
+                                            <div class="col-12 col-lg-7 col-xl-9">
+
+                                                <div class="py-2 px-4 border-bottom d-none d-lg-block">
+                                                    <div class="d-flex align-items-center py-1">
+                                                        <div class="flex-grow-1 pl-3">
+                                                            <input type="text" id="search-input" class="form-control mb-3" placeholder="Search...">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="position-relative">
+
+                                                    <div class="chat-messages p-4" id="ChatBox">
+                                                        @if (ViewBag.NotingCount > 0)
+                                                        {
+                                                            sno = Model.ILNotingCRUD.Count + 1;
+                                                            for (int i = 0; i < Model.ILNotingCRUD.Count; i++)
+                                                            {
+                                                                var item = Model.ILNotingCRUD[i];
+
+                                                                if (item.CommentFrom == Convert.ToInt16(SessionManager.UserId))
+                                                                {
+                                                                    <div class="chat-message-left pb-4">
+                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3" style="width: 48rem;">
+                                                                            <div class="text-muted small text-nowrap mt-2">
+                                                                                Note # @{ sno--; }
+                                                                                @sno
+                                                                            </div>
+                                                                            <br />
+                                                                            @if (@item.ForwardedToUsers != "" && @item.ForwardedToUsers != null)
+                                                                            {
+                                                                                <label>Forwarded To :- </label>@Html.DisplayFor(modelItem => item.ForwardedToUsers) <br />
+
+                                                                            }
+                                                                            @if (@item.CCToUsers != "" && @item.CCToUsers != null)
+                                                                            {
+                                                                                <label>CC To :- </label>@Html.DisplayFor(modelItem => item.CCToUsers)<br />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.DisplayFor(modelItem => item.Comment)
+                                                                            }
+                                                                            <br />
+
+                                                                            @if (item.Attachment != "")
+                                                                            {
+                                                                                <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("Attachment"),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Attachment.ToString()) })" target="_blank">
+                                                                                    <div class="pdf">
+                                                                                    </div>
+                                                                                </a>
+                                                                            }
+                                                                            <div style="overflow: hidden;">
+                                                                                <!-- This clears the float -->
+                                                                                <div class="text-muted small text-nowrap mt-2" style="float: left;">
+                                                                                    @Html.DisplayFor(modelItem => item.DateTimeOfUpdate)
+                                                                                </div>
+
+                                                                                <div class="small text-nowrap mt-2" style="float: right; font-family: Arial; font-weight: bold; color: #0793f7;">
+                                                                                    @SessionManager.UserName <br />@SessionManager.UnitName
+                                                                                </div>
+
+                                                                            </div>
+                                                                            @*<div class="text-muted small text-nowrap mt-2" style="float:right"> @SessionManager.UserName</div>*@
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="chat-message-left pb-4">
+                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3" style="width: 48rem;">
+
+                                                                            <div class="text-muted small text-nowrap mt-2">
+                                                                                Note # @{ sno--; }
+                                                                                @sno
+                                                                            </div>
+                                                                            <br />
+                                                                            @if (@item.ForwardedToUsers != "" && @item.ForwardedToUsers != null)
+                                                                            {
+                                                                                <label>Forworded To :- </label>@Html.DisplayFor(modelItem => item.ForwardedToUsers)<br />
+
+                                                                            }
+                                                                            @if (@item.CCToUsers != "" && @item.CCToUsers != null)
+                                                                            {
+                                                                                <label>CC To :- </label>@Html.DisplayFor(modelItem => item.CCToUsers)<br />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.DisplayFor(modelItem => item.Comment)
+                                                                            }
+                                                                            <br />
+                                                                            @if (item.Attachment != "")
+                                                                            {
+                                                                                <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("Attachment"),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Attachment.ToString()) })" target="_blank">
+                                                                                    <div class="pdf">
+                                                                                    </div>
+                                                                                </a>
+                                                                            }
+                                                                            <div style="overflow: hidden;">
+                                                                                <!-- This clears the float -->
+                                                                                <div class="text-muted small text-nowrap mt-2" style="float: left;">
+                                                                                    @Html.DisplayFor(modelItem => item.DateTimeOfUpdate)
+                                                                                </div>
+
+                                                                                <div class="small text-nowrap mt-2" style="float: right; font-family: Arial; font-weight: bold; color: #0793f7;">
+                                                                                    @Html.DisplayFor(modelItem => item.UserName) <br />@Html.DisplayFor(modelItem => item.UserUnitName)
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+
+
+                                                </div>
+
+
+                                                <div class="flex-grow-0 py-3 px-4 border-top">
+                                                    <div class="icon-container">
+                                                        <a onclick="location.href='@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })'">
+                                                            <div class="chathome"></div>
+                                                        </a>
+
+                                                        @if (Model.CloseId == 0)
+                                                        {
+                                                            if (Model.ScheduleCreatedById != Convert.ToInt32(@SessionManager.UserIntId))
+                                                            {
+                                                                if (Model.ForwardID != 0)
+                                                                {
+                                                                    <div class="fwd" data-toggle="modal" data-target="#FwdPopup"></div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (Model.ForwardID != 0)
+                                                                    {
+                                                                        <div class="fwd" data-toggle="modal" data-target="#FwdPopup"></div>
+                                                                    }
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="fwd" data-toggle="modal" data-target="#FwdPopup"></div>
+                                                            }
+
+                                                            <div class="addnoting" data-toggle="modal" data-target="#CommentPopup" id="BtnCommentPopup"> </div>
+                                                        }
+
+                                                        <div class="notinghistory" data-toggle="modal" data-target="#APLog" id="BtnAPLog"> </div>
+
+                                                        <div class="notingprint" onclick="PrintChatDiv()"> </div>
+
+                                                        @if (Model.ScheduleCreatedById == Convert.ToInt32(SessionManager.UserIntId) || Model.sponsorId == Convert.ToInt32(SessionManager.UserIntId))
+                                                        {
+                                                            if (Model.OpenId == 0 && Model.CloseId != 0)
+                                                            {
+                                                                <div class="OpenAgendaPt" data-toggle="modal" data-target="#OpenAgendaPt" id="BtnOpenAgendaPt"> </div>
+                                                            }
+                                                            if (Model.CloseId == 0)
+                                                            {
+                                                                <div class="ClosedAgendaPt" data-toggle="modal" data-target="#ClosedAgendaPt" id="BtnClosedAgendaPt"> </div>
+                                                            }
+                                                        }
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="APLog">
+        <div class="modal-dialog" style="margin-top: 120px; width: 400mm;max-width: 100%;">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <p style="text-align:center;font-size:16px; font-weight:bold; font-family:Arial;">
+                        Agenda Point Log<br />
+                    </p>
+                    <p style="font-size:14px; margin-left:50px;margin-right:50px;"><span><b>@Model.Title</b></span></p>
+                   
+                        <a id="btnExport" style="color:white;" class="btn btn-info" download="APLog.pdf" value="Export Pdf" onclick="PrintDiv()">Export Pdf</a>
+                  
+                    <button type="button" class="btn btn-danger CloseLogpoup" data-dismiss="modal" style="float:right;">&times;</button>
+                </div>
+                <div class="modal-body" style="max-height: 600px; overflow: auto;" id="APLogData">
+                    <table class="table table-striped align-top" id="dataTable2" width="100%" cellspacing="0">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th class="center">S/No</th>
+                                <th class="center">From</th>
+                                <th class="center">To</th>
+                                <th class="center">CC</th>
+                                <th class="center">Nodal Remark</th>
+                                <th class="center">CC Remark</th>
+                                <th class="center">Updated/Created on</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ILAgendaPointLog.Count > 0)
+                            {
+                                foreach (var item in Model.ILAgendaPointLog)
+                                {
+                                    <tr>
+                                        <td>
+                                            @{ sno1++; }
+                                            @sno1
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.FromId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ToId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CCId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.OtherDescription)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DateTimeOfUpdate)</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="6" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @*<div class="modal-footer">
+                    <div class="btn-group">
+                        <a id="btnApLogCancel" style="color:white;" class="btn btn-danger" data-dismiss="modal">Close</a>
+                        <a id="btnExport" style="color:white;" class="btn btn-info" download="APLog.pdf" value="Export Pdf" onclick="PrintDiv()">Export Pdf</a>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="CommentPopup">
+        <div class="modal-dialog modal-dialog-centered" style="margin-top: 0; width: 220mm; height: 140mm; max-height: 100%; max-width: 100%;">
+ 
+            <div class="modal-content">
+                <h4 style="text-align: center; background-color: #0793f7; padding: 3px; color:white; ">Add Comment</h4>
+                <label style="text-align: center; ">Title : @ViewBag.ConfTitle</label>
+
+                @Html.TextAreaFor(m => m.Comment, new { @onkeyup = "ValInData(this)", style = "border: 2px solid black; height: 140mm; max-height: 100%;max-width: 100%;", id = "txtComment", @required = true })
+
+                <div class="col-6">
+                    @Html.TextBoxFor(m => m.Attachment, new { type = "file", id = "Attachmentfiles", accept = ".pdf", @onchange = "checkPDFHeader(this)" }) &nbsp;
+                    <div class="pdfup"> (Upload supporting docu/appx only with in 5MB) </div>
+                </div>
+
+                <span id="CommentError" class="text-danger" style="display: none;">Please Fill out the Comment</span>
+                <div class="modal-footer" style="margin-right: 8rem;">
+                    <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
+                    <button id="clearComment" class="btn btn-danger">Clear</button>
+                    <a id="btnCancel" style="color:white;" class="btn btn-info" data-dismiss="modal">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@using (Html.BeginForm("OpenAgendaPoint", "ACC", FormMethod.Post, new { enctype = "multipart/form-data", id = "myForm3" }))
+{
+    @Html.HiddenFor(m => m.Inbox_ID)
+
+    <div class="modal fade" id="OpenAgendaPt">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <h4 style="text-align: center; background-color: #0793f7; padding: 3px; color:white; ">Reason for Open</h4>
+                <label style="text-align: center; ">Title : @ViewBag.ConfTitle</label>
+                @Html.TextAreaFor(m => m.OpenReason, new { @onkeyup = "ValInData(this)", style = " margin-left: 40px; border: 2px solid black; height: 100px; width: 600px;", id = "OpenReason", @required = true })
+
+                <span id="CommentError" class="text-danger" style="display: none;">Please Fill out the Comment</span>
+                <div class="modal-footer" style="margin-right: 8rem;">
+                    <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
+                    <button id="clearOpenReason" type="button" class="btn btn-danger">Clear</button>
+                    <a id="btnCancel" style="color:white;" class="btn btn-info" data-dismiss="modal">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@using (Html.BeginForm("CloseAgendaPoint", "ACC", FormMethod.Post, new { enctype = "multipart/form-data", id = "myForm2" }))
+{
+    @Html.HiddenFor(m => m.Inbox_ID)
+
+    <div class="modal fade" id="ClosedAgendaPt">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="width:350mm;">
+
+
+                <h4 style="text-align: center; background-color: #0793f7; padding: 3px; color:white; ">Reason for Close</h4>
+                <label style="text-align: center; "><b>Title : @ViewBag.ConfTitle</b></label>
+                @Html.TextAreaFor(m => m.CloseReason, new { @onkeyup = "ValInData(this)", style = " margin-left: 40px; border: 2px solid black; height: 100px; width: 600px;", id = "CloseReason", @required = true })
+
+                <span id="CommentError" class="text-danger" style="display: none;">Please Fill out the Comment</span>
+                <div class="modal-footer" style="margin-right: 8rem;">
+                    <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
+                    <button id="clearCloseReason" type="button" class="btn btn-danger">Clear</button>
+                    <a id="btnCancel" style="color:white;" class="btn btn-info" data-dismiss="modal">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@using (Html.BeginForm("ForwardAP", "Noting", FormMethod.Post, new { enctype = "multipart/form-data", id = "myForm1" }))
+{
+    @Html.HiddenFor(m => m.Inbox_ID)
+    if (Model.ForwardID != 0)
+    {
+        @Html.HiddenFor(m => m.ForwardID)
+    }
+    <div class="modal fade" id="FwdPopup" tabindex="-1" role="dialog" aria-labelledby="FwdPopupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="width: 380mm;">
+                <div class="modal-header" style="background-color:#0793f7">
+                    <h5 class="modal-title" id="FwdPopupLabel">Forward To</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if (Model.ForwardID == 0)
+                    {
+                        <label for="forwardTo"><b>Select Nodal Branch(To):</b></label>
+                        @Html.DropDownListFor(m => m.NodalId, (new IHSDC.WebApp.Models.MasterModels()).LoadNodal(Model.Schedule_ID, Model.Inbox_ID), "--Select Nodal --", new { @data_show_subtext = "true", @class = "select form-control dropdownselect", style = "width:100%;", @data_live_search = "true", @required = true })
+                        <label for="forwardTo"><b>Nodal Branch Remark :</b></label>
+                        @Html.TextAreaFor(m => m.NodalComment, new { @onkeyup = "ValInData(this)", style = "border: 2px solid black; width: 210mm; height: 30mm; max-height: 100%;max-width: 100%;", id = "txtForward" })
+                    }
+                    <div class="form-group">
+                        <label for="forwardTo"><b>Select Other Branches(CC) :</b></label>
+                        @Html.TextBoxFor(m => m.SentID, new { style = "display:none;" })
+
+                        <select id="ddlCivEdnId" multiple="multiple" name="CivEdn">
+                            @if (Model.ILUnitCRUD != null)
+                            {
+                                foreach (var item in Model.ILUnitCRUD)
+                                {
+                                    if (item.SentName != null)
+                                    {
+                                        <option value="@item.SentId">
+                                            @item.SentName
+                                        </option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Body area for the forwarded message -->
+                    <div class="form-group">
+                        <label for="forwardBody"><b>Other Branch Remarks :</b></label>
+                        @Html.TextAreaFor(m => m.FwdComment, new { @onkeyup = "ValInData(this)", style = "border: 2px solid black; width: 210mm; height: 30mm; max-height: 100%;max-width: 100%;", id = "FwdComment" })
+                        <span id="FwdError" class="text-danger" style="display: none;">Please Fill out the Comment</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Forward</button>
+                    <button type="button" id="clearfwd" class="btn btn-danger">Clear</button>
+                    <button type="button" id="closefwd" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/CustomJS/GEBSubmit.js"></script>
+<script src="~/Content/CustomJS/AviatorJS.js"></script>
+<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/Content/css/sweetalert.min.js"></script>
+<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
+<script src="~/NewContent/dataTable4/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ddlCivEdnId").change(function () {
+            if ($("#NodalId").val() == "") {
+                alert("Select first Nodal Branch(To)");
+                $("#ddlCivEdnId").val("");
+                $(".multiselect").html("<span class='multiselect-selected-text's>None selected</span>");
+                $(".form-check-input").prop("checked", false);
+            }
+        });
+        $("#NodalId").change(function () {
+            $(".multiselect-option").removeClass("d-none");
+            $(".multiselect-option").each(function () {
+                if ($("#NodalId option:selected").text().trim() == $(this).text().trim()) {
+                    $(this).addClass("d-none");
+                }
+            });
+        });
+
+
+        $('.dropdownselect').select2({
+            dropdownParent: $('#FwdPopup'),
+            closeOnSelect: false
+        });
+
+    });
+
+    $('#FwdPopup').on('shown.bs.modal', function (e) {
+
+    });
+    $('#FwdPopup').on('hidden.bs.modal', function (e) {
+
+        $('#ddlCivEdnId').multiselect('deselectAll', false);
+        $('#ddlCivEdnId').multiselect('updateButtonText');
+        $("#txtForward").val("");
+        $('#NodalId').val("0");
+        $('#NodalComment').val("");
+        $('#FwdComment').val("");
+    });
+    $("#closefwd").click(function () {
+
+        $('#ddlCivEdnId').multiselect('deselectAll', false);
+        $('#ddlCivEdnId').multiselect('updateButtonText');
+        $("#txtForward").val("");
+        $('#NodalId').val("0");
+        $('#NodalComment').val("");
+        $('#FwdComment').val("");
+    });
+
+    $("#clearfwd").click(function () {
+
+        $('#ddlCivEdnId').multiselect('deselectAll', false);
+        $('#ddlCivEdnId').multiselect('updateButtonText');
+        $("#txtForward").val("");
+        $('#NodalId').val("0");
+        $('#NodalComment').val("");
+        $('#FwdComment').val("");
+    });
+
+
+    $('#FwdPopup').on('click', function (e) {
+        if (e.target === this) {
+
+            $('#ddlCivEdnId').multiselect('deselectAll', false);
+            $('#ddlCivEdnId').multiselect('updateButtonText');
+            $("#txtForward").val("");
+            $('#FwdPopup').modal('hide');
+            $('#NodalId').val("0");
+            $('#NodalComment').val("");
+            $('#FwdComment').val("");
+        }
+    });
+
+    $("#clearOpenReason").click(function () {
+        $('#OpenReason').val("");
+    });
+    $("#clearCloseReason").click(function () {
+        $('#CloseReason').val("");
+    });
+</script>
+
+
+<script>
+
+    function checkPDFHeader(input) {
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = function (e) {
+                if (e.target.readyState === FileReader.DONE) {
+                    const arr = new Uint8Array(e.target.result).subarray(0, 4);
+                    const header = Array.from(arr).map(byte => byte.toString(16)).join("").toUpperCase();
+
+                    if (header === "25504446") {
+
+                    } else {
+                        sweetAlert("Please select a valid PDF file.");
+                        input.value = "";
+                    }
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    }
+
+
+           function PrintDiv() {
+           var divToPrint = document.getElementById('APLogData');
+        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+        popupWin.document.open();
+        var table_style = document.getElementById("table_style").innerHTML;
+        popupWin.document.write('<style type = "text/css">');
+        popupWin.document.write(table_style);
+        popupWin.document.write('</style>')
+        popupWin.document.title = 'AgendaPointLog';
+        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + '@(ViewBag.ipadd)' + "" + '</html>');
+        popupWin.document.close();
+    }
+
+    function PrintChatDiv() {
+         var divToPrint = document.getElementById('ChatBox');
+        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+        popupWin.document.open();
+         var table_style = document.getElementById("table_style1").innerHTML;
+        popupWin.document.write('<style type = "text/css">');
+        popupWin.document.write(table_style);
+        popupWin.document.write('</style>')
+        var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Agenda Point Noting Detail</h1>';
+        popupWin.document.write('<html><body onload="window.print()">' + pageHeading + divToPrint.innerHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + '@(ViewBag.ipadd)' + "" + '</html>');
+        popupWin.document.close();
+    }
+
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+    <head runat="server">
+        <script src="~/Scripts/bootstrap-multiselect.js"></script>
+        <link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
+
+        <script type="text/javascript">
+            $(function () {
+                $('#ddlCivEdnId').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllValue: 'multiselect-all',
+                    enableFiltering: true,
+                    enableCaseInsensitiveFiltering: true,
+                    maxHeight: '300',
+                    buttonWidth: '770',
+                });
+            });
+
+            $("#ddlCivEdnId").change(function () {
+                var selected = $("#ddlCivEdnId option:selected");
+                var CivEdn = "";
+                var arrSelected = [];
+                selected.each(function () {
+                    arrSelected.push($(this).val());
+                    CivEdn += $(this).val() + ",";
+                });
+                CivEdn = CivEdn.slice(0, -1);
+                $('#SentID').val(CivEdn);
+            });
+
+        </script>
+    </head>
+
+
+    <script>
+
+        $(document).ready(function () {
+            var recipientContainer = $('#recipientContainer');
+            var recipientInput = $('#recipientInput');
+            recipientInput.keypress(function (e) {
+                if (e.which === 13) {
+                    e.preventDefault();
+                    var recipientEmail = recipientInput.val().trim();
+                    if (recipientEmail !== "") {
+                        var recipientBox = $('<div class="recipient-box">' + recipientEmail + '<span class="remove-recipient">x</span></div>');
+                        recipientContainer.append(recipientBox);
+                        recipientInput.val('');
+                    }
+                }
+            });
+
+            recipientContainer.on('click', '.remove-recipient', function () {
+                $(this).parent().remove();
+            });
+        });
+    </script>
+
+
+
+    <script>
+        $('#clearComment').click(function () {
+            $("#txtComment").val("");
+        });
+
+    </script>
+
+
+
+    <script>
+
+
+               var message = '@message';
+    var messageStatus = '@messageStatus';
+    var messagemidStatus = '@messagemidStatus ';
+    if (message)
+			sweetAlert(message, messagemidStatus, messageStatus);
+
+
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#search-input").on("keyup", function () {
+                var searchValue = $(this).val().toLowerCase();
+                $(".chat-messages .chat-message-right, .chat-messages .chat-message-left").each(function () {
+                    var text = $(this).text().toLowerCase();
+                    if (text.indexOf(searchValue) === -1) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            var pdfUrl = $("#files").attr('value');
+            if (pdfUrl) {
+                fetch(pdfUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Failed to load PDF document");
+                        }
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        const pdfFile = new File([blob], "aa.pdf", { type: 'application/pdf' });
+
+                        const pdfContainer = document.getElementById("pdf-container");
+
+                        if (pdfFile) {
+                            const selectedFile = pdfFile;
+                            if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
+                                const embed = document.createElement("object");
+                                embed.data = URL.createObjectURL(selectedFile);
+                                embed.type = "application/pdf";
+                                embed.width = "100%";
+                                embed.height = "450px";
+                                pdfContainer.innerHTML = "";
+                                pdfContainer.appendChild(embed);
+                            } else {
+                                alert("Please select a valid PDF file.");
+                                input.value = "";
+                                pdfContainer.innerHTML = "";
+                            }
+                        }
+
+                        console.log("Converted File Object:", pdfFile);
+
+                        const formData = new FormData();
+                    })
+                    .catch(error => {
+                        console.error("Failed to fetch or convert the PDF:", error);
+                        const pdfContainer = document.getElementById("pdf-container");
+                        pdfContainer.innerHTML = "Failed to load PDF document.";
+                    });
+            }
+        });
+
+    </script>
+}

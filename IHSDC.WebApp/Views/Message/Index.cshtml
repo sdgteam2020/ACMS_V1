@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Pending";
+    Layout = null;
+}
+
+<div class="container">
+	<div class="card">
+	
+		<div class="card-body">
+
+			<h4 class="card-title">  Pls verify your pending docu</h4>
+			<p class="card-text ">
+				<marquee direction="up" scrolldelay="5" scrollamount="12" hspace="23%" behavior="slide">
+					@if (@ViewBag.Aviator != 0)
+					{<h2 class="bg-secondary text-center"  ><a href="dbo_tbl_Aviator/Main" data-toggle="tooltip" title=" Docu Pending" data-placement="right" class="nav-link ">Aviator = @ViewBag.Aviator Record Pending</a></h2>}
+
+					@if (@ViewBag.Course != 0)
+					{<h2 class="bg-secondary text-center"><a href="dbo_tbl_AviatorCourses/ValAviatorCourse" data-toggle="tooltip" title="Docu Pending" data-placement="left" class="nav-link">Course = @ViewBag.Course Record Pending</a></h2>}
+
+
+
+					@if (@ViewBag.FlyingHrs != 0)
+					{<h2 class="bg-secondary text-center"><a href="dbo_tbl_AviatorFlyingHrs/ValAviatorFlyingHrs" data-toggle="tooltip" title="Docu Pending" data-placement="right" class="nav-link">Flying Hrs = @ViewBag.FlyingHrs Record Pending</a></h2>}
+
+
+					@if (@ViewBag.HonoursAwards != 0)
+					{<h2 class="bg-secondary text-center"><a href="dbo_tbl_AviatorHonourAwards/ValAviatorAward" data-toggle="tooltip" title="Docu Pending" data-placement="left" class="nav-link">Honour and Awards= @ViewBag.HonoursAwards Record Pending</a></h2>}
+
+
+					@if (@ViewBag.Medical != 0)
+					{<h2 class="bg-secondary text-center"><a href="dbo_tbl_AviatorMedical/ValAviatorMedical" data-toggle="tooltip" title="Docu Pending" data-placement="right" class="nav-link">Medical = @ViewBag.Medical Record Pending</a></h2>}
+
+
+					@if (@ViewBag.SpecialEqpt != 0)
+					{<h2 class="bg-secondary text-center"><a href="dbo_tbl_AviatorSpecialEqpt/ValAviatorSplEqpt" data-toggle="tooltip" title="Docu Pending" data-placement="left" class="nav-link">Special Eqpt = @ViewBag.SpecialEqpt Record Pending</a></h2>}
+
+					@if (@ViewBag.SpecialQual != 0)
+					{<h2 class="bg-secondary text-center"><a href="dbo_tbl_AviatorSpecialQual/ValAviatorSplQual" data-toggle="tooltip" title="Docu Pending" data-placement="right" class="nav-link">Special Qual = @ViewBag.SpecialQual Record Pending</a></h2>}
+
+
+
+					@if (@ViewBag.PostingOut != 0)
+					{<h2 class="bg-secondary text-center"><a href="dbo_tbl_AviatorPosting/ValPostingOut" data-toggle="tooltip" title="Docu Pending" data-placement="right" class="nav-link">Posting Out = @ViewBag.PostingOut Record Pending</a></h2>}
+
+
+					@if (@ViewBag.Postingin != 0)
+					{<h2 class="bg-secondary text-center"><a href="dbo_tbl_AviatorPosting/PostingIn" data-toggle="tooltip" title="Docu Pending" data-placement="right" class="nav-link">Posting In = @ViewBag.PostingIn Record Pending</a></h2>}
+				</marquee>
+			</p>
+
+
+
+		</div>
+	</div>
+</div>
+
+<script src="~/Scripts/js/jquery.min.js"></script>
+<script src="~/Scripts/js/bootstrap.min.js"></script>
+<script src="~/Scripts/umd/popper.js"></script>
+<script src="~/Scripts/umd/popper.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
+

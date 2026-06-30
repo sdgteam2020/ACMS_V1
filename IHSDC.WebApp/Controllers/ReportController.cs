@@ -253,7 +253,7 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.count1 = Common.Helpers.Identity.Hierarchy.GetHierarchyUsers(CurrentUser).OrderBy(u => u.IntId).Count() - 1;
 
             
-                ViewBag.ipadd = Request.UserHostAddress + " :: " + DateTime.Now;
+                ViewBag.ipadd = ClientIPAddress.GetIPAddress() + " :: " + DateTime.Now;
 
                 DataSet data1 = con.GetAppxReport(1, "proc_AppxReport", model1.Schedule_ID);
                 if (data1.Tables.Count > 1)
@@ -342,7 +342,7 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.count1 = Common.Helpers.Identity.Hierarchy.GetHierarchyUsers(CurrentUser).OrderBy(u => u.IntId).Count() - 1;
 
 
-                ViewBag.ipadd = Request.UserHostAddress + " :: " + DateTime.Now;
+                ViewBag.ipadd = ClientIPAddress.GetIPAddress() + " :: " + DateTime.Now;
 
                 DataSet data1 = con.GetAppxReport(2, "proc_AppxReport", model1.Schedule_ID);
                 if (data1.Tables.Count > 1)

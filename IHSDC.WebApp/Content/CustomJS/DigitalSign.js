@@ -1,6 +1,42 @@
-﻿$('#btnSignAgendapoint').click(function () {
-       $.ajax({
+﻿var baseUrl = "";
+$(document).ready(function () {
+    CheckDGISLatestVersion();
+
+});
+function CheckDGISLatestVersion() {
+    $.ajax({
+        url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+        type: 'GET',
+        dataType: 'json',
+        timeout: 3000,
+        success: function () {
+            baseUrl = "https://dgisapp.army.mil:55102";
+            localStorage.setItem("dgisBaseUrl", baseUrl);
+        },
+        error: function () {
+            CheckDGISPreviousVersion();
+        }
+    });
+}
+
+function CheckDGISPreviousVersion() {
+    $.ajax({
         url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+        type: 'GET',
+        dataType: 'json',
+        timeout: 3000,
+        success: function () {
+            baseUrl = "http://localhost";
+            localStorage.setItem("dgisBaseUrl", baseUrl);
+        },
+        error: function () {
+            
+        }
+    });
+}
+$('#btnSignAgendapoint').click(function () {
+       $.ajax({
+           url: baseUrl+'/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
         type: 'GET',
         dataType: 'json',
         timeout: 3000,
@@ -34,7 +70,7 @@ function errorhandle(response) {
 function SignPdf(thumbprint, pathofpdf, InboxId) {
     var EncPath = window.btoa(pathofpdf)
     $.ajax({
-        url: 'http://localhost/Temporary_Listen_Addresses/ByteDigitalSignAsync',
+        url: baseUrl+'/Temporary_Listen_Addresses/ByteDigitalSignAsync',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify([{ "Thumbprint": thumbprint, "XCoordinate": 40, "YCoordinate": 65, "pdfpath": pathofpdf }]),

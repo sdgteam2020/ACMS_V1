@@ -230,6 +230,7 @@ namespace IHSDC.WebApp.Models
 
     public class APSupportingDocu : ACCCommon
     {
+        public int UploadBy {  get; set; }  
         public string SuppFileName { get; set; }
         public string SuppFilePath { get; set; }
     }

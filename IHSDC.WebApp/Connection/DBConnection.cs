@@ -359,8 +359,10 @@ namespace IHSDC.WebApp.Connection
         }
 
         public IList<APSupportingDocu> GetSupportingData(int procid, APSupportingDocu model)
+        
+        
         {
-            var data = GetDataInList<APSupportingDocu>("proc_SupportingData_CRUD @procId='" + procid + "',@SuppFileName='" + model.SuppFileName + "',@SuppFilePath='" + model.SuppFilePath + "'").ToList();
+            var data = GetDataInList<APSupportingDocu>("proc_SupportingData_CRUD @procId='" + procid + "',@SuppFileName='" + model.SuppFileName + "',@SuppFilePath='" + model.SuppFilePath + "',@UploadBy='" + model.UploadBy +"'").ToList();
             return data;
         }
 

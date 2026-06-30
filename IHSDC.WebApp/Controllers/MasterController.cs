@@ -2972,7 +2972,7 @@ namespace IHSDC.WebApp.Controllers
         {
             //GetIpAddress obj = new GetIpAddress();
             //var ipaddress = obj.getAddress();
-            var ipaddress = Request.UserHostAddress;
+            var ipaddress = ClientIPAddress.GetIPAddress();
             string settingValue = ConfigurationManager.AppSettings["ServerIPAddress"];       
             string userrole = SessionManager.RoleId;
             if (ipaddress == settingValue && userrole == enum1.Administrator.ToString())

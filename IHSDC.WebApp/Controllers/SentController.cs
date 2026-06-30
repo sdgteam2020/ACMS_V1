@@ -44,7 +44,7 @@ namespace IHSDC.WebApp.Controllers
                     return RedirectToAction("Login", "Account");
                 }
                 //watermark dataTable
-                var ipAddress = Request.UserHostAddress;
+                var ipAddress = ClientIPAddress.GetIPAddress();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                 ViewBag.ipadd = watermarkText;

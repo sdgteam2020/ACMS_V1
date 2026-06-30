@@ -55,7 +55,7 @@ namespace IHSDC.WebApp.Controllers
                         if (Logdata.Count > 0)
                         {
                             model1.ILAgendaPointLog = Logdata;
-                            ViewBag.ipadd = Request.UserHostAddress + " :: " + DateTime.Now;
+                            ViewBag.ipadd = ClientIPAddress.GetIPAddress() + " :: " + DateTime.Now;
                         }
                         int ReadUnRead = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
                         model1.Status = ReadUnRead;
@@ -155,7 +155,7 @@ namespace IHSDC.WebApp.Controllers
                         if (Logdata.Count > 0)
                         {
                             model1.ILAgendaPointLog = Logdata;
-                            ViewBag.ipadd = Request.UserHostAddress + " :: " + DateTime.Now;
+                            ViewBag.ipadd = ClientIPAddress.GetIPAddress() + " :: " + DateTime.Now;
                         }
                         int ReadUnRead = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
                         model1.Status = ReadUnRead;

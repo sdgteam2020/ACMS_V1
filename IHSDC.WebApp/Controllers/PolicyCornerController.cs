@@ -396,13 +396,14 @@ namespace IHSDC.WebApp.Controllers
 
         #endregion
 
-        public ActionResult GetFilesToShow(string FName, string Type)
+        public ActionResult GetFilesToShow(string FName, string Type, string PLid)
         {
             try
             {
                 FileList Files = new FileList();
                 string FolderName = "";
                 int DocType = 0;
+                string Policy = "";
                 if (!string.IsNullOrEmpty(FName))
                 {
                     FolderName = RepositryManager.EncryptionManager.Decryption(FName);
@@ -411,7 +412,11 @@ namespace IHSDC.WebApp.Controllers
                 {
                     DocType = Convert.ToInt16(RepositryManager.EncryptionManager.Decryption(Type));
                 }
-
+                if (!string.IsNullOrEmpty(PLid))
+                {
+                    Policy = RepositryManager.EncryptionManager.Decryption(PLid);
+                }
+                ViewBag.Policy = Policy;
                 string PolicyPath = Server.MapPath("~/Policy/") + FolderName;
                 List<string> fileNames = Directory.GetFiles(PolicyPath, "*", SearchOption.AllDirectories).ToList();
 
@@ -477,7 +482,7 @@ namespace IHSDC.WebApp.Controllers
                 downloadLog log = new downloadLog();
                 log.FileName = "";
                 log.ICNumber = SessionManager.ArmyNo;
-                log.IpAddress = Request.UserHostAddress;
+                log.IpAddress = ClientIPAddress.GetIPAddress();
                 log.PolicyId = Convert.ToInt16(PolicyId);
                 log.AccessDownload = "A";
                 var data = con.downloadLogCRUD(1, log);
@@ -604,7 +609,7 @@ namespace IHSDC.WebApp.Controllers
                         downloadLog download = new downloadLog();
                         download.FileName = pathName;
                         download.ICNumber = SessionManager.ArmyNo;
-                        download.IpAddress = Request.UserHostAddress;
+                        download.IpAddress = ClientIPAddress.GetIPAddress();
                         download.PolicyId = Convert.ToInt16(PolicyId);
                         download.AccessDownload = "D";
                         var data = con.downloadLogCRUD(1, download);
@@ -619,7 +624,7 @@ namespace IHSDC.WebApp.Controllers
 
 
 
-                var ipAddress = Request.UserHostAddress;
+                var ipAddress = ClientIPAddress.GetIPAddress();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                 ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;

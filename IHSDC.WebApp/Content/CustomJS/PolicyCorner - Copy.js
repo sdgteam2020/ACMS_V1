@@ -150,7 +150,7 @@ $('.showpopupFile').on('click', function (e) {
 
 
 $('.PolicyModelOpen').on('click', function (e) {
-    
+    alert("PolicyModelOpen");
     $('#spnPolicyName').text($(this).closest("div").find('.spncardid').html());
     $('#spnDocType').text($(this).closest("div").find('.spnTypeofdocu').html());
     $('#spnPId').text($(this).closest("div").find('.spnPolicyId').html());

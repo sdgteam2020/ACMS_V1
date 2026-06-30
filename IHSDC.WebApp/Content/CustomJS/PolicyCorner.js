@@ -1,22 +1,76 @@
-﻿function navigateToSearch() {
+﻿
+var baseUrl = "";
+function CheckDGISLatestVersion() {
+;    $('#pageLoader').show();
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+            type: 'GET',
+            dataType: 'json',
+            timeout: 3000,
+            success: function () {
+                baseUrl = "https://dgisapp.army.mil:55102";
+                $('#pageLoader').hide();
+                resolve();
+            },
+            error: function () {
+                // fallback to previous version
+                $.ajax({
+                    url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+                    type: 'GET',
+                    dataType: 'json',
+                    timeout: 3000,
+                    success: function () {
+                        baseUrl = "http://localhost";
+                        $('#pageLoader').hide();
+                        resolve();
+                    },
+                    error: function () {
+                        $('#pageLoader').hide();
+                        reject("DGIS not available");
+                    }
+                });
+            }
+        });
+    });
+}
+
+function navigateToSearch() {
+   
     debugger;
     document.querySelector('.table-responsive').style.display = 'block';
     var Armyno = $('#SpnArmyNumber1').html();
    if ($('#spnDocType').html() == 2)
 
-   // if ($('#spnDocType').html() == 2 || $('#spnDocType').html() == 1) 
+    // if ($('#spnDocType').html() == 2 || $('#spnDocType').html() == 1) 
     {
        
        
-        /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
-        $.ajax({
-            url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-            type: 'GET',
-            dataType: 'json',
-            timeout: 3000,
-            success: FetchUniqueTokenDetails,
-            error: errorhandle
-        });
+       /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
+       //$.ajax({
+       //    url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+       //    type: 'GET',
+       //    dataType: 'json',
+       //    timeout: 3000,
+       //    success: FetchUniqueTokenDetails,
+       //    error: errorhandle
+       //});
+       CheckDGISLatestVersion()
+           .then(() => {
+               // Now that baseUrl is available, continue
+               $.ajax({
+                   url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+                   type: 'GET',
+                   dataType: 'json',
+                   timeout: 3000,
+                   success: FetchUniqueTokenDetails,
+                   error: errorhandle
+               });
+           })
+           .catch((err) => {
+               errorhandle(); // or display a custom alert
+           });
+        
 
         function FetchUniqueTokenDetails(response) {
             if (response) {
@@ -46,7 +100,7 @@
 
         function validatePersID2FA() {
             $.ajax({
-                url: 'http://localhost/Temporary_Listen_Addresses/ValidatePersID2FA',
+                url: baseUrl+'/Temporary_Listen_Addresses/ValidatePersID2FA',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ "inputPersID": Armyno }),
@@ -88,7 +142,7 @@
                 }
             });
         }
-    }
+   }
     else {
         var searchTermValue = window.btoa($('#searchTerm').val());
         var otherParamValue = window.btoa($('#spnPolicyName').html());
@@ -100,6 +154,7 @@
             type: 'GET',
             data: { Term: searchTermValue, id: otherParamValue, type: Type, PLid: Pid },
             success: function (data) {
+                console.log(data);
                 $("#dataTable1").removeClass("d-none");
                 $("#tbody").html(data);
                 $('#searchTerm').val("");
@@ -132,10 +187,13 @@ $('.showpopupFile').on('click', function (e) {
     $('#spnShowFileDocType').text($(this).closest("div").find('.spnTypeofdocu').html());
     var fileText = window.btoa($('#spnShowFilePolicyName').html());
     var fileType = window.btoa($('#spnShowFileDocType').html());
+    $('#spnPId').text($(this).closest("div").find('.spnPolicyId').html());
+    let policyId = window.btoa($('#spnPId').html()); 
+  
     $.ajax({
         url: '/PolicyCorner/GetFilesToShow',
         type: 'GET',
-        data: { FName: fileText, Type: fileType },
+        data: { FName: fileText, Type: fileType, PLid: policyId },
         success: function (data) {
             $("#tShowFilebody").html(data);
             var modal = document.getElementById("ShowFileModal");
@@ -149,6 +207,7 @@ $('.showpopupFile').on('click', function (e) {
 
 
 $('.PolicyModelOpen').on('click', function (e) {
+
     $('#spnPolicyName').text($(this).closest("div").find('.spncardid').html());
     $('#spnDocType').text($(this).closest("div").find('.spnTypeofdocu').html());
     $('#spnPId').text($(this).closest("div").find('.spnPolicyId').html());
@@ -161,16 +220,34 @@ $('.PolicyModelOpen').on('click', function (e) {
  if ($(this).closest("div").find('.spnTypeofdocu').html() == 2)
   //if ($(this).closest("div").find('.spnTypeofdocu').html() == 2 || $(this).closest("div").find('.spnTypeofdocu').html() == 0 || $(this).closest("div").find('.spnTypeofdocu').html() == 1)
     {    
+     
+     /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
+     //CheckDGISLatestVersion()
+     //   $.ajax({
+     //       //url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+     //       url: baseUrl+'/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
 
-        /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
-        $.ajax({
-            url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-            type: 'GET',
-            dataType: 'json',
-            timeout: 3000,
-            success: FetchUniqueTokenDetails,
-            error: errorhandle
-        });
+     //       type: 'GET',
+     //       dataType: 'json',
+     //       timeout: 3000,
+     //       success: FetchUniqueTokenDetails,
+     //       error: errorhandle
+     //   });
+     CheckDGISLatestVersion()
+         .then(() => {
+             // Now that baseUrl is available, continue
+             $.ajax({
+                 url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+                 type: 'GET',
+                 dataType: 'json',
+                 timeout: 3000,
+                 success: FetchUniqueTokenDetails,
+                 error: errorhandle
+             });
+         })
+         .catch((err) => {
+             errorhandle(); // or display a custom alert
+         });
 
         function FetchUniqueTokenDetails(response) {
             if (response) {
@@ -183,7 +260,6 @@ $('.PolicyModelOpen').on('click', function (e) {
                         sweetAlert('Token Expired', '', 'info');
                     }
                 } else if (response[0].Status == '404') {
-
                     sweetAlert(response[0].Remarks, '', 'info');
                     $("#tbody").html("");
                     var modal = document.getElementById("PolicyModal");
@@ -192,7 +268,8 @@ $('.PolicyModelOpen').on('click', function (e) {
             }
         }
 
-        function errorhandle(response) {
+     function errorhandle(response) {
+        
             sweetAlert('DGIS Application Not Running/Not Installed.', 'To install DGIS App - Download ADN version of DGIS App and run the setup.', 'error');
             //sweetAlert({
             //    title: 'DGIS Application Not Running/Not Installed.\n To install DGIS App - Download ADN version of DGIS App and run the setup',
@@ -205,9 +282,9 @@ $('.PolicyModelOpen').on('click', function (e) {
         }
 
             function validatePersID2FA() {
-               
+                alert('2fa');
             $.ajax({
-                url: 'http://localhost/Temporary_Listen_Addresses/ValidatePersID2FA',
+                url: baseUrl+'/Temporary_Listen_Addresses/ValidatePersID2FA',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ "inputPersID": ArmyNo }),

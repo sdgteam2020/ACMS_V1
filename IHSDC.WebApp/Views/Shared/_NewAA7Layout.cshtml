@@ -1144,6 +1144,10 @@
             var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
             input.value = input.value.replace(regex, "");
         }
+        function ValInDataConfTitle(input) {
+            var regex = /[^a-zA-Z0-9 .  ( ) _ -]/g;
+            input.value = input.value.replace(regex, "");
+        }
     </script>
     <script>
         //function ValOnlyNum(event, element) {
@@ -1221,7 +1225,7 @@
             $.ajax({
                 url: '/Master/GetCounter',
                 type: 'POST',
-                data: { "Proc": "16" },
+                data: { "Proc": "25" },
                 success: function (result) {
                     if (result.length > 0) {
                         $('#spnComdName').html(result[0].ComdName);

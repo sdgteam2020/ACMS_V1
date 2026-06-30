@@ -435,20 +435,20 @@
                 </p>
                 <button type="button" class="btn btn-danger CloseShowFilepoup" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body" style="max-height: 600px; overflow: auto;" id="ShowFileData">                
-               
-                    <table class="table" id="dataTable2">
-                        <thead class="bg-info text-white">
-                            <tr>
-                                <th class="center">S/No</th>
-                                <th class="center">FileName</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tShowFilebody">
-                        </tbody>
-                    </table>
-             
-           
+            <div class="modal-body" style="max-height: 600px; overflow: auto;" id="ShowFileData">
+
+                <table class="table" id="dataTable2">
+                    <thead class="bg-info text-white">
+                        <tr>
+                            <th class="center">S/No</th>
+                            <th class="center">FileName</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tShowFilebody">
+                    </tbody>
+                </table>
+
+
 
             </div>
         </div>
@@ -477,8 +477,8 @@
             <button type="button" class="btn btn-danger Closepoup" data-dismiss="modal">&times;</button>
         </div>
 
-        <div class="modal-body" style="max-height: 450mm; overflow: auto;" id="APLogData">         
-        
+        <div class="modal-body" style="max-height: 450mm; overflow: auto;" id="APLogData">
+
             <div class="table-responsive ">
                 <table class="table d-none" id="dataTable1">
                     <thead class="bg-info text-white">
@@ -494,7 +494,7 @@
 
                 </table>
             </div>
-        
+
 
         </div>
         <footerPolicy>
@@ -504,8 +504,24 @@
         </footerPolicy>
     </div>
 </div>
-
-
+<!-- Loader Overlay -->
+<div id="pageLoader" style="
+    position: fixed;
+    display:none;
+    color:blue;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+">
+    Loading...
+</div>
 <script src="~/Content/css/sweetalert.min.js"></script>
 <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -514,7 +530,13 @@
 <script src="~/Content/CustomJS/AddUpdateFilter.js"></script>
 <script src="~/Content/CustomJS/AviatorJS.js"></script>
 <script src="~/Content/CustomJS/PolicyCorner.js"></script>
+
 @*<script src="~/Content/CustomJS/PolicyCorner - Copy.js"></script>*@
+<script>
+    $(document).ready(function () {
+        $('#pageLoader').hide(); // force hide on page load
+    });
+</script>
 <script>
     var input = document.getElementById("searchTerm");
     input.addEventListener("keypress", function (event) {

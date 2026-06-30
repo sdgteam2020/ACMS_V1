@@ -425,6 +425,7 @@
     <Compile Include="Controllers\SentController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
     <Compile Include="Filters\CustomFilters.cs" />
+    <Compile Include="Helper\ClientIPAddress.cs" />
     <Compile Include="Helper\enum1.cs" />
     <Compile Include="Helper\ErrorLog.cs" />
     <Compile Include="Models\ACC.cs" />
@@ -601,6 +602,7 @@
     <Content Include="Content\CustomJS\bootstrap-datepicker.min.js" />
     <Content Include="Content\CustomJS\CloseAll.js" />
     <Content Include="Content\CustomJS\DeleteConfirmation.js" />
+    <Content Include="Content\CustomJS\DgisAppVersion.js" />
     <Content Include="Content\CustomJS\DigitalSign.js" />
     <Content Include="Content\CustomJS\email.js" />
     <Content Include="Content\CustomJS\Filter2.js" />

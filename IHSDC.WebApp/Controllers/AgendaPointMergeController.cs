@@ -65,7 +65,7 @@ namespace IHSDC.WebApp.Controllers
                 if (User.IsInRole("Administrator"))
                     ViewBag.count1 = Common.Helpers.Identity.Hierarchy.GetHierarchyUsers(CurrentUser).OrderBy(u => u.IntId).Count() - 1;
 
-                var ipAddress = Request.UserHostAddress;
+                var ipAddress = ClientIPAddress.GetIPAddress();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                 ViewBag.ipadd = watermarkText;
@@ -82,8 +82,15 @@ namespace IHSDC.WebApp.Controllers
                 model1.ILInboxCRUD = data1;
                 ViewBag.count = model1.ILInboxCRUD.Count;
                 APSupportingDocu SuppModel = new APSupportingDocu();
+                //commented 03-Feb-2025
+                // var SuppData = con.GetSupportingData(2, SuppModel);
+                // model1.ILAPSupportingDocu = SuppData;
+
+                //add code to get self doc 03-Feb-2025.
+                SuppModel.UploadBy = Convert.ToInt32(Session["UserIntId"]);
                 var SuppData = con.GetSupportingData(2, SuppModel);
                 model1.ILAPSupportingDocu = SuppData;
+                //end
 
                 #region For Unread AP Count
                 InboxCRUD CntInbox = new InboxCRUD();
@@ -147,7 +154,7 @@ namespace IHSDC.WebApp.Controllers
 
 
                 byte[] NewFile = AddPageNumberHeadeFooter(mergedPdfBytes, SkipPage);
-                var ipAddress = Request.UserHostAddress;
+                var ipAddress = ClientIPAddress.GetIPAddress();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $"{ipAddress}\n{currentDatetime}";
 
@@ -402,7 +409,7 @@ namespace IHSDC.WebApp.Controllers
                 if (User.IsInRole("Administrator"))
                     ViewBag.count1 = Common.Helpers.Identity.Hierarchy.GetHierarchyUsers(CurrentUser).OrderBy(u => u.IntId).Count() - 1;
 
-                var ipAddress = Request.UserHostAddress;
+                var ipAddress = ClientIPAddress.GetIPAddress();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                 ViewBag.ipadd = watermarkText;
@@ -552,6 +559,7 @@ namespace IHSDC.WebApp.Controllers
                             var filePath = Path.Combine(Server.MapPath("~/Uploads"), fileModel.FileName);
                             Suppmodel.SuppFileName = originalFileName;
                             Suppmodel.SuppFilePath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + fileModel.FileName;
+                            Suppmodel.UploadBy = Convert.ToInt32(Session["UserIntId"]);
                             System.IO.File.WriteAllBytes(filePath, fileModel.Data);
                             var data = con.GetSupportingData(1, Suppmodel);
                         }

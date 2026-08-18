@@ -64,7 +64,7 @@ function FetchUniqueTokenDetails(response) {
 }
 
 function errorhandle(response) {
-    sweetAlert('DGIS Application Not Running/Not Installed.', 'To install DGIS App - Download ADN version of DGIS App and run the setup.', 'error');
+    sweetAlert('Hastakshar SEWA Not Running/Not Installed.', 'To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.', 'error');
 }
 
 function SignPdf(thumbprint, pathofpdf, InboxId) {

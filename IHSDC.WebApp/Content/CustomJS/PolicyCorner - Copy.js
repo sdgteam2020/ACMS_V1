@@ -38,7 +38,7 @@
         }
 
         function errorhandle(response) {
-            sweetAlert('DGIS Application Not Running/Not Installed.', 'To install DGIS App - Download ADN version of DGIS App and run the setup.', 'error');
+            sweetAlert('Hastakshar SEWA Not Running/Not Installed.', 'To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.', 'error');
             $("#tbody").html("");
             var modal = document.getElementById("PolicyModal");
             modal.style.display = "none";
@@ -191,11 +191,11 @@ $('.PolicyModelOpen').on('click', function (e) {
         }
 
         function errorhandle(response) {
-            sweetAlert('DGIS Application Not Running/Not Installed.', 'To install DGIS App - Download ADN version of DGIS App and run the setup.', 'error');
+            sweetAlert('Hastakshar SEWA Not Running/Not Installed.', 'To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.', 'error');
             //sweetAlert({
-            //    title: 'DGIS Application Not Running/Not Installed.\n To install DGIS App - Download ADN version of DGIS App and run the setup',
+            //    title: 'Hastakshar SEWA Not Running/Not Installed.\n To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup',
             //    icon: 'info',
-            //    html: '<span style="font-size: 12px;">DGIS Application Not Running<br>Not Installed</span>'
+            //    html: '<span style="font-size: 12px;">Hastakshar SEWA Not Running<br>Not Installed</span>'
             //});
             $("#tbody").html("");
             var modal = document.getElementById("PolicyModal");

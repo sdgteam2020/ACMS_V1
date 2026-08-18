@@ -599,7 +599,7 @@ namespace IHSDC.WebApp.Controllers
                         //    }
                         //    else
                         //    {
-                        //        DisplayMessage("DGIS Application Not Running/Not Installed.", "To install DGIS App - Download ADN version of DGIS App and run the setup.", "i");
+                        //        DisplayMessage("Hastakshar SEWA Not Running/Not Installed.", "To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.", "i");
                         //        return RedirectToAction("PolicyCorner");
                         //    }
 
@@ -616,7 +616,7 @@ namespace IHSDC.WebApp.Controllers
                     }
                     catch (Exception ex)
                     {
-                        DisplayMessage("DGIS Application Not Running/Not Installed.", "To install DGIS App - Download ADN version of DGIS App and run the setup.", "i");
+                        DisplayMessage("Hastakshar SEWA Not Running/Not Installed.", "To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.", "i");
                         return RedirectToAction("PolicyCorner");
                     }
                 }

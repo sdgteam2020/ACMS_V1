@@ -324,7 +324,7 @@ namespace AA7.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(dbo_FullHierarchy).State = EntityState.Modified;
+                db.Entry(dbo_FullHierarchy).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

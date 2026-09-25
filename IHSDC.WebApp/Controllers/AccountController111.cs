@@ -11,21 +11,17 @@ using Microsoft.Owin.Security;
 using OneLogin.Saml;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -39,8 +35,6 @@ namespace IHSDC.WebApp.Controllers
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        string debugWithIAMflag= ConfigurationManager.AppSettings["debugWithIAM"];
-        string loginWithIAMflag = ConfigurationManager.AppSettings["withIAMLogin"];
 
         public AccountController()
         {
@@ -392,26 +386,21 @@ namespace IHSDC.WebApp.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            if (loginWithIAMflag == "true")
-            {
-                Response.Redirect("https://iam2.army.mil/IAM/User", true);
-                return View();
-            }
-            else
-            {
-                ViewBag.ReturnUrl = returnUrl;
+
+            Response.Redirect("https://iam2.army.mil/IAM/User", true);
+            return View();
+
+            //ViewBag.ReturnUrl = returnUrl;
 
 
-                if (Session["UserIntId"] != null)
-                {
+            //if (Session["UserIntId"] != null)
+            //{
 
-                    AuthenticationManager.SignOut();
-                    LogOff();
-                }
-                LoginViewModel obj = new LoginViewModel();
-                return View(obj);
-            }
-            
+            //    AuthenticationManager.SignOut();
+            //    LogOff();
+            //}
+            //LoginViewModel obj = new LoginViewModel();
+            //return View(obj);
         }
 
         public class Log
@@ -425,74 +414,12 @@ namespace IHSDC.WebApp.Controllers
         public async Task<ActionResult> UserLogin()
         {
 
-            //LoggerNew.LogError("User Registered and redirect to login page. log 3");
 
             // return Redirect("/Identity/Account/login");
-            //String EncryptedResponse = Request.Form["SAMLResponse"];
-            String EncryptedResponse = "";
-
-
-            if (debugWithIAMflag == "true")
-            {
-
-                if (ConfigurationManager.AppSettings["LocalHostActive"] == "0")
-                {
-
-                    EncryptedResponse = Request.Form["SAMLResponse"];
-                    Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
-                    if (config.AppSettings.Settings["debugWithIAM"] != null)
-                    {
-                        config.AppSettings.Settings["debugWithIAM"].Value = "false";
-                    }
-                    config.Save(ConfigurationSaveMode.Modified);
-                    ConfigurationManager.RefreshSection("appSettings");
-
-                    using (HttpClient client = new HttpClient())
-                    {
-                        var values = new FormUrlEncodedContent(new[]
-                        {
-                          new KeyValuePair<string, string>("SAMLResponse", EncryptedResponse)
-                        });
-
-                        HttpResponseMessage response = await client.PostAsync("http://localhost:8080/Account/UserLogin", values);
-
-                        string responseString = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine("Server Response: " + responseString);
-                    }
-                }
-                else if (ConfigurationManager.AppSettings["LocalHostActive"] == "1")
-                {
-                    EncryptedResponse = Request.Form["SAMLResponse"];
-                    Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
-                    if (config.AppSettings.Settings["hardSAMLResonoce"] != null)
-                    {
-                        config.AppSettings.Settings["hardSAMLResonoce"].Value = EncryptedResponse;
-                    }
-                   
-                    if (config.AppSettings.Settings["LocalHostActive"] != null)
-                    {
-                        config.AppSettings.Settings["LocalHostActive"].Value = "2";
-                    }
-                    config.Save(ConfigurationSaveMode.Modified);
-                    ConfigurationManager.RefreshSection("appSettings");
-                    //stop code directelly from here to debug code with IAM, and Run this on this URL "http://localhost:8080/Account/UserLogin". 
-                }
-                else
-                {
-                    EncryptedResponse = ConfigurationManager.AppSettings["hardSAMLResonoce"];
-                }
-
-
-            }
-            else
-            {
-                EncryptedResponse = Request.Form["SAMLResponse"];
-            }
-
+            String EncryptedResponse = Request.Form["SAMLResponse"];
 
             if (!string.IsNullOrEmpty(EncryptedResponse))
             {
-                //LoggerNew.LogError("User Registered and redirect to login page. log 4");
                 string decryptedsamlresponse = DecryptSAmlResponseNew(EncryptedResponse, "C:\\Cert\\App Certificate\\acms.army.mil.pfx", "Abc@2022");
 
                 AccountSettings accountSettings = new AccountSettings();
@@ -512,102 +439,27 @@ namespace IHSDC.WebApp.Controllers
                         //log.NameId = "dte";
                         Session["NameId"] = log.NameId;
                         Session["SAMLRole"] = log.SAMLRole;
-                        LoggerNew.LogError(log.NameId + "444");
+
                         try
                         {
-                            LoggerNew.LogError(_db.Users.FirstOrDefault(i => i.UserName == log.NameId).Active + "447");
                             if (_db.Users.FirstOrDefault(i => i.UserName == log.NameId).Active == "0")
                             {
-                                LoggerNew.LogError("User Registered deactive 449");
-                                ApplicationUser userdet = new ApplicationUser();
-                                Session["UserIntId"] = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).IntId;
-                                SessionManager.ArmyNo = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).PersonnelNumber;
-                                SessionManager.UserEditId = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).Id;
-
-                                SessionManager.UserName = log.NameId;
-                                SessionManager.UserId = Convert.ToString(Session["UserIntId"]);
-                               
-                                var Unit_ID = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).Unit_ID;
-                                SessionManager.Unit_ID = Unit_ID.ToString();
-                                var RankId = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).Rank;
-
-                                var UserFullName = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).FullName;
-                                SessionManager.UserFullName = UserFullName;
-                                IHSDCAA7DBDBContext db = new IHSDCAA7DBDBContext();
-                                var UnitName = db.dbo_tbl_Unit.FirstOrDefault(i => i.Unit_ID == Unit_ID).UnitName;
-                                SessionManager.UnitName = UnitName;
-                                var UnitType = db.dbo_tbl_Unit.Where(x => x.UnitName == UnitName).FirstOrDefault();
-                                if (UnitType != null)
-                                {
-                                    if (UnitType.TypeOfUnit == "INDEPENDENT" || UnitType.TypeOfUnit == "NORMAL")
-                                    {
-                                        SessionManager.UnitType = UnitType.TypeOfUnit.ToString();
-
-                                    }
-                                }
-                                GetIpAddress obj = new GetIpAddress();
-
-                                Session["ip"] = obj.getAddress();
-
-                                var user = await UserManager.FindByNameAsync(log.NameId);
-
-                                var RoleName = await UserManager.GetRolesAsync(user.Id.ToString());
-                                RoleName = RoleName.Where(val => val != "User").ToArray();
-                                SessionManager.Role = RoleName[0].ToString();
-
-
-                                var ss = user.Roles.Single();
-                                
-                                SessionManager.RoleId = ss.RoleId.ToString();
-                                SessionManager.UserType = Convert.ToString(user.UserTypeId);
-                                var existsrole = _db.Roles.Where(r => r.Id == ss.RoleId.ToString()).Single();
-
-                                SessionManager.IsPermission = Convert.ToInt32(existsrole.IsPermission);
-
-
-                                //var data1 = con.CheckLoggedIn(1, Convert.ToInt16(Session["UserIntId"]), string.Empty, string.Empty);
-                                var currentuser = UserManager.FindById(User.Identity.GetUserId());
-
-                                Session["Username"] = log.NameId;
-                                //LoggerNew.LogError("User Registered and redirect to login page. log 6 InActive Registerd" + Session["Username"]);
-                                con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "");
-
-                                RankCRUD RankModel = new RankCRUD();
-                                RankModel.RankId = Convert.ToInt16(RankId);
-                                var RankData = con.RankCRUD(2, RankModel);
-                                if (RankData.Count > 0)
-                                {
-
-                                    SessionManager.RankName = RankData[0].RankName;
-                                }
-
-                                ApplicationUserRole Arole = new ApplicationUserRole();
-                                LogSignin(log.NameId, _db.Users.FirstOrDefault(i => i.UserName == log.NameId).IntId, Session.SessionID);
-                                LogVisit();
-
-                                SessionManager.Active = "0";
-                                //LoggerNew.LogError("User Registered and redirect to login page. log 10 InActive Registerd ");
-                                //  LoggerNew.LogError("Final Register User login attempt with active Registered User " + SessionManager.Active + " condition for User ");
-
-                                return RedirectToAction("ContactUs", "Home");
+                                DisplayMessage("User is Pending for approval from Admin, Contact to Administrator", "", "w");
+                                return RedirectToAction("Login");
                             }
                         }
                         catch { }
 
                         //log.NameId = "C8TPSUNIT1";
                         var result = await SignInManager.PasswordSignInAsync(log.NameId, "Admin123!", false, shouldLockout: true);
-
-                     //   var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
-
-                       // LoggerNew.LogError("Start User Registered and redirect to login page. log 5 with result " + result +" User Name " + log.NameId.ToString());
                         switch (result)
                         {
                             case SignInStatus.Success:
-                                //if (_db.Users.FirstOrDefault(i => i.UserName == log.NameId).Active == "0")
-                                //{
-                                //    DisplayMessage("User is Pending for approval from Admin, Contact to Administrator", "", "w");
-                                //    return RedirectToAction("Login");
-                                //}
+                                if (_db.Users.FirstOrDefault(i => i.UserName == log.NameId).Active == "0")
+                                {
+                                    DisplayMessage("User is Pending for approval from Admin, Contact to Administrator", "", "w");
+                                    return RedirectToAction("Login");
+                                }
 
                                 ApplicationUser userdet = new ApplicationUser();
                                 Session["UserIntId"] = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).IntId;
@@ -662,7 +514,7 @@ namespace IHSDC.WebApp.Controllers
                                 var currentuser = UserManager.FindById(User.Identity.GetUserId());
 
                                 Session["Username"] = log.NameId;
-                                //LoggerNew.LogError("User Registered and redirect to login page. log 6" + Session["Username"]);
+
                                 con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "");
 
                                 RankCRUD RankModel = new RankCRUD();
@@ -676,29 +528,12 @@ namespace IHSDC.WebApp.Controllers
                                 ApplicationUserRole Arole = new ApplicationUserRole();
                                 LogSignin(log.NameId, _db.Users.FirstOrDefault(i => i.UserName == log.NameId).IntId, Session.SessionID);
                                 LogVisit();
-                               // LoggerNew.LogError("User Registered and redirect to login page. log 7" + Session["Username"]);
                                 if (SessionManager.RoleId == enum1.Administrator)
                                 {
-                                    SessionManager.Active = "1";
-                                    //LoggerNew.LogError("login attempt with active Administrator " + SessionManager.Active + " condition for User ");
                                     return RedirectToAction("Index", "Home");
                                 }
                                 else
                                 {
-
-                                   // LoggerNew.LogError("User Registered and redirect to login page. log 8" + Session["Username"]);
-                                    if (_db.Users.FirstOrDefault(i => i.UserName == log.NameId).Active == "0")
-                                    {
-                                        //DisplayMessage("User is Pending for approval from Admin, Contact to Administrator", "", "w");
-                                        //return RedirectToAction("Login");
-                                        SessionManager.Active = "0";
-                                       // LoggerNew.LogError("User Registered and redirect to login page. log 9 " + Session["Username"]);
-                                      //  LoggerNew.LogError("Final Register User login attempt with active Registered User " + SessionManager.Active + " condition for User ");
-                                        return RedirectToAction("ContactUs", "Home");
-                                    }
-
-                                    SessionManager.Active = "1";
-                                   // LoggerNew.LogError("Register User login attempt with active GSO1 " + SessionManager.Active + " condition for User ");
                                     return RedirectToAction("AddInboxNotingFwd", "ACC");
                                 }
                             //}
@@ -708,11 +543,10 @@ namespace IHSDC.WebApp.Controllers
                             //}
                             case SignInStatus.Failure:
                                 //return RedirectToAction("UnAuthorized", "Account");
-                              
                                 return RedirectToAction("SignUp", new { User = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(log.NameId), DPass = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("Admin123!") });
 
                         }
-                       
+
                         //HttpContext.Session.SetString("NameId", log.NameId);
                         //HttpContext.Session.SetString("SAMLRole", log.SAMLRole);
 
@@ -1009,7 +843,6 @@ namespace IHSDC.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-           // LoggerNew.LogError("User Registered and redirect to login page. log 2");
             string[] splitval;
             try
             {
@@ -1066,7 +899,6 @@ namespace IHSDC.WebApp.Controllers
                 //  int iii = Convert.ToInt32("45df75");
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
-             //   LoggerNew.LogError("Test Log 1st condition for User " + model.Username);
                 var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
                 switch (result)
                 {
@@ -1152,8 +984,8 @@ namespace IHSDC.WebApp.Controllers
                         }
                         else
                         {
-                              if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "https://iam2.army.mil/IAM/User" && returnUrl != null)
-                           // if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "/" && returnUrl != "/" && returnUrl != null)
+                            //  if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "https://iam2.army.mil/IAM/User" && returnUrl != null)
+                           if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "/" && returnUrl != "/" && returnUrl != null)
                             {
                                 con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "Admin Switching to User " + model.Username);
                                 return Json(1);
@@ -1163,16 +995,20 @@ namespace IHSDC.WebApp.Controllers
                                 // var routeValues = new System.Web.Routing.RouteValueDictionary();
                                 if (_db.Users.FirstOrDefault(i => i.UserName == model.Username).Active == "0")
                                 {
-                                  
+                                    // LoggerNew.LogError(Request.IsAuthenticated.ToString());
                                     // routeValues["Active"] = "0";
                                     SessionManager.Active = "0";
-                                   // LoggerNew.LogError("Register User login attempt with active "+ SessionManager.Active + " condition for User " + model.Username);
+                                    LoggerNew.LogError(" Session active value on register user ---> " + SessionManager.Active.ToString());
                                     return RedirectToAction("ContactUs", "Home");
                                 }
                                 // routeValues = new System.Web.Routing.RouteValueDictionary();
-                             //   LoggerNew.LogError("User login attempt with active " + SessionManager.Active + " condition for User " + model.Username);
+                               
+                               
+                              
                                 SessionManager.Active = "1";
                                 con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
+
+                                LoggerNew.LogError(" Session active value on GSO1 ---> " + SessionManager.Active.ToString());
                                 return RedirectToAction("AddInboxNotingFwd", "ACC");
                             }
                         }
@@ -1511,20 +1347,8 @@ namespace IHSDC.WebApp.Controllers
 
                         if (model.Active == "0")
                         {
-                           //DisplayMessage("User Created Successfully, Pending for Admin Approval !", "", "s");
-                          // LoggerNew.LogError("User Registered and redirect to login page. log 1");
-
-
-                            SessionManager.Active = "0";
-                           // LoggerNew.LogError("Register User login attempt with active " + SessionManager.Active + " condition for User " + model.Username);
-                            return RedirectToAction("ContactUs", "Home");
-                       
-                            //return RedirectToAction("Login");
-
-
-
-                            //  return RedirectToAction("ContactUs", "Home");
-
+                            DisplayMessage("User Created Successfully, Pending for Admin Approval !", "", "s");
+                            return RedirectToAction("Login");
                         }
                         else
                         {
@@ -1796,38 +1620,38 @@ namespace IHSDC.WebApp.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult LocalLogout()
-        {
-            System.Web.Security.FormsAuthentication.SignOut();
-            Session.Abandon();
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            using (var db = new ApplicationDbContext())
-            {
-                var CurrentVisit = db.Visits.FirstOrDefault(s => s.SessionId == Session.SessionID.ToString());
-                if (CurrentVisit != null)
-                {
-                    CurrentVisit.End = DateTime.Now;
-                    db.Entry(CurrentVisit).State = EntityState.Modified;
-                }
-                var CurrentLogin = db.Logins.FirstOrDefault(u => u.Username == User.Identity.Name && u.SessionId == Session.SessionID);
-                if (CurrentLogin != null)
-                {
-                    CurrentLogin.LoggedOutAt = DateTime.Now;
-                    CurrentLogin.IsLoggedIn = false;
-                    Session.Abandon();
-                    HttpContext.Request.Cookies.Clear();
+        //[HttpGet]
+        //public ActionResult LogOut()
+        //{
+        //    System.Web.Security.FormsAuthentication.SignOut();
+        //    Session.Abandon();
+        //    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+        //    using (var db = new ApplicationDbContext())
+        //    {
+        //        var CurrentVisit = db.Visits.FirstOrDefault(s => s.SessionId == Session.SessionID.ToString());
+        //        if (CurrentVisit != null)
+        //        {
+        //            CurrentVisit.End = DateTime.Now;
+        //            db.Entry(CurrentVisit).State = EntityState.Modified;
+        //        }
+        //        var CurrentLogin = db.Logins.FirstOrDefault(u => u.Username == User.Identity.Name && u.SessionId == Session.SessionID);
+        //        if (CurrentLogin != null)
+        //        {
+        //            CurrentLogin.LoggedOutAt = DateTime.Now;
+        //            CurrentLogin.IsLoggedIn = false;
+        //            Session.Abandon();
+        //            HttpContext.Request.Cookies.Clear();
 
-                    db.Entry(CurrentLogin).State = EntityState.Modified;
-                    foreach (var l in db.Logins.Where(u => u.Username == User.Identity.Name))
-                    {
-                        db.Entry(l).State = EntityState.Modified;
-                    }
-                }
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index", "Home");
-        }
+        //            db.Entry(CurrentLogin).State = EntityState.Modified;
+        //            foreach (var l in db.Logins.Where(u => u.Username == User.Identity.Name))
+        //            {
+        //                db.Entry(l).State = EntityState.Modified;
+        //            }
+        //        }
+        //        db.SaveChanges();
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
 
 
         // POST: /Account/LogOff
@@ -1876,8 +1700,6 @@ namespace IHSDC.WebApp.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-
-    
 
         private void AddErrors(IdentityResult result)
         {
@@ -1936,7 +1758,6 @@ namespace IHSDC.WebApp.Controllers
         }
 
     }
-
     internal class LoggerNew
     {
         private static readonly string LogFilePath = Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads/").ToString(), "ErrorLog.txt");

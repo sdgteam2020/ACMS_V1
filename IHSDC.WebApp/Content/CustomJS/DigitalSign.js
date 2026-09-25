@@ -1,48 +1,63 @@
-﻿var baseUrl = "";
+﻿
+var baseUrl = "";
 $(document).ready(function () {
-    CheckDGISLatestVersion();
-
+    $("#pageloader").hide();
 });
 function CheckDGISLatestVersion() {
-    $.ajax({
-        url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-        type: 'GET',
-        dataType: 'json',
-        timeout: 3000,
-        success: function () {
-            baseUrl = "https://dgisapp.army.mil:55102";
-            localStorage.setItem("dgisBaseUrl", baseUrl);
-        },
-        error: function () {
-            CheckDGISPreviousVersion();
-        }
-    });
-}
 
-function CheckDGISPreviousVersion() {
-    $.ajax({
-        url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-        type: 'GET',
-        dataType: 'json',
-        timeout: 3000,
-        success: function () {
-            baseUrl = "http://localhost";
-            localStorage.setItem("dgisBaseUrl", baseUrl);
-        },
-        error: function () {
-            
-        }
+    return new Promise((resolve, reject) => {
+
+        $("#pageloader").show();
+        $.ajax({
+            url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+            type: 'GET',
+            dataType: 'json',
+            timeout: 3000,
+            success: function () {
+                baseUrl = "https://dgisapp.army.mil:55102";
+                $('#pageloader').hide();
+                resolve();
+            },
+            error: function () {
+                // fallback to previous version
+                $.ajax({
+                    url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+                    type: 'GET',
+                    dataType: 'json',
+                    timeout: 3000,
+                    success: function () {
+                        baseUrl = "http://localhost";
+                        $('#pageloader').hide();
+                        resolve();
+                    },
+                    error: function () {
+                        $('#pageloader').hide();
+                        reject("DGIS not available");
+                    }
+                });
+            }
+        });
     });
 }
 $('#btnSignAgendapoint').click(function () {
-       $.ajax({
-           url: baseUrl+'/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-        type: 'GET',
-        dataType: 'json',
-        timeout: 3000,
-        success: FetchUniqueTokenDetails,
-        error: errorhandle
-    });
+
+    CheckDGISLatestVersion()
+        .then(() => {
+            // Now that baseUrl is available, continue
+            $.ajax({
+                url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+                type: 'GET',
+                dataType: 'json',
+                timeout: 3000,
+                success: FetchUniqueTokenDetails,
+                error: errorhandle
+            });
+        })
+        .catch((err) => {
+            errorhandle(); // or display a custom alert
+        });
+
+
 });
 
 function FetchUniqueTokenDetails(response) {
@@ -70,7 +85,7 @@ function errorhandle(response) {
 function SignPdf(thumbprint, pathofpdf, InboxId) {
     var EncPath = window.btoa(pathofpdf)
     $.ajax({
-        url: baseUrl+'/Temporary_Listen_Addresses/ByteDigitalSignAsync',
+        url: baseUrl + '/Temporary_Listen_Addresses/ByteDigitalSignAsync',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify([{ "Thumbprint": thumbprint, "XCoordinate": 40, "YCoordinate": 65, "pdfpath": pathofpdf }]),
@@ -84,7 +99,7 @@ function SignPdf(thumbprint, pathofpdf, InboxId) {
                         dataType: "json",
                         timeout: 60000,
                         success: function (response) {
-                           
+
                             if (response.success) {
                                 sweetAlert("Agenda Point Signed Successfully !");
                                 location.reload(true);

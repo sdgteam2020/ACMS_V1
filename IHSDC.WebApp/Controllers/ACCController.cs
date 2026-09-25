@@ -1087,15 +1087,13 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
-        public ActionResult DownloadAgendaWithWatermark(string title, string path,string type, string Pid, string ConfId)
+        public ActionResult DownloadAgendaWithWatermark(string title, string path, string ConfId)
         {
             String pathss = "";
             String filename = "";
             String titles = "";
             String pathName = "";
             String ConfIdText = "";
-            string DocType = "";
-            string Policy = "";
             try
             {
                 if (path != string.Empty && path != null && title != string.Empty && title != null)
@@ -1118,14 +1116,6 @@ namespace IHSDC.WebApp.Controllers
                     }
 
                 }
-                if (type != string.Empty && type != null)
-                {
-                    DocType = RepositryManager.EncryptionManager.Decryption(type);
-                }
-                if (Pid != string.Empty && Pid != null)
-                {
-                    Policy = RepositryManager.EncryptionManager.Decryption(Pid);
-                }
 
                 var ipAddress = ClientIPAddress.GetIPAddress();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
@@ -1134,7 +1124,6 @@ namespace IHSDC.WebApp.Controllers
                 System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
                 WebClient client = new WebClient();
                 byte[] pdfBytes = client.DownloadData(pathss);
-             
                 using (MemoryStream ms = new MemoryStream())
                 {
 
@@ -1157,13 +1146,7 @@ namespace IHSDC.WebApp.Controllers
                             content.RestoreState();
                         }
                     }
-                    downloadLog download = new downloadLog();
-                    download.FileName = pathName;
-                    download.ICNumber = SessionManager.ArmyNo;
-                    download.IpAddress = ClientIPAddress.GetIPAddress();
-                    download.PolicyId = Convert.ToInt16(Policy);
-                    download.AccessDownload = "D";
-                    var data = con.downloadLogCRUD(1, download);
+
 
                     return File(ms.ToArray(), "application/pdf", filename);
                 }

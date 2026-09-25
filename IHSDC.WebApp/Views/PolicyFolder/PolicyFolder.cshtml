@@ -368,7 +368,7 @@
                                 </button>
                                 <br />
                                 <div class="col" style="padding-top: 20px; margin-left: -15px; font-size:13px;">
-                                    <a href="https://dgis.army.mil/App_Data/online.zip">Download Hastakshar SEWA and run setup.</a>
+                                    <a href="https://dgis.army.mil/App_Data/dgisapp.zip">Download Hastakshar SEWA and run setup.</a>
                                 </div>
                             </div>
                         }
@@ -504,24 +504,24 @@
         </footerPolicy>
     </div>
 </div>
-<!-- Loader Overlay -->
-<div id="pageLoader" style="
-    position: fixed;
-    display:none;
+<div id="pageloader" style="
+
+    position:fixed;
     color:blue;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255,255,255,0.8);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5em;
-">
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(255,255,255,0.8);
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:1.5em;
+    ">
     Loading...
 </div>
+
 <script src="~/Content/css/sweetalert.min.js"></script>
 <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -531,12 +531,6 @@
 <script src="~/Content/CustomJS/AviatorJS.js"></script>
 <script src="~/Content/CustomJS/PolicyCorner.js"></script>
 
-@*<script src="~/Content/CustomJS/PolicyCorner - Copy.js"></script>*@
-<script>
-    $(document).ready(function () {
-        $('#pageLoader').hide(); // force hide on page load
-    });
-</script>
 <script>
     var input = document.getElementById("searchTerm");
     input.addEventListener("keypress", function (event) {

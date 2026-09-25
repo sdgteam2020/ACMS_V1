@@ -430,7 +430,7 @@ $('#Schedule_ID').change(function () {
     <script>
         $(document).ready(function () {
 
-            var table = $('#Search').DataTable();
+            var table = $('#Analysis').DataTable();
             $('#ChkAll').on('click', function () {
                 var rows = table.rows({ 'search': 'applied' }).nodes();
                 $('input[type="checkbox"]', rows).prop('checked', this.checked);

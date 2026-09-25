@@ -318,6 +318,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -602,14 +603,12 @@
     <Content Include="Content\CustomJS\bootstrap-datepicker.min.js" />
     <Content Include="Content\CustomJS\CloseAll.js" />
     <Content Include="Content\CustomJS\DeleteConfirmation.js" />
-    <Content Include="Content\CustomJS\DgisAppVersion.js" />
     <Content Include="Content\CustomJS\DigitalSign.js" />
     <Content Include="Content\CustomJS\email.js" />
     <Content Include="Content\CustomJS\Filter2.js" />
     <Content Include="Content\CustomJS\Filter1.js" />
     <Content Include="Content\CustomJS\Filter.js" />
     <Content Include="Content\CustomJS\GEBSubmit.js" />
-    <Content Include="Content\CustomJS\PolicyCorner - Copy.js" />
     <Content Include="Content\CustomJS\SearchAgendaPoint.js" />
     <Content Include="Content\CustomJS\MergeAgendaPoint.js" />
     <Content Include="Content\CustomJS\PolicyCorner.js" />
@@ -690,6 +689,10 @@
     <Content Include="Content\Thumbnails\Yeti.png" />
     <Content Include="Content\Yeti\bootstrap.css" />
     <Content Include="Content\Yeti\bootstrap.min.css" />
+    <Content Include="css\chatbot\chatbot.css" />
+    <Content Include="css\chatbot\download7.png" />
+    <Content Include="css\chatbot\favicon.png" />
+    <Content Include="css\chatbot\user4.png" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -2356,6 +2359,11 @@
     <Content Include="NewContent\vendor\bootstrap\css\fonts\icomoon\fonts\icomoon.eot" />
     <Content Include="NewContent\vendor\bootstrap\css\fonts\icomoon\fonts\icomoon.ttf" />
     <Content Include="NewContent\vendor\bootstrap\css\fonts\icomoon\fonts\icomoon.woff" />
+    <Content Include="bix0rsjf.newcfg" />
+    <Content Include="bix0rsjf.tmp" />
+    <Content Include="c2g31m4l.newcfg" />
+    <Content Include="c2g31m4l.tmp" />
+    <Content Include="IHSDC.WebApp.rar" />
     <None Include="packages.config" />
     <None Include="Report.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -2668,7 +2676,8 @@
     <Folder Include="Content\XML\" />
     <Folder Include="Help\" />
     <Folder Include="MergedFile\" />
-    <Folder Include="Policy\" />
+    <Folder Include="obj\Debug\" />
+    <Folder Include="obj\Release\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="SqlServerTypes\x64\" />
     <Folder Include="SqlServerTypes\x86\" />
@@ -2676,8 +2685,6 @@
     <Folder Include="Views\Analytics\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Counter\" />
-    <Folder Include="Views\Test1\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

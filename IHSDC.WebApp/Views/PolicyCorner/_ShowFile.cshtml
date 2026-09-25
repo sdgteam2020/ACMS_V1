@@ -22,7 +22,7 @@
         <td>
             @if (item.FileType != 2)
             {
-            <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FileName.ToString()), path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FilePath.ToString()),type = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FileType.ToString()),Pid=IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.Policy) })" target="_blank">
+            <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FileName.ToString()), path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FilePath.ToString()) })" target="_blank">
                 @Html.DisplayFor(modelItem => item.FileName)
             </a>
             }

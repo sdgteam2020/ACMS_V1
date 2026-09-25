@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Contact Us";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
 }
 
 

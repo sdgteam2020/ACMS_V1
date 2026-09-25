@@ -15,11 +15,11 @@ namespace IHSDC.Common.Configurations
     public class EF
     {
 
-        public const string DatabaseName = "accmgt24oct24";
+        public const string DatabaseName = "accmgt_05_sep_24";
         public const string DatabaseSchema = Application.Abbreviation;
-        public const string DatabaseServer = "DESKTOP-UT4RJ04";
-        public const string DatabaseUsername = "sa";
-        public const string DatabasePassword = "Sa@123";
+        public const string DatabaseServer = "S-ACMS-APLN";
+        public const string DatabaseUsername = "aa7";
+        public const string DatabasePassword = "Admin@2018";
 
 
 

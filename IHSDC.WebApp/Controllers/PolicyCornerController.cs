@@ -396,14 +396,13 @@ namespace IHSDC.WebApp.Controllers
 
         #endregion
 
-        public ActionResult GetFilesToShow(string FName, string Type, string PLid)
+        public ActionResult GetFilesToShow(string FName, string Type)
         {
             try
             {
                 FileList Files = new FileList();
                 string FolderName = "";
                 int DocType = 0;
-                string Policy = "";
                 if (!string.IsNullOrEmpty(FName))
                 {
                     FolderName = RepositryManager.EncryptionManager.Decryption(FName);
@@ -412,11 +411,7 @@ namespace IHSDC.WebApp.Controllers
                 {
                     DocType = Convert.ToInt16(RepositryManager.EncryptionManager.Decryption(Type));
                 }
-                if (!string.IsNullOrEmpty(PLid))
-                {
-                    Policy = RepositryManager.EncryptionManager.Decryption(PLid);
-                }
-                ViewBag.Policy = Policy;
+
                 string PolicyPath = Server.MapPath("~/Policy/") + FolderName;
                 List<string> fileNames = Directory.GetFiles(PolicyPath, "*", SearchOption.AllDirectories).ToList();
 

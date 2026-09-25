@@ -104,7 +104,7 @@
                         <div class="table-responsive" style="min-height:150px;">
                             <table class="table table-striped" id="Analysis" width="100%" cellspacing="0">
                                 <thead class="bg-info text-white">
-                                    <tr >
+                                    <tr>
                                         <th class="center"></th>
                                         <th class="center">All<input type="checkbox" id="ChkAll"></th>
                                         <th class="center">Add<br/>Hdr/Ftr</th>
@@ -128,7 +128,6 @@
                                     {
                                         foreach (var item in Model.ILInboxCRUD)
                                         {
-                                          
                                             <tr class="row-light" draggable='true' ondragstart='start()' ondragover='dragover()'>
                                                 <td>
                                                     <i class="fa fa-sort"></i>
@@ -606,7 +605,6 @@ $('#Schedule_ID').change(function () {
                     row = event.target;
                 }
                 function dragover() {
-                    debugger;
                     var e = event;
                     e.preventDefault();
 

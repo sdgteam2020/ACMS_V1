@@ -105,11 +105,14 @@ namespace IHSDC.WebApp.Connection
             return data;
         }
 
+
         public IList<UnitCRUD> UnitCRUDNew(int procid, UnitCRUD model)
         {
             var data = GetDataInList<UnitCRUD>("proc_Unit_CRUD @procId='" + procid + "',@Unit_ID='" + model.Unit_ID + "',@UnitName='" + model.UnitName + "',@Command='" + model.ComdId + "' ,@Corps='" + model.CorpId + "' ,@Sqn='" + model.SqnId + "',@BdeCat='" + model.BdeCatId + "'  ,@TypeOfUnit='" + model.TypeOfUnit + "'  ,@UserId='" + Convert.ToInt16(SessionManager.UserIntId) + "',@Isflight='" + model.IsFlight + "',@ScheduleId='" + model.ScheduleId + "',@Inbox_Id = '" + model.InboxID + "'").ToList();
             return data;
         }
+
+
 
         public IList<HitCRUD> HitCRUD(int procid, HitCRUD model)
         {
@@ -359,14 +362,14 @@ namespace IHSDC.WebApp.Connection
         }
 
         public IList<APSupportingDocu> GetSupportingData(int procid, APSupportingDocu model)
-        
-        
+
+
         {
-            var data = GetDataInList<APSupportingDocu>("proc_SupportingData_CRUD @procId='" + procid + "',@SuppFileName='" + model.SuppFileName + "',@SuppFilePath='" + model.SuppFilePath + "',@UploadBy='" + model.UploadBy +"'").ToList();
+            var data = GetDataInList<APSupportingDocu>("proc_SupportingData_CRUD @procId='" + procid + "',@SuppFileName='" + model.SuppFileName + "',@SuppFilePath='" + model.SuppFilePath + "',@UploadBy='" + model.UploadBy + "'").ToList();
             return data;
         }
 
-        
+
 
         public IList<AgendaPointLog> AgendaPointLogCRUD(int procid, AgendaPointLog model)
         {

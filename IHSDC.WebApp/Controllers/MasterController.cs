@@ -2971,8 +2971,8 @@ namespace IHSDC.WebApp.Controllers
         public ActionResult clientIp()
         {
             //GetIpAddress obj = new GetIpAddress();
-            //var ipaddress = obj.getAddress();
             var ipaddress = ClientIPAddress.GetIPAddress();
+            //var ipaddress = Request.UserHostAddress;
             string settingValue = ConfigurationManager.AppSettings["ServerIPAddress"];       
             string userrole = SessionManager.RoleId;
             if (ipaddress == settingValue && userrole == enum1.Administrator.ToString())

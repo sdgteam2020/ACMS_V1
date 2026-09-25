@@ -24,7 +24,7 @@ namespace IHSDC.WebApp.Controllers
     {
 
         readonly Connection.DBConnection con = new Connection.DBConnection();
-
+       
         private ApplicationDbContext _db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -67,7 +67,7 @@ namespace IHSDC.WebApp.Controllers
         }
         public ActionResult ContactUs()
         {
-          
+            LoggerNew.LogError("User Registered and redirect to login page. log ContactUs "+ SessionManager.Active);
             ViewBag.CurrentTime = DateTime.Now;
             #region For Unread AP Count
             InboxCRUD CntInbox = new InboxCRUD();
@@ -104,7 +104,6 @@ namespace IHSDC.WebApp.Controllers
                 model.Unit_ID = Convert.ToInt16(SessionManager.Unit_ID);
                 var data = con.UnitCRUD(2, model);
                 model.ILUnitCRUD = data;
-                
                 ViewBag.UnitName = data[0].UnitName;
 
                 InboxCRUD model1 = new InboxCRUD();

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    GetUserLog(1, $('#spnAviator').html(), $('#LogFromDate').val(), $("#LogToDate").val());
+    //GetUserLog(1, $('#spnAviator').html(), $('#LogFromDate').val(), $("#LogToDate").val());
 });
 
 $('.BtnUserLog').click(function () {

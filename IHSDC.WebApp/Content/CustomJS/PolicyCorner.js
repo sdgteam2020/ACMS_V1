@@ -1,8 +1,13 @@
 ﻿
 var baseUrl = "";
+$(document).ready(function () {
+    $("#pageloader").hide();
+});
 function CheckDGISLatestVersion() {
-;    $('#pageLoader').show();
+
     return new Promise((resolve, reject) => {
+
+        $("#pageloader").show();
         $.ajax({
             url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
             type: 'GET',
@@ -10,7 +15,7 @@ function CheckDGISLatestVersion() {
             timeout: 3000,
             success: function () {
                 baseUrl = "https://dgisapp.army.mil:55102";
-                $('#pageLoader').hide();
+                $('#pageloader').hide();
                 resolve();
             },
             error: function () {
@@ -22,11 +27,11 @@ function CheckDGISLatestVersion() {
                     timeout: 3000,
                     success: function () {
                         baseUrl = "http://localhost";
-                        $('#pageLoader').hide();
+                        $('#pageloader').hide();
                         resolve();
                     },
                     error: function () {
-                        $('#pageLoader').hide();
+                        $('#pageloader').hide();
                         reject("DGIS not available");
                     }
                 });
@@ -36,41 +41,40 @@ function CheckDGISLatestVersion() {
 }
 
 function navigateToSearch() {
-   
     debugger;
     document.querySelector('.table-responsive').style.display = 'block';
     var Armyno = $('#SpnArmyNumber1').html();
-   if ($('#spnDocType').html() == 2)
+    if ($('#spnDocType').html() == 2)
 
     // if ($('#spnDocType').html() == 2 || $('#spnDocType').html() == 1) 
     {
-       
-       
-       /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
-       //$.ajax({
-       //    url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-       //    type: 'GET',
-       //    dataType: 'json',
-       //    timeout: 3000,
-       //    success: FetchUniqueTokenDetails,
-       //    error: errorhandle
-       //});
-       CheckDGISLatestVersion()
-           .then(() => {
-               // Now that baseUrl is available, continue
-               $.ajax({
-                   url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-                   type: 'GET',
-                   dataType: 'json',
-                   timeout: 3000,
-                   success: FetchUniqueTokenDetails,
-                   error: errorhandle
-               });
-           })
-           .catch((err) => {
-               errorhandle(); // or display a custom alert
-           });
-        
+
+
+        /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
+        //$.ajax({
+        //    url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+        //    type: 'GET',
+        //    dataType: 'json',
+        //    timeout: 3000,
+        //    success: FetchUniqueTokenDetails,
+        //    error: errorhandle
+        //});
+        CheckDGISLatestVersion()
+            .then(() => {
+                // Now that baseUrl is available, continue
+                $.ajax({
+                    url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+                    type: 'GET',
+                    dataType: 'json',
+                    timeout: 3000,
+                    success: FetchUniqueTokenDetails,
+                    error: errorhandle
+                });
+            })
+            .catch((err) => {
+                errorhandle(); // or display a custom alert
+            });
+
 
         function FetchUniqueTokenDetails(response) {
             if (response) {
@@ -100,7 +104,7 @@ function navigateToSearch() {
 
         function validatePersID2FA() {
             $.ajax({
-                url: baseUrl+'/Temporary_Listen_Addresses/ValidatePersID2FA',
+                url: baseUrl + '/Temporary_Listen_Addresses/ValidatePersID2FA',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ "inputPersID": Armyno }),
@@ -142,7 +146,7 @@ function navigateToSearch() {
                 }
             });
         }
-   }
+    }
     else {
         var searchTermValue = window.btoa($('#searchTerm').val());
         var otherParamValue = window.btoa($('#spnPolicyName').html());
@@ -154,7 +158,6 @@ function navigateToSearch() {
             type: 'GET',
             data: { Term: searchTermValue, id: otherParamValue, type: Type, PLid: Pid },
             success: function (data) {
-                console.log(data);
                 $("#dataTable1").removeClass("d-none");
                 $("#tbody").html(data);
                 $('#searchTerm').val("");
@@ -187,13 +190,10 @@ $('.showpopupFile').on('click', function (e) {
     $('#spnShowFileDocType').text($(this).closest("div").find('.spnTypeofdocu').html());
     var fileText = window.btoa($('#spnShowFilePolicyName').html());
     var fileType = window.btoa($('#spnShowFileDocType').html());
-    $('#spnPId').text($(this).closest("div").find('.spnPolicyId').html());
-    let policyId = window.btoa($('#spnPId').html()); 
-  
     $.ajax({
         url: '/PolicyCorner/GetFilesToShow',
         type: 'GET',
-        data: { FName: fileText, Type: fileType, PLid: policyId },
+        data: { FName: fileText, Type: fileType },
         success: function (data) {
             $("#tShowFilebody").html(data);
             var modal = document.getElementById("ShowFileModal");
@@ -215,43 +215,43 @@ $('.PolicyModelOpen').on('click', function (e) {
 
     $("#dataTable1").addClass("d-none");
     var ArmyNo = $(this).closest("div").find('.spnArmyNumber').html();
-    var PolicyTmpId = $(this).closest("div").find('.spnPolicyId').html();   
+    var PolicyTmpId = $(this).closest("div").find('.spnPolicyId').html();
 
- if ($(this).closest("div").find('.spnTypeofdocu').html() == 2)
-  //if ($(this).closest("div").find('.spnTypeofdocu').html() == 2 || $(this).closest("div").find('.spnTypeofdocu').html() == 0 || $(this).closest("div").find('.spnTypeofdocu').html() == 1)
-    {    
-     
-     /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
-     //CheckDGISLatestVersion()
-     //   $.ajax({
-     //       //url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-     //       url: baseUrl+'/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+    if ($(this).closest("div").find('.spnTypeofdocu').html() == 2)
+    //if ($(this).closest("div").find('.spnTypeofdocu').html() == 2 || $(this).closest("div").find('.spnTypeofdocu').html() == 0 || $(this).closest("div").find('.spnTypeofdocu').html() == 1)
+    {
 
-     //       type: 'GET',
-     //       dataType: 'json',
-     //       timeout: 3000,
-     //       success: FetchUniqueTokenDetails,
-     //       error: errorhandle
-     //   });
-     CheckDGISLatestVersion()
-         .then(() => {
-             // Now that baseUrl is available, continue
-             $.ajax({
-                 url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-                 type: 'GET',
-                 dataType: 'json',
-                 timeout: 3000,
-                 success: FetchUniqueTokenDetails,
-                 error: errorhandle
-             });
-         })
-         .catch((err) => {
-             errorhandle(); // or display a custom alert
-         });
+        /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
+        //CheckDGISLatestVersion()
+        //   $.ajax({
+        //       //url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+        //       url: baseUrl+'/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+
+        //       type: 'GET',
+        //       dataType: 'json',
+        //       timeout: 3000,
+        //       success: FetchUniqueTokenDetails,
+        //       error: errorhandle
+        //   });
+        CheckDGISLatestVersion()
+            .then(() => {
+                // Now that baseUrl is available, continue
+                $.ajax({
+                    url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
+                    type: 'GET',
+                    dataType: 'json',
+                    timeout: 3000,
+                    success: FetchUniqueTokenDetails,
+                    error: errorhandle
+                });
+            })
+            .catch((err) => {
+                errorhandle(); // or display a custom alert
+            });
 
         function FetchUniqueTokenDetails(response) {
             if (response) {
-            //    alert(response[0].Status);
+                //    alert(response[0].Status);
                 if (response[0].Status == '200') {
                     if (response[0].TokenValid == true) {
                         validatePersID2FA();
@@ -268,8 +268,8 @@ $('.PolicyModelOpen').on('click', function (e) {
             }
         }
 
-     function errorhandle(response) {
-        
+        function errorhandle(response) {
+
             sweetAlert('Hastakshar SEWA Not Running/Not Installed.', 'To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.', 'error');
             //sweetAlert({
             //    title: 'Hastakshar SEWA Not Running/Not Installed.\n To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup',
@@ -281,10 +281,10 @@ $('.PolicyModelOpen').on('click', function (e) {
             modal.style.display = "none";
         }
 
-            function validatePersID2FA() {
-                alert('2fa');
+        function validatePersID2FA() {
+
             $.ajax({
-                url: baseUrl+'/Temporary_Listen_Addresses/ValidatePersID2FA',
+                url: baseUrl + '/Temporary_Listen_Addresses/ValidatePersID2FA',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ "inputPersID": ArmyNo }),
@@ -309,9 +309,9 @@ $('.PolicyModelOpen').on('click', function (e) {
             });
         }
 
-            function SaveDataForTokenAccess() {
+        function SaveDataForTokenAccess() {
 
-             //   alert('Test123');
+            //   alert('Test123');
             var PlId = window.btoa(PolicyTmpId);
             $.ajax({
                 url: '/PolicyCorner/AddAccessLog',
@@ -332,35 +332,34 @@ $('.PolicyModelOpen').on('click', function (e) {
             });
         }
 
- }
- else if ($(this).closest("div").find('.spnTypeofdocu').html() == 0 || $(this).closest("div").find('.spnTypeofdocu').html() == 1)
- {
-     var PlId = window.btoa(PolicyTmpId); 
-     $.ajax({
-         url: '/PolicyCorner/AddAccessLog',
-         type: 'POST',
-         contentType: 'application/json',
-         data: JSON.stringify({ "Pid": PlId }),
-         success: function (result) {
-             if (result) {
-                 if (result.success === true) {
-                 } else {
-                     sweetAlert('Log Data Not Saved', '', 'error');
-                 }
-             }
-         },
-         error: function (xhr, status, error) {
-             console.error(xhr.responseText);
-         }
-     });
+    }
+    else if ($(this).closest("div").find('.spnTypeofdocu').html() == 0 || $(this).closest("div").find('.spnTypeofdocu').html() == 1) {
+        var PlId = window.btoa(PolicyTmpId);
+        $.ajax({
+            url: '/PolicyCorner/AddAccessLog',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ "Pid": PlId }),
+            success: function (result) {
+                if (result) {
+                    if (result.success === true) {
+                    } else {
+                        sweetAlert('Log Data Not Saved', '', 'error');
+                    }
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
 
-     $("#tbody").html("");
-     var modal = document.getElementById("PolicyModal");
-     modal.style.display = "block";
- }
+        $("#tbody").html("");
+        var modal = document.getElementById("PolicyModal");
+        modal.style.display = "block";
+    }
 
-  else {
-       
+    else {
+
         $("#tbody").html("");
         var modal = document.getElementById("PolicyModal");
         modal.style.display = "block";

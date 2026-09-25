@@ -22,6 +22,7 @@ namespace IHSDC.WebApp
         public static string[] AllPath;
         protected void Application_Start()
         {
+            MvcHandler.DisableMvcResponseHeader = true;
             ApplicationDatabaseHelper.Initialize();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

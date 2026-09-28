@@ -2360,9 +2360,7 @@
     <Content Include="NewContent\vendor\bootstrap\css\fonts\icomoon\fonts\icomoon.ttf" />
     <Content Include="NewContent\vendor\bootstrap\css\fonts\icomoon\fonts\icomoon.woff" />
     <Content Include="bix0rsjf.newcfg" />
-    <Content Include="bix0rsjf.tmp" />
     <Content Include="c2g31m4l.newcfg" />
-    <Content Include="c2g31m4l.tmp" />
     <Content Include="IHSDC.WebApp.rar" />
     <None Include="packages.config" />
     <None Include="Report.xsd">

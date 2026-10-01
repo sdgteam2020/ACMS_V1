@@ -88,7 +88,7 @@
                                         @*@Html.HiddenFor(m => m.IpAddress);*@
                                         <div class="form-group">
                                             <div class="form-label-group" style="width: 263px; max-width: 263px;">
-                                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @autofocus = "autofocus" })
+                                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @autofocus = "autofocus" , @autocomplete = "off" })
                                                 <label for="inputEmail">User Name </label>
                                                 @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
                                             </div>

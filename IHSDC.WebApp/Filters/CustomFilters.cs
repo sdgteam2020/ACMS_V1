@@ -21,7 +21,7 @@ namespace IHSDC.WebApp.Filters
                     ctx.Session.Abandon();
                     ctx.Session.Clear();
 
-                    filterContext.Result = new RedirectResult("~/Account/Login");
+                    filterContext.Result = new RedirectResult("~/Account/LocalLogout");
                     return;
 
                 }

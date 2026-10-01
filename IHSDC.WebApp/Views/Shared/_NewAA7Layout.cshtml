@@ -453,7 +453,12 @@
         <!-- Sidebar -->
         <ul class="aj sidebar navbar-nav text-light toggled" id="myTab">
 
-
+            @if (!Request.IsAuthenticated)
+            {
+                <script>
+                     window.location.href = '@Url.Action("LocalLogout", "Account")';
+                </script>
+            }
             @if (Request.IsAuthenticated && (string.IsNullOrEmpty(SessionManager.Active.ToString()) || SessionManager.Active.ToString() != "0"))
             {
 
@@ -493,14 +498,14 @@
                         </div>
                     </li>
                     @*<li class="nav-item dropdown">
-                            <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-id-card" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                                <span style=" color: white; font-weight: 600; font-size: 16px;">Pers Detail</span>
-                            </a>
-                            <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                                <a style=" font-size: 16px;" class="dropdown-item" id="master2" href='@Url.Action("AddRank", "Master")' )>Rank</a>
-                            </div>
-                        </li>*@
+                    <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-id-card" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                        <span style=" color: white; font-weight: 600; font-size: 16px;">Pers Detail</span>
+                    </a>
+                    <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                        <a style=" font-size: 16px;" class="dropdown-item" id="master2" href='@Url.Action("AddRank", "Master")' )>Rank</a>
+                    </div>
+                </li>*@
                     <li class="nav-item active">
                         <a class="nav-link" style="color:white" href='@Url.Action("AddRank", "Master")'>
                             @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
@@ -560,20 +565,20 @@
 
 
                     <!--<li class="nav-item active">
-                    <a class="nav-link" style="color:white" href='@Url.Action("AddUserPolicyControl", "Master")'>-->
+            <a class="nav-link" style="color:white" href='@Url.Action("AddUserPolicyControl", "Master")'>-->
                     @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
                     <!--<i class="fa fa-shield-alt"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Policy
-                            </span>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Access
-                            </span>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Permission
-                            </span>
-                        </a>
-                    </li>-->
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Policy
+                    </span>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Access
+                    </span>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Permission
+                    </span>
+                </a>
+            </li>-->
 
 
                     <li class="nav-item active">
@@ -612,24 +617,24 @@
                     </li>
 
                     @*<li class="nav-item active">
-                            <a class="nav-link" style="color:white" id="Roles" href='@Url.Action("UserLog", "AA7")'>
+                    <a class="nav-link" style="color:white" id="Roles" href='@Url.Action("UserLog", "AA7")'>
 
-                                <i class="fas fa-file-archive"></i>
-                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                    Log
-                                </span>
-                            </a>
-                        </li>*@
-                    <!--<li class="nav-item dropdown">
-                    <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdownlog" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-file-archive" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                        <span style=" color: white; font-weight: 600; font-size: 17px;">Log</span>
+                        <i class="fas fa-file-archive"></i>
+                        <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                            Log
+                        </span>
                     </a>
-                    <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("UserLog", "AA7")' )>User Log</a>-->
+                </li>*@
+                    <!--<li class="nav-item dropdown">
+            <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdownlog" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-file-archive" style="color: white; font-weight: 600; font-size: 16px;"></i>
+                <span style=" color: white; font-weight: 600; font-size: 17px;">Log</span>
+            </a>
+            <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("UserLog", "AA7")' )>User Log</a>-->
                     @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AviatorLog", "AA7")' )>Aviator Log</a>*@
                     <!--</div>
-                    </li>-->
+            </li>-->
                     <li class="nav-item active">
                         <a class="nav-link" style="color:white" id="Roles" href='@Url.Action("UserLog", "Master")'>
 
@@ -647,22 +652,22 @@
                 {
 
                     <!--<li class="nav-item dropdown">
-                    <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-group" style="color:white;"></i>
-                        <span style="color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                            Master
-                        </span>
-                        <span style="color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
-                            Entry
-                        </span>
+            <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-group" style="color:white;"></i>
+                <span style="color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                    Master
+                </span>
+                <span style="color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                    Entry
+                </span>
 
-                    </a>
-                    <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">-->
+            </a>
+            <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">-->
                     @*<a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddTypeofConf' )>Conf Type</a>*@
                     <!--<a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddPolicy' )>Policy</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddUserPolicyControl' )>Policy Access  Permission</a>
-                        </div>
-                    </li>-->
+                    <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddUserPolicyControl' )>Policy Access  Permission</a>
+                </div>
+            </li>-->
                     <li class="nav-item">
                         <a class="nav-link" style="color:white" href="~/Schedule/ScheduleLetter">
                             <i class="fas fa-plus-circle"></i>
@@ -676,60 +681,60 @@
 
 
                     <!--<li class="nav-item active">
-                    <a class="nav-link" style="color:white" href='@Url.Action("AddTypeofConf", "Master")'>-->
+            <a class="nav-link" style="color:white" href='@Url.Action("AddTypeofConf", "Master")'>-->
                     @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
                     <!--<i class="fa fa-group"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Conf Type
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddPolicy", "Master")'>-->
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Conf Type
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" style="color:white" href='@Url.Action("AddPolicy", "Master")'>-->
                     @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
                     <!--<i class="fa fa-object-group"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Policy
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddUserPolicyControl", "Master")'>-->
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Policy
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" style="color:white" href='@Url.Action("AddUserPolicyControl", "Master")'>-->
                     @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
                     <!--<i class="fa fa-shield-alt"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Policy
-                            </span>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Access
-                            </span>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Permission
-                            </span>
-                        </a>
-                    </li>-->
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Policy
+                    </span>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Access
+                    </span>
+                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
+                        Permission
+                    </span>
+                </a>
+            </li>-->
 
                     <!--<li class="nav-item">
-                    <a class="nav-link" style="color:white" href="~/Report/Reports">
+            <a class="nav-link" style="color:white" href="~/Report/Reports">
+                <i class="fas fa-print"></i>
+                <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                    Reports
+                </span>-->
+                    @*<span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; " class="navbar-brand text-light"> Conference</span>*@
+                    <!--</a>
+            </li>-->
+                    @*<li class="nav-item dropdown">
+                    <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-print"></i>
                         <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
                             Reports
-                        </span>-->
-                    @*<span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; " class="navbar-brand text-light"> Conference</span>*@
-                    <!--</a>
-                    </li>-->
-                    @*<li class="nav-item dropdown">
-                            <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-print"></i>
-                                <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                                    Reports
-                                </span>
-                            </a>
-                            <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                                <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Report/Reports' )>Appx A&B</a>
-                                <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/ACC/Analysis' )>Analysis</a>
-                            </div>
-                        </li>*@
+                        </span>
+                    </a>
+                    <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                        <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Report/Reports' )>Appx A&B</a>
+                        <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/ACC/Analysis' )>Analysis</a>
+                    </div>
+                </li>*@
 
 
                 }
@@ -835,27 +840,27 @@
                     </li>
 
                     @*<li class="nav-item">
-                            <a class="nav-link" style="color:white" href="~/ACC/Analysis">
-                                <i class="fa fa-gear"></i>
-                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Analysis</span>
+                    <a class="nav-link" style="color:white" href="~/ACC/Analysis">
+                        <i class="fa fa-gear"></i>
+                        <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Analysis</span>
 
-                            </a>
-                        </li>*@
+                    </a>
+                </li>*@
                     if (SessionManager.RoleId == enum1.Sponsor || SessionManager.RoleId == enum1.Nodal)
                     {
                         @*<li class="nav-item">
-                                <a class="nav-link" style="color:white" href="~/PolicyCorner/PolicyCorner">
-                                    <i class="fa fa-download" style="margin-left:10px;"></i>
+                        <a class="nav-link" style="color:white" href="~/PolicyCorner/PolicyCorner">
+                            <i class="fa fa-download" style="margin-left:10px;"></i>
 
-                                    <div class="newblink" href="#">New</div>
+                            <div class="newblink" href="#">New</div>
 
-                                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Policy &</span>
-                                    <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Resource</span>
-                                    <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
-                                        Corner
-                                    </span>
-                                </a>
-                            </li>*@
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Policy &</span>
+                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Resource</span>
+                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                Corner
+                            </span>
+                        </a>
+                    </li>*@
 
                         <li class="nav-item">
                             <a class="nav-link" style="color:white" href="~/PolicyFolder/PolicyFolder">
@@ -938,20 +943,20 @@
                     </div>
                 </div>
             </footer>
-            <button id="asdcChatToggle"
+            <!--<button id="asdcChatToggle"
                     class="asdc-chat-toggle"
                     type="button"
                     aria-label="Open chat"
                     aria-controls="asdcChat"
                     aria-expanded="false">
                 <img src="~/css/chatbot/download7.png" alt="" srcset="" class="asdc-chat-icon">
-                <span class="tooltip-bubble"><strong> Your AI Companion!</strong> Ask to know more about this site</span>
+                <span class="tooltip-bubble"><strong> Your AI Companion!</strong> Ask to know more about this site</span>-->
 
                 <!-- <svg xmlns="http://www.w3.org/2000/svg" height="26" width="32" viewBox="0 0 640 512" aria-hidden="true" focusable="false">
         <path fill="#ffffff"
         d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z" />
         </svg> -->
-            </button>
+            <!--</button>-->
 
             <!-- Chat dialog -->
             <div id="asdcChat"

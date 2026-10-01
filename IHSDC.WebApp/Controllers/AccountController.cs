@@ -23,8 +23,10 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Security;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace IHSDC.WebApp.Controllers
@@ -1042,36 +1044,47 @@ namespace IHSDC.WebApp.Controllers
                 }
 
                 URL = "http://" + model.IpAddress + ":8090/Service1/GetData1";
-
-
-                //var loggedinUser = await UserManager.FindAsync(model.Username, model.Password);
-                //if (loggedinUser != null)
-                //{
-                //    // change the security stamp only on correct username/password
-                //    await UserManager.UpdateSecurityStampAsync(loggedinUser.Id);
-                //    try
-                //    {
-                //        if (_db.Users.FirstOrDefault(i => i.UserName == model.Username).Active == "0")
-                //        {
-                //            //    DisplayMessage("User is Pending for approval from Admin, Contact to Administrator", "", "w");
-                //            //  return RedirectToAction("Login");
-                //            LoggerNew.LogError(Request.IsAuthenticated.ToString());
-                //            return RedirectToAction("ContactUs", "Home");
-                //        }
-                //    }
-                //    catch
-                //    { }
-                //}
-
-                //  int iii = Convert.ToInt32("45df75");
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, change to shouldLockout: true
-             //   LoggerNew.LogError("Test Log 1st condition for User " + model.Username);
+     
                 var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
                 switch (result)
                 {
                     case SignInStatus.Success:
 
+                        //Login Previlage
+                        var user = await UserManager.FindByNameAsync(model.Username);
+
+                        if (user == null)
+                        {
+                            return RedirectToAction("Login");
+                        }
+
+                        // Invalidate previous sessions
+                        var result1 = await UserManager.UpdateSecurityStampAsync(user.Id);
+
+                        user = await UserManager.FindByIdAsync(user.Id);
+
+                        // Store NEW stamp
+                        Session["SecurityStamp"] = user.SecurityStamp;
+
+                        var identity = await UserManager.CreateIdentityAsync(
+                            user,
+                            DefaultAuthenticationTypes.ApplicationCookie);
+
+                        AuthenticationManager.SignOut(
+                            DefaultAuthenticationTypes.ApplicationCookie);
+
+                        AuthenticationManager.SignIn(
+                            new AuthenticationProperties
+                            {
+                                IsPersistent = model.RememberMe
+                            },
+                            identity);
+
+
+                        //string GetSalt = AESEncrytDecry.GetSalt();
+                        //DtoSessions dtoSessions = new DtoSessions();
+                        //dtoSessions.Salt = GetSalt;
+                        //SessionHeplers.SetObject(HttpContext.Session, "Token", dtoSessions);
                         Session["UserIntId"] = _db.Users.FirstOrDefault(i => i.UserName == model.Username).IntId;
                         SessionManager.ArmyNo = _db.Users.FirstOrDefault(i => i.UserName == model.Username).PersonnelNumber;
                         SessionManager.UserEditId = _db.Users.FirstOrDefault(i => i.UserName == model.Username).Id;
@@ -1089,11 +1102,7 @@ namespace IHSDC.WebApp.Controllers
                         SessionManager.UserFullName = UserFullName.ToString();
 
                         IHSDCAA7DBDBContext db = new IHSDCAA7DBDBContext();
-                        //var RankName = db.dbo_RankMaster.Where(x => x.RankId == Convert.ToInt32(RankId)).FirstOrDefault();
-                        //SessionManager.RankName = RankName.RankName;
-
-
-
+                      
                         var UnitName = db.dbo_tbl_Unit.FirstOrDefault(i => i.Unit_ID == Unit_ID).UnitName;
                         SessionManager.UnitName = UnitName;
 
@@ -1111,7 +1120,7 @@ namespace IHSDC.WebApp.Controllers
 
                         Session["ip"] = obj.getAddress();
 
-                        var user = await UserManager.FindByNameAsync(model.Username);
+                        //var user = await UserManager.FindByNameAsync(model.Username);
                         var RoleName = await UserManager.GetRolesAsync(user.Id.ToString());
                         RoleName = RoleName.Where(val => val != "User").ToArray();
                         SessionManager.Role = RoleName[0].ToString();
@@ -1147,32 +1156,30 @@ namespace IHSDC.WebApp.Controllers
                         if (SessionManager.RoleId == enum1.Administrator)
                         {
                             SessionManager.Active = "1";
-                            con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
+                           //con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
                             return RedirectToLocal(returnUrl);
                         }
                         else
                         {
-                              if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "https://iam2.army.mil/IAM/User" && returnUrl != null)
-                           // if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "/" && returnUrl != "/" && returnUrl != null)
+                            if (user.Active == "0")
                             {
-                                con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "Admin Switching to User " + model.Username);
+
+                                SessionManager.Active = "0";
+                                return RedirectToAction("ContactUs", "Home");
+                            }
+                            //if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "https://iam2.army.mil/IAM/User" && returnUrl != null) --for ADN 
+                            if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "/"  && returnUrl != null)  //-- for Local
+                            {
+
+                                SessionManager.Active = "1";
+                                //con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "Admin Switching to User " + model.Username);
                                 return Json(1);
                             }
                             else
                             {
-                                // var routeValues = new System.Web.Routing.RouteValueDictionary();
-                                if (_db.Users.FirstOrDefault(i => i.UserName == model.Username).Active == "0")
-                                {
-                                  
-                                    // routeValues["Active"] = "0";
-                                    SessionManager.Active = "0";
-                                   // LoggerNew.LogError("Register User login attempt with active "+ SessionManager.Active + " condition for User " + model.Username);
-                                    return RedirectToAction("ContactUs", "Home");
-                                }
-                                // routeValues = new System.Web.Routing.RouteValueDictionary();
-                             //   LoggerNew.LogError("User login attempt with active " + SessionManager.Active + " condition for User " + model.Username);
+                             
                                 SessionManager.Active = "1";
-                                con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
+                                //con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
                                 return RedirectToAction("AddInboxNotingFwd", "ACC");
                             }
                         }
@@ -1795,7 +1802,7 @@ namespace IHSDC.WebApp.Controllers
             return RedirectToAction("ResetPassword", "Account");
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult LocalLogout()
         {
@@ -1825,6 +1832,32 @@ namespace IHSDC.WebApp.Controllers
                     }
                 }
                 db.SaveChanges();
+            }
+            HttpContext.Session.Remove("Token");
+            // Logout Forms Authentication
+            FormsAuthentication.SignOut();
+
+            // Logout OWIN Authentication
+            AuthenticationManager.SignOut(
+                DefaultAuthenticationTypes.ApplicationCookie
+            );
+           
+            // Clear Session
+            Session.Clear();
+            Session.Abandon();
+
+            // Delete all cookies
+            foreach (string cookieName in Request.Cookies.AllKeys)
+            {
+                if (!string.IsNullOrEmpty(cookieName))
+                {
+                    Response.Cookies.Add(new HttpCookie(cookieName)
+                    {
+                        Value = "",
+                        Expires = DateTime.Now.AddDays(-1),
+                        HttpOnly = true
+                    });
+                }
             }
             return RedirectToAction("Index", "Home");
         }

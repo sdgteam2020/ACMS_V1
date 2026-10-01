@@ -22,6 +22,5 @@ namespace IHSDC.Common.Configurations
         public const string DatabasePassword = "Admin@2024";
 
 
-
     }
 }

@@ -1,20 +1,22 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using IHSDC.WebApp.Models;
-using IHSDC.WebApp.Connection;
-using static IHSDC.WebApp.Filters.CustomFilters;
-using PagedList;
+﻿using IHSDC.WebApp.Connection;
 using IHSDC.WebApp.Helper;
-using System.Data.SqlClient;
-using System.Text;
-using System.Collections.Generic;
-using System.IO;
-using IHSDC.WebApp.Services;
-using static IHSDC.WebApp.MvcApplication;
+using IHSDC.WebApp.Models;
 using IHSDC.WebApp.RepositryManager;
+using IHSDC.WebApp.Services;
+using PagedList;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using static IHSDC.WebApp.Controllers.PolicyCornerController;
+using static IHSDC.WebApp.Filters.CustomFilters;
+using static IHSDC.WebApp.MvcApplication;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -612,7 +614,6 @@ namespace IHSDC.WebApp.Controllers
                 return Redirect("/Error/");
             }
         }
-
         public ActionResult DeleteComd(string id)
         {
             try
@@ -1406,10 +1407,10 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                //if (Session["UserIntId"] == null)
-                //{
-                //    return RedirectToAction("Login", "Account");
-                //}
+                if (Session["UserIntId"] == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
                 ViewBag.ButtonName = "Add";
                 CorpsCRUD model = new CorpsCRUD();
                 if (id != null && id != string.Empty)
@@ -1460,15 +1461,17 @@ namespace IHSDC.WebApp.Controllers
         }
 
 
-        [HttpPost]       
+        [HttpPost]
         public ActionResult AddCorps(string id, CorpsCRUD model, string btnval)
         {
             try
             {
-                   // model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                    if (id == null)
+                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                if (ModelState.IsValid)
+                {
+                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                    if (btnval == "Add")
                     {
-
                         var data = con.CorpsCRUD(1, model);
                         if (data[0].IsSuccess == true)
                         {
@@ -1481,18 +1484,80 @@ namespace IHSDC.WebApp.Controllers
 
                         }
                     }
-                    else
-                    {
-                        int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                        model.CorpsId = item;
-                        var data = con.CorpsCRUD(3, model);
-                        if (data[0].IsSuccess == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                }
 
-                        }
+                ViewBag.ButtonName = "Add";
+
+                return RedirectToAction("AddCorps", new { id = string.Empty });
+            }
+            catch (SqlException ex)
+            {
+
+                StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
+
+                try
+                {
+                    con.ErrorLogDashboard2(3, errorMessages.ToString().Replace("'", "''"), ex.StackTrace.ToString(), "Database");
+                }
+                catch (Exception ex1)
+                {
+                    _ = ex1.Message;
+                    return Redirect("/Error/");
+                }
+
+                return Redirect("/Error/");
+            }
+            catch (Exception ex)
+            {
+                // Handle generic ones here.  
+                try
+                {
+                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
+                }
+                catch (Exception ex1)
+                {
+                    _ = ex1.Message;
+                    return Redirect("/Error/");
+                }
+                return Redirect("/Error/");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCorps(string Request)
+        {
+            try
+            {
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                   System.Web.HttpContext.Current.Session,
+                   "Token");
+
+                if (session == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
+
+                CorpsCRUD model = AESEncrytDecry.DecryptAESWithDTO<CorpsCRUD>(
+                    Request,
+                    session.Salt);
+
+                if (TryValidateModel(model))
+                {
+                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                    model.CorpsId = Convert.ToInt32(model.CorpsId);
+
+                    var data = con.CorpsCRUD(3, model);
+                    if (data[0].IsSuccess == true)
+                    {
+                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
                     }
-                
+
+                }
                 ViewBag.ButtonName = "Add";
 
                 return RedirectToAction("AddCorps", new { id = string.Empty });
@@ -2645,17 +2710,7 @@ namespace IHSDC.WebApp.Controllers
 
                         }
                     }
-                    if (btnval == "Update")
-                    {
-                        int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                        model.TypeOfConfId = item;
-                        var data = con.TypeofConfCRUD(3, model);
-                        if (data[0].IsSuccess == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                    }
+                    
                 }
                 ViewBag.ButtonName = "Add";
 
@@ -2690,6 +2745,82 @@ namespace IHSDC.WebApp.Controllers
                     _ = ex1.Message;
                     return Redirect("/Error/");
                 }
+                return Redirect("/Error/");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateTypeofConf(string Request)
+        {
+            try
+            {
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                    System.Web.HttpContext.Current.Session,
+                    "Token");
+
+                if (session == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
+
+                TypeofConfCRUD model = AESEncrytDecry.DecryptAESWithDTO<TypeofConfCRUD>(
+                    Request,
+                    session.Salt);
+
+                if (TryValidateModel(model))
+                {
+                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+
+                    model.TypeOfConfId = Convert.ToInt32(model.TypeOfConfId);
+
+                    var data = con.TypeofConfCRUD(3, model);
+                    if (data[0].IsSuccess == true)
+                    {
+                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                    }
+                }               
+                return RedirectToAction("AddTypeofConf", new { id = string.Empty });
+
+            }
+            catch (SqlException ex)
+            {
+                StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
+
+                try
+                {
+                    con.ErrorLogDashboard2(
+                        3,
+                        errorMessages.ToString().Replace("'", "''"),
+                        ex.StackTrace,
+                        "Database");
+                }
+                catch
+                {
+                    return Redirect("/Error/");
+                }
+
+                return Redirect("/Error/");
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    con.ErrorLogDashboard2(
+                        3,
+                        ex.Message,
+                        ex.StackTrace,
+                        "Page");
+                }
+                catch
+                {
+                    return Redirect("/Error/");
+                }
+
                 return Redirect("/Error/");
             }
         }

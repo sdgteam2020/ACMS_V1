@@ -14,7 +14,7 @@
 }
 
 
-@using (Html.BeginForm("AddTypeofConf", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddTypeofConf", "Master", FormMethod.Post, new { enctype = "multipart/form-data", id = "TypeConfForm" }))
 {
 
     <div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
@@ -23,6 +23,7 @@
         </h3>
         <div class="row">
             @Html.Hidden("id", "model.TypeofConfId")
+
 
             @Html.Hidden("btnval", myValue)
 
@@ -41,9 +42,20 @@
                 @Html.DropDownListFor(m => m.PolicyId, (new IHSDC.WebApp.Models.MasterModels()).LoadResPolicy(), "--Select Policy --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = "required", @maxlength = "20" })
             </div>
 
+         
+            @if (myValue == "Update")
+        {
             <div class="col-md-6">
-                <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddBranch','AddBranch')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success updateTypeConf">@ViewBag.ButtonName</button>
             </div>
+        }
+        else
+        {
+            <div class="col-md-6">
+                <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddConfirmation">@ViewBag.ButtonName</button>
+            </div>
+        }
+
         </div>
         <div class="dropdown-divider"></div>
        
@@ -96,83 +108,14 @@
 <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
-
-<script type="text/javascript">
-            var messaget = '@ViewBag.ButtonName';
-
-
-
-    function AddConfirmation(obj, ActionName, Submit) {
-        event.preventDefault();
-
-        // Remove any existing error labels
-        $('.error-label').remove();
-
-        // Check if all required form fields are filled in
-        var emptyFields = [];
-        $('form').find(':input[required]').each(function () {
-            if ($.trim($(this).val()) === '') {
-                emptyFields.push(this);
-            }
-        });
-
-        // If there are empty fields, display an error message for the first empty field
-        if (emptyFields.length > 0) {
-            var firstEmptyField = emptyFields[0];
-            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
-            return;
-        }
-
-        // If all fields are filled, display the confirmation dialog
-        if (messaget == "Add") {
-            swal({
-                title: "Please Confirm",
-                text: "",
-                type: "warning",
-
-                showCancelButton: true,
-                cancelButtonText: "Cancel",
-                cancelButtonColor: "#FF0000",
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Add",
-
-                closeOnCancel: true,
-                closeOnConfirm: false
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('form').submit();
-                    }
-                });
-        } else {
-            swal({
-                title: "Please Confirm",
-                text: "",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Update",
-                cancelButtonText: "Cancel",
-
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('form').submit();
-                    }
-                });
-        }
-    }
-    $(document).ready(function () {
-        $('.dropdownsearch').select2();
-    });
-
-   var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus ';
-    if (message)
-        sweetAlert(message, messagemidStatus, messageStatus);
+<script src="~/Content/lib/jquery/jquery.min.js"></script>
+<script src="~/DevelopersJs/EncryptePayload.js"></script>
+<script src="~/DevelopersJs/AddTypeOfConf.js"></script>
+<script>
+     var message = '@message';
+  var messageStatus = '@messageStatus';
+  var messagemidStatus = '@messagemidStatus ';
+  if (message)
+      sweetAlert(message, messagemidStatus, messageStatus);
 </script>
 

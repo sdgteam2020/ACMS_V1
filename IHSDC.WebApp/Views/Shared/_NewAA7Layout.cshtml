@@ -2,8 +2,9 @@
 @using IHSDC.WebApp.Helper
 @using IHSDC.WebApp.Connection
 @using System.Configuration
-
-
+@using IHSDC.WebApp.Models
+@using Microsoft.AspNetCore.Http
+@using IHSDC.WebApp.Helper
 @{
     Layout = null;
 
@@ -404,8 +405,16 @@
 
             <div class="navbar-nav ml-auto ml-md-0">
                 <div class="nav-item dropdown no-arrow text-light d-flex" style="float:right;margin-top:0px;">
+                    @{
+                        DtoSessions dto = SessionHeplers.GetObject<DtoSessions>(
+                            Context.Session,
+                            "Token"
+                        );
+                    }
+                    
 
-                    @*<a class="nav-link" style="color:white" href='@Url.Action("EditProfile", "Master")'>*@
+                    <input type="hidden" value="@dto.Salt" id="hiddenSa" />
+
                     @if (@SessionManager.Role != "Administrator")
                     {
                         <a href='@Url.Action("Edit", "Account", new { id = @SessionManager.UserEditId })'>
@@ -415,9 +424,21 @@
                             </div>
                         </a>
                     }
-                    &nbsp;&nbsp;
+                    &nbsp; &nbsp;
                     <h4 class="text-light infologin">
                         Welcome  @SessionManager.ArmyNo <br />
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -948,9 +969,9 @@
                 <span class="tooltip-bubble"><strong> Your AI Companion!</strong> Ask to know more about this site</span>
 
                 <!-- <svg xmlns="http://www.w3.org/2000/svg" height="26" width="32" viewBox="0 0 640 512" aria-hidden="true" focusable="false">
-        <path fill="#ffffff"
-        d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z" />
-        </svg> -->
+                <path fill="#ffffff"
+                d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z" />
+                </svg> -->
             </button>
 
             <!-- Chat dialog -->
@@ -1052,6 +1073,8 @@
         <script src="~/NewContent/vendor/bootstrap/js/main.js"></script>
         <script src="~/NewContent/dataTable4/js/select2.min.js"></script>
         <script src="~/Content/CustomJS/SignUpfmReg.js"></script>
+        <script src="~/Content/lib/crypto-js/crypto-js.js"></script>
+        <script src="~/Content/lib/crypto-js/crypto-js.min.js"></script>
     </div>
     <script>
         window.onscroll = function () { myFunction() };
@@ -1105,6 +1128,7 @@
 
     <script>
         $(document).ready(function () {
+
             //if (window.location.href.replace("http://localhost:8080/", ""))
             //alert(window.location.href.replace("http://localhost:8080/", ""));
             $('.aj1 ul li ').find('a').each(function () {
@@ -1631,10 +1655,10 @@
             } else {
                 // Inline SVG for robot
                 icon.innerHTML = `
-       <svg xmlns="http://www.w3.org/2000/svg" height="18" width="24" viewBox="0 0 640 512" fill="green">
-      <path d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z"/>
+                           <svg xmlns="http://www.w3.org/2000/svg" height="18" width="24" viewBox="0 0 640 512" fill="green">
+                          <path d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z"/>
 </svg>
-        `;
+                            `;
             }
 
             const bubble = document.createElement('div');

@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace IHSDC.WebApp.Controllers
@@ -1042,36 +1043,16 @@ namespace IHSDC.WebApp.Controllers
                 }
 
                 URL = "http://" + model.IpAddress + ":8090/Service1/GetData1";
-
-
-                //var loggedinUser = await UserManager.FindAsync(model.Username, model.Password);
-                //if (loggedinUser != null)
-                //{
-                //    // change the security stamp only on correct username/password
-                //    await UserManager.UpdateSecurityStampAsync(loggedinUser.Id);
-                //    try
-                //    {
-                //        if (_db.Users.FirstOrDefault(i => i.UserName == model.Username).Active == "0")
-                //        {
-                //            //    DisplayMessage("User is Pending for approval from Admin, Contact to Administrator", "", "w");
-                //            //  return RedirectToAction("Login");
-                //            LoggerNew.LogError(Request.IsAuthenticated.ToString());
-                //            return RedirectToAction("ContactUs", "Home");
-                //        }
-                //    }
-                //    catch
-                //    { }
-                //}
-
-                //  int iii = Convert.ToInt32("45df75");
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, change to shouldLockout: true
-             //   LoggerNew.LogError("Test Log 1st condition for User " + model.Username);
+     
                 var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
                 switch (result)
                 {
                     case SignInStatus.Success:
 
+                        string GetSalt = AESEncrytDecry.GetSalt();
+                        DtoSessions dtoSessions = new DtoSessions();
+                        dtoSessions.Salt = GetSalt;
+                        SessionHeplers.SetObject(HttpContext.Session, "Token", dtoSessions);
                         Session["UserIntId"] = _db.Users.FirstOrDefault(i => i.UserName == model.Username).IntId;
                         SessionManager.ArmyNo = _db.Users.FirstOrDefault(i => i.UserName == model.Username).PersonnelNumber;
                         SessionManager.UserEditId = _db.Users.FirstOrDefault(i => i.UserName == model.Username).Id;
@@ -1089,11 +1070,7 @@ namespace IHSDC.WebApp.Controllers
                         SessionManager.UserFullName = UserFullName.ToString();
 
                         IHSDCAA7DBDBContext db = new IHSDCAA7DBDBContext();
-                        //var RankName = db.dbo_RankMaster.Where(x => x.RankId == Convert.ToInt32(RankId)).FirstOrDefault();
-                        //SessionManager.RankName = RankName.RankName;
-
-
-
+                      
                         var UnitName = db.dbo_tbl_Unit.FirstOrDefault(i => i.Unit_ID == Unit_ID).UnitName;
                         SessionManager.UnitName = UnitName;
 

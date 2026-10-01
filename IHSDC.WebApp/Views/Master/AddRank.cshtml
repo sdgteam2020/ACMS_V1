@@ -31,7 +31,7 @@
 
             <div class="col" style="margin-left:1rem;">
                 <label><b>Rank Abbreviation:</b></label>
-                @Html.TextBoxFor(m => m.RankName, new { @class = "form-control", @maxlength = "25", @required = "required" , @onkeyup = "ValInData(this)"})
+                @Html.TextBoxFor(m => m.RankName, new { @class = "form-control", @maxlength = "25", @required = "required", @onkeyup = "ValInData(this)" })
 
                 @Html.ValidationMessageFor(model => model.RankName, "", new { @class = "danger" })
 
@@ -41,24 +41,18 @@
             <div class="col">
 
                 <label><b>Rank Name:</b></label>
-                @Html.TextBoxFor(m => m.RankAbbreviation, new { @class = "form-control", @required = "required" , @onkeyup = "ValInData(this)" })
+                @Html.TextBoxFor(m => m.RankAbbreviation, new { @class = "form-control", @required = "required", @onkeyup = "ValInData(this)" })
 
                 @Html.ValidationMessageFor(model => model.RankAbbreviation, "", new { @class = "danger" })
             </div>
 
 
             <div class="col-md-6">
-                <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddRank','AddRank')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+                <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddRankConfirm">@ViewBag.ButtonName</button>
             </div>
         </div>
         <div class="dropdown-divider"></div>
-        @*<div class="col-12" style="margin-left:35%">
-            <div class="form-group" style="margin-top: -69px;">
-                <div class="col-sm-6" style="margin-left:10%">
-                    <button type="submit" value="Add" style="margin-top: 2.5rem;" name="btnval" class="btn btn-success">Add</button>
-                </div>
-            </div>
-        </div>*@
+       
 
         <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
             <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
@@ -88,11 +82,7 @@
                                         <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
                                     </a>
                                 </td>
-                                @*<td>
-                                    <a id="btndel" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.RankId.ToString())' onclick="DeleteConfirmation(this,'/Master/DeleteRank')">
-                                        <img src="~/Content/images/Delete.png" width="30" height="30" border="0" />
-                                    </a>
-                                </td>*@
+                              
                             </tr>
                         }
                     }
@@ -113,81 +103,14 @@
 <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
-
-<script type="text/javascript">
-            var messaget = '@ViewBag.ButtonName';
-
-
-
-    function AddConfirmation(obj, ActionName, Submit) {
-        event.preventDefault();
-
-        // Remove any existing error labels
-        $('.error-label').remove();
-
-        // Check if all required form fields are filled in
-        var emptyFields = [];
-        $('form').find(':input[required]').each(function () {
-            if ($.trim($(this).val()) === '') {
-                emptyFields.push(this);
-            }
-        });
-
-        // If there are empty fields, display an error message for the first empty field
-        if (emptyFields.length > 0) {
-            var firstEmptyField = emptyFields[0];
-            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
-            return;
-        }
-
-        // If all fields are filled, display the confirmation dialog
-        if (messaget == "Add") {
-            swal({
-                title: "Please Confirm",
-                text: "",
-                type: "warning",
-
-                showCancelButton: true,
-                cancelButtonText: "Cancel",
-                cancelButtonColor: "#FF0000",
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Add",
-
-                closeOnCancel: true,
-                closeOnConfirm: false
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('form').submit();
-                    }
-                });
-        } else {
-            swal({
-                title: "Please Confirm",
-                text: "",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Update",
-                cancelButtonText: "Cancel",
-
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('form').submit();
-                    }
-                });
-        }
-    }
-
-
-   var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus ';
-    if (message)
-        sweetAlert(message, messagemidStatus, messageStatus);
+<script src="~/DevelopersJs/AddRank.js"></script>
+<script>
+     var message = '@message';
+  var messageStatus = '@messageStatus';
+  var messagemidStatus = '@messagemidStatus ';
+  if (message)
+      sweetAlert(message, messagemidStatus, messageStatus);
 </script>
+
+
 

@@ -1269,8 +1269,12 @@
     <Content Include="css\chatbot\download7.png" />
     <Content Include="css\chatbot\favicon.png" />
     <Content Include="css\chatbot\user4.png" />
+    <Content Include="DevelopersJs\AddAppt.js" />
+    <Content Include="DevelopersJs\AddBranch.js" />
+    <Content Include="DevelopersJs\AddCategory.js" />
     <Content Include="DevelopersJs\AddComd.js" />
     <Content Include="DevelopersJs\AddCorps.js" />
+    <Content Include="DevelopersJs\AddRank.js" />
     <Content Include="DevelopersJs\AddTypeOfConf.js" />
     <Content Include="DevelopersJs\EncryptePayload.js" />
     <Content Include="fonts\fontawesome-webfont.svg" />

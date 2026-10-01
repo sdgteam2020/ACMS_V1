@@ -1081,10 +1081,10 @@ namespace IHSDC.WebApp.Controllers
                             identity);
 
 
-                        //string GetSalt = AESEncrytDecry.GetSalt();
-                        //DtoSessions dtoSessions = new DtoSessions();
-                        //dtoSessions.Salt = GetSalt;
-                        //SessionHeplers.SetObject(HttpContext.Session, "Token", dtoSessions);
+                        string GetSalt = AESEncrytDecry.GetSalt();
+                        DtoSessions dtoSessions = new DtoSessions();
+                        dtoSessions.Salt = GetSalt;
+                        SessionHeplers.SetObject(HttpContext.Session, "Token", dtoSessions);
                         Session["UserIntId"] = _db.Users.FirstOrDefault(i => i.UserName == model.Username).IntId;
                         SessionManager.ArmyNo = _db.Users.FirstOrDefault(i => i.UserName == model.Username).PersonnelNumber;
                         SessionManager.UserEditId = _db.Users.FirstOrDefault(i => i.UserName == model.Username).Id;

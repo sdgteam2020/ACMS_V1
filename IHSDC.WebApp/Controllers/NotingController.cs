@@ -12,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using static IHSDC.WebApp.Filters.CustomFilters;
+using IHSDC.WebApp.Helper;
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -32,6 +33,18 @@ namespace IHSDC.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
+                if (!string.IsNullOrEmpty(id))
+                {
+                    int EditId = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
+
+                    if (Session["AllowedAgendaIds"] != null && !CommonHelper.HasAgendaAccess(EditId))
+                    {
+                        Response.StatusCode = 403;
+                        Response.TrySkipIisCustomErrors = true;
+                        return View("~/Views/Error/AccessDenied.cshtml");
+                    }
+                }
+
                 NotingDetail Notingmodel = new NotingDetail();
                 InboxCRUD model1 = new InboxCRUD();
 
@@ -131,6 +144,18 @@ namespace IHSDC.WebApp.Controllers
                 if (Session["UserIntId"] == null)
                 {
                     return RedirectToAction("Login", "Account");
+                }
+                
+                if (!string.IsNullOrEmpty(id))
+                {
+                    int EditId = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
+
+                    if (Session["AllowedAgendaIds"] != null && !CommonHelper.HasAgendaAccess(EditId))
+                    {
+                        Response.StatusCode = 403;
+                        Response.TrySkipIisCustomErrors = true;
+                        return View("~/Views/Error/AccessDenied.cshtml");
+                    }
                 }
                 NotingDetail Notingmodel = new NotingDetail();
                 InboxCRUD model1 = new InboxCRUD();

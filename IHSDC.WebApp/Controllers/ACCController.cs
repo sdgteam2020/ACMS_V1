@@ -1,7 +1,9 @@
 ﻿using IHSDC.Common.Models;
 using IHSDC.WebApp.Connection;
+using IHSDC.WebApp.DTO;
 using IHSDC.WebApp.Helper;
 using IHSDC.WebApp.Models;
+using iText.Signatures;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNet.Identity;
@@ -17,6 +19,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -26,6 +30,7 @@ using static IHSDC.WebApp.Filters.CustomFilters;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 using static iTextSharp.text.pdf.AcroFields;
 using PdfReader = iTextSharp.text.pdf.PdfReader;
+using IHSDC.WebApp.Helper;
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -47,6 +52,7 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
+                
                 ViewBag.ButtonName = "Save";
                 ViewBag.UploadPath = "";
                 ViewBag.WordFilePath = "";
@@ -55,7 +61,17 @@ namespace IHSDC.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
+                if (!string.IsNullOrEmpty(id))
+                {
+                    int EditId = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
 
+                    if (Session["AllowedAgendaIds"] != null && !CommonHelper.HasAgendaAccess(EditId))
+                    {
+                        Response.StatusCode = 403;
+                        Response.TrySkipIisCustomErrors = true;
+                        return View("~/Views/Error/AccessDenied.cshtml");
+                    }
+                }
                 var CurrentUser = UserManager.FindById(User.Identity.GetUserId());
                 if (User.IsInRole("Administrator"))
                     ViewBag.count1 = Common.Helpers.Identity.Hierarchy.GetHierarchyUsers(CurrentUser).OrderBy(u => u.IntId).Count() - 1;
@@ -170,32 +186,19 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.UnReadMsg = 0;
                 }
                 #endregion
+                var allowedIds = model1.ILInboxCRUD
+               .Select(x => x.Inbox_ID)
+                .Distinct()
+                .ToArray();
 
+                Session["AllowedAgendaIds"] = allowedIds;
                 return View(model1);
-            }
-            catch (SqlException ex)
-            {
-
-                StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
-
-                try
-                {
-                    con.ErrorLogDashboard2(3, errorMessages.ToString().Replace("'", "''"), ex.StackTrace.ToString(), "Database");
-                }
-                catch (Exception ex1)
-                {
-                    _ = ex1.Message;
-                    return Redirect("/Error/Error");
-                }
-
-                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
                 try
                 {
-                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
+                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), ex.GetType().ToString());
                 }
                 catch (Exception ex1)
                 {
@@ -206,7 +209,7 @@ namespace IHSDC.WebApp.Controllers
             }
 
         }
-
+       
         [HttpPost]
         public ActionResult AddAgenda(AgendaPointCRUD model)
         {
@@ -335,25 +338,9 @@ namespace IHSDC.WebApp.Controllers
                 }
                 else
                 {
+                    Session.Remove("AllowedAgendaIds");
                     return RedirectToAction("AddAgenda", new { id = RepositryManager.EncryptionManager.Encryption(model.Inbox_ID.ToString()), Edit = RepositryManager.EncryptionManager.Encryption("1") });
                 }
-            }
-            catch (SqlException ex)
-            {
-
-                StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
-
-                try
-                {
-                    con.ErrorLogDashboard2(3, errorMessages.ToString().Replace("'", "''"), ex.StackTrace.ToString(), "Database");
-                }
-                catch (Exception ex1)
-                {
-                    _ = ex1.Message;
-                    return Redirect("/Error/Error");
-                }
-
-                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -370,8 +357,146 @@ namespace IHSDC.WebApp.Controllers
                 return Redirect("/Error/Error");
             }
         }
+        [HttpPost]
+        public ActionResult UpdateAgendaEncrypted(EncryptedRequestModel encryptedRequest)
+        {
+            
+            string FilePaths = "";
+            try
+            {
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                   System.Web.HttpContext.Current.Session,
+                   "Token");
 
-        [HttpGet]
+                if (session == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
+
+                // Check encrypted request and Payload
+                if (encryptedRequest == null ||
+                    string.IsNullOrWhiteSpace(encryptedRequest.Payload))
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Encrypted payload is missing or empty."
+                    });
+                }
+
+                // Decrypt Payload
+                AgendaPointCRUD model;
+
+                try
+                {
+                    model = AESEncrytDecry.DecryptAESWithDTO<AgendaPointCRUD>(
+                        encryptedRequest.Payload,
+                        session.Salt);
+                }
+                catch (Exception)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Invalid or corrupted encrypted payload."
+                    });
+                }
+
+                // Check decrypted model
+                if (model == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Unable to decrypt Agenda details."
+                    });
+                }
+
+                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                model.Unit_ID = Convert.ToInt32(SessionManager.Unit_ID);
+
+                if (Convert.ToString(SessionManager.RoleId) != enum1.Administrator)
+                {
+                    if (model.Inbox_ID == 0 && Request.Files[0].ContentLength == 0)
+                    {
+                        DisplayMessage("Please upload Pdf file", "", "w");
+                        return RedirectToAction("AddAgenda", new { id = string.Empty, Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") });
+                    }
+
+                    if (model.Inbox_ID == 0 && Request.Files[1].ContentLength == 0)
+                    {
+                        DisplayMessage("Please upload Word file", "", "w");
+                        return RedirectToAction("AddAgenda", new { id = string.Empty, Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") });
+                    }
+
+                    ScheduleLetter letter = new ScheduleLetter();
+                    letter.ScheduleId = model.Schedule_ID;
+                    var LetterData = con.ScheduleLetter_CRUD(10, letter);
+                    var LetterSubject = LetterData[0].Subject;
+                    var ConfTypeId = LetterData[0].TypeOfConfId;
+                    if ((model.Inbox_ID != 0))
+                    {
+                        if (model.FileName != null)
+                        {
+                            if (model.Upload == null)
+                            {
+                                model.Upload = model.FileName;
+                            }
+                        }
+                    }
+
+                    var data = con.CreateAgendaPoint(1, model);
+                    if (data[0].IsSuccess == true)
+                    {
+                        //DisplayMessage(data[0].Msg, "", data[0].MsgStatus);
+                        //model.Inbox_ID = Convert.ToInt32(data[0].MidMsg);
+                        //return RedirectToAction("AddAgenda", new { id = string.Empty });
+                        return Json(new
+                        {
+                            success = true,
+                            message = "Update Successfully"
+                        });
+                    }
+
+
+                }
+                return Json(new
+                {
+                    success = false,
+                    message = "Invalid or corrupted encrypted payload."
+                });
+            }
+            catch (Exception ex)
+            {
+                // Handle generic ones here.  
+                try
+                {
+                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
+                }
+                catch (Exception ex1)
+                {
+                    _ = ex1.Message;
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Invalid or corrupted encrypted payload."
+                    });
+                }
+                return Json(new
+                {
+                    success = false,
+                    message = "Invalid or corrupted encrypted payload."
+                });
+            }
+            
+
+        }
+
+            [HttpGet]
         public ActionResult FinalSubmitAgenda(string id, string fid)
         {
             try
@@ -601,6 +726,12 @@ namespace IHSDC.WebApp.Controllers
                 }
                 #endregion
 
+                var allowedIds = model1.ILInboxCRUD
+               .Select(x => x.Inbox_ID)
+                .Distinct()
+                .ToArray();
+
+                Session["AllowedAgendaIds"] = allowedIds;
                 return View(model1);
             }
             catch (SqlException ex)
@@ -643,11 +774,26 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
+                if (Session["UserIntId"] == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                if (model !=null)
+                {
+                    int EditId = model.Inbox_ID;
 
+                    if (Session["AllowedAgendaIds"] != null && !CommonHelper.HasAgendaAccess(EditId))
+                    {
+                        Response.StatusCode = 403;
+                        Response.TrySkipIisCustomErrors = true;
+                        return View("~/Views/Error/AccessDenied.cshtml");
+                    }
+                }
                 var data = con.OpenCloseAgendaPoint(1, model);
                 if (data[0].IsSuccess == true)
                 {
                     DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                    Session.Remove("AllowedAgendaIds");
 
                 }
 
@@ -747,10 +893,27 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
+                if (model != null && !String.IsNullOrEmpty(model.OpenReason))
+                {
+                    int EditId = model.Inbox_ID;
 
-                var data = con.OpenCloseAgendaPoint(2, model);
+                    if (Session["AllowedAgendaIds"] != null && !CommonHelper.HasAgendaAccess(EditId))
+                    {
+                        Response.StatusCode = 403;
+                        Response.TrySkipIisCustomErrors = true;
+                        return View("~/Views/Error/AccessDenied.cshtml");
+                    }
+                }
+                else
+                {
+                    DisplayMessage("Invalid Request", "", "e");
+                    return RedirectToAction("OpenAgendaPtNoting", "Noting", new { id = RepositryManager.EncryptionManager.Encryption(model.Inbox_ID.ToString()) });
+                }
+
+                    var data = con.OpenCloseAgendaPoint(2, model);
                 if (data[0].IsSuccess == true)
                 {
+                    Session.Remove("AllowedAgendaIds");
                     DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
 
                 }
@@ -838,6 +1001,12 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.UnReadMsg = 0;
                 }
                 #endregion
+                var allowedIds = model1.ILInboxCRUD
+               .Select(x => x.Inbox_ID)
+                .Distinct()
+                .ToArray();
+
+                Session["AllowedAgendaIds"] = allowedIds;
                 return View(model1);
             }
             catch (SqlException ex)

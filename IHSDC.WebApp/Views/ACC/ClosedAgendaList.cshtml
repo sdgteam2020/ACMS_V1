@@ -8,14 +8,16 @@
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
     ViewBag.Title = "Closed Agenda Pgme";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
-    //int sno1 = 0;
-    //int rowCount = 0;
 
 }
 @{
     var watermarkText = ViewBag.ipadd;
 }
 <style>
+    .closed-agenda-body {
+        min-height: 150px;
+    }
+
     .ht {
         height: 7rem;
     }
@@ -30,27 +32,21 @@
         height: 7rem;
         width: 9rem;
         border-radius: 19px;
-        /*   box-shadow: 1px 1px 4px;*/
     }
 
     .flip-card-inner {
         border-radius: 19px;
-        /*   box-shadow: 1px 1px 4px;*/
     }
 
     .dropdown-item:hover {
         background: #4CAF50 !important;
-        /* font-size: 9px !important;*/
         border-radius: 13px;
     }
 
 
     .flip-card-inner:hover {
-        /*   width: 100px;
-        height: 100px;*/
         background: #4CAF50;
         font-size: 19px !important;
-        /* transform: rotate(360deg);*/
     }
 
         .flip-card-inner:hover > .icon {
@@ -162,6 +158,7 @@
         max-height: 400px;
         overflow-y: scroll;
     }
+
     table {
         border-collapse: collapse;
         width: 100%;
@@ -170,6 +167,27 @@
     th, td {
         text-align: left;
         padding: 8px;
+    }
+</style>
+<style id="closed-agenda-print-css">
+    .closed-agenda-print-heading {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .closed-agenda-print-watermark {
+        transform: rotate(-45deg);
+        z-index: 10000;
+        opacity: 0.3;
+        color: #8e9191;
+        position: fixed;
+        top: 39%;
+        left: 6%;
+        font-size: 80px;
+        font-weight: 500px;
+        display: grid;
+        justify-content: center;
+        align-content: center;
     }
 </style>
 <head>
@@ -218,7 +236,7 @@
             }
 
 
-            <div class="card-body" style="min-height:150px;">
+            <div class="card-body closed-agenda-body">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
@@ -271,8 +289,9 @@
                                                 <td>@Html.DisplayFor(modelItem => item.CloseDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.CloseReason)</td>
                                                 <td>
-                                                    <a onclick="location.href='@Url.Action("OpenAgendaPtNoting", "Noting", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString())})'">
-
+                                                    <a data-navigation-url="@Url.Action("OpenAgendaPtNoting", "Noting", new {
+                                                             id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString())
+                                                         })">
                                                         <div class="openbut"></div>
                                                     </a>
                                                 </td>
@@ -328,19 +347,19 @@
 </script>
 <script>
 
-   
+
     $(document).ready(function () {
         var table = $('#Agenda').DataTable({
             lengthChange: true,
             pageLength: 50,
             aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
-            /* dom: 'Bfrtip',*/
+
             dom: 'lBfrtip',
             buttons: [
                 'copy',
                 'excel',
                 'csv',
-                /* 'print',*/
+
                 {
                     text: 'PDF',
                     extend: 'pdfHtml5',
@@ -350,10 +369,10 @@
                 },
                 'colvis',
             ],
-            
+
         });
 
-        
+
         var buttonContainer = table.buttons().container().appendTo('#Agenda_wrapper .col-md-6:eq(0)');
         var searchBuilderContainer = table.searchBuilder.container();
         buttonContainer.insertBefore(table.table().container());
@@ -458,8 +477,12 @@
         tableHTML += '</tbody>';
 
         tableHTML += '</table>';
-        var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Closed Agenda Point List</h1>';
-        popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
+        var pageHeading = '<h1 class="closed-agenda-print-heading">Closed Agenda Point List</h1>';
+        var printStyles = document.getElementById('closed-agenda-print-css').outerHTML;
+        popupWin.addEventListener('load', function () {
+            popupWin.print();
+        });
+        popupWin.document.write('<html><head>' + tableStyles + printStyles + '</head><body>' + pageHeading + tableHTML + '<div class="closed-agenda-print-watermark">' + watermarkText + '</div></body></html>');
 
         popupWin.document.close();
     }
@@ -552,7 +575,7 @@
             });
         }
 
-        
+
         clearFileError(wordFileInput, wordFileError);
         clearFileError(PdfFileInput, PdfFileError);
 
@@ -588,5 +611,10 @@
                 return false;
             }
         });
+    });
+</script>
+<script>
+    $(document).on('click', 'a[data-navigation-url]', function () {
+        window.location.href = $(this).attr('data-navigation-url');
     });
 </script>

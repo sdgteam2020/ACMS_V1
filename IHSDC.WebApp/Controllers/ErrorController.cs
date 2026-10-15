@@ -28,5 +28,10 @@ namespace IHSDC.WebApp.Controllers
             ViewBag.CurrentTime = DateTime.Now;
             return View("Error");
         }
+        public ActionResult AccessDenied()
+        {
+           
+            return View();
+        }
     }
 }

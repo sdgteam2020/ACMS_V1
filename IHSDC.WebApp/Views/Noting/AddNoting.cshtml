@@ -6,9 +6,9 @@
     var messageStatus = TempData["messageStatus"] ?? string.Empty;
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
     ViewBag.Title = "Add Noting";
-    // Layout = "~/Views/Shared/_NewAA7LayoutMenu.cshtml";
-    // int sno = 0;
-    //int sno1 = 0;
+
+
+
     int rowCount = 0;
     int sno = 0;
     int sno1 = 0;
@@ -29,6 +29,7 @@
             height: 15rem;
             margin-left: 2rem;
         }
+
         .popup {
             display: none;
             position: fixed;
@@ -74,6 +75,7 @@
                 text-align: center;
                 padding: 10px;
             }
+
             header {
                 position: fixed;
                 top: 0;
@@ -85,6 +87,185 @@
                 text-align: center;
                 padding: 10px;
             }
+        }
+
+        .noting-inline-1 {
+            display: none;
+        }
+
+        .noting-inline-2 {
+            border: 2px solid black;
+            height: 140mm;
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        .noting-inline-3 {
+            margin-left: 40px;
+            border: 2px solid black;
+            height: 100px;
+            width: 600px;
+        }
+
+        .noting-inline-4 {
+            width: 100%;
+        }
+
+        .noting-inline-5 {
+            border: 2px solid black;
+            width: 210mm;
+            height: 30mm;
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        .noting-inline-6 {
+            box-shadow: -1px 1px 8px 1px;
+            margin-top: 5px;
+        }
+
+        .noting-inline-7 {
+            color: blue;
+        }
+
+        .noting-inline-8 {
+            font-weight: bold;
+            color: blue;
+        }
+
+        .noting-inline-9 {
+            font-weight: bold;
+            color: blue;
+        }
+
+        .noting-inline-10 {
+            color: white;
+            text-decoration: none;
+            float: left;
+            margin-right: 20px;
+            margin-top: -20px;
+        }
+
+        .noting-inline-11 {
+            float: left;
+            margin-right: 20px;
+            margin-top: -20px;
+        }
+
+        .noting-inline-12 {
+            width: 48rem;
+        }
+
+        .noting-inline-13 {
+            overflow: hidden;
+        }
+
+        .noting-inline-14 {
+            float: left;
+        }
+
+        .noting-inline-15 {
+            float: right;
+            font-family: Arial;
+            font-weight: bold;
+            color: #0793f7;
+        }
+
+        .noting-inline-16 {
+            margin-top: 120px;
+            width: 400mm;
+            max-width: 100%;
+        }
+
+        .noting-inline-17 {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Arial;
+        }
+
+        .noting-inline-18 {
+            font-size: 14px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        .noting-inline-19 {
+            color: white;
+        }
+
+        .noting-inline-20 {
+            float: right;
+        }
+
+        .noting-inline-21 {
+            max-height: 600px;
+            overflow: auto;
+        }
+
+        .noting-inline-22 {
+            font-weight: 600;
+            color: red;
+            text-align: center;
+        }
+
+        .noting-inline-23 {
+            margin-top: 0;
+            width: 220mm;
+            height: 140mm;
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        .noting-inline-24 {
+            text-align: center;
+            background-color: #0793f7;
+            padding: 3px;
+            color: white;
+        }
+
+        .noting-inline-25 {
+            text-align: center;
+        }
+
+        .noting-inline-26 {
+            display: none;
+        }
+
+        .noting-inline-27 {
+            margin-right: 8rem;
+        }
+
+        .noting-inline-28 {
+            width: 350mm;
+        }
+
+        .noting-inline-29 {
+            width: 380mm;
+        }
+
+        .noting-inline-30 {
+            background-color: #0793f7;
+        }
+
+        .noting-print-heading {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .noting-print-watermark {
+            transform: rotate(-45deg);
+            z-index: 10000;
+            opacity: 0.3;
+            color: #8e9191;
+            position: fixed;
+            left: 6%;
+            top: 39%;
+            font-size: 80px;
+            font-weight: 500;
+            display: grid;
+            justify-content: center;
+            align-content: center;
         }
     </style>
 
@@ -114,6 +295,7 @@
             padding: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
         }
+
         @@media print {
 
             @@page {
@@ -158,6 +340,26 @@
                 padding: 10px;
             }
         }
+
+        .noting-print-heading {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .noting-print-watermark {
+            transform: rotate(-45deg);
+            z-index: 10000;
+            opacity: 0.3;
+            color: #8e9191;
+            position: fixed;
+            left: 6%;
+            top: 39%;
+            font-size: 80px;
+            font-weight: 500;
+            display: grid;
+            justify-content: center;
+            align-content: center;
+        }
     </style>
 
 </head>
@@ -174,38 +376,38 @@
 {
     @Html.HiddenFor(m => m.Inbox_ID)
 
-    <div class="card-body" style="box-shadow: -1px 1px 8px 1px; margin-top:5px;">
+    <div class="card-body noting-inline-6">
 
         <div class="card">
             <div class="card-body">
 
                 <div class="row">
                     <div class="col-lg text-left">
-                        <label style="color:blue;"><u>Title</u> :</label>
-                        <font style="font-weight:bold;color:blue;">    @Html.DisplayFor(m => m.Title)   </font>
+                        <label class="noting-inline-7"><u>Title</u> :</label>
+                        <font class="noting-inline-8">    @Html.DisplayFor(m => m.Title)   </font>
                     </div>
                 </div>
                 <div class="row">
 
 
                     <div class="col-md-2 text-left">
-                        <label style="color:blue;"> <u>Conf</u> :</label>
-                        <font style="font-weight:bold;color:blue;">  @Html.DisplayFor(m => m.Conf)  </font>
+                        <label class="noting-inline-7"> <u>Conf</u> :</label>
+                        <font class="noting-inline-8">  @Html.DisplayFor(m => m.Conf)  </font>
                     </div>
                     <div class="col-md-3 text-left">
-                        <label style="color:blue;"><u>Unit</u> :</label>
-                        <font style="font-weight: bold; color: blue;">  @Html.DisplayFor(m => m.UnitName) </font>
+                        <label class="noting-inline-7"><u>Unit</u> :</label>
+                        <font class="noting-inline-9">  @Html.DisplayFor(m => m.UnitName) </font>
                     </div>
                     <div class="col-md-2 text-left">
-                        <label style="color:blue;"><u>Branch</u> :</label>
+                        <label class="noting-inline-7"><u>Branch</u> :</label>
 
-                        <font style="font-weight: bold; color: blue;"> @Html.DisplayFor(m => m.BranchName) </font>
+                        <font class="noting-inline-9"> @Html.DisplayFor(m => m.BranchName) </font>
                     </div>
 
                     <div class="col-md-2 text-left">
-                        <label style="color:blue;"><u>Category</u> :</label>
+                        <label class="noting-inline-7"><u>Category</u> :</label>
 
-                        <font style="font-weight:bold;color:blue;">   @Html.DisplayFor(m => m.CategoryName) </font>
+                        <font class="noting-inline-8">   @Html.DisplayFor(m => m.CategoryName) </font>
                     </div>
 
                 </div>
@@ -224,73 +426,37 @@
                                     Agenda Pt Docu (Pdf & Word Format)
                                 </div>
                                 <br />
-                                @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", @onchange = "PreviewPDF()", accept = ".pdf", disabled = "disabled", style = "display:none" })
+                                @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", accept = ".pdf", disabled = "disabled", @class = "noting-inline-1 noting-event-1" })
                                 @if (ViewBag.UploadPath != "")
                                 {
-                                    <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.ConfId.ToString()) })" class="pdfdownload" style="color: white; text-decoration: none; float: left; margin-right: 20px; margin-top: -20px;">
+                                    <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.ConfId.ToString()) })" class="pdfdownload noting-inline-10">
                                         Download
                                     </a>
                                 }
-                                @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
+                                @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control noting-inline-1 noting-event-2", @readonly = true, @required = true })
 
-                                @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", @onchange = "PreviewWordDoc()", accept = ".Doc,.Docx", disabled = "disabled", style = "display:none" })
+                                @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", accept = ".Doc,.Docx", disabled = "disabled", @class = "noting-inline-1 noting-event-3" })
 
                                 @if (ViewBag.WordFilePath != "")
                                 {
                                     <a href="@ViewBag.WordFilePath" target="_blank" download="@Model.AmendWordFileName">
-                                        <div class="worddownload" style="float:left; margin-right:20px; margin-top:-20px;">&nbsp;Download</div>
+                                        <div class="worddownload noting-inline-11">&nbsp;Download</div>
                                     </a>
                                 }
-                                @Html.TextBoxFor(m => m.WordFilePath, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
+                                @Html.TextBoxFor(m => m.WordFilePath, new { @class = "form-control noting-inline-1 noting-event-4", @readonly = true, @required = true })
 
 
 
                                 <div id="pdf-container"></div>
 
-                                <script>
-                                    function PreviewPDF() {
-                                        const input = document.getElementById("files");
-                                        const pdfContainer = document.getElementById("pdf-container");
-                                        const maxSizeInBytes = 5 * 1024 * 1024;
-
-                                        if (input.files && input.files[0]) {
-                                            const selectedFile = input.files[0];
-
-                                            if (selectedFile.size > maxSizeInBytes) {
-                                                sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
-                                                input.value = "";
-                                                pdfContainer.innerHTML = "";
-                                                return;
-                                            }
-
-                                            if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
-                                                const embed = document.createElement("object");
-                                                embed.data = URL.createObjectURL(selectedFile);
-                                                embed.type = "application/pdf";
-                                                embed.width = "100%";
-                                                embed.height = "470px";
-                                                pdfContainer.innerHTML = "";
-                                                pdfContainer.appendChild(embed);
-                                            } else {
-                                                alert("Please select a valid PDF file.");
-                                                input.value = "";
-                                                pdfContainer.innerHTML = "";
-                                            }
-                                        }
-                                    }
-                                </script>
-                              
                             </div>
 
-                            <!--<div class="card-body">-->
-                                @*<div class="uploadheadword">
-                                    Upload Agenda Pt Docu (Word Format)
-                                </div>
-                                <br />*@
 
-                               
-                            <!--</div>-->
-                            
+
+
+
+
+
                         </div>
 
                     </div>
@@ -332,7 +498,7 @@
                                                                 if (item.CommentFrom == Convert.ToInt16(SessionManager.UserId))
                                                                 {
                                                                     <div class="chat-message-left pb-4">
-                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3" style="width: 48rem;">
+                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3 noting-inline-12">
                                                                             <div class="text-muted small text-nowrap mt-2">
                                                                                 Note # @{ sno--; }
                                                                                 @sno
@@ -360,25 +526,25 @@
                                                                                     </div>
                                                                                 </a>
                                                                             }
-                                                                            <div style="overflow: hidden;">
-                                                                                <!-- This clears the float -->
-                                                                                <div class="text-muted small text-nowrap mt-2" style="float: left;">
+                                                                            <div class="noting-inline-13">
+
+                                                                                <div class="text-muted small text-nowrap mt-2 noting-inline-14">
                                                                                     @Html.DisplayFor(modelItem => item.DateTimeOfUpdate)
                                                                                 </div>
 
-                                                                                <div class="small text-nowrap mt-2" style="float: right; font-family: Arial; font-weight: bold; color: #0793f7;">
+                                                                                <div class="small text-nowrap mt-2 noting-inline-15">
                                                                                     @SessionManager.UserName <br />@SessionManager.UnitName
                                                                                 </div>
 
                                                                             </div>
-                                                                            @*<div class="text-muted small text-nowrap mt-2" style="float:right"> @SessionManager.UserName</div>*@
+
                                                                         </div>
                                                                     </div>
                                                                 }
                                                                 else
                                                                 {
                                                                     <div class="chat-message-left pb-4">
-                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3" style="width: 48rem;">
+                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3 noting-inline-12">
 
                                                                             <div class="text-muted small text-nowrap mt-2">
                                                                                 Note # @{ sno--; }
@@ -406,13 +572,13 @@
                                                                                     </div>
                                                                                 </a>
                                                                             }
-                                                                            <div style="overflow: hidden;">
-                                                                                <!-- This clears the float -->
-                                                                                <div class="text-muted small text-nowrap mt-2" style="float: left;">
+                                                                            <div class="noting-inline-13">
+
+                                                                                <div class="text-muted small text-nowrap mt-2 noting-inline-14">
                                                                                     @Html.DisplayFor(modelItem => item.DateTimeOfUpdate)
                                                                                 </div>
 
-                                                                                <div class="small text-nowrap mt-2" style="float: right; font-family: Arial; font-weight: bold; color: #0793f7;">
+                                                                                <div class="small text-nowrap mt-2 noting-inline-15">
                                                                                     @Html.DisplayFor(modelItem => item.UserName) <br />@Html.DisplayFor(modelItem => item.UserUnitName)
                                                                                 </div>
 
@@ -430,7 +596,7 @@
 
                                                 <div class="flex-grow-0 py-3 px-4 border-top">
                                                     <div class="icon-container">
-                                                        <a onclick="location.href='@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })'">
+                                                        <a class="noting-event-11" data-href='@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })'>
                                                             <div class="chathome"></div>
                                                         </a>
 
@@ -460,7 +626,7 @@
 
                                                         <div class="notinghistory" data-toggle="modal" data-target="#APLog" id="BtnAPLog"> </div>
 
-                                                        <div class="notingprint" onclick="PrintChatDiv()"> </div>
+                                                        <div class="notingprint noting-event-12"> </div>
 
                                                         @if (Model.ScheduleCreatedById == Convert.ToInt32(SessionManager.UserIntId) || Model.sponsorId == Convert.ToInt32(SessionManager.UserIntId))
                                                         {
@@ -493,19 +659,19 @@
 
 
     <div class="modal fade" id="APLog">
-        <div class="modal-dialog" style="margin-top: 120px; width: 400mm;max-width: 100%;">
+        <div class="modal-dialog noting-inline-16">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <p style="text-align:center;font-size:16px; font-weight:bold; font-family:Arial;">
+                    <p class="noting-inline-17">
                         Agenda Point Log<br />
                     </p>
-                    <p style="font-size:14px; margin-left:50px;margin-right:50px;"><span><b>@Model.Title</b></span></p>
-                   
-                        <a id="btnExport" style="color:white;" class="btn btn-info" download="APLog.pdf" value="Export Pdf" onclick="PrintDiv()">Export Pdf</a>
-                  
-                    <button type="button" class="btn btn-danger CloseLogpoup" data-dismiss="modal" style="float:right;">&times;</button>
+                    <p class="noting-inline-18"><span><b>@Model.Title</b></span></p>
+
+                    <a id="btnExport" class="btn btn-info noting-inline-19 noting-event-13" download="APLog.pdf" value="Export Pdf">Export Pdf</a>
+
+                    <button type="button" class="btn btn-danger CloseLogpoup noting-inline-20" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="modal-body" style="max-height: 600px; overflow: auto;" id="APLogData">
+                <div class="modal-body noting-inline-21" id="APLogData">
                     <table class="table table-striped align-top" id="dataTable2" width="100%" cellspacing="0">
                         <thead class="bg-info text-white">
                             <tr>
@@ -539,41 +705,36 @@
                             }
                             else
                             {
-                                <tr><td colspan="6" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>
+                                <tr><td class="noting-inline-22" colspan="6"> No Record Found!!!</td></tr>
                             }
                         </tbody>
                     </table>
                 </div>
-                @*<div class="modal-footer">
-                    <div class="btn-group">
-                        <a id="btnApLogCancel" style="color:white;" class="btn btn-danger" data-dismiss="modal">Close</a>
-                        <a id="btnExport" style="color:white;" class="btn btn-info" download="APLog.pdf" value="Export Pdf" onclick="PrintDiv()">Export Pdf</a>
-                    </div>
-                </div>*@
+
             </div>
         </div>
     </div>
 
 
     <div class="modal fade" id="CommentPopup">
-        <div class="modal-dialog modal-dialog-centered" style="margin-top: 0; width: 220mm; height: 140mm; max-height: 100%; max-width: 100%;">
- 
-            <div class="modal-content">
-                <h4 style="text-align: center; background-color: #0793f7; padding: 3px; color:white; ">Add Comment</h4>
-                <label style="text-align: center; ">Title : @ViewBag.ConfTitle</label>
+        <div class="modal-dialog modal-dialog-centered noting-inline-23">
 
-                @Html.TextAreaFor(m => m.Comment, new { @onkeyup = "ValInData(this)", style = "border: 2px solid black; height: 140mm; max-height: 100%;max-width: 100%;", id = "txtComment", @required = true })
+            <div class="modal-content">
+                <h4 class="noting-inline-24">Add Comment</h4>
+                <label class="noting-inline-25">Title : @ViewBag.ConfTitle</label>
+
+                @Html.TextAreaFor(m => m.Comment, new { id = "txtComment", @required = true, @class = "noting-inline-2 noting-event-5" })
 
                 <div class="col-6">
-                    @Html.TextBoxFor(m => m.Attachment, new { type = "file", id = "Attachmentfiles", accept = ".pdf", @onchange = "checkPDFHeader(this)" }) &nbsp;
+                    @Html.TextBoxFor(m => m.Attachment, new { type = "file", id = "Attachmentfiles", accept = ".pdf", @class = "noting-event-6" }) &nbsp;
                     <div class="pdfup"> (Upload supporting docu/appx only with in 5MB) </div>
                 </div>
 
-                <span id="CommentError" class="text-danger" style="display: none;">Please Fill out the Comment</span>
-                <div class="modal-footer" style="margin-right: 8rem;">
+                <span id="CommentError" class="text-danger noting-inline-26">Please Fill out the Comment</span>
+                <div class="modal-footer noting-inline-27">
                     <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
                     <button id="clearComment" class="btn btn-danger">Clear</button>
-                    <a id="btnCancel" style="color:white;" class="btn btn-info" data-dismiss="modal">Back</a>
+                    <a id="btnCancel" class="btn btn-info noting-inline-19" data-dismiss="modal">Back</a>
                 </div>
             </div>
         </div>
@@ -587,15 +748,15 @@
     <div class="modal fade" id="OpenAgendaPt">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <h4 style="text-align: center; background-color: #0793f7; padding: 3px; color:white; ">Reason for Open</h4>
-                <label style="text-align: center; ">Title : @ViewBag.ConfTitle</label>
-                @Html.TextAreaFor(m => m.OpenReason, new { @onkeyup = "ValInData(this)", style = " margin-left: 40px; border: 2px solid black; height: 100px; width: 600px;", id = "OpenReason", @required = true })
+                <h4 class="noting-inline-24">Reason for Open</h4>
+                <label class="noting-inline-25">Title : @ViewBag.ConfTitle</label>
+                @Html.TextAreaFor(m => m.OpenReason, new { id = "OpenReason", @required = true, @class = "noting-inline-3 noting-event-7" })
 
-                <span id="CommentError" class="text-danger" style="display: none;">Please Fill out the Comment</span>
-                <div class="modal-footer" style="margin-right: 8rem;">
+                <span id="CommentError" class="text-danger noting-inline-26">Please Fill out the Comment</span>
+                <div class="modal-footer noting-inline-27">
                     <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
                     <button id="clearOpenReason" type="button" class="btn btn-danger">Clear</button>
-                    <a id="btnCancel" style="color:white;" class="btn btn-info" data-dismiss="modal">Back</a>
+                    <a id="btnCancel" class="btn btn-info noting-inline-19" data-dismiss="modal">Back</a>
                 </div>
             </div>
         </div>
@@ -608,18 +769,18 @@
 
     <div class="modal fade" id="ClosedAgendaPt">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="width:350mm;">
+            <div class="modal-content noting-inline-28">
 
 
-                <h4 style="text-align: center; background-color: #0793f7; padding: 3px; color:white; ">Reason for Close</h4>
-                <label style="text-align: center; "><b>Title : @ViewBag.ConfTitle</b></label>
-                @Html.TextAreaFor(m => m.CloseReason, new { @onkeyup = "ValInData(this)", style = " margin-left: 40px; border: 2px solid black; height: 100px; width: 600px;", id = "CloseReason", @required = true })
+                <h4 class="noting-inline-24">Reason for Close</h4>
+                <label class="noting-inline-25"><b>Title : @ViewBag.ConfTitle</b></label>
+                @Html.TextAreaFor(m => m.CloseReason, new { id = "CloseReason", @required = true, @class = "noting-inline-3 noting-event-8" })
 
-                <span id="CommentError" class="text-danger" style="display: none;">Please Fill out the Comment</span>
-                <div class="modal-footer" style="margin-right: 8rem;">
+                <span id="CommentError" class="text-danger noting-inline-26">Please Fill out the Comment</span>
+                <div class="modal-footer noting-inline-27">
                     <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
                     <button id="clearCloseReason" type="button" class="btn btn-danger">Clear</button>
-                    <a id="btnCancel" style="color:white;" class="btn btn-info" data-dismiss="modal">Back</a>
+                    <a id="btnCancel" class="btn btn-info noting-inline-19" data-dismiss="modal">Back</a>
                 </div>
             </div>
         </div>
@@ -634,8 +795,8 @@
     }
     <div class="modal fade" id="FwdPopup" tabindex="-1" role="dialog" aria-labelledby="FwdPopupLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="width: 380mm;">
-                <div class="modal-header" style="background-color:#0793f7">
+            <div class="modal-content noting-inline-29">
+                <div class="modal-header noting-inline-30">
                     <h5 class="modal-title" id="FwdPopupLabel">Forward To</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -645,13 +806,13 @@
                     @if (Model.ForwardID == 0)
                     {
                         <label for="forwardTo"><b>Select Nodal Branch(To):</b></label>
-                        @Html.DropDownListFor(m => m.NodalId, (new IHSDC.WebApp.Models.MasterModels()).LoadNodal(Model.Schedule_ID, Model.Inbox_ID), "--Select Nodal --", new { @data_show_subtext = "true", @class = "select form-control dropdownselect", style = "width:100%;", @data_live_search = "true", @required = true })
+                        @Html.DropDownListFor(m => m.NodalId, (new IHSDC.WebApp.Models.MasterModels()).LoadNodal(Model.Schedule_ID, Model.Inbox_ID), "--Select Nodal --", new { @data_show_subtext = "true", @class = "select form-control dropdownselect noting-inline-4", @data_live_search = "true", @required = true })
                         <label for="forwardTo"><b>Nodal Branch Remark :</b></label>
-                        @Html.TextAreaFor(m => m.NodalComment, new { @onkeyup = "ValInData(this)", style = "border: 2px solid black; width: 210mm; height: 30mm; max-height: 100%;max-width: 100%;", id = "txtForward" })
+                        @Html.TextAreaFor(m => m.NodalComment, new { id = "txtForward", @class = "noting-inline-5 noting-event-9" })
                     }
                     <div class="form-group">
                         <label for="forwardTo"><b>Select Other Branches(CC) :</b></label>
-                        @Html.TextBoxFor(m => m.SentID, new { style = "display:none;" })
+                        @Html.TextBoxFor(m => m.SentID, new { @class = "noting-inline-1" })
 
                         <select id="ddlCivEdnId" multiple="multiple" name="CivEdn">
                             @if (Model.ILUnitCRUD != null)
@@ -669,11 +830,11 @@
                         </select>
                     </div>
 
-                    <!-- Body area for the forwarded message -->
+
                     <div class="form-group">
                         <label for="forwardBody"><b>Other Branch Remarks :</b></label>
-                        @Html.TextAreaFor(m => m.FwdComment, new { @onkeyup = "ValInData(this)", style = "border: 2px solid black; width: 210mm; height: 30mm; max-height: 100%;max-width: 100%;", id = "FwdComment" })
-                        <span id="FwdError" class="text-danger" style="display: none;">Please Fill out the Comment</span>
+                        @Html.TextAreaFor(m => m.FwdComment, new { id = "FwdComment", @class = "noting-inline-5 noting-event-10" })
+                        <span id="FwdError" class="text-danger noting-inline-26">Please Fill out the Comment</span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -688,6 +849,38 @@
 }
 
 
+<script>
+    function PreviewPDF() {
+        const input = document.getElementById("files");
+        const pdfContainer = document.getElementById("pdf-container");
+        const maxSizeInBytes = 5 * 1024 * 1024;
+
+        if (input.files && input.files[0]) {
+            const selectedFile = input.files[0];
+
+            if (selectedFile.size > maxSizeInBytes) {
+                sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
+                input.value = "";
+                pdfContainer.innerHTML = "";
+                return;
+            }
+
+            if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
+                const embed = document.createElement("object");
+                embed.data = URL.createObjectURL(selectedFile);
+                embed.type = "application/pdf";
+                embed.width = "100%";
+                embed.height = "470px";
+                pdfContainer.innerHTML = "";
+                pdfContainer.appendChild(embed);
+            } else {
+                alert("Please select a valid PDF file.");
+                input.value = "";
+                pdfContainer.innerHTML = "";
+            }
+        }
+    }
+</script>
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Content/CustomJS/GEBSubmit.js"></script>
 <script src="~/Content/CustomJS/AviatorJS.js"></script>
@@ -812,8 +1005,10 @@
         popupWin.document.write(table_style);
         popupWin.document.write('</style>')
         popupWin.document.title = 'AgendaPointLog';
-        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + '@(ViewBag.ipadd)' + "" + '</html>');
+        popupWin.document.write('<html><body>' + divToPrint.innerHTML + '<div class="noting-print-watermark">' + '@(ViewBag.ipadd)' + "" + '</div></body></html>');
         popupWin.document.close();
+        popupWin.focus();
+        popupWin.print();
     }
 
     function PrintChatDiv() {
@@ -824,9 +1019,11 @@
         popupWin.document.write('<style type = "text/css">');
         popupWin.document.write(table_style);
         popupWin.document.write('</style>')
-        var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Agenda Point Noting Detail</h1>';
-        popupWin.document.write('<html><body onload="window.print()">' + pageHeading + divToPrint.innerHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + '@(ViewBag.ipadd)' + "" + '</html>');
+        var pageHeading = '<h1 class="noting-print-heading">Agenda Point Noting Detail</h1>';
+        popupWin.document.write('<html><body>' + pageHeading + divToPrint.innerHTML + '<div class="noting-print-watermark">' + '@(ViewBag.ipadd)' + "" + '</div></body></html>');
         popupWin.document.close();
+        popupWin.focus();
+        popupWin.print();
     }
 
 </script>
@@ -974,5 +1171,23 @@
             }
         });
 
+    </script>
+
+    <script>
+        document.querySelectorAll('.noting-event-1').forEach(function (element) { element.addEventListener('change', function (event) { PreviewPDF(); }); });
+        document.querySelectorAll('.noting-event-2').forEach(function (element) { element.addEventListener('keyup', function (event) { ValInData(this); }); });
+        document.querySelectorAll('.noting-event-2').forEach(function (element) { element.addEventListener('keypress', function (event) { if (onlyAlphaNumeric(event) === false) event.preventDefault(); }); });
+        document.querySelectorAll('.noting-event-3').forEach(function (element) { element.addEventListener('change', function (event) { PreviewWordDoc(); }); });
+        document.querySelectorAll('.noting-event-4').forEach(function (element) { element.addEventListener('keyup', function (event) { ValInData(this); }); });
+        document.querySelectorAll('.noting-event-4').forEach(function (element) { element.addEventListener('keypress', function (event) { if (onlyAlphaNumeric(event) === false) event.preventDefault(); }); });
+        document.querySelectorAll('.noting-event-5').forEach(function (element) { element.addEventListener('keyup', function (event) { ValInData(this); }); });
+        document.querySelectorAll('.noting-event-6').forEach(function (element) { element.addEventListener('change', function (event) { checkPDFHeader(this); }); });
+        document.querySelectorAll('.noting-event-7').forEach(function (element) { element.addEventListener('keyup', function (event) { ValInData(this); }); });
+        document.querySelectorAll('.noting-event-8').forEach(function (element) { element.addEventListener('keyup', function (event) { ValInData(this); }); });
+        document.querySelectorAll('.noting-event-9').forEach(function (element) { element.addEventListener('keyup', function (event) { ValInData(this); }); });
+        document.querySelectorAll('.noting-event-10').forEach(function (element) { element.addEventListener('keyup', function (event) { ValInData(this); }); });
+        document.querySelectorAll('.noting-event-11').forEach(function (element) { element.addEventListener('click', function (event) { window.location.href = this.dataset.href; }); });
+        document.querySelectorAll('.noting-event-12').forEach(function (element) { element.addEventListener('click', function (event) { PrintChatDiv(); }); });
+        document.querySelectorAll('.noting-event-13').forEach(function (element) { element.addEventListener('click', function (event) { PrintDiv(); }); });
     </script>
 }

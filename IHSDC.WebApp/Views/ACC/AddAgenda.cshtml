@@ -8,8 +8,6 @@
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
     ViewBag.Title = "Add Agenda Pgme";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
-    //int sno1 = 0;
-    //int rowCount = 0;
 
 }
 @{
@@ -20,22 +18,18 @@
         padding: 10px;
         margin: 2px;
         border: 1px solid #ccc;
-        /* border-radius: 5px; */
         background-color: #f2f2f2;
         width: 100%;
         box-sizing: border-box;
         position: relative;
-        /*text-indent: 50px; */
     }
 
         .suggestionItem:nth-child(odd) {
-            /*background-color: #cfd5ea;*/
             background-color: #044C92;
             color: white;
         }
 
         .suggestionItem:nth-child(even) {
-            /*      background-color: #e9ebf5;*/
             background-color: #044C92;
             color: white;
         }
@@ -45,7 +39,7 @@
     }
 
     .searchbarPol {
-        width: calc(100% - 55px); /* Adjust width to accommodate icon */
+        width: calc(100% - 55px);
     }
 
     .pdfup {
@@ -53,8 +47,7 @@
         cursor: pointer;
         border-radius: 50%;
         color: white;
-        /* margin-top: -45px;*/
-        left: calc(100% - 70px); /* Adjust position of PDF icon */
+        left: calc(100% - 70px);
         position: absolute;
     }
 
@@ -62,18 +55,16 @@
             font-family: FontAwesome;
             content: "\f1c1";
             font-size: 15px;
-            /* position: absolute;*/
         }
-
 
 
     #suggestionBox {
         display: flex;
         flex-wrap: wrap;
         position: absolute;
-        top: calc(100% + 0px); /* Adjust the distance from the input field */
+        top: calc(100% + 0px);
         left: 0;
-        width: 100%; /* Ensure it spans the full width */
+        width: 100%;
         z-index: 1;
     }
 
@@ -82,49 +73,33 @@
             position: absolute;
             top: 0;
             left: 0;
-            /* width: 100%;*/
             height: 100%;
-            /*    background-color: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
             border-radius: 10px;
             padding: 10px;
             z-index: -1;
             width: calc(100% - 55px);
         }
 
-    /*
-
-    .card-body {
-        flex: 1 1 auto;
-        min-height: 1px;
-        padding: 0.55rem !important;
-    }*/
 
     .flip-card-link {
         height: 7rem;
         width: 9rem;
         border-radius: 19px;
-        /*   box-shadow: 1px 1px 4px;*/
     }
 
     .flip-card-inner {
         border-radius: 19px;
-        /*   box-shadow: 1px 1px 4px;*/
     }
 
     .dropdown-item:hover {
         background: #4CAF50 !important;
-        /* font-size: 9px !important;*/
         border-radius: 13px;
     }
 
 
     .flip-card-inner:hover {
-        /*   width: 100px;
-        height: 100px;*/
         background: #4CAF50;
         font-size: 19px !important;
-        /* transform: rotate(360deg);*/
     }
 
         .flip-card-inner:hover > .icon {
@@ -172,18 +147,6 @@
         padding: 3px;
         border: 3px solid blue;
     }
-
-    /*    .icon {
-        color: #044C92;
-        font-size: 100px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        text-align: center;
-    }*/
-
 
 
     .border-left-primary {
@@ -240,7 +203,6 @@
         margin-top: -50px;
         float: right;
         position: relative;
-        /*  margin-right: 410px;*/
     }
 
     #word-container {
@@ -300,8 +262,6 @@
     }
 
 
-
-
     .bar1 {
         margin: 0 auto;
         width: 575px;
@@ -322,7 +282,6 @@
         margin-top: -50px;
         float: right;
         position: relative;
-        /*  margin-right: 410px;*/
     }
 
     .button {
@@ -364,28 +323,26 @@
     }
 
     .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 999; /* Sit on top */
-        /*padding-top: 100px;*/ /* Location of the box */
+        display: none;
+        position: fixed;
+        z-index: 999;
         left: 0;
         top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
     }
 
-    /* Modal Content */
+
     .modal-content {
         background-color: #fefefe;
         margin: auto;
-        /*padding: 20px;*/
         border: 1px solid #888;
         width: 80%;
     }
-    /* The Close Button */
+
     .close {
         color: #aaaaaa;
         float: right;
@@ -402,11 +359,9 @@
 
     .popover__title {
         font-size: 24px;
-        /* line-height: 36px;*/
         text-decoration: none;
         color: rgb(228, 68, 68);
         text-align: center;
-        /*  padding: 15px 0;*/
     }
 
     .popover__wrapper {
@@ -477,18 +432,6 @@
         margin-left: -2px !important;
     }
 
-    /*    .form-control:focus {
-        color: #495057;
-        background-color: #fff;
-        border-color: #ced4da;
-        outline: 0;
-        box-shadow: 0 0 0 0 !important;
-    }
-
-    .form-control {
-        border-right: 0 !important;
-        border-left: 0 !important;
-    }*/
 
     footerPolicy {
         display: flex;
@@ -503,7 +446,6 @@
         justify-content: space-between;
         align-items: center;
         max-width: 1200px;
-        /* margin: 0 auto;*/
         padding: 0 20px;
     }
 
@@ -518,8 +460,151 @@
         background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
         justify-content: center;
         align-items: center;
-        /* margin-top:-19px;*/
-        /*height: 100vh; */
+    }
+
+
+    .agenda-inline-style-01 {
+        display: none;
+    }
+
+    .agenda-inline-style-02 {
+        box-shadow: -1px 1px 8px 1px !important;
+        margin-top: 5px !important;
+    }
+
+    .agenda-inline-style-03 {
+        margin-right: 10px !important;
+        margin-bottom: 3px !important;
+    }
+
+    .agenda-inline-style-04 {
+        margin-top: 2px !important;
+    }
+
+    .agenda-inline-style-05 {
+        color: white !important;
+        text-decoration: none !important;
+        margin-left: 125px !important;
+        margin-top: -38px !important;
+        padding: 5px !important;
+    }
+
+    .agenda-inline-style-06 {
+        color: white !important;
+        text-decoration: none !important;
+        float: right !important;
+        margin-right: 20px !important;
+        margin-top: -37px !important;
+        padding: 5px !important;
+        border: none !important;
+        background-color: white !important;
+    }
+
+    .agenda-inline-style-07 {
+        display: none;
+    }
+
+    .agenda-inline-style-08 {
+        width: 150px !important;
+        margin-left: 240px !important;
+        display: flex !important;
+        margin-top: -36px !important;
+    }
+
+    .agenda-inline-style-09 {
+        color: white !important;
+        text-decoration: none !important;
+        margin-top: -33px !important;
+        margin-left: 380px !important;
+        padding: 5px !important;
+    }
+
+    .agenda-inline-style-10 {
+        margin-top: 10px !important;
+    }
+
+    .agenda-inline-style-11 {
+        color: red !important;
+        text-align: center !important;
+    }
+
+    .agenda-inline-style-12 {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+
+    .agenda-inline-style-13 {
+        width: 37px !important;
+        height: 37px !important;
+        margin-top: 12px !important;
+    }
+
+    .agenda-inline-style-14 {
+        margin-top: 10px !important;
+    }
+
+    .agenda-inline-style-15 {
+        margin-right: 10px !important;
+    }
+
+    .agenda-inline-style-16 {
+        color: white !important;
+    }
+
+    .agenda-inline-style-17 {
+        max-width: 500mm !important;
+    }
+
+    .agenda-inline-style-18 {
+        margin-top: 120px !important;
+    }
+
+    .agenda-inline-style-19 {
+        float: right !important;
+        margin-top: -10px !important;
+        margin-bottom: 2px !important;
+    }
+
+    .agenda-inline-style-20 {
+        text-align: center !important;
+        font-size: 30px !important;
+        font-weight: bold !important;
+        font-family: Arial !important;
+    }
+
+    .agenda-inline-style-21 {
+        color: #FF0000 !important;
+    }
+
+    .agenda-inline-style-22 {
+        width: 45px !important;
+        height: 45px !important;
+        margin-top: 4px !important;
+    }
+
+    .agenda-inline-style-23 {
+        max-height: 600px !important;
+        overflow: auto !important;
+    }
+
+    .agenda-inline-style-24 {
+        width: 15% !important;
+    }
+
+    .agenda-inline-style-25 {
+        width: 60% !important;
+    }
+
+    body .agenda-inline-style-01 {
+        display: none;
+    }
+
+    #PdfFileError.agenda-inline-style-07, #wordFileError.agenda-inline-style-07 {
+        display: none;
+    }
+
+    .agenda-script-hidden {
+        display: none;
     }
 </style>
 
@@ -528,25 +613,23 @@
 </head>
 
 
-
 <div class="container">
-
 
 
     @using (Html.BeginForm("AddAgenda", "ACC", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <span id="spnScheduleId" style="display:none">@Model.Schedule_ID</span>
-        <span id="spnNode" style="display:none">@Model.NodalViewId</span>
-        <span id="spnsponsor" style="display:none">@Model.sponsorId</span>
-        <span id="spnUnFreeze" style="display:none">@Model.AllowEdit</span>
-        <span id="spnGSOId" style="display:none">@Model.ScheduleCreatedById</span>
-        <span id="SpnUploadFile" style="display:none">@ViewBag.UploadPath</span>
-        <span id="SpnWordFilePath" style="display:none">   @ViewBag.WordFilePath</span>
-        <span id="spnThumbprint" style="display:none"></span>
-        <span id="spnInboxId" style="display:none">@Model.Inbox_ID</span>
-        <span id="spnArmyNumber" style="display:none">@SessionManager.ArmyNo</span>
-        <span id="spnDefaultPolicy" style="display:none"></span>
-        <span id="spnConfTypeId" style="display:none"></span>
+        <span id="spnScheduleId" class="agenda-inline-style-01">@Model.Schedule_ID</span>
+        <span id="spnNode" class="agenda-inline-style-01">@Model.NodalViewId</span>
+        <span id="spnsponsor" class="agenda-inline-style-01">@Model.sponsorId</span>
+        <span id="spnUnFreeze" class="agenda-inline-style-01">@Model.AllowEdit</span>
+        <span id="spnGSOId" class="agenda-inline-style-01">@Model.ScheduleCreatedById</span>
+        <span id="SpnUploadFile" class="agenda-inline-style-01">@ViewBag.UploadPath</span>
+        <span id="SpnWordFilePath" class="agenda-inline-style-01">   @ViewBag.WordFilePath</span>
+        <span id="spnThumbprint" class="agenda-inline-style-01"></span>
+        <span id="spnInboxId" class="agenda-inline-style-01">@Model.Inbox_ID</span>
+        <span id="spnArmyNumber" class="agenda-inline-style-01">@SessionManager.ArmyNo</span>
+        <span id="spnDefaultPolicy" class="agenda-inline-style-01"></span>
+        <span id="spnConfTypeId" class="agenda-inline-style-01"></span>
 
         @Html.HiddenFor(m => m.Inbox_ID)
         @Html.HiddenFor(m => m.FinalSubmitYN)
@@ -558,7 +641,6 @@
         }
 
 
-
         if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
         {
             @Html.HiddenFor(m => m.Title)
@@ -567,13 +649,13 @@
         }
 
 
-        <div class="card-body" style="box-shadow: -1px 1px 8px 1px; margin-top:5px;">
+        <div class="card-body agenda-inline-style-02">
             <div class="col">
 
                 <div class="row mb">
                     <div class="col-md-4">
-                        <a style="margin-right:10px; margin-bottom:3px;" class="btn btn-success" id="btnNew" onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = string.Empty,Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
-                            @*<span style="color:white">Add New</span>*@
+                        <a class="agenda-inline-style-03 btn btn-success agenda-navigate" id="btnNew" data-agenda-url="@Url.Action("AddAgenda", "ACC", new { id = string.Empty,Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })">
+
                             <div class="addagenda">&nbsp; Add New</div>
                         </a>
                     </div>
@@ -596,109 +678,52 @@
                                                 Upload Agenda Pt Docu with in 5MB (Pdf & Word Format)
                                             </div>
 
-                                            <div class="upload-btn-wrapper" style="margin-top:2px;">
+                                            <div class="upload-btn-wrapper agenda-inline-style-04">
                                                 @if (Model.IsView == false)
                                                 {
 
                                                     <button class="btnUpload">Upload pdf file</button>
-                                                    @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", @onchange = "checkPDFHeader(this)", accept = ".pdf" })
+                                                    @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", accept = ".pdf", @class = "agenda-validate-pdf" })
 
                                                 }
                                                 else
                                                 {
 
                                                     <button class="btnUpload">Upload pdf file</button>
-                                                    @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", @onchange = "checkPDFHeader(this)", accept = ".pdf", @disabled = "disabled" })
+                                                    @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", accept = ".pdf", @disabled = "disabled", @class = "agenda-validate-pdf" })
 
                                                 }
                                             </div>
 
                                             @if (ViewBag.UploadPath != "")
                                             {
-                                                @*<a href="@ViewBag.UploadPath" target="_blank">
-                                                        <div class="pdfdownload" style="float:right; margin-right:20px;">&nbsp;Download</div>
-                                                    </a>*@
 
 
-                                                <div class="pdfdownload" style="color: white; text-decoration: none; margin-left: 125px; margin-top: -38px;padding:5px;">
+                                                <div class="pdfdownload agenda-inline-style-05">
                                                     <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.ConfId.ToString()) })">
                                                         Download
                                                     </a>
                                                 </div>
 
 
-                                                @*<a href="@Url.Action("SignAgendaPoint", "ACC", new { path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString()) })" style="color: white; text-decoration: none; float: right; margin-right: 20px;">
-                                                        Sign Pdf
-                                                    </a>*@
-                                                <div><button type="button" id="btnSignAgendapoint" style="color: white; text-decoration: none; float: right; margin-right: 20px; margin-top:-37px;padding:5px; border: none; background-color: white;">Sign pdf</button></div>
+                                                <div><button type="button" id="btnSignAgendapoint" class="agenda-inline-style-06">Sign pdf</button></div>
                                             }
-                                            @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
-                                            @Html.TextBoxFor(m => m.FileName, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
-                                            @Html.TextBoxFor(m => m.WordFile, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
-                                            <span id="PdfFileError" class="text-danger" style="display: none;">Please Upload a PDF file.</span>
-                                            <script>
-                                                function checkPDFHeader(input) {
-                                                    const file = input.files[0];
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.onloadend = function (e) {
-                                                            if (e.target.readyState === FileReader.DONE) {
-                                                                const arr = new Uint8Array(e.target.result).subarray(0, 4);
-                                                                const header = Array.from(arr).map(byte => byte.toString(16)).join("").toUpperCase();
+                                            @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control agenda-inline-style-01 agenda-validate-input agenda-only-alphanumeric", @readonly = true, @required = true })
+                                            @Html.TextBoxFor(m => m.FileName, new { @class = "form-control agenda-inline-style-01 agenda-validate-input agenda-only-alphanumeric", @readonly = true, @required = true })
+                                            @Html.TextBoxFor(m => m.WordFile, new { @class = "form-control agenda-inline-style-01 agenda-validate-input agenda-only-alphanumeric", @readonly = true, @required = true })
+                                            <span id="PdfFileError" class="text-danger agenda-inline-style-07">Please Upload a PDF file.</span>
 
-                                                                if (header === "25504446") {
-                                                                    PreviewPDF(file);
-                                                                } else {
-                                                                    sweetAlert("Please select a valid PDF file.");
-                                                                    input.value = "";
-                                                                }
-                                                            }
-                                                        };
-                                                        reader.readAsArrayBuffer(file);
-                                                    }
-                                                }
-
-                                                function PreviewPDF() {
-                                                    const input = document.getElementById("files");
-                                                    const pdfContainer = document.getElementById("pdf-container");
-                                                    const maxSizeInBytes = 5 * 1024 * 1024;
-
-                                                    if (input.files && input.files[0]) {
-                                                        const selectedFile = input.files[0];
-
-                                                        if (selectedFile.size > maxSizeInBytes) {
-                                                            sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
-                                                            input.value = "";
-                                                            pdfContainer.innerHTML = "";
-                                                            return;
-                                                        }
-                                                        if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
-                                                            const embed = document.createElement("object");
-                                                            embed.data = URL.createObjectURL(selectedFile);
-                                                            embed.type = "application/pdf";
-                                                            embed.width = "100%";
-                                                            embed.height = "350px";
-                                                            pdfContainer.innerHTML = "";
-                                                            pdfContainer.appendChild(embed);
-                                                        } else {
-                                                            alert("Please select a valid PDF file.");
-                                                            input.value = "";
-                                                            pdfContainer.innerHTML = "";
-                                                        }
-                                                    }
-                                                }
-                                            </script>
-                                            <div class="upload-btn-wrapper" style="width: 150px; margin-left: 240px; display: flex; margin-top: -36px;">
+                                            <div class="upload-btn-wrapper agenda-inline-style-08">
                                                 @if (Model.IsView == false)
                                                 {
                                                     <button class="btnUpload">Upload Word file</button>
-                                                    @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", @onchange = "checkWordFile(this)", accept = ".Docx" })
+                                                    @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", accept = ".Docx", @class = "agenda-validate-word" })
 
                                                 }
                                                 else
                                                 {
                                                     <button class="btnUpload">Upload Word file</button>
-                                                    @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", @onchange = "checkWordFile(this)", accept = ".Docx", @disabled = "disabled" })
+                                                    @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", accept = ".Docx", @disabled = "disabled", @class = "agenda-validate-word" })
 
                                                 }
 
@@ -707,58 +732,21 @@
                                             {
 
 
-                                                <div class="worddownload" style="color: white; text-decoration: none; margin-top:-33px; margin-left: 380px;padding:5px;"><a href="@ViewBag.WordFilePath" target="_blank" download="@Model.AmendWordFileName">Download</a></div>
+                                                <div class="worddownload agenda-inline-style-09"><a href="@ViewBag.WordFilePath" target="_blank" download="@Model.AmendWordFileName">Download</a></div>
 
 
                                             }
-                                            @Html.TextBoxFor(m => m.WordFilePath, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, style = "display:none;" })
-                                            <span id="wordFileError" class="text-danger" style="display: none;">Please Upload a Word file.</span>
-                                            <script>
-                                                function checkWordFile(input) {
-                                                    const file = input.files[0];
-                                                    const maxSizeInBytes = 5 * 1024 * 1024;
+                                            @Html.TextBoxFor(m => m.WordFilePath, new { @class = "form-control agenda-inline-style-01 agenda-validate-input agenda-only-alphanumeric", @readonly = true, @required = true })
+                                            <span id="wordFileError" class="text-danger agenda-inline-style-07">Please Upload a Word file.</span>
 
-                                                    if (file.size > maxSizeInBytes) {
-                                                        sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
-                                                        input.value = "";
-                                                        return;
-                                                    }
-                                                    if (file) {
-                                                        const reader = new FileReader();
 
-                                                        reader.onloadend = function (e) {
-                                                            if (e.target.readyState === FileReader.DONE) {
-                                                                const arrayBuffer = e.target.result;
-
-                                                                mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
-                                                                    .then(result => {
-
-                                                                    })
-                                                                    .catch(error => {
-                                                                        sweetAlert("Please select a valid Word document (.docx only).");
-                                                                        input.value = "";
-                                                                    });
-                                                            }
-                                                        };
-
-                                                        reader.readAsArrayBuffer(file);
-                                                    }
-                                                }
-                                            </script>
-
-                                            <div id="pdf-container" style="margin-top:10px;"></div>
+                                            <div id="pdf-container" class="agenda-inline-style-10"></div>
 
                                         </div>
-                                        @*<div class="card-body">*@
-                                        @*<div class="uploadheadword">
-                                                Upload Agenda Pt Docu with in 5MB (Word Format)
-                                            </div>*@
 
 
-                                        @*</div>*@
                                     </div>
                                 </div>
-
 
 
                                 <div class="col-12 col-lg-12 col-xl-6 d-flex">
@@ -776,8 +764,8 @@
 
                                                         <div class="row row-cols-2">
                                                             <div class="col">
-                                                                <p class="mb-0 font-weight-bold">Conf&nbsp;<span style="color:red;text-align:center">*</span></p>
-                                                             
+                                                                <p class="mb-0 font-weight-bold">Conf&nbsp;<span class="agenda-inline-style-11">*</span></p>
+
                                                                 @if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
                                                                 {
                                                                     if (Model.Inbox_ID != 0)
@@ -802,48 +790,28 @@
                                                                     }
                                                                 }
 
-                                                           </div>
+                                                            </div>
 
                                                         </div>
                                                         <div class="row row-cols-1 font-weight-bold">
                                                             <div class="col">
-                                                                <p class="mb-0">Title(<span id="characterCount">500</span>&nbsp;Characters)&nbsp;<span style="color:red;text-align:center">*</span></p>
+                                                                <p class="mb-0">Title(<span id="characterCount">500</span>&nbsp;Characters)&nbsp;<span class="agenda-inline-style-11">*</span></p>
                                                                 @if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
                                                                 {
-                                                                    @*<p class="mb-0">Title(<span id="characterCount">500</span>&nbsp;Characters)&nbsp;<span style="color:red;text-align:center">*</span></p>*@
-                                                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @maxlength = "500", @onkeyup = "updateCharacterCount(this)", @onkeypress = "return onlyAlphaNumeric(event)", @required = true, @disabled = "disabled" })
-                                                                    <script>
-                                                                        function updateCharacterCount(input) {
-                                                                            var maxLength = 500;
-                                                                            var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
-                                                                            input.value = input.value.replace(regex, "");
-                                                                            var currentLength = input.value.length;
-                                                                            var charactersRemaining = maxLength - currentLength;
-                                                                            var countDisplay = document.getElementById('characterCount');
-                                                                            countDisplay.textContent = charactersRemaining;
-                                                                        }
-                                                                    </script>
+
+                                                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control agenda-count-title agenda-only-alphanumeric", @maxlength = "500", @required = true, @disabled = "disabled" })
+
                                                                 }
                                                                 else
                                                                 {
-                                                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @maxlength = "500", @onkeyup = "updateCharacterCount(this)", @required = true })
+                                                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control agenda-count-title", @maxlength = "500", @required = true })
 
-                                                                    <script>
-                                                                        function updateCharacterCount(input) {
-                                                                            var maxLength = 500;
-                                                                            var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
-                                                                            input.value = input.value.replace(regex, "");
-                                                                            var currentLength = input.value.length;
-                                                                            var charactersRemaining = maxLength - currentLength;
-                                                                            var countDisplay = document.getElementById('characterCount');
-                                                                            countDisplay.textContent = charactersRemaining;
-                                                                        }
-                                                                    </script>
+
                                                                 }
                                                                 <div class="PolicyModelOpen">
-                                                                    <a href="#" id="btnPopup" style="color: inherit; text-decoration: none;">
+                                                                    <a href="#" id="btnPopup" class="agenda-inline-style-12">
                                                                         <div class="buttons">
-                                                                            <img src="~/Images/search_blue.png" style="width: 37px; height: 37px; margin-top:12px;" />
+                                                                            <img src="~/Images/search_blue.png" class="agenda-inline-style-13" />
                                                                         </div>
                                                                     </a>
                                                                 </div>
@@ -859,9 +827,9 @@
                                                             </div>
 
                                                             <div class="col font-weight-bold">
-                                                                <p class="mb-0">Sponsor&nbsp;<span style="color:red;text-align:center">*</span></p>
+                                                                <p class="mb-0">Sponsor&nbsp;<span class="agenda-inline-style-11">*</span></p>
 
-                                                                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true })
+                                                                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control agenda-validate-input agenda-only-alphanumeric", @readonly = true, @required = true })
                                                             </div>
                                                         </div>
 
@@ -870,24 +838,14 @@
                                                                 <p class="mb-0">Summary(<span id="characterCountsum">1000</span>&nbsp;Characters)</p>
                                                                 @if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
                                                                 {
-                                                                    @*<p class="mb-0">Summary(<span id="characterCountsum">1000</span>&nbsp;Characters)</p>*@
-                                                                    @Html.TextAreaFor(m => m.Summary, new { @class = "form-control", @maxlength = "1000", @onkeyup = "updateCharacterCountSum(this)", @onkeypress = "return onlyAlphaNumeric(event)", @disabled = "disabled" })
+
+                                                                    @Html.TextAreaFor(m => m.Summary, new { @class = "form-control agenda-count-summary agenda-only-alphanumeric", @maxlength = "1000", @disabled = "disabled" })
                                                                 }
                                                                 else
                                                                 {
-                                                                    @Html.TextAreaFor(m => m.Summary, new { @class = "form-control", @maxlength = "1000", @onkeyup = "updateCharacterCountSum(this)", @onkeypress = "return onlyAlphaNumeric(event)" })
+                                                                    @Html.TextAreaFor(m => m.Summary, new { @class = "form-control agenda-count-summary agenda-only-alphanumeric", @maxlength = "1000" })
 
-                                                                    <script>
-                                                                        function updateCharacterCountSum(input) {
-                                                                            var maxLength = 1000;
-                                                                            var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
-                                                                            input.value = input.value.replace(regex, "");
-                                                                            var currentLength = input.value.length;
-                                                                            var charactersRemaining = maxLength - currentLength;
-                                                                            var countDisplay = document.getElementById('characterCountsum');
-                                                                            countDisplay.textContent = charactersRemaining;
-                                                                        }
-                                                                    </script>
+
                                                                 }
                                                             </div>
 
@@ -915,7 +873,7 @@
                                                         <div class="row row-cols-2 font-weight-bold">
 
                                                             <div class="col">
-                                                                <p class="mb-0">Conf&nbsp;<span style="color:red;text-align:center">*</span></p>
+                                                                <p class="mb-0">Conf&nbsp;<span class="agenda-inline-style-11">*</span></p>
                                                                 @if (Model.Inbox_ID != 0)
                                                                 {
                                                                     @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(0), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true, @disabled = "disabled" })
@@ -927,16 +885,16 @@
                                                             </div>
 
                                                             <div class="col">
-                                                                <p class="mb-0">Sponsor&nbsp;<span style="color:red;text-align:center">*</span></p>
+                                                                <p class="mb-0">Sponsor&nbsp;<span class="agenda-inline-style-11">*</span></p>
 
-                                                                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @readonly = true, @required = true, @disabled = "disabled" })
+                                                                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control agenda-validate-input agenda-only-alphanumeric", @readonly = true, @required = true, @disabled = "disabled" })
                                                             </div>
                                                         </div>
 
                                                         <div class="row row-cols-1 font-weight-bold">
                                                             <div class="col">
-                                                                <p class="mb-0">Title&nbsp;<span style="color:red;text-align:center">*</span></p>
-                                                                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @required = true, @disabled = "disabled" })
+                                                                <p class="mb-0">Title&nbsp;<span class="agenda-inline-style-11">*</span></p>
+                                                                @Html.TextBoxFor(m => m.Title, new { @class = "form-control agenda-validate-input agenda-only-alphanumeric", @required = true, @disabled = "disabled" })
                                                             </div>
                                                         </div>
                                                         <div class="row row-cols-1 font-weight-bold">
@@ -949,7 +907,7 @@
                                                         <div class="row row-cols-2 font-weight-bold">
                                                             <div class="col-5">
                                                                 <p class="mb-0">Summary</p>
-                                                                @Html.TextAreaFor(m => m.Summary, new { @class = "form-control", @onkeyup = "ValInData(this)", @onkeypress = "return onlyAlphaNumeric(event)", @disabled = "disabled" })
+                                                                @Html.TextAreaFor(m => m.Summary, new { @class = "form-control agenda-validate-input agenda-only-alphanumeric", @disabled = "disabled" })
                                                             </div>
                                                             <div class="col-5">
                                                                 <p class="mb-0">Organizer Category</p>
@@ -969,43 +927,34 @@
                                                     }
 
 
-                                                    <div class="d-flex justify-content-center" style="margin-top: 10px;">
+                                                    <div class="d-flex justify-content-center agenda-inline-style-14">
                                                         @if (Model.IsView == false)
                                                         {
-                                                            <button type="submit" value=@ViewBag.ButtonName name="btnval" id="btnSave" class="btn btn-success" style="margin-right:10px">1. @ViewBag.ButtonName</button>
+                                                            <button type="submit" value=@ViewBag.ButtonName name="btnval" id="btnSave" class="btn btn-success agenda-inline-style-15">1. @ViewBag.ButtonName</button>
                                                             if (Model.Inbox_ID != 0)
                                                             {
                                                                 if (Model.FinalSubmitYN == false || Model.AllowEdit == true)
                                                                 {
-                                                                    <a class="btn btn-success mr-2" id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' onclick="SubmitGEBConfirmation(this,'/ACC/FinalSubmitAgenda','Do you want to submit Agenda','FinalSubmitAgenda')">
-                                                                        <span style="color:white">2. Submit</span>
+                                                                    <a class="btn btn-success mr-2 agenda-submit-confirm" id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")'>
+                                                                        <span class="agenda-inline-style-16">2. Submit</span>
                                                                     </a>
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                <a class="btn btn-success mr-2 disabled" id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' onclick="SubmitGEBConfirmation(this,'/ACC/FinalSubmitAgenda','Do you want to submit Agenda','FinalSubmitAgenda')">
-                                                                    <span style="color:white">2. Submit</span>
+                                                                <a class="btn btn-success mr-2 disabled agenda-submit-confirm" id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")'>
+                                                                    <span class="agenda-inline-style-16">2. Submit</span>
                                                                 </a>
                                                             }
                                                         }
 
-                                                        @*@if (Model.Inbox_ID != 0)
-                                                            {
-                                                                if (Model.sponsorId == Convert.ToInt32(SessionManager.UserIntId))
-                                                                {
-                                                                    <a class="btn btn-success mr-2" id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' onclick="SubmitGEBConfirmation(this,'/ACC/FinalSubmitAgenda','Do you want to submit Agenda','FinalSubmitAgenda')">
-                                                                        <span style="color:white">Submit</span>
-                                                                    </a>
-                                                                }
-                                                            }*@
 
-                                                        <a class="btn btn-success mr-2" id="btnBack" onclick="location.href='@Url.Action("AddAgenda", "ACC", new { id = string.Empty,Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
-                                                            <span style="color:white">Clear</span>
+                                                        <a class="btn btn-success mr-2 agenda-navigate" id="btnBack" data-agenda-url="@Url.Action("AddAgenda", "ACC", new { id = string.Empty,Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })">
+                                                            <span class="agenda-inline-style-16">Clear</span>
                                                         </a>
 
-                                                        <a class="btn btn-success mr-2" id="btnBack" onclick="location.href='@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })'">
-                                                            <span style="color:white">Back</span>
+                                                        <a class="btn btn-success mr-2 agenda-navigate" id="btnBack" data-agenda-url="@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })">
+                                                            <span class="agenda-inline-style-16">Back</span>
                                                         </a>
                                                         @if (Convert.ToInt32(SessionManager.UserId) == Model.ScheduleCreatedById)
                                                         {
@@ -1047,7 +996,6 @@
                                 </div>
 
 
-
                             </div>
 
 
@@ -1057,7 +1005,7 @@
             }
             <div class="row">
                 <div class="col-sm-12">
-                    @*<div class="table-responsive">*@
+
 
                     <table class="table border border-purple table-striped no-footer dataTable table-hover" id="Agenda">
                         <thead class="bg-info text-white">
@@ -1068,7 +1016,7 @@
                                 <th class="center">Sponsor</th>
                                 <th class="center">Nodal Branch</th>
                                 <th class="center">Agenda Pt Title</th>
-                                @*<th class="center" style="width:250px;">Summary</th>*@
+
                                 <th class="center">Category</th>
                                 <th class="center">Sent On</th>
                                 <th class="center">Action</th>
@@ -1097,7 +1045,7 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Title)
                                         </td>
-                                        @*<td>@Html.DisplayFor(modelItem => item.Summary)</td>*@
+
                                         <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DateTimeOfUpdate)</td>
                                         <td>
@@ -1105,13 +1053,13 @@
                                             {
                                                 if (item.FinalSubmitYN == false)
                                                 {
-                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                    <a class="agenda-navigate" data-agenda-url="@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })">
                                                         <div class="editbut"></div>
                                                     </a>
                                                 }
                                                 else if (item.AllowEdit == true)
                                                 {
-                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'">
+                                                    <a class="agenda-navigate" data-agenda-url="@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("0"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })">
                                                         <div class="editbut"></div>
                                                     </a>
                                                 }
@@ -1119,7 +1067,7 @@
                                                 {
                                                     if (item.RequestForUnfreeze == false)
                                                     {
-                                                        <a data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' onclick="SubmitGEBConfirmation(this,'/ACC/AddRequestUnfreezeAgendaPoint','Do you place request for Unfreeze Agenda point','AddRequestUnfreezeAgendaPoint')">
+                                                        <a data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")' class="agenda-unfreeze-confirm">
                                                             <div class="unlockbut"></div>
                                                         </a>
                                                     }
@@ -1127,7 +1075,7 @@
                                             }
                                         </td>
                                         <td>
-                                            <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")})'">
+                                            <a class="agenda-navigate" data-agenda-url="@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")})">
                                                 <div class="viewbut"></div>
                                             </a>
                                         </td>
@@ -1142,25 +1090,18 @@
                     </table>
 
 
-
-
-                    @*</div>*@
                 </div>
             </div>
 
         </div>
 
         <div id="ShowpdfModal" class="modal">
-            <div class="modal-dialog" style="max-width:500mm;">
-                <div class="modal-content" style="margin-top:120px;">
+            <div class="modal-dialog agenda-inline-style-17">
+                <div class="modal-content agenda-inline-style-18">
                     <div class="modal-body">
-                        <button type="button" class="btn btn-danger CloseSearchpoup" data-dismiss="modal" style="float: right; margin-top: -10px; margin-bottom: 2px;">&times;</button>
+                        <button type="button" class="btn btn-danger CloseSearchpoup agenda-inline-style-19" data-dismiss="modal">&times;</button>
                         <div id="Searchpdf-container"></div>
-                        @*<div class="modal-footer">
-                                <div class="btn-group">
-                                    <a style="color:white;" class="btn btn-danger CloseSearchpoup">Close</a>
-                                </div>
-                            </div>*@
+
 
                     </div>
                 </div>
@@ -1168,7 +1109,7 @@
         </div>
 
         <div id="PolicyModal" class="modal">
-            <div class="modal-content" style="margin-top:120px;">
+            <div class="modal-content agenda-inline-style-18">
 
                 <div class="centered">
                     <img src="~/Images/searchEngine.png" height="70px" />
@@ -1176,30 +1117,30 @@
                 </div>
 
                 <div class="modal-header text-center">
-                    <p style="text-align:center;font-size:30px; font-weight:bold; font-family:Arial;">
-                        <span id="spnPolicyName" style="color:#FF0000"></span>
+                    <p class="agenda-inline-style-20">
+                        <span id="spnPolicyName" class="agenda-inline-style-21"></span>
                         <span id="spnDocType" class="d-none"></span>
                         <span id="spnPId" class="d-none"></span>
-                        @*<span id="SpnArmyNumber1" class="d-none">@SessionManager.ArmyNo</span>*@
+
                     </p>
                     <div class="bar1">
                         <input class="searchbarPol" type="text" id="searchTerm" title="Search" placeholder="Search here">
                         <div class="buttons">
-                            <img src="~/Images/search_pol.png" id="searchSubmit" style="width: 45px; height: 45px; margin-top:4px;" onclick="SearchTitle()" />
+                            <img src="~/Images/search_pol.png" id="searchSubmit" class="agenda-inline-style-22 agenda-search-title" />
                         </div>
                     </div>
                     <button type="button" class="btn btn-danger Closepoup" data-dismiss="modal">&times;</button>
                 </div>
-                @*<hr />*@
-                <div class="modal-body" style="max-height: 600px; overflow: auto;" id="APLogData">
+
+                <div class="modal-body agenda-inline-style-23" id="APLogData">
 
                     <div class="table-responsive" id="dataAgenda">
                         <table class="table d-none" id="dataTable1">
                             <thead class="bg-info text-white">
                                 <tr>
                                     <th class="center">S/No</th>
-                                    <th class="center" style="width:15%;">File</th>
-                                    <th class="center" style="width:60%;">Content</th>
+                                    <th class="center agenda-inline-style-24">File</th>
+                                    <th class="center agenda-inline-style-25">Content</th>
                                     <th class="center"></th>
                                 </tr>
                             </thead>
@@ -1208,11 +1149,7 @@
 
                         </table>
                     </div>
-                    @*<div class="modal-footer">
-                            <div class="btn-group">
-                                <a style="color:white;" class="btn btn-danger Closepoup">Close</a>
-                            </div>
-                        </div>*@
+
 
                 </div>
                 <footerPolicy>
@@ -1233,79 +1170,201 @@
 <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
 <script src="~/NewContent/mammoth.browser.min.js"></script>
 <script src="~/Content/CustomJS/DigitalSign.js"></script>
+<script src="~/DevelopersJs/EncryptePayload.js"></script>
 <script>
-    var input = document.getElementById("searchTerm");
-    input.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            document.getElementById("searchSubmit").click();
-        }
-    });
-</script>
-<script>
-    const tooltipContainers = document.querySelectorAll('.tooltip-container');
 
-    tooltipContainers.forEach(container => {
-        container.addEventListener('mouseenter', () => {
-            const tooltip = container.querySelector('.tooltip');
-            tooltip.style.visibility = 'visible';
-            tooltip.style.opacity = '1';
-        });
-
-        container.addEventListener('mouseleave', () => {
-            const tooltip = container.querySelector('.tooltip');
-            tooltip.style.visibility = 'hidden';
-            tooltip.style.opacity = '0';
-        });
+    document.querySelectorAll('.agenda-navigate').forEach(function (element) {
+        element.onclick = function () {
+            location.href = this.getAttribute('data-agenda-url');
+        };
     });
 
-
-    $('.Closepoup').on('click', function (e) {
-        var modal = document.getElementById("PolicyModal");
-        modal.style.display = "none";
+    document.querySelectorAll('.agenda-submit-confirm').forEach(function (element) {
+        element.onclick = function () {
+            SubmitGEBConfirmation(this, '/ACC/FinalSubmitAgenda', 'Do you want to submit Agenda', 'FinalSubmitAgenda');
+        };
     });
 
-    $('.CloseShowFilepoup').on('click', function (e) {
-        var modal = document.getElementById("ShowFileModal");
-        modal.style.display = "none";
+    document.querySelectorAll('.agenda-unfreeze-confirm').forEach(function (element) {
+        element.onclick = function () {
+            SubmitGEBConfirmation(this, '/ACC/AddRequestUnfreezeAgendaPoint', 'Do you place request for Unfreeze Agenda point', 'AddRequestUnfreezeAgendaPoint');
+        };
     });
 
+    document.querySelectorAll('.agenda-search-title').forEach(function (element) {
+        element.onclick = function () { SearchTitle(); };
+    });
 
-    $('.PolicyModelOpen').on('click', function (e) {
-        if ($('#Schedule_ID').val() == "") {
-            sweetAlert('Please Select Conf !', '', 'error');
-        }
-        else {
-            var Policy = window.btoa($('#spnDefaultPolicy').html());
-            var Conf = window.btoa($('#spnConfTypeId').html());
-            var Term = window.btoa($('#Title').val());
-            $.ajax({
-                url: '/PolicyCorner/SearchTitle',
-                type: 'GET',
-                data: { Term: Term, PolicyID: Policy, ConType: Conf },
-                success: function (data) {
-                    var modal = document.getElementById("PolicyModal");
-                    modal.style.display = "block";
-                    $("#dataTable1").removeClass("d-none");
+    document.querySelectorAll('.agenda-validate-pdf').forEach(function (element) {
+        element.onchange = function () { checkPDFHeader(this); };
+    });
 
-                    $("#tbodySearch").html(data);
-                    $('#searchTerm').val("");
-                },
-                error: function () {
-                    $("#tbodySearch").html("");
-                    var modal = document.getElementById("PolicyModal");
-                    modal.style.display = "none";
+    document.querySelectorAll('.agenda-validate-word').forEach(function (element) {
+        element.onchange = function () { checkWordFile(this); };
+    });
+
+    document.querySelectorAll('.agenda-validate-input').forEach(function (element) {
+        element.onkeyup = function () { ValInData(this); };
+    });
+
+    document.querySelectorAll('.agenda-only-alphanumeric').forEach(function (element) {
+        element.onkeypress = function (event) { return onlyAlphaNumeric(event); };
+    });
+
+    document.querySelectorAll('.agenda-count-title').forEach(function (element) {
+        element.onkeyup = function () { updateCharacterCount(this); };
+    });
+
+    document.querySelectorAll('.agenda-count-summary').forEach(function (element) {
+        element.onkeyup = function () { updateCharacterCountSum(this); };
+    });
+
+function checkPDFHeader(input) {
+    const file = input.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = function (e) {
+            if (e.target.readyState === FileReader.DONE) {
+                const arr = new Uint8Array(e.target.result).subarray(0, 4);
+                const header = Array.from(arr).map(byte => byte.toString(16)).join("").toUpperCase();
+
+                if (header === "25504446") {
+                    PreviewPDF(file);
+                } else {
+                    sweetAlert("Please select a valid PDF file.");
+                    input.value = "";
                 }
-            });
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    }
+}
 
+function PreviewPDF() {
+    const input = document.getElementById("files");
+    const pdfContainer = document.getElementById("pdf-container");
+    const maxSizeInBytes = 5 * 1024 * 1024;
+
+    if (input.files && input.files[0]) {
+        const selectedFile = input.files[0];
+
+        if (selectedFile.size > maxSizeInBytes) {
+            sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
+            input.value = "";
+            pdfContainer.innerHTML = "";
+            return;
         }
+        if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
+            const embed = document.createElement("object");
+            embed.data = URL.createObjectURL(selectedFile);
+            embed.type = "application/pdf";
+            embed.width = "100%";
+            embed.height = "350px";
+            pdfContainer.innerHTML = "";
+            pdfContainer.appendChild(embed);
+        } else {
+            alert("Please select a valid PDF file.");
+            input.value = "";
+            pdfContainer.innerHTML = "";
+        }
+    }
+}
+
+function checkWordFile(input) {
+    const file = input.files[0];
+    const maxSizeInBytes = 5 * 1024 * 1024;
+
+    if (file.size > maxSizeInBytes) {
+        sweetAlert("File size exceeds the limit of 5MB. Please select a smaller file.");
+        input.value = "";
+        return;
+    }
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onloadend = function (e) {
+            if (e.target.readyState === FileReader.DONE) {
+                const arrayBuffer = e.target.result;
+
+                mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
+                    .then(result => {
+
+                    })
+                    .catch(error => {
+                        sweetAlert("Please select a valid Word document (.docx only).");
+                        input.value = "";
+                    });
+            }
+        };
+
+        reader.readAsArrayBuffer(file);
+    }
+}
+
+function updateCharacterCount(input) {
+    var maxLength = 500;
+    var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
+    input.value = input.value.replace(regex, "");
+    var currentLength = input.value.length;
+    var charactersRemaining = maxLength - currentLength;
+    var countDisplay = document.getElementById('characterCount');
+    countDisplay.textContent = charactersRemaining;
+}
+
+function updateCharacterCountSum(input) {
+    var maxLength = 1000;
+    var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
+    input.value = input.value.replace(regex, "");
+    var currentLength = input.value.length;
+    var charactersRemaining = maxLength - currentLength;
+    var countDisplay = document.getElementById('characterCountsum');
+    countDisplay.textContent = charactersRemaining;
+}
+
+var input = document.getElementById("searchTerm");
+input.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("searchSubmit").click();
+    }
+});
+
+const tooltipContainers = document.querySelectorAll('.tooltip-container');
+
+tooltipContainers.forEach(container => {
+    container.addEventListener('mouseenter', () => {
+        const tooltip = container.querySelector('.tooltip');
+        tooltip.style.visibility = 'visible';
+        tooltip.style.opacity = '1';
     });
 
+    container.addEventListener('mouseleave', () => {
+        const tooltip = container.querySelector('.tooltip');
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+    });
+});
 
-    function SearchTitle() {
+
+$('.Closepoup').on('click', function (e) {
+    var modal = document.getElementById("PolicyModal");
+    modal.style.display = "none";
+});
+
+$('.CloseShowFilepoup').on('click', function (e) {
+    var modal = document.getElementById("ShowFileModal");
+    modal.style.display = "none";
+});
+
+
+$('.PolicyModelOpen').on('click', function (e) {
+    if ($('#Schedule_ID').val() == "") {
+        sweetAlert('Please Select Conf !', '', 'error');
+    }
+    else {
         var Policy = window.btoa($('#spnDefaultPolicy').html());
         var Conf = window.btoa($('#spnConfTypeId').html());
-        var Term = window.btoa($('#searchTerm').val());
+        var Term = window.btoa($('#Title').val());
         $.ajax({
             url: '/PolicyCorner/SearchTitle',
             type: 'GET',
@@ -1314,6 +1373,7 @@
                 var modal = document.getElementById("PolicyModal");
                 modal.style.display = "block";
                 $("#dataTable1").removeClass("d-none");
+
                 $("#tbodySearch").html(data);
                 $('#searchTerm').val("");
             },
@@ -1323,159 +1383,200 @@
                 modal.style.display = "none";
             }
         });
+
     }
-</script>
-<script>
-        var watermarkText = @Html.Raw(Json.Encode(watermarkText));
-</script>
-<script>
-    $(document).ready(function () {
-        $('.dropdownsearch').select2();
+});
+
+
+function SearchTitle() {
+    var Policy = window.btoa($('#spnDefaultPolicy').html());
+    var Conf = window.btoa($('#spnConfTypeId').html());
+    var Term = window.btoa($('#searchTerm').val());
+    $.ajax({
+        url: '/PolicyCorner/SearchTitle',
+        type: 'GET',
+        data: { Term: Term, PolicyID: Policy, ConType: Conf },
+        success: function (data) {
+            var modal = document.getElementById("PolicyModal");
+            modal.style.display = "block";
+            $("#dataTable1").removeClass("d-none");
+            $("#tbodySearch").html(data);
+            $('#searchTerm').val("");
+        },
+        error: function () {
+            $("#tbodySearch").html("");
+            var modal = document.getElementById("PolicyModal");
+            modal.style.display = "none";
+        }
+    });
+}
+
+var watermarkText = @Html.Raw(Json.Encode(watermarkText));
+
+$(document).ready(function () {
+    $('.dropdownsearch').select2();
+});
+
+$(document).ready(function () {
+    var table = $('#Agenda').DataTable({
+        lengthChange: true,
+        pageLength: 50,
+        aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+
+        dom: 'lBfrtip',
+        buttons: [
+            'copy',
+            'excel',
+            'csv',
+
+            {
+                text: 'PDF',
+                extend: 'pdfHtml5',
+                action: function (e, dt, node, config) {
+                    PrintDiv();
+                }
+            },
+            'colvis',
+        ],
+
     });
 
-    $(document).ready(function () {
-        var table = $('#Agenda').DataTable({
-            lengthChange: true,
-            pageLength: 50,
-            aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
-            /* dom: 'Bfrtip',*/
-            dom: 'lBfrtip',
-            buttons: [
-                'copy',
-                'excel',
-                'csv',
-                /* 'print',*/
-                {
-                    text: 'PDF',
-                    extend: 'pdfHtml5',
-                    action: function (e, dt, node, config) {
-                        PrintDiv();
-                    }
-                },
-                'colvis',
-            ],
 
-        });
+    var buttonContainer = table.buttons().container().appendTo('#Agenda_wrapper .col-md-6:eq(0)');
+    var searchBuilderContainer = table.searchBuilder.container();
+    buttonContainer.insertBefore(table.table().container());
+    searchBuilderContainer.insertBefore(table.table().container());
+
+});
 
 
-        var buttonContainer = table.buttons().container().appendTo('#Agenda_wrapper .col-md-6:eq(0)');
-        var searchBuilderContainer = table.searchBuilder.container();
-        buttonContainer.insertBefore(table.table().container());
-        searchBuilderContainer.insertBefore(table.table().container());
+function PrintDiv() {
+    var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+    popupWin.document.open();
+        popupWin.onload = function () { popupWin.print(); };
 
-    });
-
-
-    function PrintDiv() {
-        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-        popupWin.document.open();
-
-        var tableStyles = `
+    var tableStyles = `
                             <style type="text/css">
-                                table {
-                                    width: 100%;
-                                    border-collapse: collapse;
-                                    margin-bottom: 20px;
-                                }
-
-                                th, td {
-                                    padding: 8px;
-                                    border: 1px solid #ddd;
+                                .agenda-print-heading {
                                     text-align: center;
+                                    margin-top: 20px;
                                 }
-
-                                th {
-                                    background-color: #f2f2f2;
-                                    color: black;
-                                }
-
-                                @@media print {
-
-                                    @@page {
-                                        margin-top: 10px;
-                                        margin-bottom: 10px;
-                                    }
-
-                                    body::after {
-                                        content: none !important;
-                                    }
-
-                                    .card-page {
-                                        break-after: page;
-                                    }
-
-                                        .card-page:last-of-type {
-                                            break-after: auto;
-                                        }
-
-                                    footer {
-                                        position: fixed;
-                                        bottom: 0;
-                                        left: 0;
-                                        right: 0;
-                                        height: 10px;
-                                        background-color: gray;
-                                        color: white;
-                                        text-align: center;
-                                        padding: 10px;
-                                    }
-
-                                    header {
-                                        position: fixed;
-                                        top: 0;
-                                        left: 0;
-                                        right: 0;
-                                        height: 10px;
-                                        background-color: gray;
-                                        color: white;
-                                        text-align: center;
-                                        padding: 10px;
-                                    }
+                                .agenda-print-watermark {
+                                    transform: rotate(-45deg);
+                                    z-index: 10000;
+                                    opacity: 0.3;
+                                    color: #8e9191;
+                                    position: fixed;
+                                    top: 39%;
+                                    left: 6%;
+                                    font-size: 80px;
+                                    font-weight: 500px;
+                                    display: grid;
+                                    justify-content: center;
+                                    align-content: center;
                                 }
                             </style>
-                        `;
+                        <style type="text/css">
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-bottom: 20px;
+                            }
 
-        var table = $('#Agenda').DataTable();
-        var visibleColumns = table.columns(':visible').header().toArray();
-        var filteredData = table.rows({ search: 'applied' }).data().toArray();
+                            th, td {
+                                padding: 8px;
+                                border: 1px solid #ddd;
+                                text-align: center;
+                            }
 
-        var tableHTML = '<table>';
+                            th {
+                                background-color: #f2f2f2;
+                                color: black;
+                            }
 
-        tableHTML += '<thead>';
+                            @@media print {
+
+                                @@page {
+                                    margin-top: 10px;
+                                    margin-bottom: 10px;
+                                }
+
+                                body::after {
+                                    content: none !important;
+                                }
+
+                                .card-page {
+                                    break-after: page;
+                                }
+
+                                    .card-page:last-of-type {
+                                        break-after: auto;
+                                    }
+
+                                footer {
+                                    position: fixed;
+                                    bottom: 0;
+                                    left: 0;
+                                    right: 0;
+                                    height: 10px;
+                                    background-color: gray;
+                                    color: white;
+                                    text-align: center;
+                                    padding: 10px;
+                                }
+
+                                header {
+                                    position: fixed;
+                                    top: 0;
+                                    left: 0;
+                                    right: 0;
+                                    height: 10px;
+                                    background-color: gray;
+                                    color: white;
+                                    text-align: center;
+                                    padding: 10px;
+                                }
+                            }
+                        </style>
+                    `;
+
+    var table = $('#Agenda').DataTable();
+    var visibleColumns = table.columns(':visible').header().toArray();
+    var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+    var tableHTML = '<table>';
+
+    tableHTML += '<thead>';
+    tableHTML += '<tr>';
+    visibleColumns.forEach(function (header) {
+        tableHTML += '<th>' + header.innerHTML + '</th>';
+    });
+    tableHTML += '</tr>';
+    tableHTML += '</thead>';
+
+    tableHTML += '<tbody>';
+    for (var i = 0; i < filteredData.length; i++) {
         tableHTML += '<tr>';
-        visibleColumns.forEach(function (header) {
-            tableHTML += '<th>' + header.innerHTML + '</th>';
-        });
-        tableHTML += '</tr>';
-        tableHTML += '</thead>';
-
-        tableHTML += '<tbody>';
-        for (var i = 0; i < filteredData.length; i++) {
-            tableHTML += '<tr>';
-            for (var j = 0; j < filteredData[i].length; j++) {
-                if (!table.column(j).visible()) {
-                    continue;
-                }
-                tableHTML += '<td>' + filteredData[i][j] + '</td>';
+        for (var j = 0; j < filteredData[i].length; j++) {
+            if (!table.column(j).visible()) {
+                continue;
             }
-            tableHTML += '</tr>';
+            tableHTML += '<td>' + filteredData[i][j] + '</td>';
         }
-        tableHTML += '</tbody>';
-
-        tableHTML += '</table>';
-
-
-        var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Agenda Point List</h1>';
-        popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
-
-        popupWin.document.close();
+        tableHTML += '</tr>';
     }
+    tableHTML += '</tbody>';
+
+    tableHTML += '</table>';
 
 
-</script>
-<script>
+    var pageHeading = '<h1 class="agenda-print-heading">Agenda Point List</h1>';
+    popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body>' + tableHTML + '<div class="agenda-print-watermark">' + watermarkText + '</div></body></html>');
 
-      var message = '@message';
+    popupWin.document.close();
+}
+
+var message = '@message';
     var messageStatus = '@messageStatus';
     var messagemidStatus = '@messagemidStatus ';
     if (message)
@@ -1512,7 +1613,7 @@
         {
             if ($('#spnsponsor').val() !=@SessionManager.UserIntId)
             {
-                $('#btnsubmit').attr('style', 'display: none;');
+                $('#btnsubmit').addClass('agenda-script-hidden');
             }
         }
 
@@ -1543,8 +1644,6 @@
                             $('#spnCategoryId').val('');
                             $('#spnCategoryId').prop('disabled', true);
                     }
-
-
 
                     if (result[0].BranchIds != "")
                     {
@@ -1587,8 +1686,6 @@
                         $('#spnSponsorId').val('');
                         $('#spnSponsorId').prop('disabled', true);
                     }
-
-
 
                     if (result[0].NodalCatId != "") {
                         if ($('#spnNode').html() == @SessionManager.UserIntId || result[0].LetterCreatedBy ==@SessionManager.UserIntId) {
@@ -1792,164 +1889,317 @@
 
     });
 
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("myForm");
-        const btnSave = document.getElementById("btnSave");
-        const wordFileInput = document.getElementById("Wordfiles");
-        const wordFileError = document.getElementById("wordFileError");
-        const PdfFileInput = document.getElementById("files");
-        const PdfFileError = document.getElementById("PdfFileError");
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("myForm");
+    const btnSave = document.getElementById("btnSave");
+    const wordFileInput = document.getElementById("Wordfiles");
+    const wordFileError = document.getElementById("wordFileError");
+    const PdfFileInput = document.getElementById("files");
+    const PdfFileError = document.getElementById("PdfFileError");
 
-        function clearFileError(inputElement, errorElement) {
-            inputElement.addEventListener("change", function () {
-                if (inputElement.files.length) {
-                    errorElement.style.display = "none";
-                }
-            });
-        }
-
-
-        clearFileError(wordFileInput, wordFileError);
-        clearFileError(PdfFileInput, PdfFileError);
-
-        btnSave.addEventListener("click", function (e) {
-            let isValid = true;
-
-
-            if (!wordFileInput.files.length) {
-                wordFileError.style.display = "block";
-                isValid = false;
-            } else {
-                wordFileError.style.display = "none";
-            }
-
-
-            if (!PdfFileInput.files.length) {
-                PdfFileError.style.display = "block";
-                isValid = false;
-            } else {
-                PdfFileError.style.display = "none";
-            }
-
-
-
-              const buttonName = "@ViewBag.ButtonName";
-             const uploadPath = "@ViewBag.UploadPath";
-            if (buttonName === "Update" && uploadPath !== "") {
-
-                wordFileError.style.display = "none";
-                PdfFileError.style.display = "none";
-                return true;
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-                return false;
+    function clearFileError(inputElement, errorElement) {
+        inputElement.addEventListener("change", function () {
+            if (inputElement.files.length) {
+                errorElement.style.display = "none";
             }
         });
+    }
+
+
+    clearFileError(wordFileInput, wordFileError);
+    clearFileError(PdfFileInput, PdfFileError);
+
+    btnSave.addEventListener("click", function (e) {
+        let isValid = true;
+
+
+        if (!wordFileInput.files.length) {
+            wordFileError.style.display = "block";
+            isValid = false;
+        } else {
+            wordFileError.style.display = "none";
+        }
+
+
+        if (!PdfFileInput.files.length) {
+            PdfFileError.style.display = "block";
+            isValid = false;
+        } else {
+            PdfFileError.style.display = "none";
+        }
+
+          const buttonName = "@ViewBag.ButtonName";
+         const uploadPath = "@ViewBag.UploadPath";
+        if (buttonName === "Update" && uploadPath !== "") {
+
+            wordFileError.style.display = "none";
+            PdfFileError.style.display = "none";
+            return true;
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+            return false;
+        }
+    });
+});
+
+$('#Title').keyup(function () {
+    if (event.keyCode === 32 || event.keyCode === 8) {
+        var searchTermValue = window.btoa($(this).val());
+        var Policy = window.btoa($('#spnDefaultPolicy').html());
+        var ConTypeId = window.btoa($('#spnConfTypeId').html());
+        $.ajax({
+            url: '/PolicyCorner/SearchAgendaPointTitle',
+            type: 'POST',
+            data: { "Term": searchTermValue, "PolicyID": Policy, "ConType": ConTypeId},
+            dataType: 'json',
+            timeout: 3000,
+            success: function (response) {
+                displaySuggestions(response);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+});
+    function displaySuggestions(suggestions) {
+        var suggestionBox = $("#suggestionBox");
+        suggestionBox.empty();
+        for (var i = 0; i < suggestions.length; i++) {
+            var suggestionId = window.btoa(suggestions[i].FileName);
+            var suggestionItem = $("<div class='suggestionItem' id=" + suggestionId + "></div>");
+
+            var suggestionContent = suggestions[i].paragraph;
+            if (suggestions[i].FileName.toLowerCase().endsWith('.pdf')) {
+                suggestionContent = "<div class='pdfup'></div>" + suggestionContent;
+            }
+
+            suggestionItem.html(suggestionContent);
+            suggestionBox.append(suggestionItem);
+        }
+        suggestionBox.show();
+    }
+
+$("#suggestionBox").on("click", ".suggestionItem", function () {
+    var Id = window.atob($(this).attr("id"));
+    $('#ShowpdfModal').show();
+
+    if (Id) {
+        fetch(Id)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to load PDF document");
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const pdfFile = new File([blob], "aa.pdf", { type: 'application/pdf' });
+
+                const pdfContainer = document.getElementById("Searchpdf-container");
+
+                if (pdfFile) {
+                    const selectedFile = pdfFile;
+
+                    if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
+                        const embed = document.createElement("object");
+                        embed.data = URL.createObjectURL(selectedFile);
+                        embed.type = "application/pdf";
+                        embed.width = "100%";
+                        embed.height = "600px";
+                        pdfContainer.innerHTML = "";
+                        pdfContainer.appendChild(embed);
+                    } else {
+                        alert("Please select a valid PDF file.");
+                        input.value = "";
+                        pdfContainer.innerHTML = "";
+                    }
+                }
+
+                console.log("Converted File Object:", pdfFile);
+
+                const formData = new FormData();
+            })
+            .catch(error => {
+                console.error("Failed to fetch or convert the PDF:", error);
+                const pdfContainer = document.getElementById("Searchpdf-container");
+                pdfContainer.innerHTML = "Failed to load PDF document.";
+            });
+    }
+
+});
+    $('.CloseSearchpoup').on('click', function (e) {
+        var modal = document.getElementById("ShowpdfModal");
+        modal.style.display = "none";
     });
 
-    $('#Title').keyup(function () {
-        if (event.keyCode === 32 || event.keyCode === 8) {
-            var searchTermValue = window.btoa($(this).val());
-            var Policy = window.btoa($('#spnDefaultPolicy').html());
-            var ConTypeId = window.btoa($('#spnConfTypeId').html());
-            $.ajax({
-                url: '/PolicyCorner/SearchAgendaPointTitle',
-                type: 'POST',
-                data: { "Term": searchTermValue, "PolicyID": Policy, "ConType": ConTypeId},
-                dataType: 'json',
-                timeout: 3000,
-                success: function (response) {
-                    displaySuggestions(response);
-                },
-                error: function (error) {
-                    /* sweetAlert(error.responseText);*/
+
+
+
+    $(document).ready(function () {
+
+        const $form = $("#btnSave").closest("form");
+
+        async function EncryptAgendaPayload(form) {
+
+            const payload = {};
+
+            // Collect all form fields
+            $(form).serializeArray().forEach(function (field) {
+
+                if (field.name === "__RequestVerificationToken") {
+                    return;
+                }
+
+                // Keeps first value for MVC checkbox true/false pairs
+                if (!Object.prototype.hasOwnProperty.call(
+                    payload, field.name
+                )) {
+                    payload[field.name] = field.value;
                 }
             });
-        }
-    });
-    //function displaySuggestions(suggestions) {
-    //    var suggestionBox = $("#suggestionBox");
-    //    suggestionBox.empty();
-    //    for (var i = 0; i < suggestions.length; i++) {
-    //        suggestionBox.append("<div class='suggestionItem' id=" + window.btoa(suggestions[i].FileName) + ">" + suggestions[i].paragraph + "</div>");
-    //    }
-    //    suggestionBox.show();
-        //}
-        function displaySuggestions(suggestions) {
-            var suggestionBox = $("#suggestionBox");
-            suggestionBox.empty();
-            for (var i = 0; i < suggestions.length; i++) {
-                var suggestionId = window.btoa(suggestions[i].FileName);
-                var suggestionItem = $("<div class='suggestionItem' id=" + suggestionId + "></div>");
 
-                // Check if the file name ends with '.pdf' and add the PDF icon class
-                var suggestionContent = suggestions[i].paragraph;
-                if (suggestions[i].FileName.toLowerCase().endsWith('.pdf')) {
-                    suggestionContent = "<div class='pdfup'></div>" + suggestionContent; // Add PDF icon
+            payload.btnval = $("#btnSave").val();
+
+            // Convert complete form data into JSON
+            let jsonData = JSON.stringify(payload);
+
+            // Encrypt using your existing function
+            let encrypted = await encryptPayloadData(jsonData);
+
+            return encrypted;
+        }
+
+
+        $form.on("submit", async function (e) {
+
+            const form = this;
+
+            const Inbox_ID =
+                parseInt($("#Inbox_ID").val(), 10) || 0;
+
+            // SAVE: Normal form submission
+            if (Inbox_ID === 0) {
+                return;
+            }
+
+            // UPDATE: AJAX encrypted submission
+            e.preventDefault();
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const $btn = $("#btnSave");
+
+            if ($btn.prop("disabled")) {
+                return;
+            }
+
+            $btn.prop("disabled", true);
+
+            try {
+
+                // Encrypt form fields
+                let encrypted = await EncryptAgendaPayload(form);
+
+                if (!encrypted) {
+                    throw new Error("Encryption failed.");
                 }
 
-                suggestionItem.html(suggestionContent);
-                suggestionBox.append(suggestionItem);
-            }
-            suggestionBox.show();
-        }
+                const requestData = new FormData();
 
+                // Encrypted payload
+                requestData.append("Payload", encrypted);
 
+                // PDF file - send directly if selected
+                const pdfInput = document.getElementById("files");
 
+                requestData.append(
+                    "Upload",
+                    pdfInput && pdfInput.files.length > 0
+                        ? pdfInput.files[0]
+                        : new Blob([]),
+                    pdfInput && pdfInput.files.length > 0
+                        ? pdfInput.files[0].name
+                        : ""
+                );
 
-    $("#suggestionBox").on("click", ".suggestionItem", function () {
-        var Id = window.atob($(this).attr("id"));
-        $('#ShowpdfModal').show();
+                // Second file: Word → Request.Files[1]
+                const wordInput = document.getElementById("Wordfiles");
 
-        if (Id) {
-            fetch(Id)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Failed to load PDF document");
-                    }
-                    return response.blob();
-                })
-                .then(blob => {
-                    const pdfFile = new File([blob], "aa.pdf", { type: 'application/pdf' });
+                requestData.append(
+                    "WordFile",
+                    wordInput && wordInput.files.length > 0
+                        ? wordInput.files[0]
+                        : new Blob([]),
+                    wordInput && wordInput.files.length > 0
+                        ? wordInput.files[0].name
+                        : ""
+                );
 
-                    const pdfContainer = document.getElementById("Searchpdf-container");
+                // Anti-forgery token
+                const token = $form.find(
+                    'input[name="__RequestVerificationToken"]'
+                ).val();
 
-                    if (pdfFile) {
-                        const selectedFile = pdfFile;
+                if (token) {
+                    requestData.append(
+                        "__RequestVerificationToken",
+                        token
+                    );
+                }
 
-                        if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
-                            const embed = document.createElement("object");
-                            embed.data = URL.createObjectURL(selectedFile);
-                            embed.type = "application/pdf";
-                            embed.width = "100%";
-                            embed.height = "600px";
-                            pdfContainer.innerHTML = "";
-                            pdfContainer.appendChild(embed);
-                        } else {
-                            alert("Please select a valid PDF file.");
-                            input.value = "";
-                            pdfContainer.innerHTML = "";
+                // POST encrypted fields + optional files
+                $.ajax({
+                    url: "/ACC/UpdateAgendaEncrypted",
+                    type: "POST",
+                    data: requestData,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+
+                    success: function (response) {
+                        if (response.success) {
+                            swal({
+                                title: "Update Successfully",
+                                text: "",
+                                type: "success",
+                                confirmButtonText: "OK",
+                                closeOnConfirm: true
+                            }, function (isConfirm) {
+                                if (isConfirm) {
+                                    window.location.href = "/ACC/AddAgenda";
+                                }
+                            });
                         }
+                        else {
+                            sweetAlert("Error!", response.message, "error");
+                        }
+                    },
+
+                    complete: function () {
+                        $btn.prop("disabled", false);
                     }
-
-                    console.log("Converted File Object:", pdfFile);
-
-                    const formData = new FormData();
-                })
-                .catch(error => {
-                    console.error("Failed to fetch or convert the PDF:", error);
-                    const pdfContainer = document.getElementById("Searchpdf-container");
-                    pdfContainer.innerHTML = "Failed to load PDF document.";
                 });
-        }
+
+            } catch (error) {
+
+                $btn.prop("disabled", false);
+
+                console.error(error);
+
+                sweetAlert(
+                    "Encryption Failed!",
+                    error.message,
+                    "error"
+                );
+            }
+
+        });
 
     });
-        $('.CloseSearchpoup').on('click', function (e) {
-            var modal = document.getElementById("ShowpdfModal");
-            modal.style.display = "none";
-        });
+
 </script>

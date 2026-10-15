@@ -39,7 +39,7 @@ namespace IHSDC.WebApp.Controllers
 
         #region Title search only
         public JsonResult SearchAgendaPointTitle(string Term, string PolicyID,string ConType)
-        {
+      {
 
             string searchTerm = "";
             string Policy = "";

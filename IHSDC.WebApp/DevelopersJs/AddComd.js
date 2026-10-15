@@ -1,9 +1,9 @@
 ﻿
 
-    var messaget = '@ViewBag.ButtonName';
+    let messaget = '@ViewBag.ButtonName';
 
     $(".OrderbyId").off("click").click(function () {
-        var orderby = $(this).closest("td").find(".spnOrderbyId").html();
+        let orderby = $(this).closest("td").find(".spnOrderbyId").html();
     updateorder(orderby);
 
     });
@@ -36,7 +36,7 @@ $(".saveAddComdConfirm").on("click", function () {
 
     $('.error-label').remove();
 
-    var emptyFields = [];
+    let emptyFields = [];
     $('form').find(':input[required]').each(function () {
             if ($.trim($(this).val()) === '') {
         emptyFields.push(this);
@@ -44,8 +44,8 @@ $(".saveAddComdConfirm").on("click", function () {
         });
 
         if (emptyFields.length > 0) {
-            var firstEmptyField = emptyFields[0];
-    $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            let firstEmptyField = emptyFields[0];
+    $(firstEmptyField).after('<label class="error-label">This field is required</label>');
     return;
         }
 

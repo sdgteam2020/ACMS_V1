@@ -51,10 +51,10 @@
         }
     }
 </style>
-<div class="card-body" id="lowzoom" style="box-shadow: -1px 2px 16px 3px; padding: 0.5rem;">
+<div class="card-body custom-card-body" id="lowzoom">
     <div class="row">
         <div class="col">
-            <h3 style="text-align: center;">
+            <h3 class="heading-center">
                 User Log
                 <a class="btn btn-info float-right" href="@Url.Action("Index","Home")" target="_top">
                     Back
@@ -84,7 +84,7 @@
 
 
         <div class="row">
-            <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+            <div class="table-responsive custom-table-spacing">
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead class="bg-info text-white">
                         <tr>
@@ -93,8 +93,9 @@
                             <th class="center">User Name</th>
                             <th class="center">Full Name</th>
                             <th class="center">Role</th>
-                            <th class="center" style="display:none">ID</th>
-                            <th class="center" style="display:none">Role</th>
+                            <th class="center d-none-custom">ID</th>
+                            
+                            <th class="center d-none-custom">Role</th>
                             <th class="center">User Log</th>
                         </tr>
                     </thead>
@@ -112,8 +113,8 @@
                                     <td>@Html.DisplayFor(modelItem => item.UserName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.FullName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
-                                    <td style="display:none"><spam class="Aviator_ID">@Html.DisplayFor(modelItem => item.IntId)</spam></td>
-                                    <td style="display:none"><spam class="User_Name">@Html.DisplayFor(modelItem => item.UserName)</spam></td>
+                                    <td class="center d-none-custom"><spam class="Aviator_ID">@Html.DisplayFor(modelItem => item.IntId)</spam></td>
+                                    <td class="center d-none-custom"><spam class="User_Name">@Html.DisplayFor(modelItem => item.UserName)</spam></td>
                                     <td>
                                         <button type="button" data-toggle="modal" data-target="#UserLog" id="BtnUserLog" class="btn btn-success BtnUserLog">
                                             <i class='far fa-user-circle'></i>
@@ -124,7 +125,7 @@
                         }
                         else
                         {
-                            @*<tr><td colspan="12" style="font-weight:900;color:red;text-align:center"> No Record Found!!!</td></tr>*@
+                           
                         }
                     </tbody>
                 </table>
@@ -141,34 +142,29 @@
 <script src="~/Content/css/sweetalert.min.js"></script>
 <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
 <link href="~/NewContent/SearchDate/dataTables.dataTables.css" rel="stylesheet" />
-@*<link href="~/NewContent/SearchDate/dataTables.dateTime.min.css" rel="stylesheet" />*@
-@*<script src="~/NewContent/SearchDate/dataTables.dateTime.min.js"></script>*@
-@*<script src="~/NewContent/SearchDate/dataTables.js"></script>*@
+<link href="~/DeveloperCSS/Master.css" rel="stylesheet" />
 <script src="~/NewContent/SearchDate/jquery-3.7.1.js"></script>
 <script src="~/NewContent/SearchDate/moment.min.js"></script>
 
 
 <div class="modal fade" id="UserLog">
-    <div class="modal-dialog" style="margin-top: 130px; width: 400mm; max-width: 100%; box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5); ">
+    <div class="modal-dialog custom-modal-dialog">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <p style="margin-left:10px;margin-right:10px;font-size:15px;font-family:Arial">
+                <p class="custom-paragraph">
                     <span>User Name :&nbsp;&nbsp;&nbsp;&nbsp;</span><b><span id="SpnAviatorName"></span></b><br />
                 </p>
                 <button type="button" class="btn btn-danger CloseLogpoup" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body" style="max-height: 600px; overflow: auto;" id="UserLogPrint">
-                <h3 style="text-align:center">User Log</h3>
+            <div class="modal-body modal-body-scroll-600" id="UserLogPrint">
+                <h3 class="heading-center">User Log</h3>
 
                 <div class="table-responsive">
                     <table class="table table-striped" id="aviatorTable" width="100%" cellspacing="0">
                     </table>
                 </div>
             </div>
-            @*<div class="modal-footer">
-                <a id="btnCancelData" style="color:white;" class="btn btn-danger" data-dismiss="modal">Cancel</a>
-                <a id="btnExport" style="color:white;" class="btn btn-info" download="UserLog.pdf" value="Export Pdf" onclick="PrintDiv()">Export Pdf</a>
-            </div>*@
+
         </div>
     </div>
 </div>

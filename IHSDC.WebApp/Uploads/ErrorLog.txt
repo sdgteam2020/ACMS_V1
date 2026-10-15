@@ -317,3 +317,7 @@ model FileName invoice20240808120302593.pdf
 2026-09-25 11:17:24:  Session active value on GSO1 ---> 1
 2026-09-25 11:19:37:  Session active value on GSO1 ---> 1
 2026-09-30 13:05:35: User Registered and redirect to login page. log ContactUs 1
+12-Oct-26 2:34:32 PM: User Registered and redirect to login page. log ContactUs 1
+13-Oct-26 4:06:25 PM: User Registered and redirect to login page. log ContactUs 1
+13-Oct-26 4:08:41 PM: User Registered and redirect to login page. log ContactUs 1
+14-Oct-26 3:07:23 PM: User Registered and redirect to login page. log ContactUs 1

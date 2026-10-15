@@ -1,4 +1,5 @@
 ﻿using IHSDC.Common.Models;
+using IHSDC.WebApp.Connection;
 using IHSDC.WebApp.Helper;
 using IHSDC.WebApp.Models;
 using Microsoft.AspNet.Identity.Owin;
@@ -122,6 +123,7 @@ namespace IHSDC.WebApp.Controllers
                 {
                     return Json(new { success = false, Msg = data[0].Msg });
                 }
+
             }
             catch (SqlException ex)
             {
@@ -157,16 +159,47 @@ namespace IHSDC.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeNodal(InboxCRUD model)
+        public ActionResult ChangeNodal(string Request)
         {
             try
             {
-                var data = con.ForwardCRUD(4, model);
-                if (data[0].IsSuccess == true)
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                   System.Web.HttpContext.Current.Session,
+                   "Token");
+
+                if (session == null)
                 {
-                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Session expired."
+                    });
                 }
-                return RedirectToAction("AddSentBox");
+
+                InboxCRUD model = AESEncrytDecry.DecryptAESWithDTO<InboxCRUD>(
+                    Request,
+                    session.Salt);
+                if (model == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Invalid request."
+                    });
+                }
+                else
+                {
+                    if (TryValidateModel(model))
+                    {
+                        var data = con.ForwardCRUD(4, model);
+                        if (data[0].IsSuccess == true)
+                        {
+                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                        }
+                        
+                    }
+                    return RedirectToAction("AddSentBox");
+                }               
             }
             catch (SqlException ex)
             {

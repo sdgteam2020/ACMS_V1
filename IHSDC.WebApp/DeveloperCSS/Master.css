@@ -1,0 +1,176 @@
+﻿
+.custom-card-shadow {
+    box-shadow: -1px 2px 16px 3px;
+}
+
+.custom-heading {
+    text-align: center;
+    box-shadow: 0px 1px 1px;
+}
+
+.custom-left-margin {
+    margin-left: 10%;
+}
+
+.custom-button-top {
+    margin-top: 2.5rem;
+}
+.custom-button-top1 {
+    margin-top: 2.0rem;
+}
+.custom-table-spacing {
+    margin-left: 1rem;
+    padding-right: 2rem;
+}
+
+.custom-icon-red {
+    color: #f00a0a;
+}
+
+.no-record-found {
+    font-weight: 600;
+    color: red;
+    text-align: center;
+}
+
+.custom-col-left {
+    margin-left: 1rem;
+}
+
+.hidden-field {
+    display: none;
+}
+
+.width-5 {
+    width: 5%;
+}
+.width-25 {
+    width: 25%;
+}
+
+.width-65 {
+    width: 65%;
+}
+
+.link-plain {
+    color: inherit;
+    text-decoration: none;
+}
+
+.file-count-link {
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 5px;
+}
+.inline-text {
+    display: inline;
+}
+
+.custom-modal-dialog {
+    margin-top: 130px;
+    width: 400mm;
+    max-height: 450px;
+    max-width: 100%;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.custom-title-text {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+.text-red {
+    color: #FF0000;
+}
+.font-bold {
+    font-weight: bold;
+}
+.modal-scroll-body {
+    max-height: 450px;
+    overflow: auto;
+}
+.text-white-link {
+    color: white;
+}
+
+.modal-scroll-large {
+    max-height: 650px;
+    overflow: auto;
+}
+
+.document-dropdown {
+    height: 40px;
+    width: 400px;
+}
+.policy-remarks {
+    height: 40px;
+    width: 400px;
+}
+.custom-col-margin-left {
+    margin-left: 10px;
+}
+.error-label {
+    color: red;
+}
+.custom-card-body {
+    box-shadow: -1px 2px 16px 3px;
+    padding: 0.5rem;
+}
+.heading-center {
+    text-align: center;
+}
+.d-none-custom {
+    display: none;
+}
+.custom-modal-dialog {
+    margin-top: 130px;
+    width: 400mm;
+    max-width: 100%;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5);
+}
+.custom-paragraph {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+.modal-body-scroll-600 {
+    max-height: 600px;
+    overflow: auto;
+}
+.update-success-message {
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+.custom-card-position {
+    width: 50%;
+    box-shadow: -1px 1px 8px 1px;
+    margin-top: 5px;
+    margin-left: 450px;
+}
+.custom-card-padding {
+    padding: 0.3rem;
+    border: 0 solid #89CFF0;
+}
+.form-group-width-300 {
+    width: 300px;
+}
+.custom-label {
+    margin-top: 8px;
+    margin-left: 12px;
+}
+
+.required-star {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+.roles-dropdown {
+    width: 280px;
+    height: 35px;
+    background-color: #f2f2f2;
+}

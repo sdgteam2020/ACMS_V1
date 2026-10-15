@@ -1,5 +1,5 @@
 ﻿
-    var messaget = '@ViewBag.ButtonName';
+    let messaget = '@ViewBag.ButtonName';
 
 
 
@@ -10,7 +10,7 @@ $(".saveAddRankConfirm").on("click", function () {
     $('.error-label').remove();
 
     // Check if all required form fields are filled in
-    var emptyFields = [];
+    let emptyFields = [];
     $('form').find(':input[required]').each(function () {
         if ($.trim($(this).val()) === '') {
             emptyFields.push(this);
@@ -19,8 +19,8 @@ $(".saveAddRankConfirm").on("click", function () {
 
     // If there are empty fields, display an error message for the first empty field
     if (emptyFields.length > 0) {
-        var firstEmptyField = emptyFields[0];
-        $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+        let firstEmptyField = emptyFields[0];
+        $(firstEmptyField).after('<label class="error-label">This field is required</label>');
         return;
     }
 

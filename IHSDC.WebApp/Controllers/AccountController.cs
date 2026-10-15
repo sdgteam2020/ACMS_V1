@@ -332,7 +332,6 @@ namespace IHSDC.WebApp.Controllers
             return View(model);
         }
 
-
         // GET & POST: Delete current user
         [Authorize(Roles = "Administrator")]
         public ActionResult Delete(string id)
@@ -355,6 +354,7 @@ namespace IHSDC.WebApp.Controllers
             return View(model);
         }
 
+
         [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string id)
@@ -371,7 +371,7 @@ namespace IHSDC.WebApp.Controllers
                 if (role.RoleId == AdminRoleId.Id) return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Administrator cannot be deleted.");
             }
             if (DeleteUser == null)
-                return HttpNotFound("No such user exists. Delete User Failed!");
+                return HttpNotFound("No such user exists. delete User Failed!");
             if (DeleteUser == CurrentUser) return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "You cannot delete yourself.");
 
             var Superior = DeleteUser.Superior;
@@ -941,7 +941,7 @@ namespace IHSDC.WebApp.Controllers
                 // Decrypt the input ciphertext string
                 cryptoStream.Write(cipherBytes, 0, cipherBytes.Length);
 
-                // Complete the decryption process
+                // Compvare the decryption process
                 cryptoStream.FlushFinalBlock();
 
                 // Convert the decrypted data from a MemoryStream to a byte array
@@ -977,7 +977,7 @@ namespace IHSDC.WebApp.Controllers
         //    return View(returnUrl);
         //}
         private static string URL = "http://localhost:8090/Service1/GetData1";
-        private const string DATA = "<?xml version='1.0' encoding='UTF-8'?><letter><title maxlength = '10' > Quote Letter</title>  <salutation limit = '40' > Dear Daniel,</salutation></letter>";
+        private const string DATA = "<?xml version='1.0' encoding='UTF-8'?><varter><title maxlength = '10' > Quote varter</title>  <salutation limit = '40' > Dear Daniel,</salutation></varter>";
         private static string CreateObject()
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);

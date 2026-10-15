@@ -25,6 +25,43 @@
             position: relative;
             width: 100%;
         }
+        .custom-card-body {
+            min-height: 150px;
+        }
+        .custom-sent-heading {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .custom-nodal-dropdown {
+            width: 350px;
+        }
+        .custom-modal-content {
+            width: 380mm;
+        }
+        .custom-delete-icon {
+            background-color: #ff3333;
+            border-radius: 50%;
+            width: 27px;
+            height: 27px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .custom-read-btn {
+            background-color: #008000;
+            color: white;
+            font-size: 11px;
+            width: 65px;
+            font-weight: bold;
+        }
+        .custom-unread-btn {
+            background-color: #ff0000;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+        }
     </style>
     <script src="~/Content/css/SweetAlert2.js"></script>
 
@@ -206,147 +243,155 @@
         @using (Html.BeginForm("AddSentBox", "Sent", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
 
-            <div class="card-body" style="min-height:150px;">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table border border-purple table-striped no-footer dataTable table-hover" id="Inbox">
-                                <thead class="bg-info text-white">
-                                    <tr>
-                                        <th>S/No</th>
-                                        <th>AP Id</th>
-                                        <th>Conf Title</th>
-                                        <th>Sponsor</th>
-                                        <th>Agenda Pt Title</th>
-                                        <th>Nodal Branch</th>
-                                        <th>Category (Organizer)</th>
-                                        <th>Sent To</th>
-                                        <th>Sent On</th>
-                                        <th>Read Status</th>
-                                        <th>Action</th>
-                                        <th class="d-none"></th>
-                                        <th class="d-none"></th>
-                                        @if (SessionManager.RoleId == enum1.GSO1)
-                                        {
-                                            <th>Change Nodal</th>
-                                        }
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                    @if (ViewBag.count > 0)
-                                    {
-                                        foreach (var item in Model.ILInboxCRUD)
-                                        {
-                                            <tr class="@((item.IsRead == 0) ? "row-white" : "row-light")">
-                                                <td>
-                                                    @{ sno++; }
-                                                    @sno
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Inbox_ID)
-                                                </td>
-                                                <td>
-                                                    <div class="RefLetter-container">
-                                                        @Html.DisplayFor(modelItem => item.Conf)
-                                                        <div class="RefLetter">
-                                                            @Html.DisplayFor(modelItem => item.RefLetter)
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.SponsorName)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Title)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.BranchName)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.CategoryName)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.SentTo)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.SentOn)
-                                                </td>
-                                                <td>
-                                                    @if (item.IsRead == 0)
-                                                    {
-                                                        <button class="btn" style="background-color: #ff0000; color: white; font-size: 11px; font-weight:bold;" disabled>Unread</button>
-                                                    }
-                                                    else
-                                                    {
-                                                        <button class="btn" style="background-color: #008000; color: white; font-size: 11px; width: 65px; font-weight: bold; " disabled>Read</button>
-                                                    }
-                                                </td>
-                                                <td>
-                                                    @*@if (item.IsRead == 0 || item.Ord == 1)*@
-                                                    @if (item.IsRead == 0)
-                                                    {
-                                                        <a id="btnsubmit" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Ord.ToString())' data-fid='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FwdId.ToString())' onclick="MailRevertConfirmation(this,'/Sent/AddSentBox','Do you want to Delete','AddSentBox')">
-                                                            <i class="fa fa-trash-alt" aria-hidden="true" style="background-color: #ff3333; border-radius: 50%; width: 27px; height: 27px; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; "></i>
-                                                        </a>
-                                                    }
-                                                </td>
-                                                <td class="d-none"><span class="Forword_Id">@Html.DisplayFor(modelItem => item.FwdId)</span></td>
-                                                <td class="d-none"><span class="Schedule_ID">@Html.DisplayFor(modelItem => item.Schedule_ID)</span></td>
+          <div class="card-body custom-card-body">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="table-responsive">
+                          <table class="table border border-purple table-striped no-footer dataTable table-hover" id="Inbox">
+                              <thead class="bg-info text-white">
+                                  <tr>
+                                      <th>S/No</th>
+                                      <th>AP Id</th>
+                                      <th>Conf Title</th>
+                                      <th>Sponsor</th>
+                                      <th>Agenda Pt Title</th>
+                                      <th>Nodal Branch</th>
+                                      <th>Category (Organizer)</th>
+                                      <th>Sent To</th>
+                                      <th>Sent On</th>
+                                      <th>Read Status</th>
+                                      <th>Action</th>
+                                      <th class="d-none"></th>
+                                      <th class="d-none"></th>
+                                      @if (SessionManager.RoleId == enum1.GSO1)
+                                      {
+                                          <th>Change Nodal</th>
+                                      }
+                                      <th></th>
+                                      <th></th>
+                                  </tr>
+                              </thead>
+                              <tbody id="tbody">
+                                  @if (ViewBag.count > 0)
+                                  {
+                                      foreach (var item in Model.ILInboxCRUD)
+                                      {
+                                          <tr class="@((item.IsRead == 0) ? "row-white" : "row-light")">
+                                              <td>
+                                                  @{ sno++; }
+                                                  @sno
+                                              </td>
+                                              <td>
+                                                  @Html.DisplayFor(modelItem => item.Inbox_ID)
+                                              </td>
+                                              <td>
+                                                  <div class="RefLetter-container">
+                                                      @Html.DisplayFor(modelItem => item.Conf)
+                                                      <div class="RefLetter">
+                                                          @Html.DisplayFor(modelItem => item.RefLetter)
+                                                      </div>
+                                                  </div>
+                                              </td>
+                                              <td>
+                                                  @Html.DisplayFor(modelItem => item.SponsorName)
+                                              </td>
+                                              <td>
+                                                  @Html.DisplayFor(modelItem => item.Title)
+                                              </td>
+                                              <td>
+                                                  @Html.DisplayFor(modelItem => item.BranchName)
+                                              </td>
+                                              <td>
+                                                  @Html.DisplayFor(modelItem => item.CategoryName)
+                                              </td>
+                                              <td>
+                                                  @Html.DisplayFor(modelItem => item.SentTo)
+                                              </td>
+                                              <td>
+                                                  @Html.DisplayFor(modelItem => item.SentOn)
+                                              </td>
+                                              <td>
+                                                  @if (item.IsRead == 0)
+                                                  {
+                                                            <button class="btn custom-unread-btn" disabled>Unread</button>
+                                                  }
+                                                  else
+                                                  {
+                                                            <button class="btn custom-read-btn" disabled>Read</button>
+                                                  }
+                                              </td>
+                                              <td>
 
-                                                @if (SessionManager.RoleId == enum1.GSO1)
-                                                {
-                                                    <td>
-                                                        @if (item.Ord == 1)
-                                                        {
-                                                            @*<div class="changenodal" data-toggle="modal" id="btnChangeNodal" data-target="#changenodalPopup">
-                                                            </div>*@
-                                                            <button type="button" data-toggle="modal" data-target="#changenodalPopup" id="btnChangeNodal" class="changenodal btnChangeNodal">
-                                                            </button>
-                                                        }
-                                                    </td>
-                                                }
-                                                <td>
-                                                    @if (!string.IsNullOrEmpty(item.UploadPath))
-                                                    {
-                                                        <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ConfId.ToString()) })" target="_blank">
-                                                            <div class="pdf">
-                                                            </div>
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
+                                                  @if (item.IsRead == 0)
+                                                  {
+                                                      <a href="javascript:void(0);"
+                                                         class="btnMailRevert"
+                                                         data-id="@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Ord.ToString())"
+                                                         data-fid="@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FwdId.ToString())"
+                                                         data-action="@Url.Action("AddSentBox", "Sent")"
+                                                         data-title="Do you want to Delete"
+                                                         data-submit="AddSentBox">
 
-                                                    }
-                                                </td>
-                                                <td>
-                                                    @if (!string.IsNullOrEmpty(item.WordFile))
-                                                    {
-                                                        <a href="@item.WordFilePath" target="_blank" download="@item.AmendWordFileName">
-                                                            <div class="word">
-                                                            </div>
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
+                                                          <i class="fa fa-trash-alt custom-delete-icon" aria-hidden="true"></i>
 
-                                                    }
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                    else
-                                    {
+                                                      </a>
 
-                                    }
-                                </tbody>
-                            </table>
+                                                  }
+                                              </td>
+                                              <td class="d-none"><span class="Forword_Id">@Html.DisplayFor(modelItem => item.FwdId)</span></td>
+                                              <td class="d-none"><span class="Schedule_ID">@Html.DisplayFor(modelItem => item.Schedule_ID)</span></td>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                              @if (SessionManager.RoleId == enum1.GSO1)
+                                              {
+                                                  <td>
+                                                      @if (item.Ord == 1)
+                                                      {
+
+                                                          <button type="button" data-toggle="modal" data-target="#changenodalPopup" id="btnChangeNodal" class="changenodal btnChangeNodal">
+                                                          </button>
+                                                      }
+                                                  </td>
+                                              }
+                                              <td>
+                                                  @if (!string.IsNullOrEmpty(item.UploadPath))
+                                                  {
+                                                      <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ConfId.ToString()) })" target="_blank">
+                                                          <div class="pdf">
+                                                          </div>
+                                                      </a>
+                                                  }
+                                                  else
+                                                  {
+
+                                                  }
+                                              </td>
+                                              <td>
+                                                  @if (!string.IsNullOrEmpty(item.WordFile))
+                                                  {
+                                                      <a href="@item.WordFilePath" target="_blank" download="@item.AmendWordFileName">
+                                                          <div class="word">
+                                                          </div>
+                                                      </a>
+                                                  }
+                                                  else
+                                                  {
+
+                                                  }
+                                              </td>
+                                          </tr>
+                                      }
+                                  }
+                                  else
+                                  {
+
+                                  }
+                              </tbody>
+                          </table>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
         }
     </div>
     </div>
@@ -356,7 +401,7 @@
         @Html.HiddenFor(m => m.ForwardID)
         <div class="modal fade" id="changenodalPopup" tabindex="-1" role="dialog" aria-labelledby="changenodalPopupLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content" style="width: 380mm;">
+                <div class="modal-content custom-modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="changenodalPopupLabel">Change Nodal</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -365,10 +410,10 @@
                     </div>
                     <div class="modal-body">
                         <label for="forwardTo"><b>Select Nodal Branch(To):</b></label>
-                        @Html.DropDownListFor(m => m.NodalId, (new IHSDC.WebApp.Models.MasterModels()).LoadNodal(Model.Schedule_ID, Model.Inbox_ID), "--Select Nodal --", new { @data_show_subtext = "true", @class = "select form-control dropdownselect", @data_live_search = "true", @required = true, @id = "NodalId1", style = "width: 350px;"})
+                        @Html.DropDownListFor(m => m.NodalId, (new IHSDC.WebApp.Models.MasterModels()).LoadNodal(Model.Schedule_ID, Model.Inbox_ID), "--Select Nodal --", new { @data_show_subtext = "true", @class = "select form-control dropdownselect custom-nodal-dropdown", @data_live_search = "true", @required = true, @id = "NodalId1" })
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Change</button>
+                        <button type="submit" class="btn btn-success saveChangenodal">Change</button>
                         <button type="button" id="closefwd" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -383,6 +428,7 @@
     <script src="~/Content/CustomJS/AviatorJS.js"></script>
     <script src="~/Content/css/sweetalert.min.js"></script>
     <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+    <script src="~/DevelopersJs/EncryptePayload.js"></script>
     <script>      
         $('#changenodalPopup').on('shown.bs.modal', function (e) {
 
@@ -444,11 +490,11 @@
         @Styles.Render("~/Content/cssjqryUi")
 
         <script>
-        var watermarkText = @Html.Raw(Json.Encode(watermarkText));
+        let watermarkText = @Html.Raw(Json.Encode(watermarkText));
         </script>
         <script>
             $(document).ready(function () {
-                var table = $('#Inbox').DataTable({
+                let table = $('#Inbox').DataTable({
                     lengthChange: true,
                     pageLength: 50,
                     aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
@@ -472,25 +518,38 @@
                     ],
                 });
 
-                var buttonContainer = table.buttons().container().appendTo('#Inbox_wrapper .col-md-6:eq(0)');
-                var searchBuilderContainer = table.searchBuilder.container();
+                let buttonContainer = table.buttons().container().appendTo('#Inbox_wrapper .col-md-6:eq(0)');
+                let searchBuilderContainer = table.searchBuilder.container();
                 buttonContainer.insertBefore(table.table().container());
                 searchBuilderContainer.insertBefore(table.table().container());
 
             });
 
             function PrintDiv() {
-                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                let popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
                 popupWin.document.open();
 
-                var tableStyles = `
+                let tableStyles = `
                                                             <style type="text/css">
                                                                 table {
                                                                     width: 100%;
                                                                     border-collapse: collapse;
                                                                     margin-bottom: 20px;
                                                                 }
-
+                                                                .custom-watermark {
+                                                                     transform: rotate(-45deg);
+    z-index: 10000;
+    opacity: 0.3;
+    color: #8e9191;
+    position: fixed;
+    left: 6%;
+    top: 39%;
+    font-size: 80px;
+    font-weight: 500;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
                                                                 th, td {
                                                                     padding: 8px;
                                                                     border: 1px solid #ddd;
@@ -547,11 +606,11 @@
                                                             </style>
                                                         `;
 
-                var table = $('#Inbox').DataTable();
-                var visibleColumns = table.columns(':visible').header().toArray();
-                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+                let table = $('#Inbox').DataTable();
+                let visibleColumns = table.columns(':visible').header().toArray();
+                let filteredData = table.rows({ search: 'applied' }).data().toArray();
 
-                var tableHTML = '<table>';
+                let tableHTML = '<table>';
 
                 tableHTML += '<thead>';
                 tableHTML += '<tr>';
@@ -575,8 +634,8 @@
                 tableHTML += '</tbody>';
 
                 tableHTML += '</table>';
-                var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Sent</h1>';
-                popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
+                let pageHeading = '<h1 class="custom-sent-heading">Sent</h1>';
+                popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div class="custom-watermark">' + watermarkText + '</div></body></html>');
 
                 popupWin.document.close();
             }
@@ -587,7 +646,7 @@
         <script>
             $(document).ready(function () {
                 $('.clickable-div').click(function () {
-                    var href = $(this).data('href');
+                    let href = $(this).data('href');
                     window.location.href = href;
                 });
 
@@ -595,6 +654,186 @@
                     dropdownParent: $('#changenodalPopup'),
                     closeOnSelect: false
                 });
+            });
+
+            $(document).on("click", ".saveChangenodal", function (event) {
+                event.preventDefault();
+                debugger;        
+                // Create payload
+                const payload = {
+                    ForwardID: $("#ForwardID").val() || "",
+                    NodalId: $("#NodalId1").val() || "",              
+                };
+                let jsonData = JSON.stringify(payload);
+
+                let encrypted;
+
+                try {
+
+                    encrypted = encryptPayloadData(jsonData);
+
+                }
+                catch (error) {
+
+                    console.error("Encryption Error:", error);
+
+                    swal({
+                        title: "Encryption Failed!",
+                        text: error.message || "Unable to encrypt request.",
+                        type: "error",
+                        confirmButtonColor: "#DD6B55"
+                    });
+
+                    return false;
+                }
+
+
+                if (!encrypted) {
+
+                    console.error("Encrypted request is empty.");
+
+                    swal({
+                        title: "Error",
+                        text: "Unable to create encrypted request.",
+                        type: "error",
+                        confirmButtonColor: "#DD6B55"
+                    });
+
+                    return false;
+                }
+
+
+                swal({
+
+                    title: "Are you sure?",
+
+                    text: "",
+
+                    type: "warning",
+
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText:"Yes, Add!",                          
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+                    function (isConfirm) {
+
+                        if (!isConfirm) {
+                            return;
+                        }
+
+
+                        let token =
+                            $('input[name="__RequestVerificationToken"]').val();
+
+
+                        console.log("Request:", encrypted);
+                       
+                        console.log("Token:", token);
+
+
+                        $.ajax({
+
+                            url: '/Sent/ChangeNodal',
+
+                            type: 'POST',
+
+                            data: {
+                                Request: encrypted,                            
+                               __RequestVerificationToken: token
+                            },
+
+
+                            success: function (response) {
+
+                                console.log("Server Response:", response);
+
+
+                                // If controller returns success false
+                                if (
+                                    response &&
+                                    response.success === false
+                                ) {
+
+                                    swal({
+
+                                        title: "Failed!",
+
+                                        text:
+                                            response.message ||
+                                            "Unable to save.",
+
+                                        type: "error",
+
+                                        confirmButtonColor: "#DD6B55"
+                                    });
+
+                                    return;
+                                }
+
+
+                                swal({
+
+                                    title: "",
+
+                                    text:"Nodal Changed Successfully",
+                                           
+                                    type: "success",
+
+                                    confirmButtonColor: "#DD6B55",
+
+                                    confirmButtonText: "OK",
+
+                                    closeOnConfirm: true
+
+                                },
+                                    function () {
+
+                                        window.location.href =
+                                            '/Sent/AddSentBox';
+                                    });
+                            },
+
+
+                            error: function (xhr) {
+
+                                console.error(
+                                    "Status:",
+                                    xhr.status
+                                );
+
+                                console.error(
+                                    "Response:",
+                                    xhr.responseText
+                                );
+
+
+                                swal({
+
+                                    title:                                    
+                                             "Add Failed!",                                          
+                                    text:
+                                        xhr.responseText ||
+                                        "Something went wrong.",
+
+                                    type: "error",
+
+                                    confirmButtonColor: "#DD6B55"
+
+                                });
+
+                            }
+
+                        });
+
+                    });
+
+
+                return false;
+
             });
         </script>
         <script>
@@ -641,10 +880,10 @@
 
         <script type="text/javascript">
 
-    var today = new Date();
-    var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus';
+            let today = new Date();
+            let message = '@message';
+            let messageStatus = '@messageStatus';
+            let messagemidStatus = '@messagemidStatus';
     if (message)
             sweetAlert(message, messagemidStatus, messageStatus);
 

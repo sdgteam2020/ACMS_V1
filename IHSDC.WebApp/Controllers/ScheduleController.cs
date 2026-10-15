@@ -1,17 +1,18 @@
-﻿using System;
+﻿using IHSDC.WebApp.Connection;
+using IHSDC.WebApp.Helper;
+using IHSDC.WebApp.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using IHSDC.WebApp.Models;
-using IHSDC.WebApp.Connection;
-using static IHSDC.WebApp.Filters.CustomFilters;
-using Newtonsoft.Json;
 using System.Xml.Linq;
-using IHSDC.WebApp.Helper;
-using System.Data.SqlClient;
-using System.Text;
-using System.IO;
+using static IHSDC.WebApp.Filters.CustomFilters;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -21,8 +22,10 @@ namespace IHSDC.WebApp.Controllers
         readonly Connection.DBConnection con = new Connection.DBConnection();
 
         #region Initiate Conf
+
+
         [HttpGet]
-        public ActionResult ScheduleLetter(string id, string ComdId, string Gid)
+        public ActionResult ScheduleLetter(string id)
         {
 
             try
@@ -34,7 +37,9 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.ButtonName = "Update";
                     int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
                     model.ScheduleId = item;
+                    ViewBag.ScheduleId = item;
                     var editdata = con.ScheduleLetter_CRUD(2, model);
+                    ViewBag.subject = editdata.ElementAt(0).Subject;
                     model = editdata[0];
                 }
 
@@ -125,10 +130,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -140,63 +145,93 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
+
         [HttpPost]
-        public ActionResult ScheduleLetter(string id, ScheduleLetter model, string btnval, string oldid)
+        public ActionResult ScheduleLetter(string Request, string btnval, string oldid)
         {
             try
             {
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                 System.Web.HttpContext.Current.Session,
+                 "Token");
 
-                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                model.Subject = model.Subject.TrimEnd();
-                if (btnval == "Add")
+                if (session == null)
                 {
-
-                    var folder = Server.MapPath("~/Uploads/") + model.TypeOfConfId + "_" + model.Subject;
-                    if (!Directory.Exists(folder))
+                    return Json(new
                     {
-                        Directory.CreateDirectory(folder);
-                    }
-                    var data = con.ScheduleLetter_CRUD(1, model);
-                    if (data[0].IsSuccess == true)
-                    {
-                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                    }
-                    if (data[0].IsExist == true)
-                    {
-                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                    }
+                        success = false,
+                        message = "Session expired."
+                    });
                 }
-                if (btnval == "Update")
+
+                ScheduleLetter model = AESEncrytDecry.DecryptAESWithDTO<ScheduleLetter>(
+                    Request,
+                    session.Salt);
+                if (model == null)
                 {
-                    var NewFolder = Server.MapPath("~/Uploads/") + model.TypeOfConfId + "_" + model.Subject;
-                    var Oldfolder = Server.MapPath("~/Uploads/") + model.TypeOfConfId + "_" + oldid.TrimEnd();
-                    if (model.Subject != oldid.TrimEnd())
+                    return Json(new
                     {
-                        System.IO.Directory.Move(Oldfolder, NewFolder);
-                    }
-                    else
+                        success = false,
+                        message = "Invalid request."
+                    });
+                }
+                else
+                {
+                    if (TryValidateModel(model))
                     {
-                        if (!Directory.Exists(Oldfolder))
+                        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                        model.Subject = model.Subject.TrimEnd();
+                        if (btnval == "Add")
                         {
-                            Directory.CreateDirectory(Oldfolder);
+
+                            var folder = Server.MapPath("~/Uploads/") + model.TypeOfConfId + "_" + model.Subject;
+                            if (!Directory.Exists(folder))
+                            {
+                                Directory.CreateDirectory(folder);
+                            }
+                            var data = con.ScheduleLetter_CRUD(1, model);
+                            if (data[0].IsSuccess == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                            }
+                            if (data[0].IsExist == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                            }
                         }
-                    }
+                        if (btnval == "Update")
+                        {
+                            var NewFolder = Server.MapPath("~/Uploads/") + model.TypeOfConfId + "_" + model.Subject;
+                            var Oldfolder = Server.MapPath("~/Uploads/") + model.TypeOfConfId + "_" + oldid.TrimEnd();
+                            if (model.Subject != oldid.TrimEnd())
+                            {
+                                System.IO.Directory.Move(Oldfolder, NewFolder);
+                            }
+                            else
+                            {
+                                if (!Directory.Exists(Oldfolder))
+                                {
+                                    Directory.CreateDirectory(Oldfolder);
+                                }
+                            }
 
-                    int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                    model.ScheduleId = item;
-                    var data = con.ScheduleLetter_CRUD(11, model);
-                    if (data[0].IsSuccess == true)
-                    {
-                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                            //int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
+                            //model.ScheduleId = item;
+                            var data = con.ScheduleLetter_CRUD(11, model);
+                            if (data[0].IsSuccess == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
 
+                            }
+                        }
                     }
                 }
                 ViewBag.ButtonName = "Add";
@@ -215,10 +250,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -230,9 +265,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -256,7 +291,7 @@ namespace IHSDC.WebApp.Controllers
                 {
                     DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
                 }
-                return RedirectToAction("ScheduleLetter", new { id = string.Empty, ComdId = string.Empty, Gid = string.Empty });
+                return RedirectToAction("ScheduleLetter", new { id = string.Empty });
             }
             catch (SqlException ex)
             {
@@ -270,10 +305,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -285,9 +320,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion

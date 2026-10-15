@@ -14,8 +14,8 @@ function SubmitGEBLetter(obj, ActionName, titleMessage, Submit) {
 	},
 		function (isConfirm) {
 			if (isConfirm) {
-				var encrypted = $(obj).attr('data-id');
-				var CommandId = $(obj).attr('data-cid');
+				let encrypted = $(obj).attr('data-id');
+				let CommandId = $(obj).attr('data-cid');
                 location.href = ActionName + '?id=' + encrypted + '&submit=' + Submit + '&Comd=' + CommandId;
 
 			} else {
@@ -26,6 +26,28 @@ function SubmitGEBLetter(obj, ActionName, titleMessage, Submit) {
 }
 
 
+
+$(document).on("click", ".btnGEBConfirmation", function (e) {
+
+    e.preventDefault();
+
+    debugger;
+
+    let obj = this;
+
+    let ActionName = $(this).attr("data-action");
+    let titleMessage = $(this).attr("data-title");
+    let Submit = $(this).attr("data-submit");
+
+    console.log("Action URL:", ActionName);
+    console.log("Title:", titleMessage);
+    console.log("Submit:", Submit);
+    console.log("Schedule ID:", $(this).attr("data-id"));
+    console.log("Status:", $(this).attr("data-fid"));
+
+    SubmitGEBConfirmation(obj, ActionName, titleMessage, Submit);
+
+});
 
 function SubmitGEBConfirmation(obj, ActionName, titleMessage, Submit) {
 
@@ -42,8 +64,8 @@ function SubmitGEBConfirmation(obj, ActionName, titleMessage, Submit) {
     },
         function (isConfirm) {
             if (isConfirm) {
-                var id = $(obj).attr('data-id');
-                var fid = $(obj).attr('data-fid');
+                let id = $(obj).attr('data-id');
+                let fid = $(obj).attr('data-fid');
                 location.href = ActionName + '?id=' + id + '&fid=' + fid;
 
             } else {
@@ -52,7 +74,21 @@ function SubmitGEBConfirmation(obj, ActionName, titleMessage, Submit) {
         }
     );
 }
+$(document).on("click", ".btnMailRevert", function (e) {
 
+    e.preventDefault();
+
+    debugger;
+
+    let obj = this;
+
+    let ActionName = $(this).attr("data-action");
+    let titleMessage = $(this).attr("data-title");
+    let Submit = $(this).attr("data-submit");
+
+    MailRevertConfirmation(obj, ActionName, titleMessage, Submit);
+
+});
 
 function MailRevertConfirmation(obj, ActionName, titleMessage, Submit) {
     swal({
@@ -68,10 +104,10 @@ function MailRevertConfirmation(obj, ActionName, titleMessage, Submit) {
     },
         function (isConfirm) {
             if (isConfirm) {
-                var id = $(obj).attr('data-id');
-                var fid = $(obj).attr('data-fid');
+                let id = $(obj).attr('data-id');
+                let fid = $(obj).attr('data-fid');
 
-                var data = {
+                let data = {
                     id: id,
                     fid: fid
                 };
@@ -103,9 +139,9 @@ function MailRevertConfirmation(obj, ActionName, titleMessage, Submit) {
 
 function SubmitGEBLetterFor(obj, ActionName, titleMessage, Submit) {
     //debugger;
-    var parameters = [];
-    var encrypted, submit, CommandId;
-    var isOk = false;
+    let parameters = [];
+    let encrypted, submit, CommandId;
+    let isOk = false;
     submit = "SubmitGSO1AA7";
     swal({
         title: titleMessage,
@@ -134,8 +170,8 @@ function SubmitGEBLetterFor(obj, ActionName, titleMessage, Submit) {
                 if (isOk) {
                     $("#childTable tr").each(function () {
                         //  if ($(this).find("#chkcheckbox").is(":checked")) {
-                        var IsNotification = true;
-                        var value = $(this).find("#chkcheckbox").is(":checked");
+                        let IsNotification = true;
+                        let value = $(this).find("#chkcheckbox").is(":checked");
                         if (value == true) {
                             IsNotification = false;
                         }
@@ -197,8 +233,8 @@ function SubmitGEBLetterFor(obj, ActionName, titleMessage, Submit) {
 
 function GetChilds(obj) {    
     $("#childTable tr ").remove();
-    var cid = $(obj).attr('data-cid');
-    var gid = $(obj).attr('data-gid');
+    let cid = $(obj).attr('data-cid');
+    let gid = $(obj).attr('data-gid');
     $.ajax({
         url: "/GEB/Childs",
         type: 'GET',
@@ -208,7 +244,7 @@ function GetChilds(obj) {
             if (result) {
                 $.each(result, function (i, r) {
                     
-                    var html = '<tr>' +                       
+                    let html = '<tr>' +                       
                         '<td  style="font-weight:bold;width: 10%;">' + '<label>' + r.UserName + ' </label>'  + '</td>' +                        
                         '<td  style="font-weight:bold;width: 10%;">' + '<input id="chkcheckbox"  type="checkbox" />' + '</td>' +
                         '<td style="display:none">' + '<input id="ChildId"  value=' + r.ChildId + ' type="hidden" />' + '</td>' +
@@ -241,8 +277,8 @@ function GetChilds(obj) {
 
 function GetChildsList(obj) {
     $("#childTable tr ").remove();
-    var cid = $(obj).attr('data-cid');
-    var gid = $(obj).attr('data-gid');
+    let cid = $(obj).attr('data-cid');
+    let gid = $(obj).attr('data-gid');
     $.ajax({
         url: "/GEB/GetChildsList",
         type: 'GET',
@@ -252,7 +288,7 @@ function GetChildsList(obj) {
             if (result) {
                 $.each(result, function (i, r) {
 
-                    var html = '<tr>' +
+                    let html = '<tr>' +
                         '<td  style="font-weight:bold;width: 10%;">' + '<label>' + r.UserName + ' </label>' + '</td>' +
                         '<td  style="font-weight:bold;width: 10%;">' + '<label>' + r.TypeOfUnit + ' </label>' + '</td>' +
                         '</tr>';
@@ -290,7 +326,7 @@ function SubmitAppx(obj, ActionName, titleMessage, Submit) {
     },
         function (isConfirm) {
             if (isConfirm) {
-                var encrypted = $(obj).attr('data-id');
+                let encrypted = $(obj).attr('data-id');
                 location.href = ActionName + '?fid=' + encrypted + '&submit=' + Submit;
             } else {
                 swal("Not Submitted!", "", "info");

@@ -17,6 +17,7 @@ using static IHSDC.WebApp.Controllers.PolicyCornerController;
 using static IHSDC.WebApp.Filters.CustomFilters;
 using static IHSDC.WebApp.MvcApplication;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -64,10 +65,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -79,9 +80,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -123,10 +124,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -138,9 +139,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -179,10 +180,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -194,9 +195,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -254,10 +255,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -269,9 +270,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -291,6 +292,7 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.ButtonName = "Update";
                     int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
                     model.PolicyId = item;
+                    ViewBag.PolicyId = item;
                     var editdata = con.PolicyCRUD(2, model);
                     model = editdata[0];
                 }
@@ -325,10 +327,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -340,60 +342,86 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
         [HttpPost]        
-        public ActionResult AddPolicy(string id, PolicyCRUD model, string btnval, string oldid)
+        public ActionResult AddPolicy(string Request,string btnval, string oldid)
         {
             try
             {
-                if (ModelState.IsValid)
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                  System.Web.HttpContext.Current.Session,
+                  "Token");
+
+                if (session == null)
                 {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                    if (btnval == "Add")
+                    return Json(new
                     {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
 
-                        var data = con.PolicyCRUD(1, model);
-
-                        var folder = Server.MapPath("~/Policy/") + model.PolicyName;
-                        if (!Directory.Exists(folder))
-                        {
-                            Directory.CreateDirectory(folder);
-                        }
-                        if (data[0].IsSuccess == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                        if (data[0].IsExist == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                    }
-                    if (btnval == "Update")
+                PolicyCRUD model = AESEncrytDecry.DecryptAESWithDTO<PolicyCRUD>(
+                    Request,
+                    session.Salt);
+                if (model == null)
+                {
+                    return Json(new
                     {
-                        var NewFolder = Server.MapPath("~/Policy/") + model.PolicyName;
-                        var Oldfolder = Server.MapPath("~/Policy/") + oldid;
-                        if (model.PolicyName != oldid)
+                        success = false,
+                        message = "Invalid request."
+                    });
+                }
+                else {
+                    if (TryValidateModel(model))
+                    {
+                        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                        if (btnval == "Add")
                         {
-                            System.IO.Directory.Move(Oldfolder, NewFolder);
+                            if (model.PolicyId == 0)
+                            {
+                                var data = con.PolicyCRUD(1, model);
+
+                                var folder = Server.MapPath("~/Policy/") + model.PolicyName;
+                                if (!Directory.Exists(folder))
+                                {
+                                    Directory.CreateDirectory(folder);
+                                }
+                                if (data[0].IsSuccess == true)
+                                {
+                                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                                }
+                                if (data[0].IsExist == true)
+                                {
+                                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                                }
+                            }
                         }
-
-                        int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                        model.PolicyId = item;
-                        var data = con.PolicyCRUD(3, model);
-                        if (data[0].IsSuccess == true)
+                        if (btnval == "Update")
                         {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                            var NewFolder = Server.MapPath("~/Policy/") + model.PolicyName;
+                            var Oldfolder = Server.MapPath("~/Policy/") + oldid;
+                            if (model.PolicyName != oldid)
+                            {
+                                System.IO.Directory.Move(Oldfolder, NewFolder);
+                            }
+                            var data = con.PolicyCRUD(3, model);
+                            if (data[0].IsSuccess == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
 
+                            }
                         }
                     }
                 }
+              
                 ViewBag.ButtonName = "Add";
 
                 return RedirectToAction("AddPolicy", new { id = string.Empty });
@@ -410,10 +438,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -425,9 +453,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -459,10 +487,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -474,9 +502,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion
@@ -520,10 +548,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -535,9 +563,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -594,10 +622,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -609,9 +637,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         public ActionResult DeleteComd(string id)
@@ -642,10 +670,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -657,9 +685,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion
@@ -709,10 +737,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -724,9 +752,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -783,10 +811,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -798,9 +826,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -832,10 +860,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -847,9 +875,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion
@@ -895,10 +923,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -910,9 +938,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -969,10 +997,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -984,9 +1012,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -1018,10 +1046,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1033,9 +1061,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion
@@ -1079,10 +1107,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1094,9 +1122,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -1153,10 +1181,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1168,9 +1196,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -1202,10 +1230,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1217,9 +1245,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion
@@ -1259,10 +1287,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1274,9 +1302,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -1329,10 +1357,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1344,9 +1372,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -1378,10 +1406,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1393,9 +1421,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion
@@ -1418,10 +1446,12 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.ButtonName = "Update";
                     int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
                     model.CorpsId = item;
+                    ViewBag.CorpsId = item;
                     var editdata = con.CorpsCRUD(2, model);
                     model = editdata[0];
                 }
                 model.CorpsId = 0;
+               
                 var data = con.CorpsCRUD(2, model);
                 model.ILCorpsCRUD = data;
                 ViewBag.count = model.ILCorpsCRUD.Count();
@@ -1439,10 +1469,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1454,83 +1484,21 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
 
         [HttpPost]
-        public ActionResult AddCorps(string id, CorpsCRUD model, string btnval)
-        {
-            try
-            {
-                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                if (ModelState.IsValid)
-                {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                    if (btnval == "Add")
-                    {
-                        var data = con.CorpsCRUD(1, model);
-                        if (data[0].IsSuccess == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                        if (data[0].IsExist == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                    }
-                }
-
-                ViewBag.ButtonName = "Add";
-
-                return RedirectToAction("AddCorps", new { id = string.Empty });
-            }
-            catch (SqlException ex)
-            {
-
-                StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
-
-                try
-                {
-                    con.ErrorLogDashboard2(3, errorMessages.ToString().Replace("'", "''"), ex.StackTrace.ToString(), "Database");
-                }
-                catch (Exception ex1)
-                {
-                    _ = ex1.Message;
-                    return Redirect("/Error/");
-                }
-
-                return Redirect("/Error/");
-            }
-            catch (Exception ex)
-            {
-                // Handle generic ones here.  
-                try
-                {
-                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
-                }
-                catch (Exception ex1)
-                {
-                    _ = ex1.Message;
-                    return Redirect("/Error/");
-                }
-                return Redirect("/Error/");
-            }
-        }
-
-        [HttpPost]
-        public ActionResult UpdateCorps(string Request)
+        public ActionResult AddCorps(string Request, string btnval)
         {
             try
             {
                 var session = SessionHeplers.GetObject<DtoSessions>(
-                   System.Web.HttpContext.Current.Session,
-                   "Token");
+                  System.Web.HttpContext.Current.Session,
+                  "Token");
 
                 if (session == null)
                 {
@@ -1544,20 +1512,50 @@ namespace IHSDC.WebApp.Controllers
                 CorpsCRUD model = AESEncrytDecry.DecryptAESWithDTO<CorpsCRUD>(
                     Request,
                     session.Salt);
-
-                if (TryValidateModel(model))
+                if(model == null)
                 {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                    model.CorpsId = Convert.ToInt32(model.CorpsId);
-
-                    var data = con.CorpsCRUD(3, model);
-                    if (data[0].IsSuccess == true)
+                    return Json(new
                     {
-                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                    }
-
+                        success = false,
+                        message = "Invalid request."
+                    });
                 }
+                else
+                {
+                    if (TryValidateModel(model))
+                    {
+                        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                        if (btnval == "Add")
+                        {
+                            if (model.CorpsId == 0)
+                            {
+                                var data = con.CorpsCRUD(1, model);
+                                if (data[0].IsSuccess == true)
+                                {
+                                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                                }
+                                if (data[0].IsExist == true)
+                                {
+                                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                                }
+                            }
+
+                        }
+                        if (btnval == "Update")
+                        {
+                            model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                            var data = con.CorpsCRUD(3, model);
+                            if (data[0].IsSuccess == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                            }
+                        }
+                    }
+                }            
+
                 ViewBag.ButtonName = "Add";
 
                 return RedirectToAction("AddCorps", new { id = string.Empty });
@@ -1574,10 +1572,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1589,12 +1587,13 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
+      
         public ActionResult DeleteCorps(string id)
         {
             try
@@ -1623,10 +1622,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1638,9 +1637,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion
@@ -1666,6 +1665,7 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.ButtonName = "Update";
                     int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
                     model.Unit_ID = item;
+                    ViewBag.Unit_ID = item;
                     var editdata = con.UnitCRUD(2, model);
                     model = editdata[0];
 
@@ -1691,10 +1691,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1706,51 +1706,77 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddUnit(string id, UnitCRUD model, string btnval)
+        public ActionResult AddUnit(string Request, string btnval)
         {
             try
             {
 
-                if (ModelState.IsValid)
+                var session = SessionHeplers.GetObject<DtoSessions>(
+           System.Web.HttpContext.Current.Session,
+           "Token");
+
+                if (session == null)
                 {
-                    ViewBag.corpsId = 0;
-                    ViewBag.BdeCatId = 0;
-                    ViewBag.SqnIdbind = 0;
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                    if (btnval == "Add")
+                    return Json(new
                     {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
 
-                        var data = con.UnitCRUD(1, model);
-                        if (data[0].IsSuccess == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                        if (data[0].IsExist == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                    }
-                    if (btnval == "Update")
+                UnitCRUD model = AESEncrytDecry.DecryptAESWithDTO<UnitCRUD>(
+                    Request,
+                    session.Salt);
+                if (model == null)
+                {
+                    return Json(new
                     {
-                        int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                        model.Unit_ID = item;
-                        var data = con.UnitCRUD(3, model);
-
-                        if (data[0].IsSuccess == true)
+                        success = false,
+                        message = "Invalid request."
+                    });
+                }
+                else
+                {
+                    if (TryValidateModel(model))
+                    {
+                        ViewBag.corpsId = 0;
+                        ViewBag.BdeCatId = 0;
+                        ViewBag.SqnIdbind = 0;
+                        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                        if (btnval == "Add")
                         {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                            if (model.Unit_ID == 0)
+                            {
+                                var data = con.UnitCRUD(1, model);
+                                if (data[0].IsSuccess == true)
+                                {
+                                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
 
+                                }
+                                if (data[0].IsExist == true)
+                                {
+                                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                                }
+                            }
+                        }
+                        if (btnval == "Update")
+                        {
+                            var data = con.UnitCRUD(3, model);
+                            if (data[0].IsSuccess == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                            }
                         }
                     }
                 }
@@ -1770,10 +1796,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1785,9 +1811,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -1819,10 +1845,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -1834,9 +1860,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
         #endregion
@@ -2059,10 +2085,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2074,9 +2100,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2133,10 +2159,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2148,9 +2174,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2182,10 +2208,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2197,9 +2223,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2219,6 +2245,7 @@ namespace IHSDC.WebApp.Controllers
         public JsonResult GetOrganizerId(int Schedule_ID)
         {
             ScheduleLetter model = new ScheduleLetter();
+
             Connection.DBConnection con1 = new Connection.DBConnection();
             model.ScheduleId = Schedule_ID;
 
@@ -2270,10 +2297,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2285,9 +2312,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2344,10 +2371,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2359,9 +2386,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2393,10 +2420,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2408,9 +2435,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2441,20 +2468,21 @@ namespace IHSDC.WebApp.Controllers
                     return RedirectToAction("Login", "Account");
                 }
                 ViewBag.ButtonName = "Add";
-                //UserPolicyControlCRUD model = new UserPolicyControlCRUD();
+              
                 FolderControlPermissionCRUD model = new FolderControlPermissionCRUD();
                 if (id != null && id != string.Empty)
                 {
                     ViewBag.ButtonName = "Update";
                     int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
                     model.FolderControlId = item;
+                    ViewBag.FolderControlId = item;
                     var editdata = con.FolderControlPermissionCRUD(1, model);
                     model = editdata[0];
                 }
                 UserCRUD Policy = new UserCRUD();
                 Policy.PolicyId = model.PolicyId;
 
-                //Policy.PUserId = model.UserId;
+            
                 Policy.FolderControlId = model.FolderControlId;
 
 
@@ -2480,10 +2508,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2495,46 +2523,72 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddFolderControl(string id, FolderControlPermissionCRUD model, string btnval)
+        public ActionResult AddFolderControl(string Request, string btnval)
         {
             try
             {
-                if (ModelState.IsValid)
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                   System.Web.HttpContext.Current.Session,
+                   "Token");
+
+                if (session == null)
                 {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                    if (btnval == "Add")
+                    return Json(new
                     {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
 
-                        var data = con.FolderControlPermissionCRUD(2, model);
-                        if (data[0].IsSuccess == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                        if (data[0].IsExist == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                    }
-                    if (btnval == "Update")
+                FolderControlPermissionCRUD model = AESEncrytDecry.DecryptAESWithDTO<FolderControlPermissionCRUD>(
+                    Request,
+                    session.Salt);
+                if (model == null) {
+                    return Json(new
                     {
-                        int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                        model.FolderControlId = item;
-                        var data = con.FolderControlPermissionCRUD(3, model);
-                        if (data[0].IsSuccess == true)
+                        success = false,
+                        message = "Invalid request."
+                    });
+                }
+                else
+                {                  
+                 model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                    if (TryValidateModel(model))
+                    {
+                        if (btnval == "Add")
                         {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                            if (model.FolderControlId == 0)
+                            {
+                                var data = con.FolderControlPermissionCRUD(2, model);
+                                if (data[0].IsSuccess == true)
+                                {
+                                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
 
+                                }
+                                if (data[0].IsExist == true)
+                                {
+                                    DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                                }
+                            }
+                        }
+                        if (btnval == "Update")
+                        {
+                            var data = con.FolderControlPermissionCRUD(3, model);
+                            if (data[0].IsSuccess == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                            }
                         }
                     }
                 }
@@ -2554,10 +2608,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2565,13 +2619,14 @@ namespace IHSDC.WebApp.Controllers
                 try
                 {
                     con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
+                   
                 }
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2579,6 +2634,7 @@ namespace IHSDC.WebApp.Controllers
         public JsonResult GetConf(int Proc, int TypeOfConf, int ScheduleId)
         {
             ScheduleLetter model = new ScheduleLetter();
+
             Connection.DBConnection con1 = new Connection.DBConnection();
             model.TypeOfConfId = TypeOfConf;
             model.ScheduleId = ScheduleId;
@@ -2664,10 +2720,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2679,9 +2735,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2728,10 +2784,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2743,9 +2799,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2770,20 +2826,31 @@ namespace IHSDC.WebApp.Controllers
                 TypeofConfCRUD model = AESEncrytDecry.DecryptAESWithDTO<TypeofConfCRUD>(
                     Request,
                     session.Salt);
-
-                if (TryValidateModel(model))
+                if (model == null)
                 {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-
-                    model.TypeOfConfId = Convert.ToInt32(model.TypeOfConfId);
-
-                    var data = con.TypeofConfCRUD(3, model);
-                    if (data[0].IsSuccess == true)
+                    return Json(new
                     {
-                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                        success = false,
+                        message = "Invalid request."
+                    });
+                }
+                else
+                {
+                    if (TryValidateModel(model))
+                    {
+                        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
 
+                        model.TypeOfConfId = Convert.ToInt32(model.TypeOfConfId);
+
+                        var data = con.TypeofConfCRUD(3, model);
+                        if (data[0].IsSuccess == true)
+                        {
+                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                        }
                     }
-                }               
+                }
+                          
                 return RedirectToAction("AddTypeofConf", new { id = string.Empty });
 
             }
@@ -2801,10 +2868,10 @@ namespace IHSDC.WebApp.Controllers
                 }
                 catch
                 {
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2818,10 +2885,10 @@ namespace IHSDC.WebApp.Controllers
                 }
                 catch
                 {
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2904,10 +2971,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2919,9 +2986,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -2978,10 +3045,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -2993,9 +3060,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 
@@ -3635,10 +3702,10 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
 
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
             catch (Exception ex)
             {
@@ -3650,9 +3717,9 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Redirect("/Error/");
+                    return Redirect("/Error/Error");
                 }
-                return Redirect("/Error/");
+                return Redirect("/Error/Error");
             }
         }
 

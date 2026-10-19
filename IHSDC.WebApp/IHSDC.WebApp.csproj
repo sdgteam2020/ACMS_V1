@@ -3031,6 +3031,7 @@
     <Content Include="Policy\testing policy semg\Permission Camera.pdf_Permission Camera.pdf" />
     <Content Include="Policy\yahoo\file-sample1.pdf" />
     <Content Include="Policy\yahoo\file-sample2.pdf" />
+    <Content Include="Policy\abcd19102026\20231206132105152 %282%29.pdf" />
     <None Include="Report.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>Report.Designer.cs</LastGenOutput>

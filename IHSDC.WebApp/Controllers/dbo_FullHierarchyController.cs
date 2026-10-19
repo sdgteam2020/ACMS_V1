@@ -23,6 +23,7 @@ namespace AA7.Controllers
 {
     public class dbo_FullHierarchyController : Controller
     {
+       // readonly DBConnection con = new DBConnection();
         readonly SearchDBConnection con = new SearchDBConnection();
         private IHSDCAA7DBDBContext db = new IHSDCAA7DBDBContext();
         

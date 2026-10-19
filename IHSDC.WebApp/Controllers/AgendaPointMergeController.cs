@@ -104,6 +104,12 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.UnReadMsg = 0;
                 }
                 #endregion
+                var allowedIds = model1.ILInboxCRUD
+                            .Select(x => x.Inbox_ID)
+                             .Distinct()
+                             .ToArray();
+
+                Session["AllowedAgendaIds"] = allowedIds;
                 return View(model1);
             }
             catch (SqlException ex)
@@ -440,7 +446,12 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.UnReadMsg = 0;
                 }
                 #endregion
+                var allowedIds = model1.ILInboxCRUD
+                           .Select(x => x.Inbox_ID)
+                            .Distinct()
+                            .ToArray();
 
+                Session["AllowedAgendaIds"] = allowedIds;
                 return View(model1);
             }
             catch (SqlException ex)
@@ -531,6 +542,7 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
+
         public ActionResult SupportDocuUpload(InboxCRUD model)
         {
             try
@@ -539,44 +551,115 @@ namespace IHSDC.WebApp.Controllers
 
                 if (Request.Files.Count > 0)
                 {
+                    // Validate all files before processing any of them.
                     for (int i = 0; i < Request.Files.Count; i++)
                     {
                         var file = Request.Files[i];
-                        if (file != null && file.ContentLength > 0)
+
+                        if (file == null || file.ContentLength <= 0)
                         {
-                            var originalFileName = Path.GetFileName(file.FileName);
+                            TempData["Message"] = "Please select a valid PDF file.";
+                            TempData["messageStatus"] = "warning";
 
+                            return RedirectToAction("AgendaPointMerge",
+                                new { Conf = string.Empty });
+                        }
 
-                            var fileModel = new FileModel
-                            {
-                                FileName = originalFileName
-                            };
+                        string extension = Path.GetExtension(file.FileName);
 
-                            using (var reader = new BinaryReader(file.InputStream))
-                            {
-                                fileModel.Data = reader.ReadBytes(file.ContentLength);
-                            }
+                        if (!string.Equals(extension, ".pdf",
+                            StringComparison.OrdinalIgnoreCase))
+                        {
+                            TempData["Message"] = "Only PDF files are allowed.";
+                            TempData["messageStatus"] = "warning";
 
-                            var filePath = Path.Combine(Server.MapPath("~/Uploads"), fileModel.FileName);
-                            Suppmodel.SuppFileName = originalFileName;
-                            Suppmodel.SuppFilePath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + fileModel.FileName;
-                            Suppmodel.UploadBy = Convert.ToInt32(Session["UserIntId"]);
-                            System.IO.File.WriteAllBytes(filePath, fileModel.Data);
-                            var data = con.GetSupportingData(1, Suppmodel);
+                            return RedirectToAction("AgendaPointMerge",
+                                new { Conf = string.Empty });
+                        }
+
+                        // Check PDF file signature (%PDF-).
+                        byte[] pdfHeader = new byte[5];
+
+                        file.InputStream.Position = 0;
+
+                        int bytesRead = file.InputStream.Read(
+                            pdfHeader, 0, pdfHeader.Length);
+
+                        file.InputStream.Position = 0;
+
+                        if (bytesRead != 5 ||
+                            Encoding.ASCII.GetString(pdfHeader) != "%PDF-")
+                        {
+                            TempData["Message"] = "Only valid PDF files are allowed.";
+                            TempData["messageStatus"] = "warning";
+
+                            return RedirectToAction("AgendaPointMerge",
+                                new { Conf = string.Empty });
                         }
                     }
+
+                    // Save files only after every selected file passes validation.
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        var file = Request.Files[i];
+
+                        var originalFileName = Path.GetFileName(file.FileName);
+
+                        var fileModel = new FileModel
+                        {
+                            FileName = originalFileName
+                        };
+
+                        using (var reader = new BinaryReader(
+                            file.InputStream, Encoding.UTF8, true))
+                        {
+                            fileModel.Data = reader.ReadBytes(file.ContentLength);
+                        }
+
+                        var filePath = Path.Combine(
+                            Server.MapPath("~/Uploads"),
+                            fileModel.FileName);
+
+                        Suppmodel.SuppFileName = originalFileName;
+
+                        Suppmodel.SuppFilePath =
+                            Request.Url.GetLeftPart(UriPartial.Authority)
+                            + "/Uploads/" + fileModel.FileName;
+
+                        Suppmodel.UploadBy =
+                            Convert.ToInt32(Session["UserIntId"]);
+
+                        System.IO.File.WriteAllBytes(filePath, fileModel.Data);
+
+                        var data = con.GetSupportingData(1, Suppmodel);
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = "Please select a PDF file.";
+                    TempData["messageStatus"] = "warning";
+
+                    return RedirectToAction("AgendaPointMerge",
+                        new { Conf = string.Empty });
                 }
 
-                return RedirectToAction("AgendaPointMerge", new { Conf = string.Empty });
+                TempData["Message"] = "PDF files uploaded successfully.";
+                TempData["messageStatus"] = "success";
+
+                return RedirectToAction("AgendaPointMerge",
+                    new { Conf = string.Empty });
             }
             catch (SqlException ex)
             {
-
                 StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
 
                 try
                 {
-                    con.ErrorLogDashboard2(3, errorMessages.ToString().Replace("'", "''"), ex.StackTrace.ToString(), "Database");
+                    con.ErrorLogDashboard2(
+                        3,
+                        errorMessages.ToString().Replace("'", "''"),
+                        ex.StackTrace?.ToString() ?? "",
+                        "Database");
                 }
                 catch (Exception ex1)
                 {
@@ -588,19 +671,24 @@ namespace IHSDC.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
                 try
                 {
-                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
+                    con.ErrorLogDashboard2(
+                        3,
+                        ex.Message,
+                        ex.StackTrace?.ToString() ?? "",
+                        "Page");
                 }
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
                     return Redirect("/Error/Error");
                 }
+
                 return Redirect("/Error/Error");
             }
         }
+
         #endregion
     }
 }

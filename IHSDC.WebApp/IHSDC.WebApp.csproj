@@ -427,6 +427,7 @@
     <Compile Include="Controllers\SignUpController.cs" />
     <Compile Include="DTO\EncryptedRequestModel.cs" />
     <Compile Include="Filters\CustomFilters.cs" />
+    <Compile Include="Filters\GlobalExceptionFilter.cs" />
     <Compile Include="Helper\AESEncrytDecry.cs" />
     <Compile Include="Helper\ClientIPAddress.cs" />
     <Compile Include="Helper\CommonHelper.cs" />
@@ -582,6 +583,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-utilities.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.css" />
@@ -2984,6 +2986,7 @@
     <Content Include="Content\lib\jquery-validation\LICENSE.md" />
     <Content Include="Content\lib\jquery\jquery.min.map" />
     <Content Include="Content\lib\jquery\jquery.slim.min.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
     <None Include="packages.config" />
     <Content Include="Policy\agendadfdffgg\ACMS_GSO1SW_24102024_1545_hrs.pdf" />
     <Content Include="Policy\AG\20231206132105152 %282%29.pdf" />

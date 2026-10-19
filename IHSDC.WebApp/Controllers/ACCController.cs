@@ -1088,6 +1088,13 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.UnReadMsg = 0;
                 }
                 #endregion
+
+                var allowedIds = model1.ILInboxCRUD
+               .Select(x => x.Inbox_ID)
+                .Distinct()
+                .ToArray();
+
+                Session["AllowedAgendaIds"] = allowedIds;
                 return View(model1);
             }
             catch (SqlException ex)

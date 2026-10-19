@@ -323,7 +323,6 @@ namespace IHSDC.WebApp.Controllers
                     _ = ex1.Message;
                     return Redirect("/Error/Error");
                 }
-
                 return Redirect("/Error/Error");
             }
             catch (Exception ex)

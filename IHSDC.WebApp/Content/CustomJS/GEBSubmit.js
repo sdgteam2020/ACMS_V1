@@ -187,7 +187,7 @@ function SubmitGEBLetterFor(obj, ActionName, titleMessage, Submit) {
 
                 if (isOk) {
                     $("#childTable tr").each(function () {
-                        //  if ($(this).find("#chkcheckbox").is(":checked")) {
+                      
                         let IsNotification = true;
                         let value = $(this).find("#chkcheckbox").is(":checked");
                         if (value == true) {
@@ -272,8 +272,7 @@ function GetChilds(obj) {
                         '</tr>'
                     
                     $(html).appendTo($("#childTable"));
-                    ///$('#childTable ').append('<td>' + html + '</td>');
-                    //$("#childTable").append($('<td>' + html + '</td>'));
+                   
                 })
                
                 // swal('success', '', 'success')

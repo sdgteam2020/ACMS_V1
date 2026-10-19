@@ -89,7 +89,7 @@ namespace IHSDC.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
+                
                 try
                 {
                     con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");

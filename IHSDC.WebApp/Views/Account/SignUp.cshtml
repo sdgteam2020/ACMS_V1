@@ -674,7 +674,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @maxlength = "10", @onkeyup = "ValInDataReg(this)", @required = true })
+                                        @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @maxlength = "10", @onkeyup = "ValInDataReg(this)", @required = true,@autocomplete="off" })
                                     </div>
                                 </div>
                                 <div class="form-group required" style="width:300px;">
@@ -692,7 +692,7 @@
                                         @Html.LabelFor(m => m.FullName)
                                     </label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @onkeyup = "ValInData(this)", @required = true })
+                                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @onkeyup = "ValInData(this)", @required = true , @autocomplete = "off" })
                                     </div>
                                 </div>
                                 <div class="form-group required" style="width:300px;">
@@ -740,7 +740,7 @@
                                     </a>
 
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @required = true })
+                                        @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @required = true , @autocomplete = "off" })
                                         <select id="spnCorp" class="form-control d-flex"></select>
                                     </div>
                                 </div>
@@ -753,7 +753,7 @@
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     </a>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @required = true })
+                                        @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @required = true , @autocomplete = "off" })
                                         <select id="spnUnit" class="form-control" required></select>
                                     </div>
                                 </div>
@@ -765,7 +765,7 @@
                                         @Html.LabelFor(m => m.ASCON)
                                     </label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control", @maxlength = "10", @oninput = "ValInData1(this)", @required = true })
+                                        @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control", @maxlength = "10", @oninput = "ValInData1(this)", @required = true , @autocomplete = "off" })
                                     </div>
                                 </div>
                                 <div class="form-group required" style="width:300px;">
@@ -773,12 +773,12 @@
                                         @Html.LabelFor(m => m.MobNo)
                                     </label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control", @oninput = "ValInData1(this)", @maxlength = "10", @required = true })
+                                        @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control", @oninput = "ValInData1(this)", @maxlength = "10", @required = true, @autocomplete = "off" })
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4 d-none">
                                     <label>Bde</label>
-                                    @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @required = true })
+                                    @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @required = true, @autocomplete = "off" })
                                     <select id="spnBde" class="form-control" }></select>
                                 </div>
                             </div>

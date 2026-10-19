@@ -79,20 +79,39 @@ $(document).on("click", ".btnMailRevert", function (e) {
     e.preventDefault();
 
     debugger;
+    let id = $(this).attr("data-id");
+    let fid = $(this).attr("data-fid");
+    const payload = {
 
-    let obj = this;
+        Ord: id,
+        FwdId: fid,      
+    };
+    let jsonData = JSON.stringify(payload);
+    let encrypted;
+    try {
+        encrypted = encryptPayloadData(jsonData);
+    }
+    catch (error) {
 
-    let ActionName = $(this).attr("data-action");
-    let titleMessage = $(this).attr("data-title");
-    let Submit = $(this).attr("data-submit");
+        console.error("Encryption Error:", error);
 
-    MailRevertConfirmation(obj, ActionName, titleMessage, Submit);
+        swal({
+            title: "Encryption Failed!",
+            text: error.message || "Unable to encrypt request.",
+            type: "error",
+            confirmButtonColor: "#DD6B55"
+        });
+
+        return false;
+    }
+ 
+    MailRevertConfirmation(encrypted);
 
 });
 
-function MailRevertConfirmation(obj, ActionName, titleMessage, Submit) {
+function MailRevertConfirmation(encrypted) {
     swal({
-        title: titleMessage,
+        title: "Do you want to delete!",
         text: "",
         type: "info",
         showCancelButton: true,
@@ -104,21 +123,18 @@ function MailRevertConfirmation(obj, ActionName, titleMessage, Submit) {
     },
         function (isConfirm) {
             if (isConfirm) {
-                let id = $(obj).attr('data-id');
-                let fid = $(obj).attr('data-fid');
-
-                let data = {
-                    id: id,
-                    fid: fid
-                };
+             
                 $.ajax({
-                    url: ActionName,
-                    type: "POST",
-                    data: data,
+                    url: '/Sent/AddSentBox',
+                    type: 'POST',
+                    data: {
+                        Request: encrypted,
+                    },
                     success: function (response) {
                         if (response.success) {
                             swal(response.Msg, "", "success");
-                            location.href = ActionName;
+                            window.location.href =
+                                '/Sent/AddSentBox';
                         }
                         else
                         {
@@ -130,10 +146,12 @@ function MailRevertConfirmation(obj, ActionName, titleMessage, Submit) {
                     }
                 });
 
-            } else {
+            }
+            else {
                 swal("Not Deleted!", "", "info");
             }
-        });
+        }
+    );
 }
 
 

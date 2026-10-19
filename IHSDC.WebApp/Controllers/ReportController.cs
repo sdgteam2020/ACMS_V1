@@ -175,22 +175,50 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
+     
 
 
         [HttpPost]
-        public ActionResult Reports(ReportsModels model)
+        public ActionResult Reports(string Request)
         {
             try
             {
-                if (model.Type==1)
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                System.Web.HttpContext.Current.Session,
+                "Token");
+
+                if (session == null)
                 {
-                    return RedirectToAction("AppxAReport", new { Conf = RepositryManager.EncryptionManager.Encryption(model.ScheduleId.ToString()), RefNo = RepositryManager.EncryptionManager.Encryption(model.ConfRefNo.ToString()) });
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
+
+                ReportsModels model = AESEncrytDecry.DecryptAESWithDTO<ReportsModels>(
+                    Request,
+                    session.Salt);
+                if (model == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Invalid request."
+                    });
                 }
                 else
                 {
-                    return RedirectToAction("AppxBReport", new { Conf = RepositryManager.EncryptionManager.Encryption(model.ScheduleId.ToString()), RefNo = RepositryManager.EncryptionManager.Encryption(model.ConfRefNo.ToString()) });
+                    if (model.Type == 1)
+                    {
+                        return RedirectToAction("AppxAReport", new { Conf = RepositryManager.EncryptionManager.Encryption(model.ScheduleId.ToString()), RefNo = RepositryManager.EncryptionManager.Encryption(model.ConfRefNo.ToString()) });
+                    }
+                    else
+                    {
+                        return RedirectToAction("AppxBReport", new { Conf = RepositryManager.EncryptionManager.Encryption(model.ScheduleId.ToString()), RefNo = RepositryManager.EncryptionManager.Encryption(model.ConfRefNo.ToString()) });
+                    }
                 }
-                //return View();
+
             }
             catch (SqlException ex)
             {

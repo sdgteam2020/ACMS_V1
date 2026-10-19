@@ -104,26 +104,51 @@ namespace IHSDC.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddSentBox(string id, string fid)
+        public ActionResult AddSentBox(string Request)
         {
             try
             {
-                int OrdId = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                int FwdId = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(fid));
+              
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                 System.Web.HttpContext.Current.Session,
+                 "Token");
 
-                InboxCRUD model = new InboxCRUD();
-                model.Ord = OrdId;
-                model.FwdId = FwdId;
-                var data = con.RevertMailCRUD(2, model);
-                if (data[0].IsSuccess == true)
+                if (session == null)
                 {
-                    return Json(new { success = true, Msg = data[0].Msg });
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
+
+                InboxCRUD model = AESEncrytDecry.DecryptAESWithDTO<InboxCRUD>(
+                    Request,
+                    session.Salt);
+                if (model == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Invalid request."
+                    });
                 }
                 else
                 {
-                    return Json(new { success = false, Msg = data[0].Msg });
+                    if (TryValidateModel(model))
+                    {
+                        var data = con.RevertMailCRUD(2, model);
+                        if (data[0].IsSuccess == true)
+                        {
+                            return Json(new { success = true, Msg = data[0].Msg });
+                        }
+                        else
+                        {
+                            return Json(new { success = false, Msg = data[0].Msg });
+                        }
+                    }
                 }
-
+                return RedirectToAction("AddSentBox");
             }
             catch (SqlException ex)
             {

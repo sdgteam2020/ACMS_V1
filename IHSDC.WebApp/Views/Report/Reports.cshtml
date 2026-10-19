@@ -25,8 +25,8 @@
 
 @using (Html.BeginForm("Reports", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="card-body" style="box-shadow: -1px 1px 16px 1px; margin-top:5px;">
-        <div class="row" style="padding-left:10px;padding-right:10px">
+    <div class="card-body custom-card-body">
+        <div class="row custom-row-padding">
             <div class="col">
             </div>
             <div class="col">
@@ -37,7 +37,7 @@
                 <label><b>Subject / Title of Conf</b></label>
                 @Html.TextBoxFor(m => m.ScheduleId, new { @class = "form-control d-none", @required = true })
                 <select id="spnScheduleId" class="form-control" }></select>
-                
+
             </div>
             <div class="col">
                 <label><b>Appx</b></label>
@@ -47,24 +47,24 @@
                 @Html.TextBoxFor(m => m.ConfRefNo, new { @class = "form-control d-none", @required = true })
             </div>
         </div>
-            <div class="row" style="padding-left:10px;">
-                <div class="col">
-                </div>
-                <div class="col">
-                </div>
-                <div class="col">
-                    <button type="submit" value="Generate Report" class="btn btn-success" style="margin-right:10px">Generate Report</button>
-                    <a class="btn btn-success mr-2" onclick="location.href='@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })'">
-                        <span style="color:white">Back</span>
-                    </a>
-                </div>
-                <div class="col">
-                </div>
-                <div class="col">
-                </div>
+        <div class="row custom-row-paddings">
+            <div class="col">
             </div>
-        <br/>
-        <br/>
+            <div class="col">
+            </div>
+            <div class="col">
+                <button type="submit" value="Generate Report" class="btn btn-success custom-report-btn generateReport"> Generate Report </button>
+                <a class="btn btn-success mr-2" href="@Url.Action("AddInboxNotingFwd", "ACC", new { id = string.Empty })">
+                    <span class="custom-back-text">Back</span>
+                </a>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <br />
+        <br />
     </div>
 }
 
@@ -72,11 +72,34 @@
     .center {
         text-align: center;
     }
+
+    .custom-card-body {
+        box-shadow: -1px 1px 16px 1px;
+        margin-top: 5px;
+    }
+
+    .custom-row-padding {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .custom-row-paddings {
+        padding-left: 10px;
+    }
+
+    .custom-report-btn {
+        margin-right: 10px;
+    }
+
+    .custom-back-text {
+        color: white;
+    }
 </style>
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Content/CustomJS/GEBSubmit.js"></script>
 <script src="~/Content/CustomJS/AviatorJS.js"></script>
 <script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="~/DevelopersJs/EncryptePayload.js"></script>
 <script src="~/Content/css/sweetalert.min.js"></script>
 <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
 @section Scripts {
@@ -91,31 +114,31 @@
     var messagemidStatus = '@messagemidStatus ';
     if (message)
             sweetAlert(message, messagemidStatus, messageStatus);
-        
+
     </script>
     <script>
 
-         $(document).ready(function () {
-             $('#spnScheduleId').change(function () {
-                 $("#ScheduleId").val($('#spnScheduleId').val());
+        $(document).ready(function () {
+            $('#spnScheduleId').change(function () {
+                $("#ScheduleId").val($('#spnScheduleId').val());
 
-                 var typeofConf = $("#TypeOfConfId").val();
-                 var scheduleid = $("#ScheduleId").val();
-                 $.ajax({
-                     url: '/Master/GetConf',
-                     type: 'POST',
-                     data: { "Proc": "12", "TypeOfConf": typeofConf, "ScheduleId": scheduleid },
-                     success: function (result) {
-                         if (result.length > 0) {
-                             $('#ConfRefNo').val(result[0].ScheduleRefNoDt);
-                         }
-                         else {
-                             $('#ConfRefNo').val("");
-                         }
-                     }
-                 });
+                var typeofConf = $("#TypeOfConfId").val();
+                var scheduleid = $("#ScheduleId").val();
+                $.ajax({
+                    url: '/Master/GetConf',
+                    type: 'POST',
+                    data: { "Proc": "12", "TypeOfConf": typeofConf, "ScheduleId": scheduleid },
+                    success: function (result) {
+                        if (result.length > 0) {
+                            $('#ConfRefNo').val(result[0].ScheduleRefNoDt);
+                        }
+                        else {
+                            $('#ConfRefNo').val("");
+                        }
+                    }
+                });
             });
-         });
+        });
 
         $('#TypeOfConfId').change(function () {
             BindConf($("#TypeOfConfId").val());
@@ -131,7 +154,7 @@
             $.ajax({
                 url: '/Master/GetConf',
                 type: 'POST',
-                data: { "Proc": "12", "TypeOfConf": TypeOfConfId,"ScheduleId":"0" },
+                data: { "Proc": "12", "TypeOfConf": TypeOfConfId, "ScheduleId": "0" },
                 success: function (result) {
                     if (result.length > 0) {
                         list = '';
@@ -154,5 +177,63 @@
             });
         }
 
+        $(document).on("click", ".generateReport", function (e) {
+
+            e.preventDefault();
+
+            debugger;
+
+            const payload = {
+
+                TypeOfConfId: $("#TypeOfConfId").val() || "",
+                ScheduleId: $("#ScheduleId").val() || "",
+                Type: $("#Type").val() || "",
+                ConfRefNo: $("#ConfRefNo").val() || "",           
+            };
+            let jsonData = JSON.stringify(payload);
+            let encrypted;
+            try {
+                encrypted = encryptPayloadData(jsonData);
+            }
+            catch (error) {
+
+                console.error("Encryption Error:", error);
+
+                swal({
+                    title: "Encryption Failed!",
+                    text: error.message || "Unable to encrypt request.",
+                    type: "error",
+                    confirmButtonColor: "#DD6B55"
+                });
+
+                return false;
+            }         
+
+                $.ajax({
+                    url: '/Report/Reports',
+                    type: 'POST',
+                    data: {
+                        Request: encrypted,
+                    },
+                    success: function (response) {
+                      
+                        if (payload.Type == "1") {
+                            window.location.href =
+                                '/Report/AppxAReport';
+                        }
+                        else if (payload.Type == "2") {
+                            window.location.href =
+                                '/Report/AppxBReport';
+                        }
+                        else {
+
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });          
+
+        });
     </script>
 }

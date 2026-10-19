@@ -19,7 +19,91 @@
 
 
 <head>
-    <style>
+    <style id="analysis-page-styles">
+        .card-body-analysis {
+            min-height: 150px;
+        }
+
+        .print-page table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .print-page th, .print-page td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .print-page th {
+            background-color: #f2f2f2;
+            color: black;
+        }
+
+        .print-page .print-heading {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .print-page .print-watermark {
+            transform: rotate(-45deg);
+            z-index: 10000;
+            opacity: 0.3;
+            color: #8e9191;
+            position: fixed;
+            top: 39%;
+            left: 6%;
+            font-size: 80px;
+            font-weight: 500px;
+            display: grid;
+            justify-content: center;
+            align-content: center;
+        }
+
+        @@media print {
+            @@page {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .print-page::after {
+                content: none !important;
+            }
+
+            .print-page .card-page {
+                break-after: page;
+            }
+
+                .print-page .card-page:last-of-type {
+                    break-after: auto;
+                }
+
+            .print-page footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .print-page header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+
         .clickable-div {
             cursor: pointer;
         }
@@ -44,7 +128,7 @@
         </div>
         @using (Html.BeginForm("Analysis", "ACC", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <div class="card-body"  style="min-height:150px;">
+            <div class="card-body card-body-analysis">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
@@ -137,7 +221,7 @@
                                                     }
                                                 </td>
                                                 <td>
-                                                    <a onclick="location.href='@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")})'">
+                                                    <a data-navigation-url="@Url.Action("AddAgenda", "ACC", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString()),View= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1"),Edit= IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1")})">
                                                         <div class="viewbut"></div>
                                                     </a>
                                                 </td>
@@ -151,11 +235,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        </div>
                     </div>
-                    </div>
-                    }
                 </div>
+            </div>
+        }
+    </div>
 </div>
 <script src="~/NewContent/dataTable4/js/jquery-3.7.0.js"></script>
 <script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
@@ -236,73 +320,19 @@
 
         });
 
+        $(document).on('click', 'a[data-navigation-url]', function () {
+            var navigationUrl = $(this).attr('data-navigation-url');
+            if (navigationUrl) {
+                window.location.href = navigationUrl;
+            }
+        });
+
         function PrintDiv() {
             var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+            if (!popupWin) return;
             popupWin.document.open();
 
-            var tableStyles = `
-                        <style type="text/css">
-                            table {
-                                width: 100%;
-                                border-collapse: collapse;
-                                margin-bottom: 20px;
-                            }
 
-                            th, td {
-                                padding: 8px;
-                                border: 1px solid #ddd;
-                                text-align: center;
-                            }
-
-                            th {
-                                background-color: #f2f2f2;
-                                color: black;
-                            }
-                            @@media print {
-
-                            @@page {
-                                margin-top: 10px;
-                                margin-bottom: 10px;
-                            }
-
-                            body::after {
-                                content: none !important;
-                            }
-
-                            .card-page {
-                                break-after: page;
-                            }
-
-                                .card-page:last-of-type {
-                                    break-after: auto;
-                                }
-
-                            footer {
-                                position: fixed;
-                                bottom: 0;
-                                left: 0;
-                                right: 0;
-                                height: 10px;
-                                background-color: gray;
-                                color: white;
-                                text-align: center;
-                                padding: 10px;
-                            }
-
-                            header {
-                                position: fixed;
-                                top: 0;
-                                left: 0;
-                                right: 0;
-                                height: 10px;
-                                background-color: gray;
-                                color: white;
-                                text-align: center;
-                                padding: 10px;
-                            }
-                            }
-                        </style>
-                    `;
 
             var table = $('#Analysis').DataTable();
             var visibleColumns = table.columns(':visible').header().toArray();
@@ -332,8 +362,18 @@
             tableHTML += '</tbody>';
 
             tableHTML += '</table>';
-            var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Analysis</h1>';
-            popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
+            var pageStyles = document.getElementById('analysis-page-styles').textContent;
+            popupWin.addEventListener('load', function () {
+                popupWin.focus();
+                popupWin.print();
+            });
+            popupWin.document.write('<html><head><style>' + pageStyles + '</style></head>' +
+                '<body class="print-page"><h1 class="print-heading">Analysis</h1>' +
+                tableHTML + '<div class="print-watermark" id="printWatermark"></div></body></html>');
+            var printWatermark = popupWin.document.getElementById('printWatermark');
+            if (printWatermark) {
+                printWatermark.textContent = watermarkText == null ? '' : String(watermarkText);
+            }
 
             popupWin.document.close();
         }
@@ -353,9 +393,9 @@
     <script type="text/javascript">
 
     var today = new Date();
-    var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus';
+    var message = @Html.Raw(Json.Encode(message));
+    var messageStatus = @Html.Raw(Json.Encode(messageStatus));
+    var messagemidStatus = @Html.Raw(Json.Encode(messagemidStatus));
     if (message)
             sweetAlert(message, messagemidStatus, messageStatus);
 

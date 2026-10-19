@@ -65,6 +65,7 @@ namespace IHSDC.WebApp.Controllers
             return View();
 
         }
+        [AllowAnonymous]
         public ActionResult ContactUs()
         {
             LoggerNew.LogError("User Registered and redirect to login page. log ContactUs "+ SessionManager.Active);

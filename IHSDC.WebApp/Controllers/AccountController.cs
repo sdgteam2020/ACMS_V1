@@ -1516,22 +1516,33 @@ namespace IHSDC.WebApp.Controllers
 
                         Common.Helpers.Identity.Hierarchy.UpdateHierarchyTable();
 
+                        string GetSalt = AESEncrytDecry.GetSalt();
+
+                        DtoSessions dtoSessions = new DtoSessions
+                        {
+                            Salt = GetSalt
+                        };
+
+                        SessionHeplers.SetObject(HttpContext.Session, "Token", dtoSessions);
+
                         if (model.Active == "0")
                         {
-                           //DisplayMessage("User Created Successfully, Pending for Admin Approval !", "", "s");
-                          // LoggerNew.LogError("User Registered and redirect to login page. log 1");
+                            // Sign in the newly registered user.
+                            await SignInManager.SignInAsync(
+                                NewUser,
+                                isPersistent: false,
+                                rememberBrowser: false);
 
+                            // Set session values for the newly registered user.
+                            Session["UserIntId"] = NewUser.IntId;
+                            Session["UserId"] = NewUser.Id;
+                            Session["Username"] = NewUser.UserName;
 
+                            SessionManager.UserName = NewUser.UserName;
+                            SessionManager.UserId = NewUser.Id;
                             SessionManager.Active = "0";
-                           // LoggerNew.LogError("Register User login attempt with active " + SessionManager.Active + " condition for User " + model.Username);
+
                             return RedirectToAction("ContactUs", "Home");
-                       
-                            //return RedirectToAction("Login");
-
-
-
-                            //  return RedirectToAction("ContactUs", "Home");
-
                         }
                         else
                         {

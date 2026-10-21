@@ -38,11 +38,10 @@
 
 
     .flip-card-inner:hover {
-        /*   width: 100px;
-        height: 100px;*/
+        
         background: #4CAF50;
         font-size: 19px !important;
-        /* transform: rotate(360deg);*/
+        
     }
 
         .flip-card-inner:hover > .icon {
@@ -219,42 +218,6 @@ if (SessionManager.Role == "Administrator")
 
     </div>
 
-
-    @*<div class="col-md-1">
-            <a href='@Url.Action("AddBdeCat", "Master")' class="flip-card-link">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <div class="icon" title="User Profile">
-                            <i class="fas fa-check-square" style="font-size: 30px;"></i>
-                        </div>
-                        <div style="text-align: center; margin-top: 4rem; font-size: 13px;" class="dropdown-item">
-                            Bde
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-
-        </div>*@
-
-    @*<div class="col-md-1">
-            <a href='@Url.Action("AddSqn", "Master")' class="flip-card-link">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <div class="icon" title="User Profile">
-                            <i class="fa fa-users" style="font-size: 30px;"></i>
-                        </div>
-                         <div style="text-align: center; margin-top: 4rem; font-size: 13px;" class="dropdown-item">
-                            SQN
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-
-        </div>*@
-
-
     <div class="col-md-1">
         <a href='@Url.Action("AddUnit", "Master")' class="flip-card-link">
             <div class="flip-card-inner">
@@ -384,23 +347,6 @@ if (SessionManager.Role == "Administrator")
         </a>
 
     </div>
-
-    @*<div class="col-md-1">
-        <a href='@Url.Action("AddUserPolicyControl", "Master")' class="flip-card-link">
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <div class="icon" title="Policy Access Permission">
-                        <i class="fa fa-shield-alt" style="font-size: 30px;"></i>
-                    </div>
-                    <div style="text-align: center; margin-top: 4rem; font-size: 13px;" class="dropdown-item">
-                        Policy Access<br /> Permission
-                    </div>
-                </div>
-            </div>
-        </a>
-
-    </div>*@
-
     <div class="col-md-1 ht">
         <a href='@Url.Action("UserLog", "Master")' class="flip-card-link">
             <div class="flip-card-inner">
@@ -463,6 +409,4 @@ if (SessionManager.Role == "Administrator")
 
 
 }
-@*<script src="~/NewContent/tinymce.min.js"></script>
-    <script src="~/NewContent/mammoth.browser.min.js"></script>*@
 <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>

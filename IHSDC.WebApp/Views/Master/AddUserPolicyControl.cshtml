@@ -53,7 +53,7 @@
                                 {
                                     if (item.Msg == "Selected")
                                     {
-                                        //if (item.UpdatedByUserId == Convert.ToInt32(ViewBag.userintid))
+                                        
                                         if (item.UpdatedByUserId == Convert.ToInt32(ViewBag.userintid))
                                         {
                                             <option value="@item.PolicyId" selected="selected">
@@ -133,7 +133,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.UserName)</td>
                                 <td>@Html.DisplayFor(modelItem => item.PolicyName)</td>
                                 <td>
-                                    @*<a onclick="location.href='@Url.Action("AddUserPolicyControl", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UserPolicyControlId.ToString()) })'">*@
+                                   
                                     <a href='@Url.Action("AddUserPolicyControl", "Master", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UserPolicyControlId.ToString()) })'>
                                         <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
                                     </a>
@@ -184,17 +184,6 @@
                     removeSelectedValue();
                 });
             });
-
-            //$(function () {
-            //    $('#ddlPolicies').multiselect({
-            //        includeSelectAllOption: true,
-            //        selectAllValue: 'multiselect-all',
-            //        enableFiltering: true,
-            //        enableCaseInsensitiveFiltering: true,
-            //        maxHeight: '300',
-            //        buttonWidth: '230',
-            //    });
-            //});
 
             $("#ddlPolicies").change(function () {
                 var selected = $("#ddlPolicies option:selected");

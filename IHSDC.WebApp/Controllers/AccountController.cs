@@ -202,53 +202,32 @@ namespace IHSDC.WebApp.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 IHSDCAA7DBDBContext db = new IHSDCAA7DBDBContext();
-                //var AllRoles = (new ApplicationDbContext()).Roles.OrderBy(r => r.IsPermission).Where(n => n.Name != "Administrator").ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-                //ViewBag.Roles = AllRoles;
-                //ViewData["Roles"] = AllRoles;
                 SelectList list_of_unit = new SelectList(db.dbo_tbl_Unit, "Unit_ID", "UnitName");
                 ViewData["Unit_ID"] = list_of_unit;
 
                 ViewData["EstablishmentFull"] = new SelectList(db.dbo_tbl_Unit, "UnitName", "UnitName");
                 var CurrentUser = _db.Users.FirstOrDefault(i => i.UserName == User.Identity.Name);
                 var EditUser = _db.Users.FirstOrDefault(i => i.Id == id);
-
-
                 if (EditUser == null) return HttpNotFound("No such user exists. Edit User Failed!");
-                //if (EditUser == CurrentUser) return Redirect("~/Manage/Index");
-                //if (EditUser.Superior == CurrentUser)
-                //{
                 ViewBag.EditUsername = EditUser.UserName;
                 ViewBag.UserId = EditUser.Id;
                 var ss = EditUser.Roles.Single();
-
-
                 var existsrole = _db.Roles.Where(r => r.Id == ss.RoleId.ToString()).Single();
-
                 var AllRoles = (new ApplicationDbContext()).Roles.OrderBy(r => r.IsPermission).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
                 ViewBag.Roles = AllRoles;
                 ViewData["Roles"] = AllRoles;
-
                 ViewBag.sel_unit_id = EditUser.Unit_ID;
                 ViewBag.sel_roles_id = existsrole.Name;
                 ViewBag.pass = EditUser.PasswordHash;
-
-
                 ViewData["UserTypeId"] = EditUser.UserTypeId;
                 ViewData["UnitId"] = EditUser.Unit_ID;
                 var UnitData = db.dbo_tbl_Unit.Where(c => c.Unit_ID == EditUser.Unit_ID).Single();
                 ViewBag.ComdId = UnitData.Command;
                 ViewBag.CorpId = UnitData.Corps;
-
-
-
                 return View(new EditUserViewModel(EditUser));
-                //}
-                //Danger(string.Format("You are not authorised to edit this user. The <strong>{0}</strong> is not your immediate subordinate.", EditUser.UserName), true);
-                //return RedirectToAction("Hierarchy");
             }
             catch (SqlException ex)
             {
-
                 StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
 
                 try
@@ -264,7 +243,6 @@ namespace IHSDC.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
                 try
                 {
                     con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
@@ -286,13 +264,10 @@ namespace IHSDC.WebApp.Controllers
                 var CurrentUser = _db.Users.FirstOrDefault(i => i.UserName == User.Identity.Name);
                 var EditUser = _db.Users.FirstOrDefault(i => i.Id == model.UserId);
                 var DEFwdAuth = _db.Users.FirstOrDefault();
-                //if (EditUser.Superior == CurrentUser)
-                //{
                 EditUser.DEFwdAuth = model.DEFwdAuth;
                 EditUser.GEBFwdAuth = model.GEBFwdAuth;
                 EditUser.Active = model.Active;
                 EditUser.EstablishmentFull = model.EstablishmentFull;
-                //EditUser.EstablishmentAbbreviation = model.EstablishmentAbbreviation;
                 EditUser.Appointment = model.Appointment;
                 EditUser.MobNo = model.MobNo;
                 EditUser.Rank = model.Rank;
@@ -324,7 +299,7 @@ namespace IHSDC.WebApp.Controllers
                 //}
                 _db.Entry(EditUser).State = EntityState.Modified;
                 _db.SaveChanges();
-                //TempData["message"] = "Update Successfully";
+                
                 DisplayMessage("User editted successfully", "s", "s");
                 return RedirectToAction("Hierarchy");
             }
@@ -380,9 +355,6 @@ namespace IHSDC.WebApp.Controllers
             {
                 Subordinate.Superior = Superior;
             }
-
-            //TODO: Update Hierarchy and Full Hierarchy on account delete and adding superior check reoccurence of _db.SavChanges()
-
             _db.Users.Remove(DeleteUser);
             _db.SaveChanges();
 
@@ -823,12 +795,8 @@ namespace IHSDC.WebApp.Controllers
             AccountSettings accountSettings = new AccountSettings();
 
             OneLogin.Saml.AuthRequest req = new AuthRequest(new AppSettings(), accountSettings);
-
-            //string ReuestXML = req.GetRequest(AuthRequest.AuthRequestFormat.Base64);
-            //string ReuestXML = req.GetLogOutRequest(AuthRequest.AuthRequestFormat.Base64, issueurl, "https://iam2.army.mil/IAM/logout");
             string ReuestXML = req.GetLogOutRequest(AuthRequest.AuthRequestFormat.Base64, issueurl, "https://iam2.army.mil/IAM/logout");
 
-            //Response.Redirect("https://iam2.army.mil/IAM/logout?SAMLResponse=" + ReuestXML);
             Response.Redirect("https://iam2.army.mil/IAM/logout?SAMLResponse=" + ReuestXML);
 
         }
@@ -969,13 +937,6 @@ namespace IHSDC.WebApp.Controllers
 
 
 
-
-        //[AllowAnonymous]
-        //public ActionResult Login(LoginViewModel returnUrl)
-        //{
-        //   // ViewBag.ReturnUrl = returnUrl;
-        //    return View(returnUrl);
-        //}
         private static string URL = "http://localhost:8090/Service1/GetData1";
         private const string DATA = "<?xml version='1.0' encoding='UTF-8'?><varter><title maxlength = '10' > Quote varter</title>  <salutation limit = '40' > Dear Daniel,</salutation></varter>";
         private static string CreateObject()
@@ -1372,28 +1333,9 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                //ViewBag.ButtonName = "Add";
-                //ApptCRUD model = new ApptCRUD();
-                //if (id != null && id != string.Empty)
-                //{
-                //    ViewBag.ButtonName = "Update";
-                //    int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                //    model.ApptId = item;
-                //    var editdata = con.ApptCRUD(2, model);
-                //    model = editdata[0];
-                //}
-                //model.ApptId = 0;
-                //var data = con.ApptCRUD(2, model);
-                //model.ILApptCRUD = data;
-                //ViewBag.count = model.ILApptCRUD.Count();
-                //return View(model);
-                // List<SearchData> DataList = new List<SearchData>();
-
                 UnitCRUD model = new UnitCRUD();
                 model.Unit_ID = 0;
                 var data = con.UnitCRUD(2, model);
-                //   ViewBag.ILUnitCRUD = data;
-
                 return View(data);
             }
             catch (SqlException ex)

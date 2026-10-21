@@ -561,46 +561,6 @@ namespace IHSDC.WebApp.Controllers
                 {
                     try
                     {
-                        //string response = GetRequest("http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails");
-                       
-                        //List<CertificateData> certificates = JsonConvert.DeserializeObject<List<CertificateData>>(response);
-                        //if (certificates == null)
-                        //{
-                        //    DisplayMessage("No Token Found !", "", "i");
-                        //    return RedirectToAction("PolicyCorner");
-                        //}
-                        //certificateData = certificates[0];
-                        //if (certificates[0].Status == "404")
-                        //{
-                        //    DisplayMessage(certificates[0].Remarks, "", "i");
-                        //    return RedirectToAction("PolicyCorner");
-                        //}
-                        //else
-                        //{
-                        //    if (certificates[0].TokenValid == true)
-                        //    {
-
-                        //        //var Armynumber = SessionManager.ArmyNo;
-                        //        string Data = "{\"inputPersID\":\"" + SessionManager.ArmyNo + "\"}";
-                        //        //string Data = "{\"inputPersID\":\""+ Armynumber + "\"}";
-                        //        //string Data = $"{{\"inputPersID\":\"'"+@SessionManager.ArmyNo+"'\"}}";
-                        //        string PostResponse = PostRequest("http://localhost/Temporary_Listen_Addresses/ValidatePersID2FA", Data);
-                        //        ResponseList responseData = JsonConvert.DeserializeObject<ResponseList>(PostResponse);
-                        //        if (!responseData.ValidatePersID2FAResult)
-                        //        {
-                        //            DisplayMessage("You are not authorized for this policy", "", "i");
-                        //            return RedirectToAction("PolicyCorner");
-                        //        }
-                        //    }
-                        //    else
-                        //    {
-                        //        DisplayMessage("Hastakshar SEWA Not Running/Not Installed.", "To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.", "i");
-                        //        return RedirectToAction("PolicyCorner");
-                        //    }
-
-                        //}
-                        
-                        
                         downloadLog download = new downloadLog();
                         download.FileName = pathName;
                         download.ICNumber = SessionManager.ArmyNo;
@@ -615,10 +575,6 @@ namespace IHSDC.WebApp.Controllers
                         return RedirectToAction("PolicyCorner");
                     }
                 }
-
-
-
-
                 var ipAddress = ClientIPAddress.GetIPAddress();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
@@ -722,7 +678,6 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
-
         public static string PostRequest(string URI, string postData)
         {
             try
@@ -760,7 +715,6 @@ namespace IHSDC.WebApp.Controllers
                 return lObj.mStrResponse + " Message :" + ex.Message;
             }
         }
-
 
         public static class lObj
         {

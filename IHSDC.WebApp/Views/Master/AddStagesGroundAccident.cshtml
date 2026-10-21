@@ -39,14 +39,7 @@
             </div>
         </div>
         <div class="dropdown-divider"></div>
-        @*<div class="col-12" style="margin-left:35%">
-            <div class="form-group">
-                <div class="col-sm-6" style="margin-left:10%">
-                    <button type="submit" style="margin-top: 2rem;"  value="@ViewBag.ButtonName" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
-                </div>
-            </div>
-        </div>*@
-
+       
         <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
             <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                 <thead class="bg-info text-white">
@@ -73,11 +66,7 @@
                                         <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
                                     </a>
                                 </td>
-                                @*<td>
-                                    <a id="btndel" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.StagesGroundAccidentId.ToString())' onclick="DeleteConfirmation(this,'/Master/DeleteStagesGroundAccident')">
-                                        <img src="~/Content/images/Delete.png" width="30" height="30" border="0" />
-                                    </a>
-                                </td>*@
+                               
                             </tr>
                         }
                     }
@@ -117,14 +106,13 @@
             }
         });
 
-        // If there are empty fields, display an error message for the first empty field
+        
         if (emptyFields.length > 0) {
             var firstEmptyField = emptyFields[0];
             $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
             return;
         }
 
-        // If all fields are filled, display the confirmation dialog
         if (messaget == "Add") {
             swal({
                 title: "Please Confirm",
@@ -165,7 +153,6 @@
                 });
         }
     }
-
 
    var message = '@message';
     var messageStatus = '@messageStatus';

@@ -206,20 +206,7 @@
                         Welcome  @SessionManager.UserName @*| Role : @SessionManager.Role*@
 
 
-
-                        @*| Unit : @SessionManager.UnitName*@
-                        @*| Unit Id : @SessionManager.Unit_ID*@
-                        @*| Role : @SessionManager.Role  | Id : @SessionManager.UserId*@
-
                     </h4>
-
-                    @*<div class="frmSearch mr-4">
-                        <input type="text" id="txtsearch" class="form-control mb-2" placeholder="Search Aviator Name" value="@SessionManager.AviatorName" style="width:300px;" />
-
-                        <div id="suggesstion-box" class="mt-2" style="width:300px;"></div>
-                    </div>*@
-
-
                     <a href="@Url.Action("LogOut", "Account")">
                         <img src="~/Images/shutdown.png" style="width:45px;height:45px; display:flex; margin-right:20px;" />
                     </a>
@@ -352,17 +339,6 @@
                         <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
                             <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddRank", "Master")' )>Rank </a>
 
-                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddGender", "Master")' )>Gender </a>*@
-                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddPostingType", "Master")' )>Posting Type </a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddForeignPostingType", "Master")' )>Foreign Posting </a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddHonourAward", "Master")' )>Honour Award </a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddArmService", "Master")' )>Arm Service </a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCivEdn", "Master")' )>Civ Edn</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCourse", "Master")' )>Course</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddFlgWithAppt", "Master")' )>Examiner Appt</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddAppt", "Master")' )>Appt </a>
-
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCourseGrading", "Master")' )>Course Grading </a>*@
 
                         </div>
                     </li>
@@ -596,13 +572,10 @@
                 <!-- DataTables Example -->
 
             </div>
-            <!-- /.container-fluid -->
-            <!-- Sticky Footer -->
+            
             <footer class="sticky-footer" style=" background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%); opacity: 3.8; position: fixed; border-bottom: 2px; width: 100%; height: 36px;">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        @*<span>Copyright © Your Website 2022</span>*@
-
                         <p class="mb-0  text-light" style="font-size:22px;">Copyright © 2023. Developed by <span class="text-danger text-light">ASDC , DGIS :</span> Sponsor Dte : <span class="text-light">Aviation Dte </span> </p>
                     </div>
                 </div>
@@ -686,12 +659,7 @@
         }
     </script>
     <script>
-        //function ValOnlyNum(event, element) {
-        //    var keyCode = event.keyCode || event.which;
-        //    if (keyCode < 48 || keyCode > 57) {
-        //        event.preventDefault();
-        //    }
-        //}
+       
         function ValOnlyNum(element) {
             // Remove any non-numeric characters
             element.value = element.value.replace(/\D/g, '');
@@ -776,13 +744,6 @@
             position: relative;
             overflow: hidden;
         }
-
-
-
-        /*a:hover {
-                    background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);
-                }*/
-
         .dropdown-item:hover {
             background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);
         }

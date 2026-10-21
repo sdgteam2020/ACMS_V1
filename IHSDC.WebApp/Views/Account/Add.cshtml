@@ -223,46 +223,6 @@
                         $("#Unit_ID").val($('#spnUnit').val());
                     });
 
-                    //function Bindunit(UserTypeId) {
-
-                    //    var list = '';
-
-
-                    //    $.ajax({
-                    //        url: '/Master/GetUnitByhierarchy',
-                    //        type: 'POST',
-                    //        data: { "Unit_ID": UserTypeId }, //get the search string
-                    //        success: function (result) {
-
-
-                    //            if (result.length > 0) {
-
-                    //                list = '';
-
-                    //                list = '<option value="">Select Unit</option>';
-
-
-                    //                for (var j = 0; j < result.length; j++) {
-
-
-                    //                    list += '<option value=' + result[j].Value + '>' + result[j].Text + '</option>';
-                    //                }
-
-
-                    //                $('#spnUnit_ID').html(list);
-                    //            }
-
-                    //            // $('#SqnId').html(list);
-
-                    //        }
-                    //    });
-
-
-
-
-                    //}
-
-
                     var dropdown = document.getElementById("rolesDropdown");
                     dropdown.addEventListener("keydown", function (event) {
                         event.preventDefault();

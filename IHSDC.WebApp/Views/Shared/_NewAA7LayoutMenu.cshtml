@@ -216,18 +216,7 @@
 
 
 
-                        @*| Unit : @SessionManager.UnitName*@
-                        @*| Unit Id : @SessionManager.Unit_ID*@
-                        @*| Role : @SessionManager.Role  | Id : @SessionManager.UserId*@
-
                     </h4>
-
-                    @*<div class="frmSearch mr-4">
-                        <input type="text" id="txtsearch" class="form-control mb-2" placeholder="Search Aviator Name" value="@SessionManager.AviatorName" style="width:300px;" />
-
-                        <div id="suggesstion-box" class="mt-2" style="width:300px;"></div>
-                    </div>*@
-
 
                     <a href="@Url.Action("LogOut", "Account")">
                         <img src="~/Images/shutdown.png" style="width:45px;height:45px; display:flex; margin-right:20px;" />
@@ -237,9 +226,6 @@
 
 
                 </div>
-
-                @*<img src="~/Content/images/MYImage.png" style="height: 105px; width: 105px;" />*@
-
             </div>
 
         </nav>
@@ -269,34 +255,6 @@
                 if (SessionManager.RoleId != enum1.Administrator)
 
                 {
-
-                    <!--<li class="nav-item ">-->
-                        @* <a class="nav-link active" style="color:white" href='@Url.Action("AddAviator", "AA7",new { DashVal = string.Empty,UnitId=IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") })'>*@
-                        <!--<a class="nav-link active" id="a77" style="color: white;" href='@Url.Action("AddAviator", "AA7")'>
-                            <i class="fas fa-user-edit"></i>
-
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                                Sent
-                            </span>-->
-
-                            @*<span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light"> Records</span>*@
-
-
-                        <!--</a>
-                    </li>-->
-
-                    @*<li class="nav-item ">
-                    <a class="nav-link" style="color:white" href='@Url.Action("AASQNReport", "AA7")'>
-
-                        <i class="fas fa-user-edit"></i>
-                        <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                            Unit
-                        </span>
-                        <span class="navbar-brand mr-1 text-light" style=" color: white; font-size: 16px; margin-top: -9px; font-weight: 500">
-                            Card
-                        </span>
-                    </a>
-                </li>*@
 
 
         <li class="nav-item">
@@ -348,20 +306,6 @@
                 </a>
             }
         </li>
-
-                    @*<li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("Index", "AdvSearch")'>
-
-                            <i class="fas fa-user-edit"></i>
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                                Search
-                            </span>
-
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">Aviator</span>
-
-                        </a>
-                    </li>*@
-
                     <li class="nav-item dropdown">
                         <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdownlog" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-file-archive" style="color: white; font-weight: 600; font-size: 16px;"></i>
@@ -369,35 +313,10 @@
                         </a>
                         <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
                             <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("UserLog", "AA7")' )>User Log</a>
-                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AviatorLog", "AA7")' )>Aviator Log</a>*@
+                           
                         </div>
                     </li>
 
-                    @*<li class="nav-item active">
-                    <a class="nav-link" style="color:white" href='@Url.Action("RegisterComplaint", "Complaints")'>
-
-                        <i class="fas fa-user-edit"></i>
-                        <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                            Complaints
-                        </span>
-                    </a>
-                </li>*@
-
-                    <!--<li class="nav-item dropdown">
-                        <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdownlog" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-file-archive" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span style=" color: white; font-weight: 600; font-size: 17px;">Help</span>
-                        </a>
-                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("HelpPdf", "Home")' )>View Help File</a>-->
-
-                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("Policies", "Home")' )>Important Policies</a>*@
-                            <!--<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("ContactUs", "Home")' )>Contact Us</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("Maintenance", "Home")' )>Maintenance</a>-->
-                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("Error", "Error")' )>Error Page</a>*@
-                        <!--</div>
-                    </li>-->
 
                 }
 
@@ -431,93 +350,11 @@
                         <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
                             <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddRank", "Master")' )>Rank </a>
 
-                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddGender", "Master")' )>Gender </a>*@
-                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddPostingType", "Master")' )>Posting Type </a>
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddForeignPostingType", "Master")' )>Foreign Visit </a>
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddHonourAward", "Master")' )>Honour Award </a>
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddArmService", "Master")' )>Arm Service </a>
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCivEdn", "Master")' )>Civ Edn</a>
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCourse", "Master")' )>Course</a>
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddFlgWithAppt", "Master")' )>Examiner Appt</a>
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddAppt", "Master")' )>Appt </a>
-
-                        <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCourseGrading", "Master")' )>Course Grading </a>*@
-
+                           
                         </div>
                     </li>
 
 
-
-                    <!--<li class="nav-item dropdown">
-                        <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span style=" color: white; font-weight: 600; font-size: 17px;">Spl </span>
-                        </a>
-                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">-->
-                            @*<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddSpecialEqpt", "Master")' )>Special Eqpt </a>*@
-                            <!--<a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddSpecialQual", "Master")' )>Special Qual</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddSpecialQualStatus", "Master")' )>Special Qual Status</a>
-                        </div>
-                    </li>-->
-
-                    @*<li class="nav-item dropdown">
-                        <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span style=" color: white; font-weight: 600; font-size: 17px;">Medical</span>
-                        </a>
-                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddTypeMedical", "Master")' )>Type of Medical</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddMedicalCat", "Master")' )>Medical Cat</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddPlaceMedical", "Master")' )>Medical Institute</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddCopeCode", "Master")' )>COPE Code </a>
-                        </div>
-                    </li>*@
-
-
-
-                    @*<li class="nav-item dropdown">
-                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-indent" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span style=" color: white; font-weight: 600; font-size: 16px;">Heptr</span>
-                        </a>
-                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages3" href='@Url.Action("AddAircraftType", "Master")' )>Aircraft Type(Heptr)</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages3" href='@Url.Action("AddHeptrRPAMaster", "Master")' )>AC(Heptr) Master</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages3" href='@Url.Action("AddCatIR", "Master")' )>CAT/IR</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages3" href='@Url.Action("AddInstrCAT", "Master")' )>Instr CAT</a>
-                        </div>
-                    </li>*@
-
-
-                    @*<li class="nav-item dropdown">
-                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user-plus" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span style=" color: white; font-weight: 600; font-size: 16px;">RPAS</span>
-                        </a>
-                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages4" href='@Url.Action("AddAircraftType", "Master")' )>Aircraft Type(RPAS)</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages4" href='@Url.Action("AddHeptrRPAMaster", "Master")' )>AC(RPAS) Master</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages4" href='@Url.Action("AddRPASubstream", "Master")' )>RPAS Substream</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages4" href='@Url.Action("AddRPACat", "Master")' )>RPAS CAT</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="pages4" href='@Url.Action("AddRPAInstrCat", "Master")' )>RPAS Instr CAT</a>
-                        </div>
-                    </li>*@
-
-                    @*<li class="nav-item dropdown">
-                        <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span style=" color: white; font-weight: 600; font-size: 17px;">Accident</span>
-                        </a>
-                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddAccidentCat", "Master")' )>Accident Cat</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddAccidentCatSub", "Master")' )>Accident Sub Cat</a>
-
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddStagesGroundAccident", "Master")' )>Stages Ground Accident </a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddPeriodOperation", "Master")' )>Period Operation </a>
-                            <a style=" font-size: 16px;" class="dropdown-item" href='@Url.Action("AddClassInjury", "Master")' )>Class Injury</a>
-
-                        </div>
-                    </li>*@
 
                     <li class="nav-item dropdown">
                         <a style=" font-size: 17px;" class="nav-link dropdown-toggle" href="#" id="pagesDropdownlog" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -530,39 +367,8 @@
                         </div>
                     </li>
 
-                    @*<li class="nav-item active">
-                    <a class="nav-link" style="color:white" href='@Url.Action("RegisterComplaint", "Complaints")'>
-
-                        <i class="fas fa-user-edit"></i>
-                        <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                            Complaints
-                        </span>
-                    </a>
-                </li>*@
-
+                   
                 }
-
-
-
-                @*<li class="nav-item active">
-                <a class="nav-link" style="color:white" href='@Url.Action("ChangePassword", "Manage")'>
-
-                    <i class="fas fa-user-lock"></i>
-                    <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                        Password
-                    </span>
-
-                </a>
-
-                @if (SessionManager.UserName == "Admin")
-                {
-                    <a class="nav-link" style="color:white" href='@Url.Action("Hierarchy", "Account")'>Accounts</a>
-                }
-
-
-            </li>*@
-
-
 
             }
 
@@ -574,113 +380,6 @@
 
         <div id="content-wrapper">
             <div class="container-fluid">
-
-
-                @*<div class="cards mb-3">*@
-                    @if (Request.IsAuthenticated)
-                    {
-
-
-                        if (SessionManager.RoleId != enum1.Administrator)
-                        {
-
-                            @*<div class="mani">
-                                <ul class="mani">
-
-                                    
-                                        <li><a href='@Url.Action("AddAviator", "AA7")'><i class='far fa-user-circle'></i> Aviator</a></li>
-                                        <li><a href='@Url.Action("AddAviatorHeptrRPA", "AA7")'><i class="fas fa-box"></i> Heptr/RPAS</a></li>
-                                        <li>
-                                            <a href='@Url.Action("AddAviatorContactDetails", "AA7")'><i class="fas fa-envelope"></i> Contact</a>
-                                        </li>
-
-                                        <li> <a href='@Url.Action("AddAviatorCourses", "AA7")' )><i class="fas fa-check-circle"></i> Courses</a></li>
-                                        <li>
-                                            <a href='@Url.Action("AddAviatorHonourAwards", "AA7")' )><i class="fas fa-award"></i> Awards</a>
-                                        </li>
-                                        <li> <a href='@Url.Action("AddAviatorFlyingHrs", "AA7")' )><i class="fas fa-clipboard"></i> Flying Hrs</a></li>
-                                    <li><a href='@Url.Action("AddAviatorSpecialEqpt", "AA7")' )><i class="fas fa-edit"></i> Spl Eqpt Qual</a></li>
-                                    <li> <a href='@Url.Action("AddAviatorForeignVisit", "AA7")' )><i class="fas fa-folder"></i> Foreign Visit</a></li>
-    <li> <a href='@Url.Action("AddAviatorQualification", "AA7")' )><i class="fas fa-bars"></i> Spl Pilot Qual</a></li>
-    <li>  <a href='@Url.Action("AddAviatorMedical", "AA7")' )><i class="fas fa-mars"></i> Medical</a></li>
-    <li>  <a href='@Url.Action("AddAviatorAccident", "AA7")' )><i class="fas fa-check-square"></i> Accident</a></li>
-    <li>   <a href='@Url.Action("AddAviatorGoodShow", "AA7")' )><i class="fas fa-expand"></i> Good Show</a></li>
-    <li>   <a href='@Url.Action("PostingAviatorOut", "AA7")' )><i class="fas fa-palette"></i> Posting Out</a></li>
-    <li>  <a href='@Url.Action("PostingAviatorIn", "AA7")' )><i class="fas fa-id-card"></i> Posting In</a></li>
-
-
-
-                                </ul>
-                            </div>*@
-
-
-                            @*<script>
-                                    $(document).ready(function () {
-                                        $('.mani ul li').find('a').each(function () {
-                                            var text = $(this).attr("href");
-
-                                            if (window.location.href.replace(window.location.origin, "") == text) {
-
-                                                $(this).addClass('active')
-                                            }
-                                            else {
-                                                $(this).removeClass("active");
-                                            }
-                                        });
-
-                                        $('.mani ul li a').click(function () {
-
-
-                                            $('li a').removeClass("active");
-                                            $(this).addClass("active");
-
-                                        });
-
-                                    });
-                                </script>*@
-
-
-
-
-                            @*<script>
-                                    $(document).ready(function () {
-                                        //if (window.location.href.replace("http://localhost:8080/", ""))
-                                        //alert(window.location.href.replace("http://localhost:8080/", ""));
-
-                                        $('.mani ul li').find('a').each(function () {
-                                            var text = $(this).attr("href");
-
-                                            if (window.location.pathname.replace(window.location.origin, "") == text) {
-
-                                                $(this).addClass('active')
-                                            }
-                                            else {
-                                                $(this).removeClass("active");
-                                            }
-                                        });
-
-                                        $('.mani ul li a').click(function () {
-
-
-                                            $('li a').removeClass("active");
-                                            $(this).addClass("active");
-
-                                        });
-
-                                    });
-                                </script>*@
-
-
-                        }
-
-
-
-
-
-
-
-                    }
-
 
 
                     <br />
@@ -757,9 +456,7 @@
 
             if (window.location.pathname.replace(window.location.origin, "") == text) {
                 var ss = (window.location.pathname.replace(window.location.origin, "")).replace("/", "").split("/")
-                /* alert(ss[0]);*/
-                //  alert(window.location.pathname.replace(window.location.origin, "") + '---' + text)
-
+                
 
 
                 $(this).addClass("active");
@@ -810,12 +507,7 @@
         }
     </script>
     <script>
-        //function ValOnlyNum(event, element) {
-        //    var keyCode = event.keyCode || event.which;
-        //    if (keyCode < 48 || keyCode > 57) {
-        //        event.preventDefault();
-        //    }
-        //}
+      
         function ValOnlyNum(element) {
             // Remove any non-numeric characters
             element.value = element.value.replace(/\D/g, '');
@@ -875,20 +567,6 @@
     </script>
 
     <script src="~/Content/CustomJS/email.js"></script>
-
-
-    <script>
-        $(document).ready(function () {
-            // Add click event to all sidenav links
-            //$('.sidebar a').click(function () {
-            //    // Remove "active" class from all links
-            //    $('.sidebar a').removeClass('active');
-            //    // Add "active" class to the clicked link
-            //    $(this).addClass('active');
-            //});
-        });
-    </script>
-
 
     <style>
 

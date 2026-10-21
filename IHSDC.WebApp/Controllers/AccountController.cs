@@ -202,9 +202,7 @@ namespace IHSDC.WebApp.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 IHSDCAA7DBDBContext db = new IHSDCAA7DBDBContext();
-                //var AllRoles = (new ApplicationDbContext()).Roles.OrderBy(r => r.IsPermission).Where(n => n.Name != "Administrator").ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-                //ViewBag.Roles = AllRoles;
-                //ViewData["Roles"] = AllRoles;
+               
                 SelectList list_of_unit = new SelectList(db.dbo_tbl_Unit, "Unit_ID", "UnitName");
                 ViewData["Unit_ID"] = list_of_unit;
 
@@ -214,9 +212,7 @@ namespace IHSDC.WebApp.Controllers
 
 
                 if (EditUser == null) return HttpNotFound("No such user exists. Edit User Failed!");
-                //if (EditUser == CurrentUser) return Redirect("~/Manage/Index");
-                //if (EditUser.Superior == CurrentUser)
-                //{
+               
                 ViewBag.EditUsername = EditUser.UserName;
                 ViewBag.UserId = EditUser.Id;
                 var ss = EditUser.Roles.Single();
@@ -242,9 +238,7 @@ namespace IHSDC.WebApp.Controllers
 
 
                 return View(new EditUserViewModel(EditUser));
-                //}
-                //Danger(string.Format("You are not authorised to edit this user. The <strong>{0}</strong> is not your immediate subordinate.", EditUser.UserName), true);
-                //return RedirectToAction("Hierarchy");
+                
             }
             catch (SqlException ex)
             {
@@ -286,13 +280,12 @@ namespace IHSDC.WebApp.Controllers
                 var CurrentUser = _db.Users.FirstOrDefault(i => i.UserName == User.Identity.Name);
                 var EditUser = _db.Users.FirstOrDefault(i => i.Id == model.UserId);
                 var DEFwdAuth = _db.Users.FirstOrDefault();
-                //if (EditUser.Superior == CurrentUser)
-                //{
+               
                 EditUser.DEFwdAuth = model.DEFwdAuth;
                 EditUser.GEBFwdAuth = model.GEBFwdAuth;
                 EditUser.Active = model.Active;
                 EditUser.EstablishmentFull = model.EstablishmentFull;
-                //EditUser.EstablishmentAbbreviation = model.EstablishmentAbbreviation;
+               
                 EditUser.Appointment = model.Appointment;
                 EditUser.MobNo = model.MobNo;
                 EditUser.Rank = model.Rank;
@@ -321,10 +314,10 @@ namespace IHSDC.WebApp.Controllers
                     UserManager.AddToRole(EditUser.Id, "User");
                 }
 
-                //}
+               
                 _db.Entry(EditUser).State = EntityState.Modified;
                 _db.SaveChanges();
-                //TempData["message"] = "Update Successfully";
+              
                 DisplayMessage("User editted successfully", "s", "s");
                 return RedirectToAction("Hierarchy");
             }
@@ -332,7 +325,7 @@ namespace IHSDC.WebApp.Controllers
             return View(model);
         }
 
-        // GET & POST: Delete current user
+    
         [Authorize(Roles = "Administrator")]
         public ActionResult Delete(string id)
         {
@@ -381,16 +374,14 @@ namespace IHSDC.WebApp.Controllers
                 Subordinate.Superior = Superior;
             }
 
-            //TODO: Update Hierarchy and Full Hierarchy on account delete and adding superior check reoccurence of _db.SavChanges()
-
+           
             _db.Users.Remove(DeleteUser);
             _db.SaveChanges();
 
             return RedirectToAction("Hierarchy");
         }
 
-        //
-        // GET: /Account/Login
+       
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -427,10 +418,7 @@ namespace IHSDC.WebApp.Controllers
         public async Task<ActionResult> UserLogin()
         {
 
-            //LoggerNew.LogError("User Registered and redirect to login page. log 3");
-
-            // return Redirect("/Identity/Account/login");
-            //String EncryptedResponse = Request.Form["SAMLResponse"];
+            
             String EncryptedResponse = "";
 
 
@@ -477,7 +465,7 @@ namespace IHSDC.WebApp.Controllers
                     }
                     config.Save(ConfigurationSaveMode.Modified);
                     ConfigurationManager.RefreshSection("appSettings");
-                    //stop code directelly from here to debug code with IAM, and Run this on this URL "http://localhost:8080/Account/UserLogin". 
+                   
                 }
                 else
                 {
@@ -494,7 +482,7 @@ namespace IHSDC.WebApp.Controllers
 
             if (!string.IsNullOrEmpty(EncryptedResponse))
             {
-                //LoggerNew.LogError("User Registered and redirect to login page. log 4");
+               
                 string decryptedsamlresponse = DecryptSAmlResponseNew(EncryptedResponse, "C:\\Cert\\App Certificate\\acms.army.mil.pfx", "Abc@2022");
 
                 AccountSettings accountSettings = new AccountSettings();
@@ -567,11 +555,11 @@ namespace IHSDC.WebApp.Controllers
                                 SessionManager.IsPermission = Convert.ToInt32(existsrole.IsPermission);
 
 
-                                //var data1 = con.CheckLoggedIn(1, Convert.ToInt16(Session["UserIntId"]), string.Empty, string.Empty);
+                             
                                 var currentuser = UserManager.FindById(User.Identity.GetUserId());
 
                                 Session["Username"] = log.NameId;
-                                //LoggerNew.LogError("User Registered and redirect to login page. log 6 InActive Registerd" + Session["Username"]);
+                               
                                 con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "");
 
                                 RankCRUD RankModel = new RankCRUD();
@@ -588,28 +576,19 @@ namespace IHSDC.WebApp.Controllers
                                 LogVisit();
 
                                 SessionManager.Active = "0";
-                                //LoggerNew.LogError("User Registered and redirect to login page. log 10 InActive Registerd ");
-                                //  LoggerNew.LogError("Final Register User login attempt with active Registered User " + SessionManager.Active + " condition for User ");
-
+                               
                                 return RedirectToAction("ContactUs", "Home");
                             }
                         }
                         catch { }
 
-                        //log.NameId = "C8TPSUNIT1";
+                      
                         var result = await SignInManager.PasswordSignInAsync(log.NameId, "Admin123!", false, shouldLockout: true);
 
-                     //   var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
-
-                       // LoggerNew.LogError("Start User Registered and redirect to login page. log 5 with result " + result +" User Name " + log.NameId.ToString());
                         switch (result)
                         {
                             case SignInStatus.Success:
-                                //if (_db.Users.FirstOrDefault(i => i.UserName == log.NameId).Active == "0")
-                                //{
-                                //    DisplayMessage("User is Pending for approval from Admin, Contact to Administrator", "", "w");
-                                //    return RedirectToAction("Login");
-                                //}
+                               
 
                                 ApplicationUser userdet = new ApplicationUser();
                                 Session["UserIntId"] = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).IntId;
@@ -618,8 +597,7 @@ namespace IHSDC.WebApp.Controllers
 
                                 SessionManager.UserName = log.NameId;
                                 SessionManager.UserId = Convert.ToString(Session["UserIntId"]);
-                                ////var UnitName = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).EstablishmentFull;
-                                ////SessionManager.UnitName = UnitName;
+                              
                                 var Unit_ID = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).Unit_ID;
                                 SessionManager.Unit_ID = Unit_ID.ToString();
                                 var RankId = _db.Users.FirstOrDefault(i => i.UserName == log.NameId).Rank;
@@ -650,9 +628,7 @@ namespace IHSDC.WebApp.Controllers
 
 
                                 var ss = user.Roles.Single();
-                                //// Date 04-07-2023 IAM Role Disable
-                                //if (RoleName[0].ToString() == log.SAMLRole)
-                                //{
+                                
                                 SessionManager.RoleId = ss.RoleId.ToString();
                                 SessionManager.UserType = Convert.ToString(user.UserTypeId);
                                 var existsrole = _db.Roles.Where(r => r.Id == ss.RoleId.ToString()).Single();
@@ -660,11 +636,11 @@ namespace IHSDC.WebApp.Controllers
                                 SessionManager.IsPermission = Convert.ToInt32(existsrole.IsPermission);
 
 
-                                //var data1 = con.CheckLoggedIn(1, Convert.ToInt16(Session["UserIntId"]), string.Empty, string.Empty);
+                               
                                 var currentuser = UserManager.FindById(User.Identity.GetUserId());
 
                                 Session["Username"] = log.NameId;
-                                //LoggerNew.LogError("User Registered and redirect to login page. log 6" + Session["Username"]);
+                             
                                 con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "");
 
                                 RankCRUD RankModel = new RankCRUD();
@@ -678,47 +654,37 @@ namespace IHSDC.WebApp.Controllers
                                 ApplicationUserRole Arole = new ApplicationUserRole();
                                 LogSignin(log.NameId, _db.Users.FirstOrDefault(i => i.UserName == log.NameId).IntId, Session.SessionID);
                                 LogVisit();
-                               // LoggerNew.LogError("User Registered and redirect to login page. log 7" + Session["Username"]);
+                              
                                 if (SessionManager.RoleId == enum1.Administrator)
                                 {
                                     SessionManager.Active = "1";
-                                    //LoggerNew.LogError("login attempt with active Administrator " + SessionManager.Active + " condition for User ");
+                                 
                                     return RedirectToAction("Index", "Home");
                                 }
                                 else
                                 {
 
-                                   // LoggerNew.LogError("User Registered and redirect to login page. log 8" + Session["Username"]);
+                                 
                                     if (_db.Users.FirstOrDefault(i => i.UserName == log.NameId).Active == "0")
                                     {
-                                        //DisplayMessage("User is Pending for approval from Admin, Contact to Administrator", "", "w");
-                                        //return RedirectToAction("Login");
+                                       
                                         SessionManager.Active = "0";
-                                       // LoggerNew.LogError("User Registered and redirect to login page. log 9 " + Session["Username"]);
-                                      //  LoggerNew.LogError("Final Register User login attempt with active Registered User " + SessionManager.Active + " condition for User ");
                                         return RedirectToAction("ContactUs", "Home");
                                     }
 
                                     SessionManager.Active = "1";
-                                   // LoggerNew.LogError("Register User login attempt with active GSO1 " + SessionManager.Active + " condition for User ");
+                                
                                     return RedirectToAction("AddInboxNotingFwd", "ACC");
                                 }
-                            //}
-                            //else
-                            //{
-                            //    return RedirectToAction("RoleNotAuth", "Account");
-                            //}
+                           
                             case SignInStatus.Failure:
-                                //return RedirectToAction("UnAuthorized", "Account");
+                              
                               
                                 return RedirectToAction("SignUp", new { User = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(log.NameId), DPass = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("Admin123!") });
 
                         }
                        
-                        //HttpContext.Session.SetString("NameId", log.NameId);
-                        //HttpContext.Session.SetString("SAMLRole", log.SAMLRole);
-
-                        // string nameid = HttpContext.Session.GetString("NameId");
+                        
 
                     }
                     else
@@ -758,7 +724,7 @@ namespace IHSDC.WebApp.Controllers
                     HttpContext.Session.Clear();
                     try
                     {
-                        //SendResponseToIAM("https://152.1.21.237/Account/Logout", accountSettings.entityId, nameid);
+                      
                         SendResponseToIAM("https://152.1.34.153/Account/Logout", accountSettings.entityId, nameid);
                     }
                     catch (Exception exx)
@@ -769,8 +735,7 @@ namespace IHSDC.WebApp.Controllers
                 else if (!string.IsNullOrEmpty(Convert.ToString(HttpContext.Request.QueryString["SAMLResponse"])))
                 {
                     HttpContext.Session.Clear();
-                    // RedirectToAction("FinalLogout", "Home");
-                    //Response.Redirect("https://152.1.21.237/Account/FinalLogout");
+                  
                     Response.Redirect("https://acms.army.mil/Account/FinalLogout");
                 }
                 else
@@ -791,11 +756,9 @@ namespace IHSDC.WebApp.Controllers
 
 
 
-                //await HttpContext.SignOutAsync();
+              
                 HttpContext.Session.Clear();
-                //HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
-
-
+               
 
                 LogoutRequesttoIAM(role, acs.entityId, NameId);
             }
@@ -824,11 +787,10 @@ namespace IHSDC.WebApp.Controllers
 
             OneLogin.Saml.AuthRequest req = new AuthRequest(new AppSettings(), accountSettings);
 
-            //string ReuestXML = req.GetRequest(AuthRequest.AuthRequestFormat.Base64);
-            //string ReuestXML = req.GetLogOutRequest(AuthRequest.AuthRequestFormat.Base64, issueurl, "https://iam2.army.mil/IAM/logout");
+           
             string ReuestXML = req.GetLogOutRequest(AuthRequest.AuthRequestFormat.Base64, issueurl, "https://iam2.army.mil/IAM/logout");
 
-            //Response.Redirect("https://iam2.army.mil/IAM/logout?SAMLResponse=" + ReuestXML);
+         
             Response.Redirect("https://iam2.army.mil/IAM/logout?SAMLResponse=" + ReuestXML);
 
         }
@@ -839,7 +801,7 @@ namespace IHSDC.WebApp.Controllers
             OneLogin.Saml.AuthRequest req = new AuthRequest(new AppSettings(), accountSettings);
 
             string ReuestXML = req.SingleLogoutRequest(AuthRequest.AuthRequestFormat.Base64, entityid, role, usernam);
-            //Response.Redirect("https://iam2.army.mil/IAM/singleAppLogout?SAMLRequest=" + HttpUtility.UrlEncode(ReuestXML), true);
+           
             Response.Redirect("https://iam2.army.mil/IAM/singleAppLogout?SAMLRequest=" + HttpUtility.UrlEncode(ReuestXML), true);
         }
         [AllowAnonymous]
@@ -853,9 +815,9 @@ namespace IHSDC.WebApp.Controllers
 
                 String[] spearator = { Convert.ToBase64String(plainTextBytes) };
 
-                // using the method
+              
                 String[] newstring = Encryptedtext.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
-                //string[] newstring = encryptedvalue.Split();
+               
                 string key = newstring[1].ToString();
                 string plain = newstring[0].ToString();
                 #region decryptkeyusingprivatekey
@@ -908,46 +870,45 @@ namespace IHSDC.WebApp.Controllers
         [AllowAnonymous]
         private string DecryptString0705222_Final(string cipherText, byte[] key, byte[] iv)
         {
-            // Instantiate a new Aes object to perform string symmetric encryption
+           
             Aes encryptor = Aes.Create();
 
             encryptor.Mode = CipherMode.ECB;
 
-            // Set key and IV
+         
             byte[] aesKey = new byte[16];
             Array.Copy(key, 0, aesKey, 0, 16);
             encryptor.Key = aesKey;
             encryptor.IV = iv;
             encryptor.Padding = PaddingMode.PKCS7;
 
-            // Instantiate a new MemoryStream object to contain the encrypted bytes
+          
             MemoryStream memoryStream = new MemoryStream();
 
-            // Instantiate a new encryptor from our Aes object
+          
             ICryptoTransform aesDecryptor = encryptor.CreateDecryptor();
 
-            // Instantiate a new CryptoStream object to process the data and write it to the 
-            // memory stream
+           
             CryptoStream cryptoStream = new CryptoStream(memoryStream, aesDecryptor, CryptoStreamMode.Write);
 
-            // Will contain decrypted plaintext
+           
             string plainText = String.Empty;
 
             try
             {
-                // Convert the ciphertext string into a byte array
+               
                 byte[] cipherBytes = Convert.FromBase64String(cipherText);
 
-                // Decrypt the input ciphertext string
+              
                 cryptoStream.Write(cipherBytes, 0, cipherBytes.Length);
 
-                // Compvare the decryption process
+              
                 cryptoStream.FlushFinalBlock();
 
-                // Convert the decrypted data from a MemoryStream to a byte array
+               
                 byte[] plainBytes = memoryStream.ToArray();
 
-                // Convert the decrypted byte array to string
+             
                 plainText = Encoding.ASCII.GetString(plainBytes, 0, plainBytes.Length);
             }
             catch (Exception exx)
@@ -956,12 +917,12 @@ namespace IHSDC.WebApp.Controllers
             }
             finally
             {
-                // Close both the MemoryStream and the CryptoStream
+                
                 memoryStream.Close();
                 cryptoStream.Close();
             }
 
-            // Return the decrypted data as a string
+          
             return plainText;
 
         }
@@ -970,12 +931,7 @@ namespace IHSDC.WebApp.Controllers
 
 
 
-        //[AllowAnonymous]
-        //public ActionResult Login(LoginViewModel returnUrl)
-        //{
-        //   // ViewBag.ReturnUrl = returnUrl;
-        //    return View(returnUrl);
-        //}
+     
         private static string URL = "http://localhost:8090/Service1/GetData1";
         private const string DATA = "<?xml version='1.0' encoding='UTF-8'?><varter><title maxlength = '10' > Quote varter</title>  <salutation limit = '40' > Dear Daniel,</salutation></varter>";
         private static string CreateObject()
@@ -1011,12 +967,12 @@ namespace IHSDC.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-           // LoggerNew.LogError("User Registered and redirect to login page. log 2");
+          
             string[] splitval;
             try
             {
                  if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "https://iam2.army.mil/IAM/User"  && returnUrl != null)
-               // if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "/" && returnUrl != "/" && returnUrl != null)
+              
                 {
                     splitval = returnUrl.Split('^');
 
@@ -1050,7 +1006,7 @@ namespace IHSDC.WebApp.Controllers
                 {
                     case SignInStatus.Success:
 
-                        //Login Previlage
+                       
                         var user = await UserManager.FindByNameAsync(model.Username);
 
                         if (user == null)
@@ -1058,12 +1014,12 @@ namespace IHSDC.WebApp.Controllers
                             return RedirectToAction("Login");
                         }
 
-                        // Invalidate previous sessions
+                     
                         var result1 = await UserManager.UpdateSecurityStampAsync(user.Id);
 
                         user = await UserManager.FindByIdAsync(user.Id);
 
-                        // Store NEW stamp
+                       
                         Session["SecurityStamp"] = user.SecurityStamp;
 
                         var identity = await UserManager.CreateIdentityAsync(
@@ -1120,7 +1076,7 @@ namespace IHSDC.WebApp.Controllers
 
                         Session["ip"] = obj.getAddress();
 
-                        //var user = await UserManager.FindByNameAsync(model.Username);
+                     
                         var RoleName = await UserManager.GetRolesAsync(user.Id.ToString());
                         RoleName = RoleName.Where(val => val != "User").ToArray();
                         SessionManager.Role = RoleName[0].ToString();
@@ -1135,7 +1091,7 @@ namespace IHSDC.WebApp.Controllers
                         SessionManager.IsPermission = Convert.ToInt32(existsrole.IsPermission);
 
 
-                        //var data1 = con.CheckLoggedIn(1, Convert.ToInt16(Session["UserIntId"]), string.Empty, string.Empty);
+                       
                         var currentuser = UserManager.FindById(User.Identity.GetUserId());
 
                         Session["Username"] = model.Username;
@@ -1150,13 +1106,13 @@ namespace IHSDC.WebApp.Controllers
                         }
 
                         ApplicationUserRole Arole = new ApplicationUserRole();
-                        //LogSignin(model.Username, _db.Users.FirstOrDefault(i => i.UserName == model.Username).IntId, Session.SessionID);
+                     
                         LogVisit();
-                        // return RedirectToLocal(returnUrl);
+                      
                         if (SessionManager.RoleId == enum1.Administrator)
                         {
                             SessionManager.Active = "1";
-                           //con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
+                           con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
                             return RedirectToLocal(returnUrl);
                         }
                         else
@@ -1167,19 +1123,19 @@ namespace IHSDC.WebApp.Controllers
                                 SessionManager.Active = "0";
                                 return RedirectToAction("ContactUs", "Home");
                             }
-                            //if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "https://iam2.army.mil/IAM/User" && returnUrl != null) --for ADN 
+                          
                             if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "/"  && returnUrl != null)  //-- for Local
                             {
 
                                 SessionManager.Active = "1";
-                                //con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "Admin Switching to User " + model.Username);
+                                con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), "Admin Switching to User " + model.Username);
                                 return Json(1);
                             }
                             else
                             {
                              
                                 SessionManager.Active = "1";
-                                //con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
+                                con.GetAviatorForDashboard2(2, 0, user.IntId, obj.getAddress(), null);
                                 return RedirectToAction("AddInboxNotingFwd", "ACC");
                             }
                         }
@@ -1188,7 +1144,7 @@ namespace IHSDC.WebApp.Controllers
                     case SignInStatus.RequiresVerification:
                         return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                     case SignInStatus.Failure:
-                        //return RedirectToAction("UnAuthorized", "Account");
+                       
                         return RedirectToAction("SignUp", new { User = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(model.Username), DPass = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("Admin123!") });
                     default:
                         Danger("Invalid login attempt.", true);
@@ -1214,7 +1170,7 @@ namespace IHSDC.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
+               
                 try
                 {
                     con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
@@ -1231,7 +1187,7 @@ namespace IHSDC.WebApp.Controllers
         public void DisplayMessage(string message, string midMsg, string messageStatus_s_e_w_i_Or_blank)
         {
             string status = messageStatus_s_e_w_i_Or_blank.ToLower();
-            //ViewBag.msg = message;
+           
             TempData["Message"] = message;
             TempData["messagemidStatus"] = midMsg;
             if (status == "s")
@@ -1283,7 +1239,7 @@ namespace IHSDC.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
+              
                 try
                 {
                     con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
@@ -1372,27 +1328,12 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                //ViewBag.ButtonName = "Add";
-                //ApptCRUD model = new ApptCRUD();
-                //if (id != null && id != string.Empty)
-                //{
-                //    ViewBag.ButtonName = "Update";
-                //    int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                //    model.ApptId = item;
-                //    var editdata = con.ApptCRUD(2, model);
-                //    model = editdata[0];
-                //}
-                //model.ApptId = 0;
-                //var data = con.ApptCRUD(2, model);
-                //model.ILApptCRUD = data;
-                //ViewBag.count = model.ILApptCRUD.Count();
-                //return View(model);
-                // List<SearchData> DataList = new List<SearchData>();
+                
 
                 UnitCRUD model = new UnitCRUD();
                 model.Unit_ID = 0;
                 var data = con.UnitCRUD(2, model);
-                //   ViewBag.ILUnitCRUD = data;
+              
 
                 return View(data);
             }
@@ -1425,10 +1366,9 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
-        // POST: /Account/Add
         [HttpPost]
         [Authorize]
-        // [ValidateAntiForgeryToken]
+      
         public async Task<ActionResult> Add(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -1495,7 +1435,7 @@ namespace IHSDC.WebApp.Controllers
                             foreach (var role in model.Roles)
                             {
                                 UserManager.AddToRole(NewUser.Id, role);
-                                // UserManager.AddToRole(NewUser.Id, "User");
+                                
                             }
                         }
                         catch (Exception)
@@ -1527,13 +1467,13 @@ namespace IHSDC.WebApp.Controllers
 
                         if (model.Active == "0")
                         {
-                            // Sign in the newly registered user.
+                           
                             await SignInManager.SignInAsync(
                                 NewUser,
                                 isPersistent: false,
                                 rememberBrowser: false);
 
-                            // Set session values for the newly registered user.
+                           
                             Session["UserIntId"] = NewUser.IntId;
                             Session["UserId"] = NewUser.Id;
                             Session["Username"] = NewUser.UserName;
@@ -1582,11 +1522,11 @@ namespace IHSDC.WebApp.Controllers
             IHSDCAA7DBDBContext db2 = new IHSDCAA7DBDBContext();
             ViewData["EstablishmentFull"] = new SelectList(db2.dbo_tbl_Unit, "UnitName", "UnitName");
             ViewData["Unit_ID"] = new SelectList(db2.dbo_tbl_Unit, "Unit_ID", "UnitName");
-            // If we got this far, something failed, redisplay form
+           
             return View(model);
         }
 
-        // Add Superior
+        
         [Authorize(Roles = "Administrator")]
         public ActionResult AddSuperior()
         {
@@ -1603,7 +1543,7 @@ namespace IHSDC.WebApp.Controllers
         }
 
 
-        //TODO: Add superior & update subordinates
+       
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
@@ -1703,7 +1643,7 @@ namespace IHSDC.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
+               
                 try
                 {
                     con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
@@ -1716,7 +1656,7 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
-        // GET: /Account/ConfirmEmail
+      
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -1728,16 +1668,14 @@ namespace IHSDC.WebApp.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
-        // GET: /Account/ForgotPassword
+       
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
 
-        //
-        // POST: /Account/ForgotPassword
+       
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -1769,8 +1707,7 @@ namespace IHSDC.WebApp.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
+       
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
@@ -1778,8 +1715,7 @@ namespace IHSDC.WebApp.Controllers
             return View();
         }
 
-        //
-        // GET: /Account/ResetPassword
+       
         [AllowAnonymous]
         [HttpGet]
         public ActionResult ResetPassword()
@@ -1845,15 +1781,15 @@ namespace IHSDC.WebApp.Controllers
                 db.SaveChanges();
             }
             HttpContext.Session.Remove("Token");
-            // Logout Forms Authentication
+            
             FormsAuthentication.SignOut();
 
-            // Logout OWIN Authentication
+          
             AuthenticationManager.SignOut(
                 DefaultAuthenticationTypes.ApplicationCookie
             );
            
-            // Clear Session
+         
             Session.Clear();
             Session.Abandon();
 
@@ -1874,7 +1810,7 @@ namespace IHSDC.WebApp.Controllers
         }
 
 
-        // POST: /Account/LogOff
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()

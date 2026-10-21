@@ -85,7 +85,6 @@
     <Content Include="bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml" />
     <Content Include="bin\Release\IHSDC.Common.dll" />
     <Content Include="bin\Release\IHSDC.Common.pdb" />
-    <Content Include="Content\PagedList.css" />
     <Content Include="Helpers\Database\LegacyIdentity.txt" />
   </ItemGroup>
   <ItemGroup>

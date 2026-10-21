@@ -447,12 +447,6 @@
                         <tbody id="tShowFilebody">
                         </tbody>
                     </table>
-             
-                @*<div class="modal-footer">
-                    <div class="btn-group">
-                        <a style="color:white;" class="btn btn-danger CloseShowFilepoup">Close</a>
-                    </div>
-                </div>*@
 
             </div>
         </div>
@@ -482,8 +476,7 @@
         </div>
 
         <div class="modal-body" style="max-height: 450mm; overflow: auto;" id="APLogData">         
-            @*<button type="button" class="close Closepoup" aria-label="Close" style="margin-top:-60px; font-weight:bold;">
-            </button>*@
+           
             <div class="table-responsive ">
                 <table class="table d-none" id="dataTable1">
                     <thead class="bg-info text-white">
@@ -499,12 +492,7 @@
 
                 </table>
             </div>
-            @*<div class="modal-footer">
-                <div class="btn-group">
-                    <a style="color:white;" class="btn btn-danger Closepoup">Close</a>
-                </div>
-            </div>*@
-
+            
         </div>
         <footerPolicy>
             <div class="footerPolicy-content">
@@ -514,49 +502,6 @@
     </div>
 </div>
 
-
-@*<div id="PolicyModal" class="modal">
-    <div class="modal-content" style="margin-top:120px;">
-        <div class="centered">
-            <img src="~/Images/searchEngine.png" height="70px" />
-        </div>
-        <div class="modal-header text-center">
-            <p style="text-align:center;font-size:30px; font-weight:bold; font-family:Arial;">
-                <span id="spnPolicyName" style="color:#FF0000"></span>
-                <span id="spnDocType" class="d-none"></span>
-                <span id="spnPId" class="d-none"></span>
-                <span id="SpnArmyNumber1" class="d-none">@SessionManager.ArmyNo</span>
-            </p>
-            <div class="bar1">
-                <input class="searchbarPol" type="text" id="searchTerm" title="Search" placeholder="Search here">
-                <div class="buttons">
-                    <img src="~/Images/search_pol.png" id="searchSubmit" style="width: 45px; height: 45px; margin-top:4px;" onclick="navigateToSearch()" />
-
-                </div>
-            </div>
-            <button type="button" class="btn btn-danger Closepoup" data-dismiss="modal">&times;</button>
-        </div>     
-        <div class="modal-body" style="max-height: 600px; overflow: auto;" id="APLogData">
-            <table class="table d-none" id="dataTable1">
-                <thead class="bg-info text-white">
-                    <tr>
-                        <th class="center">S/No</th>
-                        <th class="center" style="width:15%;">File</th>
-                        <th class="center" style="width:60%;">Content</th>
-                        <th class="center"></th>
-                    </tr>
-                </thead>
-                <tbody id="tbody">
-                </tbody>
-            </table>
-        </div>
-        <footerPolicy>
-            <div class="footerPolicy-content">
-                <p><img src="~/Images/asdc_logo.png" width="45px" height="45px" /> Copyright © 2023. Developed by Army Software Development Centre (ASDC), DGIS</p>
-            </div>
-        </footerPolicy>
-    </div>
-</div>*@
 
 <script src="~/Content/css/sweetalert.min.js"></script>
 <link href="~/Content/css/sweetalert.css" rel="stylesheet" />

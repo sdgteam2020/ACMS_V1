@@ -23,8 +23,8 @@ namespace AA7.Controllers
 {
     public class dbo_FullHierarchyController : Controller
     {
-       // readonly DBConnection con = new DBConnection();
-        readonly SearchDBConnection con = new SearchDBConnection();
+        readonly DBConnection con = new DBConnection();
+       // readonly SearchDBConnection con = new SearchDBConnection();
         private IHSDCAA7DBDBContext db = new IHSDCAA7DBDBContext();
         
 
@@ -401,50 +401,6 @@ namespace AA7.Controllers
 
             return list.ToList();
         }
-
-        //private void ExportData(String Export, GridView gv, DataTable dt)
-        //{
-        //    if (Export == "Pdf")
-        //    {
-        //        PDFform pdfForm = new PDFform(dt, "Dbo. Full Hierarchy", "Many");
-        //        Document document = pdfForm.CreateDocument();
-        //        PdfDocumentRenderer renderer = new PdfDocumentRenderer(true);
-        //        renderer.Document = document;
-        //        renderer.RenderDocument();
-
-        //        MemoryStream stream = new MemoryStream();
-        //        renderer.PdfDocument.Save(stream, false);
-
-        //        Response.Clear();
-        //        Response.AddHeader("content-disposition", "attachment;filename=" + "Report.pdf");
-        //        Response.ContentType = "application/Pdf.pdf";
-        //        Response.BinaryWrite(stream.ToArray());
-        //        Response.Flush();
-        //        Response.End();
-        //    }
-        //    else
-        //    {
-        //        Response.ClearContent();
-        //        Response.Buffer = true;
-        //        if (Export == "Excel")
-        //        {
-        //            Response.AddHeader("content-disposition", "attachment;filename=" + "Report.xls");
-        //            Response.ContentType = "application/Excel.xls";
-        //        }
-        //        else if (Export == "Word")
-        //        {
-        //            Response.AddHeader("content-disposition", "attachment;filename=" + "Report.doc");
-        //            Response.ContentType = "application/Word.doc";
-        //        }
-        //        Response.Charset = "";
-        //        StringWriter sw = new StringWriter();
-        //        HtmlTextWriter htw = new HtmlTextWriter(sw);
-        //        gv.RenderControl(htw);
-        //        Response.Output.Write(sw.ToString());
-        //        Response.Flush();
-        //        Response.End();
-        //    }
-        //}
 
     }
 }

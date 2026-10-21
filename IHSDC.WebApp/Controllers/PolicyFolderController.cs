@@ -50,18 +50,6 @@ namespace IHSDC.WebApp.Controllers
                 model.ILPolicyFolderCRUD = data;
                 ViewBag.count = model.ILPolicyFolderCRUD.Count();
 
-                //#region For Unread AP Count
-                //InboxCRUD CntInbox = new InboxCRUD();
-                //var Cnt = con.CreateAPCRUD(10, CntInbox);
-                //if (Cnt.Count > 0)
-                //{
-                //    ViewBag.UnReadMsg = Cnt.Count;
-                //}
-                //else
-                //{
-                //    ViewBag.UnReadMsg = 0;
-                //}
-                //#endregion
                 return View(model);
             }
             catch (SqlException ex)

@@ -412,7 +412,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Connection\DBConnection.cs" />
-    <Compile Include="Connection\SearchDBConnection.cs" />
     <Compile Include="Controllers\ACCController.cs" />
     <Compile Include="Controllers\AgendaPointMergeController.cs" />
     <Compile Include="Controllers\AnalyticsController.cs" />
@@ -449,7 +448,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\dbo_FullHierarchyController.cs" />
-    <Compile Include="Controllers\HierarchyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -457,8 +455,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Library\Library.cs" />
-    <Compile Include="Library\LibraryAA.cs" />
-    <Compile Include="Library\PDFform.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Master.cs" />
     <Compile Include="Models\dbo_FullHierarchy.cs" />
@@ -586,19 +582,9 @@
     <Content Include="Content\bootstrap-utilities.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\css\bootstrap-datetimepicker.css" />
-    <Content Include="Content\css\bootstrap-datetimepicker.js" />
-    <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
-    <Content Include="Content\css\bootstrap-datetimepicker.min.js" />
     <Content Include="Content\css\bootstrap-multiselect.css" />
     <Content Include="Content\css\bootstrap-multiselect.min.css" />
-    <Content Include="Content\css\bootstrap.bundle.min.js" />
-    <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\dashboard.css" />
-    <Content Include="Content\css\jquery.dataTables.min.css" />
-    <Content Include="Content\css\normalize.min.css" />
-    <Content Include="Content\css\Search.css" />
-    <Content Include="Content\css\style.css" />
     <Content Include="Content\css\sweetalert.css" />
     <Content Include="Content\css\sweetalert.min.js" />
     <Content Include="Content\css\SweetAlert2.js" />
@@ -608,51 +594,24 @@
     <Content Include="Content\CustomJS\AdvSearch.js" />
     <Content Include="Content\CustomJS\alphanumeric.js" />
     <Content Include="Content\CustomJS\AviatorJS.js" />
-    <Content Include="Content\CustomJS\bootstrap-datepicker.min.js" />
     <Content Include="Content\CustomJS\CloseAll.js" />
     <Content Include="Content\CustomJS\DeleteConfirmation.js" />
     <Content Include="Content\CustomJS\DigitalSign.js" />
     <Content Include="Content\CustomJS\email.js" />
-    <Content Include="Content\CustomJS\Filter2.js" />
     <Content Include="Content\CustomJS\Filter1.js" />
     <Content Include="Content\CustomJS\Filter.js" />
     <Content Include="Content\CustomJS\GEBSubmit.js" />
     <Content Include="Content\CustomJS\SearchAgendaPoint.js" />
     <Content Include="Content\CustomJS\MergeAgendaPoint.js" />
     <Content Include="Content\CustomJS\PolicyCorner.js" />
-    <Content Include="Content\CustomJS\printFunctions.js" />
     <Content Include="Content\CustomJS\SignUpfmReg.js" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\images\1256616_indian-army-hd-wallpaper-download.jpg" />
     <Content Include="Content\images\2.jpg" />
-    <Content Include="Content\images\833619f7-94a4-4761-8481-b682122fba06.jpg" />
     <Content Include="Content\images\acc.png" />
     <Content Include="Content\images\ams.png" />
-    <Content Include="Content\images\armylogo.jpg" />
     <Content Include="Content\images\armylogo.png" />
-    <Content Include="Content\images\aviatorlogo.png" />
-    <Content Include="Content\images\b0bafd65-e04b-488f-b81e-f848cc914532.jpg" />
-    <Content Include="Content\images\chop.png" />
-    <Content Include="Content\images\d1.jpg" />
     <Content Include="Content\images\Delete.png" />
-    <Content Include="Content\images\Edit.jpg" />
-    <Content Include="Content\images\Edit.svg" />
-    <Content Include="Content\images\Editnew.png" />
-    <Content Include="Content\images\elsetge.cat_indian-army-photos-wallpaper_318701..jpg" />
-    <Content Include="Content\images\error.jpg" />
-    <Content Include="Content\images\fit.jpg" />
-    <Content Include="Content\images\Fit1.jpg" />
-    <Content Include="Content\images\GEB.png" />
-    <Content Include="Content\images\GEB1.png" />
-    <Content Include="Content\images\koukni.png" />
-    <Content Include="Content\images\Maintain.png" />
-    <Content Include="Content\images\maintenance.PNG" />
-    <Content Include="Content\images\MYImage.png" />
-    <Content Include="Content\images\th.jpg" />
-    <Content Include="Content\images\unit.jpg" />
-    <Content Include="Content\images\users.jpg" />
-    <Content Include="Content\images\wp2556632 %281%29.jpg" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
@@ -1270,12 +1229,10 @@
     <Content Include="Content\Thumbnails\Yeti.png" />
     <Content Include="Content\Yeti\bootstrap.css" />
     <Content Include="Content\Yeti\bootstrap.min.css" />
-    <Content Include="css\chatbot\chatbot.css" />
     <Content Include="css\chatbot\download7.png" />
     <Content Include="css\chatbot\favicon.png" />
     <Content Include="css\chatbot\user4.png" />
     <Content Include="DeveloperCSS\Master.css" />
-    <Content Include="DeveloperCSS\ScheduleLetter.css" />
     <Content Include="DevelopersJs\AddAppt.js" />
     <Content Include="DevelopersJs\AddBranch.js" />
     <Content Include="DevelopersJs\AddCategory.js" />
@@ -1427,10 +1384,6 @@
     <Content Include="NewContent\vendor\bootstrap\js\main.js" />
     <Content Include="NewContent\vendor\bootstrap\js\owl.carousel.min.js" />
     <Content Include="NewContent\vendor\bootstrap\js\popper.min.js" />
-    <Content Include="NewContent\vendor\chart.js\Chart.bundle.js" />
-    <Content Include="NewContent\vendor\chart.js\Chart.bundle.min.js" />
-    <Content Include="NewContent\vendor\chart.js\Chart.js" />
-    <Content Include="NewContent\vendor\chart.js\Chart.min.js" />
     <Content Include="NewContent\vendor\datatables\dataTables.bootstrap4.css" />
     <Content Include="NewContent\vendor\datatables\dataTables.bootstrap4.js" />
     <Content Include="NewContent\vendor\datatables\dataTables.bootstrap4.min.css" />
@@ -3225,10 +3178,8 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -3236,7 +3187,6 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
@@ -3250,11 +3200,7 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\AddSuperior.cshtml" />
-    <Content Include="Views\Hierarchy\Index.cshtml" />
     <Content Include="Views\Master\AddUnit.cshtml" />
-    <Content Include="Views\Message\SessionTimeOut.cshtml" />
-    <Content Include="Views\Message\NoAuth.cshtml" />
-    <Content Include="Views\Message\Blank.cshtml" />
     <Content Include="Views\dbo_tbl_Unit\Create.cshtml" />
     <Content Include="Views\dbo_tbl_Unit\Delete.cshtml" />
     <Content Include="Views\dbo_tbl_Unit\Details.cshtml" />
@@ -3262,7 +3208,6 @@
     <Content Include="Views\dbo_tbl_Unit\Index.cshtml" />
     <Content Include="Views\dbo_tbl_Unit\SessionTimeOut.cshtml" />
     <Content Include="Views\Home\SessionTimeOut.cshtml" />
-    <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Master\AddCorps.cshtml" />
     <Content Include="Views\Master\AddComd.cshtml" />
     <Content Include="Views\Shared\_NewAA7Layout.cshtml" />
@@ -3301,7 +3246,6 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Home\HelpPdf.cshtml" />
     <Content Include="Views\Home\Policies.cshtml" />
-    <Content Include="Views\Home\Test.pdf" />
     <Content Include="Views\Account\RoleNotAuth.cshtml" />
     <Content Include="Views\Home\Maintenance.cshtml" />
     <Content Include="Views\Schedule\ScheduleLetter.cshtml" />
@@ -3341,7 +3285,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="bin\Release\PublishOutput\" />
-    <Folder Include="Content\XML\" />
     <Folder Include="Help\" />
     <Folder Include="MergedFile\" />
     <Folder Include="obj\Debug\" />
@@ -3358,9 +3301,6 @@
     <Folder Include="SqlServerTypes\x64\" />
     <Folder Include="SqlServerTypes\x86\" />
     <Folder Include="Uploads\" />
-    <Folder Include="Views\Analytics\" />
-    <Folder Include="Views\Base\" />
-    <Folder Include="Views\Counter\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

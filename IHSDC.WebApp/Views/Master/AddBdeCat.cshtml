@@ -67,13 +67,7 @@
 
         </div>
         <div class="dropdown-divider"></div>
-        @*<div class="col-12" style="margin-left:35%">
-                <div class="form-group">
-                    <div class="col-sm-6" style="margin-left:10%">
-                        <button type="submit"  style="margin-top: 2.5rem;" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
-                    </div>
-                </div>
-            </div>*@
+        
         <span id="corpsidbind" class="d-none">@ViewBag.corpsId</span>
         <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
 
@@ -108,11 +102,7 @@
                                 <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
                             </a>
                         </td>
-                        @*<td>
-                            <a id="btndel" data-id='@IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.BdeCatId.ToString())' onclick="DeleteConfirmation(this,'/Master/DeleteBdeCat')">
-                                <img src="~/Content/images/Delete.png" width="30" height="30" border="0" />
-                            </a>
-                        </td>*@
+                       
                         <td><span>@item.Orderby</span></td>
                         <td>
                             @if (sno != 1)

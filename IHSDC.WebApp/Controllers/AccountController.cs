@@ -31,7 +31,7 @@ using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace IHSDC.WebApp.Controllers
 {
-    //[Authorize] // remove in case of IAM
+   
     [AllowAnonymous]
     public class AccountController : BaseController
     {
@@ -78,8 +78,7 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
-        //
-        //GET: /Account
+        
         [Authorize]
         public ActionResult Hierarchy()
         {
@@ -135,7 +134,7 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
-        //GET: /Account
+       
         [Authorize]
         public ActionResult HierarchyUsers()
         {
@@ -169,7 +168,7 @@ namespace IHSDC.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
+               
                 try
                 {
                     con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
@@ -210,9 +209,7 @@ namespace IHSDC.WebApp.Controllers
                 var CurrentUser = _db.Users.FirstOrDefault(i => i.UserName == User.Identity.Name);
                 var EditUser = _db.Users.FirstOrDefault(i => i.Id == id);
                 if (EditUser == null) return HttpNotFound("No such user exists. Edit User Failed!");
-                //if (EditUser == CurrentUser) return Redirect("~/Manage/Index");
-                //if (EditUser.Superior == CurrentUser)
-                //{
+              
                 ViewBag.EditUsername = EditUser.UserName;
                 ViewBag.UserId = EditUser.Id;
                 var ss = EditUser.Roles.Single();
@@ -229,9 +226,7 @@ namespace IHSDC.WebApp.Controllers
                 ViewBag.ComdId = UnitData.Command;
                 ViewBag.CorpId = UnitData.Corps;
                 return View(new EditUserViewModel(EditUser));
-                //}
-                //Danger(string.Format("You are not authorised to edit this user. The <strong>{0}</strong> is not your immediate subordinate.", EditUser.UserName), true);
-                //return RedirectToAction("Hierarchy");
+              
             }
             catch (SqlException ex)
             {
@@ -271,13 +266,12 @@ namespace IHSDC.WebApp.Controllers
                 var CurrentUser = _db.Users.FirstOrDefault(i => i.UserName == User.Identity.Name);
                 var EditUser = _db.Users.FirstOrDefault(i => i.Id == model.UserId);
                 var DEFwdAuth = _db.Users.FirstOrDefault();
-                //if (EditUser.Superior == CurrentUser)
-                //{
+               
                 EditUser.DEFwdAuth = model.DEFwdAuth;
                 EditUser.GEBFwdAuth = model.GEBFwdAuth;
                 EditUser.Active = model.Active;
                 EditUser.EstablishmentFull = model.EstablishmentFull;
-                //EditUser.EstablishmentAbbreviation = model.EstablishmentAbbreviation;
+               
                 EditUser.Appointment = model.Appointment;
                 EditUser.MobNo = model.MobNo;
                 EditUser.Rank = model.Rank;
@@ -309,7 +303,7 @@ namespace IHSDC.WebApp.Controllers
                
                 _db.Entry(EditUser).State = EntityState.Modified;
                 _db.SaveChanges();
-                //TempData["message"] = "Update Successfully";
+              
                 DisplayMessage("User editted successfully", "s", "s");
                 return RedirectToAction("Hierarchy");
             }
@@ -366,7 +360,7 @@ namespace IHSDC.WebApp.Controllers
                 Subordinate.Superior = Superior;
             }
 
-            //TODO: Update Hierarchy and Full Hierarchy on account delete and adding superior check reoccurence of _db.SavChanges()
+           
 
             _db.Users.Remove(DeleteUser);
             _db.SaveChanges();
@@ -780,11 +774,10 @@ namespace IHSDC.WebApp.Controllers
 
             OneLogin.Saml.AuthRequest req = new AuthRequest(new AppSettings(), accountSettings);
 
-            //string ReuestXML = req.GetRequest(AuthRequest.AuthRequestFormat.Base64);
-            //string ReuestXML = req.GetLogOutRequest(AuthRequest.AuthRequestFormat.Base64, issueurl, "https://iam2.army.mil/IAM/logout");
+         
             string ReuestXML = req.GetLogOutRequest(AuthRequest.AuthRequestFormat.Base64, issueurl, "https://iam2.army.mil/IAM/logout");
 
-            //Response.Redirect("https://iam2.army.mil/IAM/logout?SAMLResponse=" + ReuestXML);
+          
             Response.Redirect("https://iam2.army.mil/IAM/logout?SAMLResponse=" + ReuestXML);
 
         }
@@ -825,11 +818,11 @@ namespace IHSDC.WebApp.Controllers
                     try
                     {
                         myCert2 = new X509Certificate2(@"C:\\Cert\\App Certificate\\acms.army.mil.pfx", "Abc@2022");
-                        // rsa = (RSACryptoServiceProvider)myCert2.PrivateKey;
+                       
                         #region test
                         using (RSA rs = myCert2.GetRSAPrivateKey())
                         {
-                            // rs.KeySize = 16;
+                           
                             decryptedkey = rs.Decrypt(byteData, RSAEncryptionPadding.Pkcs1);
 
                         }
@@ -844,7 +837,7 @@ namespace IHSDC.WebApp.Controllers
 
                     byte[] iv1 = new byte[16] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
 
-                    // result = DecryptString0705222_Final(plain, rsa.Decrypt(byteData, RSAEncryptionPadding.Pkcs1), iv1);
+                  
                     result = DecryptString0705222_Final(plain, decryptedkey, iv1);
                 }
                 catch (Exception exxx)
@@ -925,12 +918,7 @@ namespace IHSDC.WebApp.Controllers
 
 
 
-        //[AllowAnonymous]
-        //public ActionResult Login(LoginViewModel returnUrl)
-        //{
-        //   // ViewBag.ReturnUrl = returnUrl;
-        //    return View(returnUrl);
-        //}
+      
         private static string URL = "http://localhost:8090/Service1/GetData1";
         private const string DATA = "<?xml version='1.0' encoding='UTF-8'?><varter><title maxlength = '10' > Quote varter</title>  <salutation limit = '40' > Dear Daniel,</salutation></varter>";
         private static string CreateObject()
@@ -1327,27 +1315,12 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                //ViewBag.ButtonName = "Add";
-                //ApptCRUD model = new ApptCRUD();
-                //if (id != null && id != string.Empty)
-                //{
-                //    ViewBag.ButtonName = "Update";
-                //    int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                //    model.ApptId = item;
-                //    var editdata = con.ApptCRUD(2, model);
-                //    model = editdata[0];
-                //}
-                //model.ApptId = 0;
-                //var data = con.ApptCRUD(2, model);
-                //model.ILApptCRUD = data;
-                //ViewBag.count = model.ILApptCRUD.Count();
-                //return View(model);
-                // List<SearchData> DataList = new List<SearchData>();
+                
 
                 UnitCRUD model = new UnitCRUD();
                 model.Unit_ID = 0;
                 var data = con.UnitCRUD(2, model);
-                //   ViewBag.ILUnitCRUD = data;
+               
 
                 return View(data);
             }

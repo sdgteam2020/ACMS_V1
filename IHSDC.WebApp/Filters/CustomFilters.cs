@@ -9,30 +9,31 @@ namespace IHSDC.WebApp.Filters
 {
     public class CustomFilters
     {
-
         public class SessionTimeoutAttribute : ActionFilterAttribute
         {
             public override void OnActionExecuting(ActionExecutingContext filterContext)
             {
                 HttpContext ctx = HttpContext.Current;
+
                 bool allowAnonymous =
-             filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true) ||
-             filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true);
+                    filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true) ||
+                    filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true);
 
                 if (allowAnonymous)
                 {
                     base.OnActionExecuting(filterContext);
                     return;
                 }
-                if (HttpContext.Current.Session["UserIntId"] == null&& HttpContext.Current.Session["UserId"] == null)
+
+                if (ctx.Session?["UserIntId"] == null && ctx.Session?["UserId"] == null)
                 {
-                    ctx.Session.Abandon();
-                    ctx.Session.Clear();
+                    ctx.Session?.Clear();
+                    ctx.Session?.Abandon();
 
                     filterContext.Result = new RedirectResult("~/Account/LocalLogout");
                     return;
-
                 }
+
                 base.OnActionExecuting(filterContext);
             }
         }

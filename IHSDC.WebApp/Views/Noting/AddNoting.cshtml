@@ -267,6 +267,38 @@
             justify-content: center;
             align-content: center;
         }
+
+        /* Restore original Nodal dropdown layout */
+
+        /* Nodal labels on separate lines */
+        #FwdPopup .modal-body > label {
+            display: block !important;
+            width: 100%;
+        }
+
+        /* Original Nodal select */
+        #FwdPopup #NodalId {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            float: none !important;
+        }
+
+        /* In case the dropdown plugin creates a wrapper */
+        #FwdPopup .modal-body > .bootstrap-select,
+        #FwdPopup .modal-body > .select2-container,
+        #FwdPopup .modal-body > .chosen-container {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            float: none !important;
+        }
+
+        /* Dropdown button inside generated wrapper */
+        #FwdPopup .bootstrap-select > .dropdown-toggle {
+            width: 100% !important;
+        }
+
     </style>
 
     <style id="table_style1" type="text/css">

@@ -58,11 +58,49 @@
     .top-border-black {
         border-top: 1px solid black;
     }
+    .lowzoom-card {
+        box-shadow: -1px 2px 16px 3px;
+        padding: 0.5rem;
+    }
+    .custom-text-center {
+        text-align: center;
+    }
+    .custom-hidden {
+        display: none;
+    }
+    .custom-table-spacing {
+        margin-left: 1rem;
+        padding-right: 2rem;
+    }
+    .custom-modal-dialog {
+        margin-top: 130px;
+        width: 400mm;
+        max-width: 100%;
+        box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5);
+    }
+    .custom-modal-body {
+        max-height: 600px;
+        overflow: auto;
+    }
+    .custom-watermark {
+        transform: rotate(-45deg);
+        z-index: 10000;
+        opacity: 0.3;
+        color: #8e9191;
+        position: fixed;
+        left: 6%;
+        top: 39%;
+        font-size: 80px;
+        font-weight: 500;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+    }
 </style>
-<div class="card-body" id="lowzoom" style="box-shadow: -1px 2px 16px 3px; padding: 0.5rem;">
+<div class="card-body lowzoom-card" id="lowzoom">
     <div class="row">
         <div class="col">
-            <h3 style="text-align: center;">
+            <h3 class="custom-text-center">
                 Counter Logs
                 <a class="btn btn-info float-right" href="@Url.Action("Index","Home")" target="_top">
                     Back
@@ -73,16 +111,16 @@
     </div>
     @using (Html.BeginForm("CounterLog", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <div style="display:none;" class="rcorners">
+        <div class="rcorners custom-hidden">
             <div class="row">
                 <div class="col-2">
                     <p class="mb-0">From Date</p>
-                    
+
                 </div>
 
                 <div class="col-2">
                     <p class="mb-0">To Date</p>
-                    
+
                 </div>
 
             </div>
@@ -92,7 +130,7 @@
 
 
         <div class="row">
-            <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+            <div class="table-responsive custom-table-spacing">
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead class="bg-info text-white">
                         <tr>
@@ -101,7 +139,7 @@
                             <th class="center">Today</th>
                             <th class="center">Current Month</th>
                             <th class="center">Total</th>
-                            <th style="display:none;" class="center">ComdName</th>
+                            <th class="center custom-hidden">ComdName</th>
                             <th class="center">Counter Log</th>
                         </tr>
                     </thead>
@@ -125,8 +163,8 @@
 
                                     <td>@Html.DisplayFor(modelItem => item.Total)</td>
 
-                                    <td style="display:none"><spam class="Aviator_ID">@Html.DisplayFor(modelItem => item.ComdName)</spam></td>
-                                
+                                    <td class="center custom-hidden"><spam class="Aviator_ID">@Html.DisplayFor(modelItem => item.ComdName)</spam></td>
+
                                     <td>
                                         <button type="button" data-toggle="modal" data-target="#CounterLog" id="BtnUserLog" class="btn btn-success BtnUserLog">
                                             <i class='far fa-user-circle'></i>
@@ -137,7 +175,7 @@
                         }
                         else
                         {
-                            
+
                         }
                     </tbody>
                 </table>
@@ -158,14 +196,14 @@
 
 
 <div class="modal fade" id="CounterLog">
-    <div class="modal-dialog" style="margin-top: 130px; width: 400mm; max-width: 100%; box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5); ">
+    <div class="modal-dialog custom-modal-dialog">
         <div class="modal-content">
             <div class="modal-header text-center">
-               
+
                 <button type="button" class="btn btn-danger CloseLogpoup ml-auto" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body" style="max-height: 600px; overflow: auto;" id="UserLogPrint">
-                <h3 style="text-align:center">Counter Log</h3>
+            <div class="modal-body custom-modal-body" id="UserLogPrint">
+                <h3 class="custom-text-center">Counter Log</h3>
 
                 <div class="table-responsive">
                     <table class="table table-striped" id="aviatorTable" width="100%" cellspacing="0">
@@ -204,7 +242,7 @@
         popupWin.document.write(table_style);
         popupWin.document.write('</style>')
         popupWin.document.title = 'MonthWiseUsersLog';
-        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + '@(ViewBag.ipadd)' + "" + '</html>');
+        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '<div class="custom-watermark">' + '@(ViewBag.ipadd)' + "" + '</html>');
         popupWin.document.close();
     }
 

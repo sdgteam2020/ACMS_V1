@@ -82,7 +82,7 @@
                                 <td>
                                     
 
-                                    <a onclick="location.href='@Url.Action("Edit", "Account", new { id = item.Id })'">
+                                    <a href="@Url.Action("Edit", "Account", new { id = item.Id })">
                                         <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
                                     </a>
                                 </td>
@@ -90,7 +90,7 @@
                                     @if (User.Identity.Name == IHSDC.Common.Configurations.Application.AdminUsername)
                                     {
                                        
-                                        <a onclick="location.href='@Url.Action("Delete", "Account", new { id = item.Id })'">
+                                        <a href="@Url.Action("Delete", "Account", new { id = item.Id })">
                                             <img src="~/Content/images/Delete.png" width="30" height="30" border="0" />
                                         </a>
                                     }

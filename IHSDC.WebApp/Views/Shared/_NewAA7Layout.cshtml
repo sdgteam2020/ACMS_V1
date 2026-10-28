@@ -18,24 +18,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>ACMS </title>
-    <!-- Bootstrap core CSS-->
+  
     <link href="~/NewContent/vendor/bootstrap/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom fonts for this template-->
+ 
     <link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <!-- Page level plugin CSS-->
-    <!-- Page level plugin CSS-->
+ 
     <link href="~/NewContent/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <!-- Custom styles for this template-->
+
     <link href="~/NewContent/css/sb-admin.css" rel="stylesheet">
-    @*// @Scripts.Render("~/bundles/modernizr")*@
+ 
     <link href="~/NewContent/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link href="~/NewContent/css/Sidebar.css" rel="stylesheet">
-    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+
     <link rel="icon" href="~/Images/dgis_ico.png" type="image/x-icon">
 
-    <!-- dataTable4-->
-    @*<link rel="stylesheet" href="~/NewContent/dataTable4/css/bootstrap.css">*@
+  
     <link rel="stylesheet" href="~/NewContent/dataTable4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="~/NewContent/dataTable4/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="~/NewContent/dataTable4/css/responsive.bootstrap4.min.css">
@@ -77,7 +75,7 @@
 
         .dropdown-item:hover {
             background: #4CAF50 !important;
-            /* font-size: 9px !important;*/
+          
             border-radius: 13px;
         }
 
@@ -136,7 +134,7 @@
             border: 1px solid transparent;
             -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
             box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
-            /*margin-top: 0px !important;*/
+           
             padding-top: 0;
             padding-bottom: 0;
             padding: 10px;
@@ -223,7 +221,7 @@
 
         .item {
             position: relative;
-            /* padding-top: 20px;*/
+         
             display: inline-block;
         }
 
@@ -332,10 +330,7 @@
             .footertitle {
                 font-size: 22px;
             }
-            /*
-           .sticky-footer {
-                background-color: darkblue;
-            }*/
+          
 
             .footersubtitle {
                 font-size: 12px;
@@ -371,15 +366,146 @@
                 max-width: 135px;
             }
         }
+       
+        .sidebar-toggle-btn {
+            margin-left: 10px;
+        }
+        .sidebar-menu-icon {
+            color: white;
+            font-size: 18px;
+        }
+        .user-dropdown {
+            float: right;
+            margin-top: 0;
+        }
+        .user-edit-icon {
+            color: white;
+            font-size: 26px;
+        }
+        .nav-link.home-link {
+            color: white;
+        }
+        .dashboard-icon {
+            color: white;
+            font-size: 15px;
+        }
+        .dashboard-brand {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+        }
+      
+        .menu-link {
+            color: white;
+            font-size: 16px;
+        }
+
+     
+        .menu-icon {
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+       
+        .menu-text {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            margin-right: 3px;
+        }
+
+       
+        .dropdown-text {
+            font-size: 16px;
+        }
+
+       
+        .menu-link:hover {
+            color: lightgray;
+            text-decoration: none;
+        }
+
+            .menu-link:hover .menu-icon,
+            .menu-link:hover .menu-text {
+                color: lightgray;
+            }  
+
+        .menu-text1 {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .initiate-text {
+            margin-right: 3px;
+        }
+
+        .conference-text {
+            margin-right: 0;
+            margin-top: -9px;
+        }
+        .custom-nav-link {
+            color: white;
+        }
+
+          
+        .add-separator {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            margin-right: 3px;
+        }
+        .custom-navbar-text {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            margin-right: 0;
+            margin-top: -9px;
+        }
+        .master-menu-link {
+            font-size: 16px;
+        }
+        .print-icon {
+            color: white;
+        }
+        .report-menu-link {
+    font-size: 16px;
+}
+        .envelope-icon {
+            margin-left: 10px;
+        }
+        .custom-navbar-text {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .download-icon {
+            margin-left: 10px;
+        }
+        .download-icon-color {
+            margin-left: 10px;
+            color: white;
+        }
+        .hidden-section {
+            display: none;
+        }
+        .footer-subtitle-custom {
+            float: right;
+            font-size: 18px;
+        }
+        .asdc-chat-title {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body id="page-top" class="sidebar-toggled">
     <div class="header" id="myHeader">
        
         <nav class="navbar navbar-expand  static-top text-light">
-            <img src="~/Content/images/armylogo.png" class="imglogo" />   @*<span class="navbar-brand mr-1 text-light" href="#" style="color: white;font-weight:600;font-size: 28px;">AVIATORS AUTOMATION(GEB) - AA7</span>*@
-            <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#" style="margin-left:10px;">
-                <i class="fas fa-bars" style="color:white;font-size:18px"></i>
+            <img src="~/Content/images/armylogo.png" class="imglogo" />   
+            <button class="btn btn-link btn-sm text-white order-1 order-sm-0 sidebar-toggle-btn" href="#">
+                <i class="fas fa-bars sidebar-menu-icon"></i>
             </button>
             <img src="~/Content/images/acc.png" class="imgback" />
 
@@ -388,14 +514,14 @@
 
 
             <div class="navbar-nav ml-auto ml-md-0">
-                <div class="nav-item dropdown no-arrow text-light d-flex" style="float:right;margin-top:0px;">
+                <div class="nav-item dropdown no-arrow text-light d-flex user-dropdown">
                     @{
                         DtoSessions dto = SessionHeplers.GetObject<DtoSessions>(
                             Context.Session,
                             "Token"
                         );
                     }
-                    
+
 
                     <input type="hidden" value="@dto.Salt" id="hiddenSa" />
 
@@ -404,7 +530,7 @@
                         <a href='@Url.Action("Edit", "Account", new { id = @SessionManager.UserEditId })'>
                             <div class="hover-text">
                                 <span class="tooltip-text" id="bottom">Update Profile</span>
-                                <i class="fas fa-user-edit" style="color:white; font-size:26px;"></i>
+                                <i class="fas fa-user-edit user-edit-icon"></i>
                             </div>
                         </a>
                     }
@@ -426,11 +552,11 @@
 
 
 
-                        <!--@SessionManager.UserName--> @*| Role : @SessionManager.Role*@ <!--<br />-->
+
                         @SessionManager.RankName @SessionManager.UserFullName <br />
                         Domain Id:  @SessionManager.UserName <br />
                         Role : @SessionManager.Role
-                       
+
                     </h4>
                     @if (ConfigurationManager.AppSettings["hardSAMLResonoce"] == "true")
                     {
@@ -469,137 +595,114 @@
                 {
 
                     <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("Index", "Home")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Dashboad
-                            </span>
-                        </a>
-                    </li>
-                    <!--Master Comd Corps Unit Add-->
-                    <li class="nav-item dropdown">
-                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-fw fa-folder" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                                Comd /
-                            </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
-                                PSOs
-                            </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
-                                Br
-                            </span>
-                        </a>
-                        <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
+                    <a class="nav-link home-link" href='@Url.Action("Index", "Home")'>
 
-                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='@Url.Action("AddComd", "Master")' )>Comd/PSOs</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='@Url.Action("AddCorps", "Master")' )>DGs</a>
-                            
-                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='@Url.Action("AddUnit", "Master")' )>Branch</a>
+                        <i class="fas fa-fw fa-tachometer-alt text-light dashboard-icon"></i>
+                        <span class="navbar-brand mr-1 text-light dashboard-brand">
+                            Dashboard
+                        </span>
+                    </a>
+                </li>
+                  
+                  
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle menu-link"
+                           href="#"
+                           id="MasterM1"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+
+                            <i class="fas fa-fw fa-folder menu-icon"></i>
+
+                            <span class="menu-text">Comd /</span>
+                            <span class="menu-text">PSOs</span>
+                            <span class="menu-text">Br</span>
+                        </a>
+
+                        <div class="dropdown-menu fix" aria-labelledby="pagesDropdown">
+                            <a class="dropdown-item dropdown-text"
+                               id="master1"
+                               href='@Url.Action("AddComd", "Master")'>Comd/PSOs</a>
+
+                            <a class="dropdown-item dropdown-text"
+                               href='@Url.Action("AddCorps", "Master")'>DGs</a>
+
+                            <a class="dropdown-item dropdown-text"
+                               href='@Url.Action("AddUnit", "Master")'>Branch</a>
                         </div>
                     </li>
-                   
+
                     <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddRank", "Master")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fas fa-id-card" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Rank
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddAppt", "Master")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fas fa-id-badge" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Appt
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddBranch", "Master")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fas fa-industry" style="color: white; font-weight: 600; font-size: 16px;"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                AP Branch
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddCategory", "Master")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fa fa-cogs"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Category
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddTypeofConf", "Master")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fa fa-group"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Conf Type
-                            </span>
+                        <a class="nav-link menu-link" href='@Url.Action("AddRank", "Master")'>
+                            <i class="fas fa-id-card menu-icon"></i>
+                            <span class="menu-text">Rank</span>
                         </a>
                     </li>
 
                     <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddPolicy", "Master")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fa fa-object-group"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Folder
-                            </span>
-                        </a>
-                    </li>
-
-
-
-                    <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("AddFolderControl", "Master")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fa fa-shield-alt"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Folder
-                            </span>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Access
-                            </span>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Permission
-                            </span>
+                        <a class="nav-link menu-link" href='@Url.Action("AddAppt", "Master")'>
+                            <i class="fas fa-id-badge menu-icon"></i>
+                            <span class="menu-text">Appt</span>
                         </a>
                     </li>
 
                     <li class="nav-item active">
-                        <a class="nav-link" style="color:white" href='@Url.Action("Hierarchy", "Account")'>
-                            @*<i class="fas fa-fw fa-tachometer-alt text-light" style=" color: white;font-size: 15px;"></i>*@
-                            <i class="fa fa-universal-access"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Users
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" style="color:white" id="Roles" href='@Url.Action("Index", "Roles")'>
-
-                            <i class="fa fa-edit"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                Role
-                            </span>
+                        <a class="nav-link menu-link" href='@Url.Action("AddBranch", "Master")'>
+                            <i class="fas fa-industry menu-icon"></i>
+                            <span class="menu-text">AP Branch</span>
                         </a>
                     </li>
 
                     <li class="nav-item active">
-                        <a class="nav-link" style="color:white" id="Roles" href='@Url.Action("UserLog", "Master")'>
+                        <a class="nav-link menu-link" href='@Url.Action("AddCategory", "Master")'>
+                            <i class="fa fa-cogs menu-icon"></i>
+                            <span class="menu-text">Category</span>
+                        </a>
+                    </li>
 
-                            <i class="fa fa-edit"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">
-                                User Log
-                            </span>
+                    <li class="nav-item active">
+                        <a class="nav-link menu-link" href='@Url.Action("AddTypeofConf", "Master")'>
+                            <i class="fa fa-group menu-icon"></i>
+                            <span class="menu-text">Conf Type</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link menu-link" href='@Url.Action("AddPolicy", "Master")'>
+                            <i class="fa fa-object-group menu-icon"></i>
+                            <span class="menu-text">Folder</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link menu-link" href='@Url.Action("AddFolderControl", "Master")'>
+                            <i class="fa fa-shield-alt menu-icon"></i>
+                            <span class="menu-text">Folder</span>
+                            <span class="menu-text">Access</span>
+                            <span class="menu-text">Permission</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link menu-link" href='@Url.Action("Hierarchy", "Account")'>
+                            <i class="fa fa-universal-access menu-icon"></i>
+                            <span class="menu-text">Users</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link menu-link" id="Roles" href='@Url.Action("Index", "Roles")'>
+                            <i class="fa fa-edit menu-icon"></i>
+                            <span class="menu-text">Role</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link menu-link" href='@Url.Action("UserLog", "Master")'>
+                            <i class="fa fa-edit menu-icon"></i>
+                            <span class="menu-text">User Log</span>
                         </a>
                     </li>
 
@@ -610,12 +713,10 @@
                 {
 
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="~/Schedule/ScheduleLetter">
-                            <i class="fas fa-plus-circle"></i>
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                                Initiate
-                            </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; " class="navbar-brand text-light"> Conference</span>
+                        <a class="nav-link menu-link" href="~/Schedule/ScheduleLetter">
+                            <i class="fas fa-plus-circle menu-icon"></i>
+                            <span class="menu-text1 initiate-text">Initiate</span>
+                            <span class="menu-text1 conference-text">Conference</span>
                         </a>
                     </li>
 
@@ -624,38 +725,45 @@
                 }
                 if (SessionManager.RoleId == enum1.GSO1 || SessionManager.RoleId == enum1.Sponsor || SessionManager.RoleId == enum1.Nodal)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="~/ACC/AddAgenda">
-                            <i class="fas fa-check-circle"></i>
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
-                                Add /
-                            </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
-                                View
-                            </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
-                                Agenda
-                            </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
-                                Pt
-                            </span>
-                        </a>
-                    </li>
+        <li class="nav-item">
+            
+                <a class="nav-link custom-nav-link" href="~/ACC/AddAgenda">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="navbar-brand text-light add-separator">
+                        Add /
+                    </span>
+                    <span class="navbar-brand text-light custom-navbar-text">
+                        View
+                    </span>
+                    <span class="navbar-brand text-light custom-navbar-text">
+                        Agenda
+                    </span>
+                    <span class="navbar-brand text-light custom-navbar-text">
+                        Pt
+                    </span>
+                </a>
+        </li>
                     <li class="nav-item dropdown">
-                        <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-print" style="color:white;"></i>
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                        <a class="nav-link dropdown-toggle master-menu-link"
+   href="#"
+   id="MasterM1"
+   role="button"
+   data-toggle="dropdown"
+   aria-haspopup="true"
+   aria-expanded="false">
+                            <i class="fas fa-print print-icon"></i>
+                            <span class="navbar-brand text-light add-separator">
                                 Reports
                             </span>
                         </a>
                         <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Report/Reports' )>View Report</a>
-                            <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/ACC/Analysis' )>Analysis</a>
+                            <a class="dropdown-item report-menu-link" id="master1" href='~/Report/Reports' )>View Report</a>
+                            <a class="dropdown-item report-menu-link" id="master1" href='~/ACC/Analysis' )>Analysis</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="~/ACC/AddInboxNotingFwd">
-                            <i class="fas fa-envelope-open" style="margin-left:10px;"></i>
+                        <a class="nav-link custom-nav-link" href="~/ACC/AddInboxNotingFwd">
+                            <i class="fas fa-envelope-open envelope-icon"></i>
 
                             @if (ViewBag.UnReadMsg != 0)
                             {
@@ -665,76 +773,76 @@
                             }
 
 
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Inbox</span>
+                        <span class="navbar-brand mr-1 text-light custom-navbar-text">Inbox</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="~/AgendaPointMerge/SearchInboxNoting">
+                        <a class="nav-link custom-nav-link" href="~/AgendaPointMerge/SearchInboxNoting">
                             <i class="fa fa-search"></i>
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light add-separator">
                                 Active
                             </span>
 
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light custom-navbar-text">
                                 Agenda
                             </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light custom-navbar-text">
                                 Pt
                             </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="~/Sent/AddSentBox">
+                        <a class="nav-link custom-nav-link" href="~/Sent/AddSentBox">
 
                             <div class="item">
                                 <i class="fas fa-paper-plane"></i>
                             </div>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Sent</span>
+                            <span class="navbar-brand mr-1 text-light custom-navbar-text">Sent</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="~/ACC/ClosedAgendaList">
+                        <a class="nav-link custom-nav-link" href="~/ACC/ClosedAgendaList">
                             <i class="fas fa-times-circle"></i>
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light add-separator">
                                 Closed
                             </span>
 
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light custom-navbar-text">
                                 Agenda
                             </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light custom-navbar-text">
                                 Pt
                             </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="~/AgendaPointMerge/AgendaPointMerge">
+                        <a class="nav-link custom-nav-link" href="~/AgendaPointMerge/AgendaPointMerge">
                             <i class="fas fa-files-o"></i>
-                            <span style=" color: white;font-size: 16px;font-weight:500;margin-right: 3px;" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light add-separator">
                                 Merge
                             </span>
 
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light custom-navbar-text">
                                 Agenda
                             </span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                            <span class="navbar-brand text-light custom-navbar-text">
                                 Pt
                             </span>
                         </a>
                     </li>
 
-                   
+
                     if (SessionManager.RoleId == enum1.Sponsor || SessionManager.RoleId == enum1.Nodal)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white" href="~/PolicyFolder/PolicyFolder">
-                                <i class="fa fa-download" style="margin-left:10px;"></i>
+                            <a class="nav-link custom-nav-link" href="~/PolicyFolder/PolicyFolder">
+                                <i class="fa fa-download download-icon"></i>
 
                                 <div class="newblink" href="#">New</div>
 
-                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Folder &</span>
-                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Resource</span>
-                                <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                <span class="navbar-brand mr-1 text-light custom-navbar-text">Folder &</span>
+                                <span class="navbar-brand mr-1 text-light custom-navbar-text">Resource</span>
+                                <span class="navbar-brand text-light custom-navbar-text">
                                     Corner
                                 </span>
                             </a>
@@ -744,28 +852,28 @@
                     if (SessionManager.RoleId == enum1.GSO1)
                     {
                         <li class="nav-item dropdown">
-                            <a style=" font-size: 16px;" class="nav-link dropdown-toggle" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-download" style="margin-left: 10px; color: white;"></i>
+                            <a class="nav-link dropdown-toggle master-menu-link" href="#" id="MasterM1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-download download-icon-color"></i>
                                 <div class="newblink" href="#">New</div>
-                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Folder &</span>
-                                <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Resource</span>
-                                <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                                <span class="navbar-brand mr-1 text-light custom-navbar-text">Folder &</span>
+                                <span class="navbar-brand mr-1 text-light custom-navbar-text">Resource</span>
+                               <span class="navbar-brand text-light custom-navbar-text">
                                     Corner
                                 </span>
                             </a>
                             <div class="dropdown-menu  fix" aria-labelledby="pagesDropdown">
-                                
-                                <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/PolicyFolder/PolicyFolder' )>View Folder & Resource</a>
-                                <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddPolicy' )>Upload Folder & Resource</a>
-                                <a style=" font-size: 16px;" class="dropdown-item" id="master1" href='~/Master/AddFolderControl' )>Manage Folder & Resource Access Permission</a>
+
+                                <a class="dropdown-item master-menu-link" id="master1" href='~/PolicyFolder/PolicyFolder' )>View Folder & Resource</a>
+                                <a class="dropdown-item master-menu-link" id="master1" href='~/Master/AddPolicy' )>Upload Folder & Resource</a>
+                                <a  class="dropdown-item master-menu-link" id="master1" href='~/Master/AddFolderControl' )>Manage Folder & Resource Access Permission</a>
                             </div>
                         </li>
                     }
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="~/Home/ContactUs">
+                        <a class="nav-link custom-nav-link" href="~/Home/ContactUs">
                             <i class="fa fa-address-book"></i>
-                            <span class="navbar-brand mr-1 text-light" style=" color: white;font-size: 16px;font-weight:500">Contact</span>
-                            <span style=" color: white; font-size: 16px; font-weight: 500; margin-Right: 0px; margin-top: -9px; /*! margin-left: -3px; */ /*! margin-left: 13px; */" class="navbar-brand text-light">
+                            <span class="navbar-brand mr-1 text-light custom-navbar-text">Contact</span>
+                            <span class="navbar-brand text-light custom-navbar-text">
                                 Us
                             </span>
                         </a>
@@ -794,8 +902,8 @@
                             <div class="col-md-2"></div>
                             <div class="col-md-8 text-center footertitle"> <p class="mb-0  text-light">Copyright © 2023. Developed by <span class="text-danger text-light">Army Software Development Centre (ASDC), DGIS</span></div>
                             <div class="col-md-2">
-                                @*<div class="text-right footersubtitle" style="font-size:18px;">*@
-                                <div class="footersubtitle text-nowrap mt-2" style="float: right; font-size: 18px;">
+                              
+                                <div class="footersubtitle text-nowrap mt-2 footer-subtitle-custom">
                                     <label class="text-light mr-2">Visitors -</label>
                                     <label class="text-light mr-2">Today : <span id="spnTodayCnt"></span></label>
                                     <label class="text-light mr-2">Monthly : <span id="spnMonthlyCnt"></span></label>
@@ -818,7 +926,7 @@
                     <div class="asdc-chat-header-left">
                         <img src="~/css/chatbot/favicon.png" alt="ASDC" class="asdc-chat-logo">
                         <div class="asdc-chat-title-wrap">
-                            <h3 id="asdcChatTitle" class="asdc-chat-title" style="text-decoration: none;">DGIS Assistant (ACMS)</h3>
+                            <h3 id="asdcChatTitle" class="asdc-chat-title">DGIS Assistant (ACMS)</h3>
                             <small class="asdc-chat-subtitle">
                                 Developed by ASDC, DGIS
                             </small>
@@ -841,14 +949,13 @@
             </div>
 
         </div>
-        <!-- /.content-wrapper -->
+      
     </div>
-    <!-- /#wrapper -->
-    <!-- Scroll to Top Button-->
+    
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    <!-- Logout Modal-->
+   
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -867,7 +974,7 @@
         </div>
     </div>
     <!-- Bootstrap core JavaScript-->
-    <div style="display:none">
+    <div class="hidden-section">
         <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
         <script src="~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Core plugin JavaScript-->
@@ -897,7 +1004,7 @@
         <script src="~/NewContent/dataTable4/js/dataTables.responsive.min.js"></script>
         <script src="~/NewContent/dataTable4/js/responsive.bootstrap4.min.js"></script>
         <script src="~/NewContent/dataTable4/js/dataTables.colReorder.min.js"></script>
-        @*<script src="~/NewContent/dataTable4/js/jquery-3.7.0.js"></script>*@
+
         <script src="~/NewContent/dataTable4/js/dataTables.searchBuilder.min.js"></script>
         <script src="~/NewContent/dataTable4/js/dataTables.dateTime.min.js"></script>
         <script src="~/NewContent/dataTable4/js/fnMultiFilter.js"></script>
@@ -925,7 +1032,7 @@
     </script>
     <script>
         const currentPage = window.location.pathname;
-        // find the link that matches the current page URL and add the active class
+       
         const links = document.querySelectorAll(".sidebar a");
         for (let i = 0; i < links.length; i++) {
             if (links[i].href === currentPage) {
@@ -937,15 +1044,12 @@
     <script>
         $(document).ready(function () {
 
-            //if (window.location.href.replace("http://localhost:8080/", ""))
-            //alert(window.location.href.replace("http://localhost:8080/", ""));
+            
             $('.aj1 ul li ').find('a').each(function () {
                 var text = $(this).attr("href");
                 if (window.location.pathname.replace(window.location.origin, "") == text) {
                     var ss = (window.location.pathname.replace(window.location.origin, "")).replace("/", "").split("/")
-                    /* alert(ss[0]);*/
-                    // alert(window.location.pathname.replace(window.location.origin, "") + '---' + text)
-                    /*alert($(this).html())*/
+                   
                     $(this).addClass("active");
 
                     if ($(this).html() == 'User Log' || $(this).html() == 'Aviator Log') {
@@ -969,9 +1073,7 @@
                     else if ($(this).html() == 'Aircraft Type(RPAS)' || $(this).html() == 'AC(RPAS) Master' || $(this).html() == 'RPAS Substream' || $(this).html() == 'RPAS CAT' || $(this).html() == 'RPAS Instr CAT' || $(this).html() == 'Aviator Status(RPAS)') {
                         $("#pagesDropdown4").addClass('active')
                     }
-                    //else if ($(this).html() == 'Accident Cat' || $(this).html() == 'Accident Sub Cat' || $(this).html() == 'Stages Ground Accident' || $(this).html() == 'Period Operation' || $(this).html() == 'Class Injury') {
-                    //    $("#pagesDropdown5").addClass('active')
-                    //}
+                   
                 }
                 else {
                     $(this).removeClass("active");
@@ -987,7 +1089,7 @@
         var year = date.getFullYear();
         var month = date.getMonth();
         $('.datepicker').datepicker({
-            //format: "MM yyyy",
+          
             minViewMode: 1,
             weekStart: 1,
             daysOfWeekHighlighted: "6,0",
@@ -1000,16 +1102,16 @@
             format: "dd/M/yyyy",
             autoclose: true,
         });
-        /*  $('#Month').datepicker("setDate", new Date());*/
+       
     </script>
 
     <script>
         $(document).ready(function () {
-            // Add click event to all sidenav links
+          
             $('.sidebar a').click(function () {
-                // Remove "active" class from all links
+               
                 $('.sidebar a').removeClass('active');
-                // Add "active" class to the clicked link
+               
                 $(this).addClass('active');
             });
         });
@@ -1048,10 +1150,10 @@
             let startX = 0, startY = 0;      // mouse/touch position at mousedown
             let startLeft = 0, startTop = 0; // dialog position at mousedown
 
-            // compute current numeric left/top of dialog
+           
             function getDialogRect() {
                 const r = dialog.getBoundingClientRect();
-                // when bottom/right were used initially, convert to left/top now
+              
                 if (dialog.style.left === '' && dialog.style.right !== '') {
                     dialog.style.left = (window.innerWidth - r.right) + 'px';
                     dialog.style.top = (r.top) + 'px';
@@ -1070,7 +1172,7 @@
                 startLeft = rect.left;
                 startTop = rect.top;
 
-                // prevent text selection while dragging
+               
                 document.body.style.userSelect = 'none';
             }
 
@@ -1083,7 +1185,7 @@
                 let newLeft = startLeft + dx;
                 let newTop = startTop + dy;
 
-                // keep inside viewport
+              
                 const rect = dialog.getBoundingClientRect();
                 const maxLeft = window.innerWidth - rect.width;
                 const maxTop = window.innerHeight - rect.height;
@@ -1107,7 +1209,7 @@
             document.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
             document.addEventListener('mouseup', onEnd);
 
-            // Touch events (mobile)
+        
             handle.addEventListener('touchstart', (e) => {
                 const t = e.touches[0];
                 onStart(t.clientX, t.clientY);
@@ -1121,11 +1223,11 @@
 
             document.addEventListener('touchend', onEnd);
 
-            // If you toggle fullscreen, reset position when exiting
+          
             const fullscreenBtn = document.getElementById('asdcFullscreen');
             fullscreenBtn?.addEventListener('click', () => {
                 if (!dialog.classList.contains('fullscreen')) {
-                    // leaving fullscreen → snap to bottom-right baseline again
+                  
                     dialog.style.bottom = '20px';
                     dialog.style.right = '20px';
                     dialog.style.left = '';
@@ -1216,13 +1318,11 @@
                 welcomeShown = true;
             }
 
-            // Start heartbeat while open (every 4 min)
-
-            // Focus management
+           
             const f = focusableElements(dlg);
             if (f.length) f[0].focus();
 
-            // Scroll to last
+           
             requestAnimationFrame(() => {
                 chatBox.scrollTop = chatBox.scrollHeight;
             });
@@ -1238,13 +1338,13 @@
             toggleBtn.setAttribute('aria-expanded', 'false');
             isOpen = false;
 
-            // Stop heartbeat
+        
             if (heartbeatTimer) {
                 clearInterval(heartbeatTimer);
                 heartbeatTimer = null;
             }
 
-            // Return focus to toggle
+          
             toggleBtn.focus();
 
             document.removeEventListener('keydown', onEsc, { capture: true });
@@ -1651,9 +1751,7 @@
             position: relative;
             overflow: hidden;
         }
-        /*a:hover {
-                    background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);
-                }*/
+       
 
         .dropdown-item:hover {
             background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);

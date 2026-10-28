@@ -1,0 +1,99 @@
+﻿
+.custom-login-navbar {
+    margin-top: -5rem;
+}
+
+
+.custom-army-logo {
+    height: 105px;
+    min-height: 105px;
+    width: 105px;
+    min-width: 105px;
+}
+
+
+.custom-acc-logo {
+    height: 110px;
+    margin-left: -155px;
+}
+
+
+.custom-login-card {
+    min-width: 779px;
+    border-radius: 1rem;
+    width: 1rem;
+    height: 338px;
+    min-height: 330px !important;
+}
+
+
+.custom-login-row {
+    width: 50rem;
+}
+
+
+.custom-login-image {
+    border-radius: 1rem 0 0 1rem;
+    margin-left: 1px;
+    height: 301px;
+    max-width: 319px;
+    max-height: 321px;
+}
+
+
+.custom-login-column {
+    height: 22rem;
+}
+
+
+.custom-login-form-card {
+    border-radius: 1rem;
+    height: 19rem;
+    margin-top: -2rem;
+    margin-right: 5px;
+}
+
+
+.custom-login-card-body {
+    max-height: 222px;
+    width: 447px;
+    max-width: 496px;
+    margin-top: -17px;
+}
+
+.custom-login-input {
+    width: 263px;
+    max-width: 263px;
+}
+
+.custom-remember-group {
+    margin-bottom: 0.5rem !important;
+}
+
+.custom-login-checkbox {
+    margin-top: -1rem;
+}
+
+.custom-login-button-container {
+    margin-top: -1rem;
+}
+
+
+.custom-login-button {
+    margin-right: 9rem;
+    margin-top: 15px;
+}
+
+
+.custom-login-footer {
+    background: linear-gradient( 90deg, rgba(0, 211, 255, 1) 0%, rgba(12, 141, 242, 1) 66%, rgba(22, 125, 207, 1) 99% );
+    opacity: 1;
+    position: fixed;
+    border-bottom: 2px;
+    width: 100%;
+    height: 36px;
+}
+
+.custom-login-footer-text {
+    font-size: 22px;
+}

@@ -291,7 +291,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.CloseDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.CloseReason)</td>
                                                 <td>
-                                                    <a onclick="location.href='@Url.Action("OpenAgendaPtNoting", "Noting", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString())})'">
+                                                    <a href="@Url.Action("OpenAgendaPtNoting", "Noting", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Inbox_ID.ToString())})">
 
                                                         <div class="openbut"></div>
                                                     </a>
@@ -426,20 +426,25 @@
     text-align: center;
     margin-top: 20px;
 }
-.custom-watermark {
+.custom-page-heading {
+    text-align: center;
+    margin-top: 20px;
+}
+.print-watermark {
     transform: rotate(-45deg);
     z-index: 10000;
     opacity: 0.3;
-    color: #8e9191;
     position: fixed;
     left: 6%;
     top: 39%;
+    color: #8e9191;
     font-size: 80px;
     font-weight: 500;
     display: grid;
     justify-content: center;
     align-content: center;
 }
+
                                 footer {
                                     position: fixed;
                                     bottom: 0;
@@ -495,8 +500,8 @@
         tableHTML += '</tbody>';
 
         tableHTML += '</table>';
-        var pageHeading = '<h1 style="text-align: center; margin-top: 20px;">Closed Agenda Point List</h1>';
-        popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + watermarkText + '</div></body></html>');
+        var pageHeading = '<h1 class="custom-page-heading">Closed Agenda Point List</h1>';
+        popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body onload="window.print()">' + tableHTML + '<div class="print-watermark">' + watermarkText + '</div></body></html>');
 
         popupWin.document.close();
     }

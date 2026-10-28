@@ -164,9 +164,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   display: none;
 }
 
-.sidebar .nav-item .nav-link {
-  color: rgba(255, 255, 255, 0.5);
-}
 
 .sidebar .nav-item .nav-link:active, .sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
   color: rgba(255, 255, 255, 0.75);
@@ -213,7 +210,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
     width: 90px;
   }
   .sidebar.toggled .nav-item .nav-link span {
-    font-size: 0.65rem;
+    font-size: 1rem;
     display: block;
   }
   .sidebar.toggled .nav-item .dropdown-menu {

@@ -51,24 +51,24 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label><b>Start Dt</b></label>
-                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control datepicker3", @onkeyup = "ValInData(this)", @required = true, @onchange = "CheckFromDate(this)", @placeholder = "dd/mmm/yyyy" })
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control datepicker3", @required = true, @placeholder = "dd/mmm/yyyy" })
                                 </div>
                                 <div class="col-md-4">
                                     <label><b>End Dt</b></label>
-                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control datepicker3", @onkeyup = "ValInData(this)", @required = true, @onchange = "CheckToDate(this)", @placeholder = "dd/mmm/yyyy" })
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control datepicker3", @required = true, @placeholder = "dd/mmm/yyyy" })
                                 </div>
                                 <div class="col-md-4">
                                     <label><b> Subject / Title of Conf</b></label>
 
-                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @maxlength = "200", @required = true, @onkeyup = "ValInDataConfTitle(this)" })
+                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @maxlength = "100", @required = true, @autocomplete = "off" })
                                 </div>
                                 <div class="col-md-4">
                                     <label><b>Ref varter No with Dt</b></label>
-                                    @Html.TextBoxFor(m => m.ScheduleRefNoDt, new { @class = "form-control", @maxlength = "100", @required = true, @onkeyup = "ValInData(this)" })
+                                    @Html.TextBoxFor(m => m.ScheduleRefNoDt, new { @class = "form-control", @maxlength = "100", @required = true, @autocomplete = "off" })
                                 </div>
                                 <div class="col-md-4">
                                     <label><b>Remark</b></label>
-                                    @Html.TextBoxFor(m => m.Remark, new { @class = "form-control", @maxlength = "100", @required = true, @onkeyup = "ValInData(this)" })
+                                    @Html.TextBoxFor(m => m.Remark, new { @class = "form-control", @maxlength = "100", @required = true , @autocomplete = "off" })
                                 </div>
 
                             </div>
@@ -321,8 +321,7 @@
                                         <th class="left">Remark</th>
                                         <th class="center">Action</th>
                                         <th class="left">Status (Open/Close)</th>
-                                        @*<th></th>
-                                            <th></th>*@
+                                       
 
                                     </tr>
                                 </thead>
@@ -426,12 +425,13 @@
     @Styles.Render("~/Content/cssjqryUi")
 
 
-    <head runat="server">
-        <script src="~/Scripts/bootstrap-multiselect.js"></script>
-        <link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
-        <script src="~/DevelopersJs/EncryptePayload.js"></script>
-        <script src="~/DevelopersJs/ScheduleLetter.js"></script>
-    </head>
+<head runat="server">
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="~/DevelopersJs/EncryptePayload.js"></script>
+    <script src="~/DevelopersJs/ScheduleLetter.js"></script>
+    <link href="~/DeveloperCSS/ScheduleLetter.css" rel="stylesheet" />
+</head>
 
     <script type="text/javascript">
         var message = '@message';

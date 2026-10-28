@@ -612,6 +612,7 @@
     <Content Include="Content\images\ams.png" />
     <Content Include="Content\images\armylogo.png" />
     <Content Include="Content\images\Delete.png" />
+    <Content Include="Content\images\Editnew.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
@@ -1232,6 +1233,7 @@
     <Content Include="css\chatbot\download7.png" />
     <Content Include="css\chatbot\favicon.png" />
     <Content Include="css\chatbot\user4.png" />
+    <Content Include="DeveloperCSS\Login.css" />
     <Content Include="DeveloperCSS\Master.css" />
     <Content Include="DeveloperCSS\ScheduleLetter.css" />
     <Content Include="DevelopersJs\AddAppt.js" />
@@ -3168,7 +3170,6 @@
     <Content Include="Views\Master\AddCorps.cshtml" />
     <Content Include="Views\Master\AddComd.cshtml" />
     <Content Include="Views\Shared\_NewAA7Layout.cshtml" />
-    <Content Include="Views\Shared\_NewAA7Layout_Search.cshtml" />
     <Content Include="Views\Import\ImportData.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
@@ -3184,14 +3185,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Token\AddUserCertificate.cshtml" />
     <Content Include="Views\Report\GenerateIAFZ.cshtml" />
-    <Content Include="Views\Report\UnitStrReturn.cshtml" />
     <Content Include="Views\Master\AddRank.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Master\AddGender.cshtml" />
     <Content Include="Views\Master\AddAppt.cshtml" />
-    <Content Include="Views\Master\AddStagesGroundAccident.cshtml" />
-    <Content Include="Views\Master\AddPeriodOperation.cshtml" />
     <Content Include="Views\Shared\_NewAA7LayoutMenu.cshtml" />
     <Content Include="Views\Master\AddBdeCat.cshtml" />
     <Content Include="Views\Account\HierarchyUsers.cshtml" />

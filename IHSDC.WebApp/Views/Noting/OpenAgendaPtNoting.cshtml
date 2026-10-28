@@ -362,6 +362,9 @@
             justify-content: center;
             align-content: center;
         }
+        .custom-btn-white {
+            color: white;
+        }
     </style>
 
 </head>
@@ -436,7 +439,7 @@
                                         Download
                                     </a>
                                 }
-                                @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control refactor-style-26", @readonly = true, @required = true })
+                                @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control refactor-style-26", @readonly = true, @required = true, @autocomplete = "off" })
                                 <div id="pdf-container"></div>
                             </div>
 
@@ -454,7 +457,7 @@
                                         <div class="worddownload refactor-style-6">&nbsp;Download</div>
                                     </a>
                                 }
-                                @Html.TextBoxFor(m => m.WordFilePath, new { @class = "form-control refactor-style-26", @readonly = true, @required = true })
+                                @Html.TextBoxFor(m => m.WordFilePath, new { @class = "form-control refactor-style-26", @readonly = true, @required = true, @autocomplete = "off" })
 
                             </div>
 
@@ -713,14 +716,11 @@
                 </div>
 
                         <div class="btn-group">
-                            <a id="btnApLogCancel" style="color:white;" class="btn btn-danger" data-dismiss="modal">Close</a>
-                            <a id="btnExport" style="color:white;" class="btn btn-info" download="APLog.pdf" value="Export Pdf" onclick="PrintDiv()">Export Pdf</a>
+                            <a id="btnApLogCancel" class="btn btn-danger custom-btn-white" data-dismiss="modal">Close</a>
+                            <a id="btnExport" class="btn btn-info custom-btn-white" download="APLog.pdf" value="Export Pdf">Export Pdf</a>
                         </div>
             </div>
-                        @*<div class="btn-group">
-                            <a id="btnApLogCancel" style="color:white;" class="btn btn-danger" data-dismiss="modal">Close</a>
-                            <a id="btnExport" style="color:white;" class="btn btn-info" download="APLog.pdf" value="Export Pdf" onclick="PrintDiv()">Export Pdf</a>
-                        </div>*@
+                        
         </div>
     </div>
      
@@ -759,7 +759,7 @@
             <div class="modal-content refactor-style-23">
                 <h4 class="refactor-style-19">Reason for Open</h4>
                 <label class="refactor-style-20">Title : @ViewBag.ConfTitle</label>
-                @Html.TextAreaFor(m => m.OpenReason, new { @class = "refactor-style-28", id = "OpenReason", @required = true })
+                @Html.TextAreaFor(m => m.OpenReason, new { @class = "refactor-style-28", id = "OpenReason", @required = true,@autocomplete = "off" })
 
                 <span id="CommentError" class="text-danger refactor-style-21">Please Fill out the Comment</span>
                 <div class="modal-footer refactor-style-22">
@@ -783,7 +783,7 @@
 
                 <h4 class="refactor-style-19">Reason for Close</h4>
                 <label class="refactor-style-20">Title : @ViewBag.ConfTitle</label>
-                @Html.TextAreaFor(m => m.CloseReason, new { @class = "refactor-style-28", id = "CloseReason", @required = true })
+                @Html.TextAreaFor(m => m.CloseReason, new { @class = "refactor-style-28", id = "CloseReason", @required = true, @autocomplete = "off" })
 
                 <span id="CommentError" class="text-danger refactor-style-21">Please Fill out the Comment</span>
                 <div class="modal-footer refactor-style-22">
@@ -817,7 +817,7 @@
                         <label for="forwardTo"><b>Select Nodal Branch(To):</b></label>
                         @Html.DropDownListFor(m => m.NodalId, (new IHSDC.WebApp.Models.MasterModels()).LoadNodal(Model.Schedule_ID, Model.Inbox_ID), "--Select Nodal --", new { @data_show_subtext = "true", @class = "select form-control dropdownselect refactor-style-29", @data_live_search = "true", @required = true })
                         <label for="forwardTo"><b>Nodal Branch Remark :</b></label>
-                        @Html.TextAreaFor(m => m.NodalComment, new { @class = "refactor-style-30", id = "txtForward" })
+                        @Html.TextAreaFor(m => m.NodalComment, new { @class = "refactor-style-30", id = "txtForward", @autocomplete = "off" })
                     }
                     <div class="form-group">
                         <label for="forwardTo"><b>Select Other Branches(CC) :</b></label>
@@ -971,7 +971,10 @@
             reader.readAsArrayBuffer(file);
         }
     }
-
+    document.getElementById("btnExport").addEventListener("click", function (event) {
+        event.preventDefault();
+        PrintDiv();
+    });
 
            function PrintDiv() {
            var divToPrint = document.getElementById('APLogData');

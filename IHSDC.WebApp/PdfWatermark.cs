@@ -18,8 +18,6 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using iText.StyledXmlParser.Jsoup.Parser;
-//using Microsoft.AspNetCore.Http;
-
 using Color = iText.Kernel.Colors.Color;
 using Document = iText.Layout.Document;
 using Paragraph = iText.Layout.Element.Paragraph;
@@ -57,7 +55,7 @@ namespace IHSDC.WebApp
                 Random rnd = new Random();
                 string Dfilename = rnd.Next(1, 1000).ToString();
                 var filePath1 = System.IO.Path.Combine(rootPath, "PolicyPdf" + OFileName + ".pdf");
-                //var filePath1 = "Test.pdf";
+               
                 PdfDocument pdfDoc = new PdfDocument(new PdfReader(inputFilePath), new PdfWriter(filePath1));
                 Document doc = new Document(pdfDoc);
                 PdfFont font = PdfFontFactory.CreateFont(FontProgramFactory.CreateFont(StandardFonts.HELVETICA));
@@ -81,7 +79,7 @@ namespace IHSDC.WebApp
 
                 doc.Close();
                 return filePath1;
-                // return modifiedFilePath;
+               
             }
             catch (Exception ex)
             {
@@ -89,23 +87,7 @@ namespace IHSDC.WebApp
             }
 
         }
-        //public string getipAddress()
-        //{
-
-        //    string ip="";
-        //    //System.Text.StringBuilder ip = new System.Text.StringBuilder(); // empty
-
-        //    string hostName = Dns.GetHostName();
-        //    IPHostEntry hostEntry = Dns.GetHostEntry(hostName);
-        //    IPAddress[] addresses = hostEntry.AddressList;
-
-        //    ip = addresses.ToString();
-        //    //foreach (IPAddress address in addresses)
-        //    //{
-        //    //    ip = address;
-        //    //}
-        //    return ip.ToString();
-        //}
+       
 
     }
 

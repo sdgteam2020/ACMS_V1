@@ -5,11 +5,56 @@
     var message = TempData["Message"] ?? string.Empty;
     var messageStatus = TempData["messageStatus"] ?? string.Empty;
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
-    //var ActionName = "/Master/DeleteComd";
+   
 
     ViewBag.Title = "Add Gender ";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
 }
+<style>
+  
+    .gender-card-body {
+        box-shadow: -1px 2px 16px 3px;
+    }
+
+  
+    .gender-title {
+        text-align: center;
+        box-shadow: 0 1px 1px;
+    }
+
+   
+    .gender-button-container {
+        margin-left: 10%;
+    }
+
+   
+    .gender-add-button {
+        margin-top: 2.5rem;
+    }
+
+    
+    .gender-table-container {
+        margin-left: 1rem;
+        padding-right: 2rem;
+    }
+
+  
+    .gender-edit-icon {
+        width: 30px;
+        height: 30px;
+        border: 0;
+    }
+
+   
+    .no-gender-record {
+        font-weight: 600;
+        color: red;
+        text-align: center;
+    }
+    .error-label {
+        color: red;
+    }
+</style>
 @{
     string myValue = @ViewBag.ButtonName;
 }
@@ -17,41 +62,55 @@
 @using (Html.BeginForm("AddGender", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
-    <div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
-        <h3 style="text-align: center; box-shadow: 0px 1px 1px;">
+    <div class="card-body gender-card-body">
+        <h3 class="gender-title">
             Gender
         </h3>
+
         <div class="row">
             @Html.Hidden("id", "model.GenderId")
-
             @Html.Hidden("btnval", myValue)
 
             <div class="col-md-3">
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "danger" })
-                <div class="col">
-                    <label><b> Gender :</b></label>
-                    @Html.TextBoxFor(m => m.Gender, new { @class = "form-control", @maxlength = "25", @required = "required", @onkeyup = "ValInData(this)" })
 
-                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "danger" })
+                <div class="col">
+                    <label><b>Gender :</b></label>
+
+                    @Html.TextBoxFor(m => m.Gender,
+                        new { @class = "form-control", @maxlength = "25", @autocomplete = "off", @required = "required" })
+
+                    @Html.ValidationMessageFor(model => model.Gender, "",
+                        new { @class = "danger" })
                 </div>
             </div>
-            <div class="col-sm-6" style="margin-left:10%">
-                <button type="button" style="margin-top: 2.5rem;" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddGender','AddGender')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+
+            <div class="col-sm-6 gender-button-container">
+                <button type="button"
+                        value="@ViewBag.ButtonName"
+                        name="btnval"
+                        class="btn btn-success gender-add-button">
+                    @ViewBag.ButtonName
+                </button>
             </div>
         </div>
+
         <div class="dropdown-divider"></div>
-        
-        <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
-            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+
+        <div class="table-responsive gender-table-container">
+            <table class="table table-striped"
+                   id="dataTable"
+                   width="100%"
+                   cellspacing="0">
                 <thead class="bg-info text-white">
                     <tr>
                         <th class="center">S/No</th>
                         <th class="center">Gender</th>
                         <th class="center">Edit</th>
-                       
                     </tr>
                 </thead>
+
                 <tbody id="tbody">
                     @if (ViewBag.count > 0)
                     {
@@ -64,17 +123,24 @@
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.Gender)</td>
                                 <td>
-                                    <a onclick="location.href='@Url.Action("AddGender", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.GenderId.ToString()) })'">
-                                        <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                                    <a href="@Url.Action("AddGender", "Master", new {
+                                    id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.GenderId.ToString())
+                                })">
+                                        <img src="~/Content/images/Editnew.png"
+                                             class="gender-edit-icon"
+                                             alt="Edit Gender">
                                     </a>
                                 </td>
-                                
                             </tr>
                         }
                     }
                     else
                     {
-                        <tr><td colspan="4" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>
+                        <tr>
+                            <td colspan="3" class="no-gender-record">
+                                No Record Found!!!
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -97,7 +163,15 @@
 
 
 
-
+    $(document).ready(function () {
+        $(document).on("click", ".gender-add-button", function () {
+            AddConfirmation(
+                this,
+                $(this).data("url"),
+                $(this).data("action")
+            );
+        });
+    });
 
     function AddConfirmation(obj, ActionName, Submit) {
         event.preventDefault();
@@ -116,7 +190,7 @@
         // If there are empty fields, display an error message for the first empty field
         if (emptyFields.length > 0) {
             var firstEmptyField = emptyFields[0];
-            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            $(firstEmptyField).after('<label class="error-label">This field is required</label>');
             return;
         }
 

@@ -11,10 +11,10 @@ $(document).on("click", ".saveAddUnitConfirm", function (event) {
 
     event.preventDefault();
     debugger;
-    // Remove previous validation messages
+  
     $('.error-label').remove();
 
-    // Validate required fields
+   
     let emptyFields = [];
 
     $('form').find(':input[required]').each(function () {
@@ -40,10 +40,10 @@ $(document).on("click", ".saveAddUnitConfirm", function (event) {
     }
 
 
-    // Get encrypted ID exactly as it exists
+   
     let id = $("#id").val() || "";
 
-    // Get Add / Update
+   
     let buttonName = $(this).val() || "";
 
 
@@ -146,7 +146,7 @@ $(document).on("click", ".saveAddUnitConfirm", function (event) {
 
                     Request: encrypted,
 
-                  //  id: id,
+              
 
                     btnval: buttonName,
 
@@ -159,7 +159,7 @@ $(document).on("click", ".saveAddUnitConfirm", function (event) {
                     console.log("Server Response:", response);
 
 
-                    // If controller returns success false
+                 
                     if (
                         response &&
                         response.success === false

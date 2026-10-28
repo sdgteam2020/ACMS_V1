@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-md-4">
                     <label><b>Users:</b></label>
-                    @Html.TextBoxFor(m => m.Users, new { @class = "hidden-field" })
+                    @Html.TextBoxFor(m => m.Users, new { @class = "hidden-field" ,@autocomplete = "off" })
 
                     <div id="OrgId">
                         <select id="ddlUsers" multiple="multiple" name="UserPolicies" class="form-control">

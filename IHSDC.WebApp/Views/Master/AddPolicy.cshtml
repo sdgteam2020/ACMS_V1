@@ -45,28 +45,28 @@
         }
 
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 999; /* Sit on top */
-            /*padding-top: 100px;*/ /* Location of the box */
+            display: none; 
+            position: fixed; 
+            z-index: 999; 
+          
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
         }
 
-        /* Modal Content */
+     
         .modal-content {
             background-color: #fefefe;
             margin: auto;
-            /*padding: 20px;*/
+           
             border: 1px solid #888;
-            /*   width: 80%;*/
+           
         }
-        /* The Close Button */
+       
         .close {
             color: #aaaaaa;
             float: right;
@@ -117,18 +117,18 @@
                     @Html.ValidationSummary(true, "", new { @class = "danger" })
                     <div class="col">
                         <label><b> Folder Name:</b></label>
-                        @Html.TextBoxFor(m => m.PolicyName, new { @class = "form-control", @maxlength = "100", @onkeyup = "ValInData(this)", @required = "required" })
+                        @Html.TextBoxFor(m => m.PolicyName, new { @class = "form-control", @maxlength = "50", @autocomplete = "off", @required = "required" })
                         @Html.ValidationMessageFor(model => model.PolicyName, "", new { @class = "danger" })
 
                     </div>
                     <div class="col">
                         <label><b>Type of Docu:</b></label>
-                        @Html.DropDownListFor(m => m.TypeOfDocu, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfDocu(), "--Select Type of Docu --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch document-dropdown", @required = "required", @data_live_search = "true", @onkeyup = "ValInData(this)" })
+                        @Html.DropDownListFor(m => m.TypeOfDocu, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfDocu(), "--Select Type of Docu --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch document-dropdown", @required = "required", @data_live_search = "true" })
                         @Html.ValidationMessageFor(model => model.TypeOfDocu, "", new { @class = "danger" })
                     </div>
                     <div class="col">
                         <label><b>Remarks:</b></label>
-                        @Html.TextAreaFor(m => m.PolicyRemarks, new { @class = "form-control policy-remarks", @onkeyup = "ValInData(this)", @required = "required" })
+                        @Html.TextAreaFor(m => m.PolicyRemarks, new { @class = "form-control policy-remarks", @required = "required", @autocomplete = "off" })
                         @Html.ValidationMessageFor(model => model.PolicyRemarks, "", new { @class = "danger" })
                     </div>
 
@@ -233,7 +233,7 @@
                             <hr />
 
 
-                            @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", @onchange = "checkPDFHeader(this)", accept = ".pdf", multiple = "multiple" })
+                            @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", accept = ".pdf", multiple = "multiple", @autocomplete = "off" })
 
                         <button type="submit" class="btn btn-primary font-bold">
                             Upload

@@ -16,27 +16,54 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>ACMS - SignUp</title>
-    <!-- Bootstrap core CSS-->
+    <style>
+        .error-label {
+            color: red;
+        }
+
+        .custom-btn-margin {
+            margin-top: 2.5rem;
+        }
+
+        .custom-card-body {
+            padding: 0.3rem;
+            border: 0px solid #89CFF0;
+            width: 600px;
+        }
+
+        .custom-row-margin {
+            margin-left: 1rem;
+        }
+
+        .custom-required-text {
+            color: red;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .custom-table-responsive {
+            margin-left: 1rem;
+            padding-right: 2rem;
+        }
+    </style>
     <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
     <script src="~/Content/CustomJS/AviatorJS.js"></script>
     <link href="~/Content/css/dashboard.css" rel="stylesheet">
     <link href="~/NewContent/vendor/bootstrap/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom fonts for this template-->
+
     <link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <!-- Page level plugin CSS-->
-    <!-- Page level plugin CSS-->
+
     <link href="~/NewContent/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <!-- Custom styles for this template-->
+
     <link href="~/NewContent/css/sb-admin.css" rel="stylesheet">
-    @*// @Scripts.Render("~/bundles/modernizr")*@
+
     <link href="~/NewContent/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link href="~/NewContent/css/Sidebar.css" rel="stylesheet">
-    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+
     <link rel="icon" href="~/Images/dgis_ico.png" type="image/x-icon">
 
-    <!-- dataTable4-->
-    @*<link rel="stylesheet" href="~/NewContent/dataTable4/css/bootstrap.css">*@
+
     <link rel="stylesheet" href="~/NewContent/dataTable4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="~/NewContent/dataTable4/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="~/NewContent/dataTable4/css/responsive.bootstrap4.min.css">
@@ -45,43 +72,45 @@
     <link href="~/NewContent/dataTable4/css/dataTables.dateTime.min.css" rel="stylesheet" />
     <link href="~/NewContent/dataTable4/css/buttons.dataTables.min.css" rel="stylesheet" />
     <link href="~/NewContent/dataTable4/css/colReorder.dataTables.min.css" rel="stylesheet" />
-    <!--Notification bell-->
+
     <link href="~/NewContent/vendor/bootstrap/css/owl.carousel.min.css" rel="stylesheet" />
     <link href="~/NewContent/vendor/bootstrap/css/fonts/icomoon/style.css" rel="stylesheet" />
     <link href="~/NewContent/dataTable4/css/select2.min.css" rel="stylesheet" />
 
+
 </head>
-<div class="card-body" style="padding: 0.3rem; border: 0px solid #89CFF0; width: 600px;">
+<div class="card-body custom-card-body">
     @using (Html.BeginForm("AddCorps", "SignUp", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="col">
-            <div class="row" style="margin-left:1rem;">
-                <div class="col-md-12">
-                    <label><b>Comd/PSOs Name</b></label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
-                    @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @maxlength = "20" })
-                  
-                </div>
-            </div>
+         <div class="row custom-row-margin">
+             <div class="col-md-12">
+                 <label><b>Comd/PSOs Name</b></label><span class="custom-required-text">*</span>
+                 @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @maxlength = "20" })
 
-            <div class="row" style="margin-left:1rem;">
-                <div class="col-md-12">
-                    <label><b>DGs Name</b></label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
-                    @Html.TextBoxFor(m => m.CorpsName, new { @class = "form-control", @maxlength = "25", @onkeyup = "ValInData(this)" })
+             </div>
+         </div>
 
-                  
+         <div class="row custom-row-margin">
+             <div class="col-md-12">
+                 <label><b>DGs Name</b></label><span class="custom-required-text">*</span>
+                 @Html.TextBoxFor(m => m.CorpsName, new { @class = "form-control", @maxlength = "25", @autocomplete = "off" })
 
-                </div>
-                <div class="col-md-12 text-right">
-                    <button type="button" style="margin-top: 2.5rem;" value="@ViewBag.ButtonName" id="btnval" onclick="AddConfirmationDgs(this,'/SignUp/AddCorps','AddCorps',event)" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
-                </div>
-            </div>
+
+
+             </div>
+             <div class="col-md-12 text-right">
+                 <button type="button" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success custom-btn-margin js-add-corps">@ViewBag.ButtonName</button>
+
+             </div>
+         </div>
 
         </div>
-        
+
         <div class="dropdown-divider"></div>
 
 
-        <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+        <div class="table-responsive custom-table-responsive">
             <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                 <thead class="bg-info text-white">
                     <tr>
@@ -136,7 +165,7 @@
     $(".OrderbyId").off("click").click(function () {
         var orderby = $(this).closest("td").find(".spnOrderbyId").html();
         updateorder(orderby);
-       // CorpsOrderby
+      
     });
     function updateorder(orderby) {
 
@@ -161,14 +190,14 @@
 
     }
 
-
+   
     function AddConfirmationDgs(obj, ActionName, Submit) {
         event.preventDefault();
 
-        // Remove any existing error labels
+      
         $('.error-label').remove();
 
-        // Check if all required form fields are filled in
+        
         var emptyFields = [];
         $('form').find(':input[required]').each(function () {
             if ($.trim($(this).val()) === '') {
@@ -176,14 +205,14 @@
             }
         });
 
-        // If there are empty fields, display an error message for the first empty field
+    
         if (emptyFields.length > 0) {
             var firstEmptyField = emptyFields[0];
-            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            $(firstEmptyField).after('<label class="error-label">This field is required</label>');
             return;
         }
 
-        // If all fields are filled, display the confirmation dialog
+      
         if (messaget == "Add") {
             swal({
                 title: "Please Confirm",
@@ -243,14 +272,14 @@
 
 <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
 <script src="~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
+
 <script src="~/NewContent/vendor/jquery-easing/jquery.easing.min.js"></script>
-<!-- Page level plugin JavaScript-->
+
 <script src="~/NewContent/vendor/datatables/jquery.dataTables.js"></script>
 <script src="~/NewContent/vendor/datatables/dataTables.bootstrap4.js"></script>
-<!-- Custom scripts for all pages-->
+
 <script src="~/NewContent/js/sb-admin.min.js"></script>
-<!-- Demo scripts for this page-->
+
 <script src="~/NewContent/js/demo/datatables-demo.js"></script>
 <script src="~/NewContent/bootstrap-datepicker.min.js"></script>
 <script src="~/NewContent/jszip.min.js"></script>

@@ -36,12 +36,12 @@ namespace IHSDC.WebApp.Controllers
             string[] all = Alldata.Split(',');
             int ComdId = 0;
             int CorpsId = 0;
-            //  if (all[0] == "null")
+          
             if (all[0] == "null" || all[0] == "")
                 ComdId = 0;
             else
                 ComdId = Convert.ToInt32(all[0]);
-            //if (all[1] == "null")
+          
             if (all[1] == "null" || all[1] == "")
                 CorpsId = 0;
             else
@@ -51,30 +51,7 @@ namespace IHSDC.WebApp.Controllers
             return Json(data);
         }
 
-        //public JsonResult LoadUnitbyId(string Alldata)
-        //{
-        //    string[] all = Alldata.Split(',');
-        //    int ComdId = 0;
-        //    int CorpsId = 0;
-        //    int BdeId = 0;
-        //    if (all[0] == "null")
-        //        ComdId = 0;
-        //    else
-        //        ComdId = Convert.ToInt32(all[0]);
-        //    if (all[1] == "null")
-        //        CorpsId = 0;
-        //    else
-        //        CorpsId = Convert.ToInt32(all[1]);
-
-        //    if (all[2] == "null")
-        //        BdeId = 0;
-        //    else
-        //        BdeId = Convert.ToInt32(all[2]);
-
-        //    MasterModels masterModels = new MasterModels();
-        //    var data = masterModels.LoadUnit(ComdId, CorpsId, BdeId);
-        //    return Json(data);
-        //}
+        
         public JsonResult LoadUnitbyId(string Alldata)
         {
             try
@@ -92,7 +69,7 @@ namespace IHSDC.WebApp.Controllers
                 else
                     CorpsId = Convert.ToInt32(all[1]);
 
-                // if (all[2] == "null")
+             
                 if (all[2] == null || all[2] == "undefined")
                     BdeId = 0;
                 else
@@ -115,10 +92,7 @@ namespace IHSDC.WebApp.Controllers
         [HttpGet]
         public ActionResult AddCorps(string id)
         {
-            //if (Session["UserIntId"] == null)
-            //{
-            //    return RedirectToAction("Login", "Account");
-            //}
+            
             ViewBag.ButtonName = "Add";
             CorpsCRUD model = new CorpsCRUD();
             if (id != null && id != string.Empty)
@@ -259,8 +233,7 @@ namespace IHSDC.WebApp.Controllers
             model.ComdId = model.ComdIdUnit;
 
             model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-            //if (btnval == "Add")
-            //{
+           
             var data = con.UnitCRUDNew(1, model);
             if (data[0].IsSuccess == true)
             {
@@ -272,11 +245,11 @@ namespace IHSDC.WebApp.Controllers
                 DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
                 TempData["message"] = "Already Exist";
             }
-            // }
+        
 
 
             ViewBag.ButtonName = "Add";
-            //  return RedirectToAction("AddUnit", new { id = string.Empty });
+          
             return Json(new { message = TempData["message"] });
         }
 
@@ -292,7 +265,7 @@ namespace IHSDC.WebApp.Controllers
                 if (data[0].IsSuccess == true)
                 {
                     DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-                    //DisplayMessage("Corps Deleted Successfully", " ", "s");
+                   
                 }
                 return RedirectToAction("AddUnit", new { id = string.Empty });
             }
@@ -416,8 +389,7 @@ namespace IHSDC.WebApp.Controllers
                 ViewBag.ButtonName = "Add";
 
                 return Json(new { message = TempData["message"] });
-                //  return RedirectToAction("SignUp", new { id = string.Empty, message = TempData["message"] });
-                // return RedirectToAction("AddAppt", new { id = string.Empty, message = TempData["message"] });
+               
             }
             catch (SqlException ex)
             {
@@ -453,9 +425,9 @@ namespace IHSDC.WebApp.Controllers
         }
         public ActionResult ReloadAppointments()
         {
-            // Reload appointments from the server (assuming LoadAppointment() does this)
+           
             var appointments = (new IHSDC.WebApp.Models.MasterModels()).LoadAppointment();
-            // Return appointments as JSON
+          
             return Json(appointments, JsonRequestBehavior.AllowGet);
         }
 

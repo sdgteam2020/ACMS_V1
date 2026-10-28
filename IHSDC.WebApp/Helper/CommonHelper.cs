@@ -18,5 +18,18 @@ namespace IHSDC.WebApp.Helper
 
             return allowedIds.Contains(inboxId);
         }
+
+        public static bool HasScheduleAccess(int ScheduleId)
+        {
+            var allowedIds = HttpContext.Current?
+                .Session?["AllowScheduleId"] as int[];
+
+            if (allowedIds == null)
+            {
+                return false;
+            }
+
+            return allowedIds.Contains(ScheduleId);
+        }
     }
 }

@@ -51,6 +51,22 @@
         }
     }
 </style>
+<style>
+    .watermark-text {
+        transform: rotate(-45deg);
+        z-index: 10000;
+        opacity: 0.3;
+        color: #8e9191;
+        position: fixed;
+        top: 39%;
+        left: 6%;
+        font-size: 80px;
+        font-weight: 500;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+    }
+</style>
 <div class="card-body custom-card-body" id="lowzoom">
     <div class="row">
         <div class="col">
@@ -69,12 +85,12 @@
             <div class="row">
                 <div class="col-2">
                     <p class="mb-0">From Date</p>
-                    @Html.TextBoxFor(m => m.LogFromDate, new { @class = "form-control datepicker3", @onkeyup = "ValInData(this)", @onchange = "isDate(this))", @placeholder = "dd/mm/yyyy", @required = true })
+                    @Html.TextBoxFor(m => m.LogFromDate, new { @class = "form-control datepicker3", @autocomplete = "off", @placeholder = "dd/mm/yyyy", @required = true })
                 </div>
 
                 <div class="col-2">
                     <p class="mb-0">To Date</p>
-                    @Html.TextBoxFor(m => m.LogToDate, new { @class = "form-control datepicker3", @onkeyup = "ValInData(this)", @onchange = "isDate(this))", @placeholder = "dd/mm/yyyy", @required = true })
+                    @Html.TextBoxFor(m => m.LogToDate, new { @class = "form-control datepicker3", @autocomplete = "off", @placeholder = "dd/mm/yyyy", @required = true })
                 </div>
                 
             </div>
@@ -196,7 +212,7 @@
         popupWin.document.write(table_style);
         popupWin.document.write('</style>')
         popupWin.document.title = 'MonthWiseUsersLog';
-        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' + '@(ViewBag.ipadd)' + "" + '</html>');
+        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '<div class="watermark-text">' + '@(ViewBag.ipadd)' + "" + '</html>');
         popupWin.document.close();
     }
 

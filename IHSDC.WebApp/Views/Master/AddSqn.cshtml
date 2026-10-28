@@ -5,107 +5,199 @@
     var message = TempData["Message"] ?? string.Empty;
     var messageStatus = TempData["messageStatus"] ?? string.Empty;
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
-    //var ActionName = "/Master/DeleteSqn";
-
+   
     ViewBag.Title = "Add SQN ";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
 }
+<style>
+  
+    .squadron-card-body {
+        box-shadow: -1px 2px 16px 3px;
+    }
+
+   
+    .squadron-title {
+        text-align: center;
+        box-shadow: 0 1px 1px;
+    }
+
+  
+    .squadron-command-col {
+        margin-left: 10px;
+    }
+
+  
+    .squadron-button-col {
+        margin-left: 10%;
+    }
+
+  
+    .squadron-add-button {
+        margin-top: 2rem;
+    }
+
+    
+    .squadron-table-container {
+        margin-left: 1rem;
+        padding-right: 2rem;
+    }
+
+  
+    .squadron-edit-icon {
+        width: 30px;
+        height: 30px;
+        border: 0;
+    }
+
+    
+    .squadron-order-icon {
+        color: #f00a0a;
+    }
+
+   
+    .squadron-no-record {
+        font-weight: 600;
+        color: red;
+        text-align: center;
+    }
+    .error-label {
+        color: red;
+    }
+</style>
 @{
     string myValue = @ViewBag.ButtonName;
 }
 @using (Html.BeginForm("AddSqn", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
-    <div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
-        <h3 style="text-align: center; box-shadow: 0px 1px 1px;">
+    <div class="card-body squadron-card-body">
+        <h3 class="squadron-title">
             Squadron
         </h3>
+
         <div class="row">
             @Html.Hidden("id", "model.SqnId")
-
             @Html.Hidden("btnval", myValue)
 
             <span id="corpsidbind" class="d-none">@ViewBag.corpsId</span>
             <span id="BdeCatIdbind" class="d-none">@ViewBag.BdeCatId</span>
+
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "danger" })
-            <div class="col" style="margin-left:10px">
+
+            <div class="col squadron-command-col">
                 <label><b>Command</b></label>
-                @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd --", new { @data_show_subtext = "true", @class = "select form-control", @required = "required" , @data_live_search = "true", @maxlength = "20" })
+                @Html.DropDownListFor(
+                    m => m.ComdId,
+                    (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(),
+                    "--Select Comd --",
+                    new
+                         {
+                        @data_show_subtext = "true",
+                        @class = "select form-control",
+                        @required = "required",
+                        @data_live_search = "true",
+                        @maxlength = "20"
+                    })
                 @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "danger" })
             </div>
+
             <div class="col">
                 <label><b>Corps</b></label>
-
-                <select name="CorpsId" id="CorpsId" class="select form-control" required></select>
+                <select name="CorpsId" id="CorpsId"
+                        class="select form-control" required></select>
             </div>
+
             <div class="col">
                 <label><b>Bde/CATS</b></label>
-
-                <select name="BdeCatId" id="BdeCatId" class="select form-control" required></select>
+                <select name="BdeCatId" id="BdeCatId"
+                        class="select form-control" required></select>
             </div>
+
             <div class="col">
-                <label><b> SQN  Name:</b></label>
-                @Html.TextBoxFor(m => m.SqnName, new { @class = "form-control", @maxlength = "40", @required = "required" , @onkeyup = "ValInData(this)" })
-
+                <label><b>SQN Name:</b></label>
+                @Html.TextBoxFor(m => m.SqnName,
+                    new
+                         {
+                        @class = "form-control",
+                        @maxlength = "40",
+                        @required = "required",
+                        @autocomplete = "off"
+                    })
                 @Html.ValidationMessageFor(model => model.SqnName, "", new { @class = "danger" })
-
-
             </div>
-            <div class="col" style="margin-left:10%">
-                <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddSqn','AddSqn')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+
+            <div class="col squadron-button-col">
+                <button type="button"
+                        value="@ViewBag.ButtonName"
+                        data-url="/Master/AddSqn"
+                        data-action="AddSqn"
+                        name="btnval"
+                        class="btn btn-success squadron-add-button">
+                    @ViewBag.ButtonName
+                </button>
             </div>
         </div>
+
         <div class="dropdown-divider"></div>
-       
-        <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
-            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+
+        <div class="table-responsive squadron-table-container">
+            <table class="table table-striped"
+                   id="dataTable" width="100%" cellspacing="0">
                 <thead class="bg-info text-white">
                     <tr>
                         <th class="center">S/No</th>
-                        <th class="center">SQN  Name</th>
+                        <th class="center">SQN Name</th>
                         <th class="center">Command Name</th>
                         <th class="center">Corps Name</th>
                         <th class="center">Bde/CATS Name</th>
                         <th class="center">Edit</th>
                         <th class="center">Order</th>
                         <th class="center">Shorting</th>
-                        @*<th class="center">Delete</th>*@
                     </tr>
                 </thead>
+
                 <tbody id="tbody">
                     @if (ViewBag.count > 0)
                     {
                         foreach (var item in Model.ILSqnCRUD)
                         {
-                    <tr>
-                        <td>
-                            @{ sno++; }
-                            @sno
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.SqnName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ComdName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CorpsName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.BdeCatName)</td>
-                        <td>
-                            <a onclick="location.href='@Url.Action("AddSqn", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.SqnId.ToString()) })'">
-                                <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
-                            </a>
-                        </td>
-                       
-                        <td><span>@item.Orderby</span></td>
-                        <td>
-                            @if (sno != 1)
-                            {
-                                <div class="spnOrderbyId d-none">@item.Orderby</div>
-                                <i class="fas fa-2x fa-arrow-circle-up OrderbyId" style="color: #f00a0a;"></i>
-                            }
-                    </tr>
+                            <tr>
+                                <td>
+                                    @{ sno++; }
+                                    @sno
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.SqnName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ComdName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CorpsName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.BdeCatName)</td>
+                                <td>
+                                    <a href="@Url.Action("AddSqn", "Master", new {
+                                    id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.SqnId.ToString())
+                                })">
+                                        <img src="~/Content/images/Editnew.png"
+                                             class="squadron-edit-icon"
+                                             alt="Edit Squadron">
+                                    </a>
+                                </td>
+                                <td><span>@item.Orderby</span></td>
+                                <td>
+                                    @if (sno != 1)
+                                    {
+                                        <div class="spnOrderbyId d-none">@item.Orderby</div>
+                                        <i class="fas fa-2x fa-arrow-circle-up OrderbyId squadron-order-icon"></i>
+                                    }
+                                </td>
+                            </tr>
                         }
                     }
                     else
                     {
-                        <tr><td colspan="4" style="font-weight:600;color:red;text-align:center"> No Record Found!!!</td></tr>
+                        <tr>
+                            <td colspan="8" class="squadron-no-record">
+                                No Record Found!!!
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -120,7 +212,7 @@
 <script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
 <script src="~/Content/css/sweetalert.min.js"></script>
 <link href="~/Content/css/sweetalert.css" rel="stylesheet" />
-@*<link href="~/NewContent/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="only screen">*@
+
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/Content/CustomJS/Filter.js"></script>
@@ -154,6 +246,15 @@
 
 
     }
+    $(document).ready(function () {
+        $(document).on("click", ".squadron-add-button", function () {
+            AddConfirmation(
+                this,
+                $(this).data("url"),
+                $(this).data("action")
+            );
+        });
+    });
     function AddConfirmation(obj, ActionName, Submit) {
         event.preventDefault();
 
@@ -171,7 +272,7 @@
         // If there are empty fields, display an error message for the first empty field
         if (emptyFields.length > 0) {
             var firstEmptyField = emptyFields[0];
-            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            $(firstEmptyField).after('<label class="error-label">This field is required</label>');
             return;
         }
 

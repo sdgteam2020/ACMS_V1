@@ -31,7 +31,7 @@
 
             <div class="col custom-col-left">
                 <label><b>AP Branch Name:</b></label>
-                @Html.TextBoxFor(m => m.BranchName, new { @class = "form-control", @maxlength = "25", @required = "required", @onkeyup = "ValInData(this)" })
+                @Html.TextBoxFor(m => m.BranchName, new { @class = "form-control", @maxlength = "25", @autocomplete = "off", @required = "required" })
 
                 @Html.ValidationMessageFor(model => model.BranchName, "", new { @class = "danger" })
 

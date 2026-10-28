@@ -12,27 +12,73 @@
     ViewBag.Title = "Edit User";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; }
 
-@*<h2>@ViewBag.Title.</h2>*@
+<style>
+    .form-group {
+        margin-bottom: 0rem !important;
+    }
+
+    .custom-card-body {
+        width: 50%;
+        box-shadow: -1px 1px 8px 1px;
+        margin-top: 5px;
+        margin-left: 450px;
+    }
+
+    .custom-card-padding {
+        padding: 0.3rem;
+        border: 0px solid #89CFF0;
+    }
+
+    .custom-form-group {
+        width: 300px;
+    }
+
+    .custom-label {
+        margin-top: 8px;
+        margin-left: 12px;
+    }
+
+    .required-star {
+        color: red;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .custom-label {
+        margin-top: 8px;
+        margin-left: 12px;
+    }
+    .hidden-user-type {
+        display: none;
+    }
+    .role-dropdown {
+        width: 270px;
+        height: 35px;
+        background-color: #f2f2f2;
+    }
+    .custom-margin-left {
+        margin-left: 1rem;
+    }
+</style>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @*<h4 style="color: #044C92; font-size: 2rem;">Update details for @ViewBag.EditUsername.</h4>*@
-    @*<hr />*@
+   
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         <div class="col-md-12">
             @Html.HiddenFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control disabled" } })
         </div>
     </div>
-    <div class="card-body" style="width:50%; box-shadow: -1px 1px 8px 1px; margin-top:5px; margin-left:450px;">
+    <div class="card-body custom-card-body">
         <div class="card-body">
-            <div class="card-body" style="padding: 0.3rem; border: 0px solid #89CFF0;">
+            <div class="card-body custom-card-padding">
                 <div class="row">
                     <div class="col-md-4"></div>
                     <div class="col-md-4 headingtext">UPDATE : @ViewBag.EditUsername</div>
                     <div class="col-md-4"></div>
-                    <span id="spnUserTypeId" style="display:none">@ViewData["UserTypeId"]</span>
-                    <span id="UnitId" style="display:none">@ViewData["UnitId"]</span>
+                    <span id="spnUserTypeId" class="hidden-user-type">@ViewData["UserTypeId"]</span>
+                    <span id="UnitId" class="hidden-user-type">@ViewData["UnitId"]</span>
                 </div>
                 <hr />
                 @if (SessionManager.RoleId == enum1.Administrator)
@@ -42,20 +88,20 @@
 
                         <div class="form-row row-cols-3">
                             <!-- First Row -->
-                            <div class="form-group required" style="width:300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Username, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @onkeyup = "ValInData(this)" })
+                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control username-input", @maxlength = "20", @autocomplete = "off" })
                                 </div>
                             </div>
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Roles, new { @class = "col-md-12 control-label Roles" })
                                 <div class="col-md-12">
-                                    @Html.DropDownListFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewData["Roles"], new { style = "width:270px;height:35px;background-color:#f2f2f2", @class = "Roles" })
+                                    @Html.DropDownListFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewData["Roles"], new { @class = "Roles role-dropdown" })
                                 </div>
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(model => model.Active, (new IHSDC.WebApp.Models.MasterModels()).LoadActive(), "--Select --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
@@ -63,56 +109,43 @@
                             </div>
                         </div>
 
-                        <!--<div class="form-group" style="width:300px;">
-                        @Html.LabelFor(m => m.DEFwdAuth, new { @class = "col-md-12 control-label" })
-                        <div class="col-md-12">-->
-                        @*@Html.TextBoxFor(m => m.DEFwdAuth, new { @class = "form-control" })*@
-                        <!--@Html.DropDownListFor(m => m.DEFwdAuth, (new IHSDC.WebApp.Models.MasterModels()).LoadUserList(""), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true"})
-
-                            </div>
-                        </div>
-                        <div class="form-group" style="width:300px;">
-                            @Html.LabelFor(m => m.GEBFwdAuth, new { @class = "col-md-12 control-label" })
-                            <div class="col-md-12">
-                                @Html.DropDownListFor(m => m.GEBFwdAuth, (new IHSDC.WebApp.Models.MasterModels()).LoadUserList(""), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true"})
-                            </div>
-                        </div>-->
-
+                      
                         <div class="form-row row-cols-3">
                             <!-- Second Row -->
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Number, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @onkeyup = "ValInData(this)" })
+                                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control username-input", @maxlength = "10", @autocomplete = "off" })
                                 </div>
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Rank, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(m => m.Rank, (new IHSDC.WebApp.Models.MasterModels()).LoadRanks(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
 
                                 </div>
                             </div>
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.FullName, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @onkeyup = "ValInData(this)" })
+                                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control username-input", @maxlength = "50", @autocomplete = "off" })
                                 </div>
                             </div>
 
-                            <div class="form-group d-none" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @autocomplete = "off" })
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-row row-cols-3">
                             <!-- Third Row -->
-                            <div class="form-group required" style="width: 300px;">
-                                <label style="margin-top:9px;margin-left:12px">Comd/PSOs</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                            <div class="form-group required custom-form-group">
+                                <label class="custom-label">Comd/PSOs</label>
+                                <span class="required-star">*</span>
                                 <a href='@Url.Action("AddComd", "Master")' )>
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
@@ -122,32 +155,35 @@
 
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
-                                <label style="margin-top:8px;margin-left:12px">DGs</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                            <div class="form-group required custom-form-group">
+                                <label class="custom-label">DGs</label>
+                                <span class="required-star">*</span>
+                             
                                 <a href='@Url.Action("AddCorps", "Master")' )>
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @required = true })
+                                    @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @autocomplete = "off", @required = true })
                                     <select id="spnCorp" class="form-control"></select>
                                 </div>
                             </div>
 
-                            <div class="form-group d-none" style="width: 300px;">
-                                <label style="margin-top:8px;margin-left:12px">Bde</label>
+                            <div class="form-group required custom-form-group">
+                                <label class="custom-label">Bde</label>
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @required = true })
+                                    @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @autocomplete = "off", @required = true })
                                     <select id="spnBde" class="form-control"></select>
                                 </div>
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
-                                <label style="margin-top:9px;margin-left:12px">Branch</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                            <div class="form-group required custom-form-group">
+
+                                <label class="custom-label">Branch</label><span class="required-star">*</span>
                                 <a href='@Url.Action("AddUnit", "Master")' )>
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @required = true })
+                                    @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @autocomplete = "off", @required = true })
                                     <select id="spnUnit" class="form-control" required></select>
                                 </div>
                             </div>
@@ -155,28 +191,28 @@
 
                         <div class="form-row row-cols-3">
 
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Appointment, new { @class = "col-md-12 control-label" })
                                 <a href='@Url.Action("AddAppt", "Master")' )>
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
                                 <div class="col-md-12">
-                                    @*@Html.TextBoxFor(m => m.Appointment, new { @class = "form-control" })*@
+
                                     @Html.DropDownListFor(m => m.Appointment, (new IHSDC.WebApp.Models.MasterModels()).LoadAppointment(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
 
                                 </div>
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.ASCON, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control", @onkeyup = "ValInData1(this)" })
+                                    @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10"})
                                 </div>
                             </div>
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.MobNo, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control", @oninput = "ValInData1(this)", @maxlength = "10", @required = true })
+                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10", @required = true })
 
                                 </div>
                             </div>
@@ -192,66 +228,52 @@
 
                         <div class="form-row row-cols-3">
                             <!-- First Row -->
-                            <div class="form-group required" style="width:300px;">
-                                @Html.LabelFor(m => m.Username, new { @class = "col-md-12 control-label" })
-                                <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @onkeyup = "ValInData(this)", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="form-group required" style="width: 300px;">
-                                @Html.LabelFor(m => m.Roles, new { @class = "col-md-12 control-label Roles" })
-                                <div class="col-md-12">
-                                    @Html.DropDownListFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewData["Roles"], new { style = "width:270px;height:35px;background-color:#f2f2f2;pointer-events: none;", @class = "Roles" })
-                                </div>
-                            </div>
+                           <div class="form-group required custom-form-group">
+                               @Html.LabelFor(m => m.Username, new { @class = "col-md-12 control-label" })
+                               <div class="col-md-12">
+                                   @Html.TextBoxFor(m => m.Username, new { @class = "form-control username-input", @maxlength = "20", @autocomplete = "off", @readonly = "readonly" })
+                               </div>
+                           </div>
+                           <div class="form-group required custom-form-group">
+                               @Html.LabelFor(m => m.Roles, new { @class = "col-md-12 control-label Roles" })
+                               <div class="col-md-12">
+                                   @Html.DropDownListFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewData["Roles"], new { @class = "Roles role-dropdown" })
+                               </div>
+                           </div>
 
-                            <div class="form-group required" style="width: 300px;">
-                                @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-12" })
-                                <div class="col-md-12">
-                                    @Html.DropDownListFor(model => model.Active, (new IHSDC.WebApp.Models.MasterModels()).LoadActive(), "--Select --", new { style = "pointer-events: none;", @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
-                                </div>
-                            </div>
+                           <div class="form-group required custom-form-group">
+                               @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-12" })
+                               <div class="col-md-12">
+                                   @Html.DropDownListFor(model => model.Active, (new IHSDC.WebApp.Models.MasterModels()).LoadActive(), "--Select --", new {  @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                               </div>
+                           </div>
                         </div>
 
-                        <!--<div class="form-group" style="width:300px;">
-                        @Html.LabelFor(m => m.DEFwdAuth, new { @class = "col-md-12 control-label" })
-                        <div class="col-md-12">-->
-                        @*@Html.TextBoxFor(m => m.DEFwdAuth, new { @class = "form-control" })*@
-                        <!--@Html.DropDownListFor(m => m.DEFwdAuth, (new IHSDC.WebApp.Models.MasterModels()).LoadUserList(""), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true"})
-
-                            </div>
-                        </div>
-                        <div class="form-group" style="width:300px;">
-                            @Html.LabelFor(m => m.GEBFwdAuth, new { @class = "col-md-12 control-label" })
-                            <div class="col-md-12">
-                                @Html.DropDownListFor(m => m.GEBFwdAuth, (new IHSDC.WebApp.Models.MasterModels()).LoadUserList(""), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true"})
-                            </div>
-                        </div>-->
 
                         <div class="form-row row-cols-3">
                             <!-- Second Row -->
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Number, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @onkeyup = "ValInData(this)" })
+                                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control username-input", @maxlength = "10", @autocomplete = "off" })
                                 </div>
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Rank, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(m => m.Rank, (new IHSDC.WebApp.Models.MasterModels()).LoadRanks(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
 
                                 </div>
                             </div>
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.FullName, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @onkeyup = "ValInData(this)" })
+                                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control username-input", @maxlength = "20", @autocomplete = "off" })
                                 </div>
                             </div>
 
-                            <div class="form-group d-none" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
@@ -261,8 +283,8 @@
 
                         <div class="form-row row-cols-3">
                             <!-- Third Row -->
-                            <div class="form-group required" style="width: 300px;">
-                                <label style="margin-top:9px;margin-left:12px">Comd/PSOs</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                            <div class="form-group required custom-form-group">
+                                <label class="custom-label">Comd/PSOs</label><span class="required-star">*</span>
 
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
@@ -270,32 +292,32 @@
 
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
-                                <label style="margin-top:8px;margin-left:12px">DGs</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                            <div class="form-group required custom-form-group">
+                                <label class="custom-label">DGs</label><span class="required-star">*</span>
                                 <a href='@Url.Action("AddCorps", "Master")' )>
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @required = true })
+                                    @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @autocomplete = "off", @maxlength = "10", @required = true })
                                     <select id="spnCorp" class="form-control"></select>
                                 </div>
                             </div>
 
-                            <div class="form-group d-none" style="width: 300px;">
-                                <label style="margin-top:8px;margin-left:12px">Bde</label>
+                            <div class="form-group required custom-form-group">
+                                <label class="custom-label">Bde</label>
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @required = true })
+                                    @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @autocomplete = "off", @maxlength = "10", @required = true })
                                     <select id="spnBde" class="form-control"></select>
                                 </div>
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
-                                <label style="margin-top:9px;margin-left:12px">Branch</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                            <div class="form-group required custom-form-group">
+                                <label class="custom-label">Branch</label><span class="required-star">*</span>
                                 <a href='@Url.Action("AddUnit", "Master")' )>
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @required = true })
+                                    @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @autocomplete = "off", @maxlength = "10", @required = true })
                                     <select id="spnUnit" class="form-control" required></select>
                                 </div>
                             </div>
@@ -303,28 +325,29 @@
 
                         <div class="form-row row-cols-3">
 
-                            <div class="form-group required" style="width: 300px;">
-                                <label style="margin-top:8px;margin-left:12px">Appt</label><font style="color:red; font-weight:bold; font-size:20px;">*</font>
+                            <div class="form-group required custom-form-group">
+                                <label class="custom-label">Appt</label><span class="required-star">*</span>
                                 <a href='@Url.Action("AddAppt", "Master")' )>
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
                                 <div class="col-md-12">
-                                    @*@Html.TextBoxFor(m => m.Appointment, new { @class = "form-control" })*@
+
                                     @Html.DropDownListFor(m => m.Appointment, (new IHSDC.WebApp.Models.MasterModels()).LoadAppointment(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
 
                                 </div>
                             </div>
 
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.ASCON, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control", @onkeyup = "ValInData1(this)" })
+                                    @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10", @required = true })
                                 </div>
                             </div>
-                            <div class="form-group required" style="width: 300px;">
+                            <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.MobNo, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control", @oninput = "ValInData1(this)", @maxlength = "10", @required = true })
+                                
+                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10", @required = true })
 
                                 </div>
                             </div>
@@ -343,10 +366,10 @@
                                 @if (SessionManager.RoleId == enum1.Administrator)
                                 {
                                     <span>
-                                        <a class="btn btn-primary" href="/Account/Hierarchy" style=" margin-left: 1rem;">Back to List</a>
+                                       <a class="btn btn-primary custom-margin-left" href="/Account/Hierarchy">Back to List</a>
                                     </span>
                                 }
-                                @*<span class="btn btn-info text-light" style="color:white;">@Html.ActionLink("Back to List", "Hierarchy")</span>*@
+                               
                             </div>
                         </div>
                     </div>
@@ -370,11 +393,38 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script>
+    function validateInput(input) {
+        let regex = /[^0-9]/g;
+        input.value = input.value.replace(regex, "");
+    }
+    function ValInData(input) {
+        let regex = /[^a-zA-Z0-9 ]/g;
+        input.value = input.value.replace(regex, "");
+    }
+
+    function ValInDataReg(input) {
+        let regex = /[^a-zA-Z0-9]/g;
+        input.value = input.value.replace(regex, "");
+    }
+</script>
+<script>
+
+    $(document).ready(function () {
+        $(document).on("keyup", ".username-input", function () {
+            ValInData(this);
+        });
+    });
+    $(document).ready(function () {
+        $('.username-input').on('input', function () {
+            validateInput(this);
+        });
+    });
+
     $(document).ready(function () {
 
 
 
-        /*BindComdbyUnit($('#Unit_ID').val());*/
+       
         $('#spnUnit_ID').change(function () {
 
             $("#Unit_ID").val($('#spnUnit_ID').val());
@@ -382,7 +432,7 @@
 
         $('#UserTypeId').change(function () {
 
-            /*bindunit($("#UserTypeId").val());*/
+           
         });
         var unit_id = '@ViewBag.sel_unit_id';
         var roles_id = '@ViewBag.sel_roles_id';
@@ -403,44 +453,7 @@
 
 
     });
-    //function bindunit(UserTypeId)
-    //{
-    //    var list = '';
-
-
-    //    $.ajax({
-    //        url: '/Master/GetUnitByhierarchy',
-    //        type: 'POST',
-    //        data: { "Unit_ID": UserTypeId}, //get the search string
-    //        success: function (result) {
-
-
-    //            if (result.length > 0) {
-
-    //                list = '';
-
-    //                list = '<option value="">Select Unit</option>';
-
-
-    //                for (var j = 0; j < result.length; j++) {
-
-
-    //                    list += '<option value=' + result[j].Value + '>' + result[j].Text + '</option>';
-    //                }
-
-
-    //                $('#spnUnit_ID').html(list);
-    //            }
-    //            // $('#SqnId').html(list);
-    //            //alert($('#UnitId').html());
-    //            $('#spnUnit_ID').val($('#UnitId').html());
-    //        }
-    //    });
-
-
-
-
-    //}
+    
 
 
     $('#ComdId').change(function () {

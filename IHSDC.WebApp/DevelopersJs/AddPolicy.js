@@ -118,7 +118,11 @@
 
 
 
-
+$(document).ready(function () {
+    $("#files").on("change", function () {
+        checkPDFHeader(this);
+    });
+});
 
     function checkPDFHeader(input) {
         const files = input.files;

@@ -30,8 +30,24 @@ namespace IHSDC.WebApp.Controllers
 
             try
             {
-                ViewBag.ButtonName = "Add";
                 ScheduleLetter model = new ScheduleLetter();
+                ViewBag.ButtonName = "Add";
+                if (Session["UserIntId"] == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                if (!string.IsNullOrEmpty(id))
+                {
+                    int EditId = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
+                   
+                    if (Session["AllowScheduleId"] != null && !CommonHelper.HasScheduleAccess(EditId))
+                    {
+                        Response.StatusCode = 403;
+                        Response.TrySkipIisCustomErrors = true;
+                        return View("~/Views/Error/AccessDenied.cshtml");
+                    }
+                }
+                
                 if (id != null && id != string.Empty)
                 {
                     ViewBag.ButtonName = "Update";
@@ -115,7 +131,12 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.UnReadMsg = 0;
                 }
                 #endregion
+                var allowedIds = model.ILScheduleLetter
+              .Select(x => x.ScheduleId)
+               .Distinct()
+               .ToArray();
 
+                Session["AllowScheduleId"] = allowedIds;
                 return View(model);
             }
             catch (SqlException ex)

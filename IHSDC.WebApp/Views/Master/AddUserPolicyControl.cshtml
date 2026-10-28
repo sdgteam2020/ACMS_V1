@@ -18,10 +18,50 @@
     .select2-selection__choice__remove {
         display: none !important;
     }
+
+    .custom-policy-card {
+        box-shadow: -1px 2px 16px 3px;
+    }
+
+
+    .custom-policy-heading {
+        text-align: center;
+        box-shadow: 0px 1px 1px;
+    }
+
+
+    .custom-policy-col {
+        margin-left: 1rem;
+    }
+
+
+    .custom-hidden-field {
+        display: none;
+    }
+
+
+    .custom-policies-dropdown {
+        width: 500px;
+    }
+
+
+    .custom-policy-btn {
+        margin-top: 2rem;
+    }
+
+
+    .custom-policy-table {
+        margin-left: 1rem;
+        padding-right: 2rem;
+    }
+    .error-label {
+        color: red;
+    }
 </style>
 
 
-@using (Html.BeginForm("AddUserPolicyControl", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddUserPolicyControl", "Master", FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(m => m.UserPolicyControlId)
 
@@ -30,21 +70,53 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "danger" })
 
-    <div class="card-body" style="box-shadow: -1px 2px 16px 3px;">
-        <h3 style="text-align: center; box-shadow: 0px 1px 1px;">
+    <div class="card-body custom-policy-card">
+
+        <h3 class="custom-policy-heading">
             Policy Access Permission
         </h3>
+
         <div class="row">
-            <div class="col" style="margin-left:1rem;">
+
+            <div class="col custom-policy-col">
+
                 <label><b>User:</b></label>
-                @Html.DropDownListFor(m => m.PUserId, (new IHSDC.WebApp.Models.MasterModels()).LoadAllUsers(), "--Select User --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = "required", @maxlength = "20" })
-                @Html.ValidationMessageFor(model => model.PUserId, "", new { @class = "danger" })
+
+                @Html.DropDownListFor(
+                    m => m.PUserId,
+                    (new IHSDC.WebApp.Models.MasterModels()).LoadAllUsers(),
+                    "--Select User --",
+                    new
+                    {
+                        @data_show_subtext = "true",
+                        @class = "select form-control dropdownsearch",
+                        @data_live_search = "true",
+                        @required = "required",
+                        @maxlength = "20"
+                    })
+
+                @Html.ValidationMessageFor(
+                    model => model.PUserId,
+                    "",
+                    new { @class = "danger" })
+
             </div>
-            <div class="col" style="margin-left:1rem;">
+
+            <div class="col custom-policy-col">
+
                 <label><b>Policies:</b></label>
-                @Html.TextBoxFor(m => m.Policies, new { style = "display:none;" })
+
+                @Html.TextBoxFor(
+                    m => m.Policies,
+                    new { @class = "custom-hidden-field", @autocomplete = "off" })
+
                 <div id="OrgId">
-                    <select id="ddlPolicies" multiple="multiple" name="UserPolicies" style="width:500px;">
+
+                    <select id="ddlPolicies"
+                            multiple="multiple"
+                            name="UserPolicies"
+                            class="custom-policies-dropdown">
+
                         @if (Model.ILUserPolicyCRUD != null)
                         {
                             foreach (var item in Model.ILUserPolicyCRUD)
@@ -53,7 +125,6 @@
                                 {
                                     if (item.Msg == "Selected")
                                     {
-                                        
                                         if (item.UpdatedByUserId == Convert.ToInt32(ViewBag.userintid))
                                         {
                                             <option value="@item.PolicyId" selected="selected">
@@ -68,11 +139,12 @@
                                         }
                                         else
                                         {
-                                            <option class="optselected" value="@item.PolicyId" selected="selected">
+                                            <option class="optselected"
+                                                    value="@item.PolicyId"
+                                                    selected="selected">
                                                 @item.PolicyName
                                             </option>
                                         }
-
                                     }
                                     else
                                     {
@@ -96,22 +168,37 @@
                                         }
                                     }
                                 }
-
                             }
                         }
+
                     </select>
+
                 </div>
+
             </div>
 
             <div class="col-md-6">
-                <button type="button" style="margin-top: 2.0rem;" value="@ViewBag.ButtonName" onclick="AddConfirmation(this,'/Master/AddUserPolicyControl','AddUserPolicyControl')" name="btnval" class="btn btn-success">@ViewBag.ButtonName</button>
+
+                <button type="button"
+                        value="@ViewBag.ButtonName"
+                        name="btnval"
+                        class="btn btn-success custom-policy-btn js-add-user-policy">
+                    @ViewBag.ButtonName
+                </button>
+
             </div>
+
         </div>
+
         <div class="dropdown-divider"></div>
 
+        <div class="table-responsive custom-policy-table">
 
-        <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
-            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-striped"
+                   id="dataTable"
+                   width="100%"
+                   cellspacing="0">
+
                 <thead class="bg-info text-white">
                     <tr>
                         <th class="center">S/No</th>
@@ -120,7 +207,9 @@
                         <th class="center">Edit</th>
                     </tr>
                 </thead>
+
                 <tbody id="tbody">
+
                     @if (ViewBag.count > 0)
                     {
                         foreach (var item in Model.ILUserPolicyControlCRUD)
@@ -130,12 +219,27 @@
                                     @{ sno++; }
                                     @sno
                                 </td>
-                                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                                <td>@Html.DisplayFor(modelItem => item.PolicyName)</td>
+
                                 <td>
-                                   
-                                    <a href='@Url.Action("AddUserPolicyControl", "Master", new { id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UserPolicyControlId.ToString()) })'>
-                                        <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PolicyName)
+                                </td>
+
+                                <td>
+                                    <a href='@Url.Action("AddUserPolicyControl", "Master",
+                                        new {
+                                            id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(
+                                                item.UserPolicyControlId.ToString())
+                                        })'>
+
+                                        <img src="~/Content/images/Editnew.png"
+                                             width="30"
+                                             height="30"
+                                             border="0"
+                                             alt="Edit" />
                                     </a>
                                 </td>
                             </tr>
@@ -143,8 +247,11 @@
                     }
 
                 </tbody>
+
             </table>
+
         </div>
+
     </div>
 }
 
@@ -204,14 +311,20 @@
             var messaget = '@ViewBag.ButtonName';
 
 
-
+        $(document).on("click", ".js-add-user-policy", function (event) {
+            AddConfirmation(
+                this,
+                '/Master/AddUserPolicyControl',
+                'AddUserPolicyControl'
+            );
+        });
     function AddConfirmation(obj, ActionName, Submit) {
         event.preventDefault();
 
-        // Remove any existing error labels
+       
         $('.error-label').remove();
 
-        // Check if all required form fields are filled in
+       
         var emptyFields = [];
         $('form').find(':input[required]').each(function () {
             if ($.trim($(this).val()) === '') {
@@ -219,14 +332,14 @@
             }
         });
 
-        // If there are empty fields, display an error message for the first empty field
+       
         if (emptyFields.length > 0) {
             var firstEmptyField = emptyFields[0];
-            $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+            $(firstEmptyField).after('<label class="error-label">This field is required</label>');
             return;
         }
 
-        // If all fields are filled, display the confirmation dialog
+      
         if (messaget == "Add") {
             swal({
                 title: "Please Confirm",

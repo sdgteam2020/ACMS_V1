@@ -36,7 +36,7 @@
             @Html.ValidationSummary(true, "", new { @class = "danger" })
             <div class="col custom-col-margin-left">
                 <label><b>Branch Name</b></label>
-                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @maxlength = "50", @required = "required", @onkeyup = "ValInData(this)" })
+                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @maxlength = "50", @required = "required", @autocomplete = "off" })
 
                 @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "danger" })
             </div>
@@ -48,7 +48,7 @@
             <div class="col custom-col-margin-left">
                 <label><b>DGs Name</b></label>
 
-                @Html.TextBoxFor(m => m.CorpsId, new { @class = "form-control d-none", @required = true })
+                @Html.TextBoxFor(m => m.CorpsId, new { @class = "form-control d-none", @autocomplete = "off", @required = true })
                 <select name="Corps" id="spnCorpsId" class="select form-control" required>
                     <option value=0>-Select DGs-</option>
                 </select>

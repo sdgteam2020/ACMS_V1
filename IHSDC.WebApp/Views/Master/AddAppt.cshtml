@@ -31,14 +31,14 @@
             @Html.ValidationSummary(true, "", new { @class = "danger" })
             <div class="col custom-col-left">
                 <label><b>Appt Abbreviation:</b></label>
-                @Html.TextBoxFor(m => m.Appt, new { @class = "form-control", @maxlength = "25", @required = "required", @onkeyup = "ValInData(this)" })
+                @Html.TextBoxFor(m => m.Appt, new { @class = "form-control", @maxlength = "25", @autocomplete = "off", @required = "required" })
 
                 @Html.ValidationMessageFor(model => model.Appt, "", new { @class = "danger" })
             </div>
 
             <div class="col custom-col-left">
                 <label><b>Appt Name:</b></label>
-                @Html.TextBoxFor(m => m.ApptAbbreviation, new { @class = "form-control", @required = "required", @onkeyup = "ValInData(this)" })
+                @Html.TextBoxFor(m => m.ApptAbbreviation, new { @class = "form-control", @required = "required", @autocomplete = "off" })
 
                 @Html.ValidationMessageFor(model => model.ApptAbbreviation, "", new { @class = "danger" })
             </div>
@@ -57,7 +57,7 @@
                         <th class="center">S/No</th>
                         <th class="center">Appt Abbreviation</th>
                         <th class="center">Appt Name</th>
-                        @*  <th class="center">Soring</th>*@
+                      
                         <th class="center">Edit</th>
                        
                     </tr>

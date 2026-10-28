@@ -46,22 +46,14 @@ function navigateToSearch() {
     var Armyno = $('#SpnArmyNumber1').html();
     if ($('#spnDocType').html() == 2)
 
-    // if ($('#spnDocType').html() == 2 || $('#spnDocType').html() == 1) 
+   
     {
 
 
-        /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
-        //$.ajax({
-        //    url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-        //    type: 'GET',
-        //    dataType: 'json',
-        //    timeout: 3000,
-        //    success: FetchUniqueTokenDetails,
-        //    error: errorhandle
-        //});
+       
         CheckDGISLatestVersion()
             .then(() => {
-                // Now that baseUrl is available, continue
+               
                 $.ajax({
                     url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
                     type: 'GET',
@@ -218,24 +210,12 @@ $('.PolicyModelOpen').on('click', function (e) {
     var PolicyTmpId = $(this).closest("div").find('.spnPolicyId').html();
 
     if ($(this).closest("div").find('.spnTypeofdocu').html() == 2)
-    //if ($(this).closest("div").find('.spnTypeofdocu').html() == 2 || $(this).closest("div").find('.spnTypeofdocu').html() == 0 || $(this).closest("div").find('.spnTypeofdocu').html() == 1)
+    
     {
 
-        /*"7f33df8ac6540b5cf7ccfd041d8c837641226444d9f1a4aa30a01924c0610996"*/
-        //CheckDGISLatestVersion()
-        //   $.ajax({
-        //       //url: 'http://localhost/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-        //       url: baseUrl+'/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-
-        //       type: 'GET',
-        //       dataType: 'json',
-        //       timeout: 3000,
-        //       success: FetchUniqueTokenDetails,
-        //       error: errorhandle
-        //   });
         CheckDGISLatestVersion()
             .then(() => {
-                // Now that baseUrl is available, continue
+             
                 $.ajax({
                     url: baseUrl + '/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
                     type: 'GET',
@@ -271,11 +251,7 @@ $('.PolicyModelOpen').on('click', function (e) {
         function errorhandle(response) {
 
             sweetAlert('Hastakshar SEWA Not Running/Not Installed.', 'To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.', 'error');
-            //sweetAlert({
-            //    title: 'Hastakshar SEWA Not Running/Not Installed.\n To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup',
-            //    icon: 'info',
-            //    html: '<span style="font-size: 12px;">Hastakshar SEWA Not Running<br>Not Installed</span>'
-            //});
+           
             $("#tbody").html("");
             var modal = document.getElementById("PolicyModal");
             modal.style.display = "none";

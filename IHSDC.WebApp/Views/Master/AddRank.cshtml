@@ -31,7 +31,7 @@
 
             <div class="col custom-col-left">
                 <label><b>Rank Abbreviation:</b></label>
-                @Html.TextBoxFor(m => m.RankName, new { @class = "form-control", @maxlength = "25", @required = "required", @onkeyup = "ValInData(this)" })
+                @Html.TextBoxFor(m => m.RankName, new { @class = "form-control", @autocomplete = "off", @maxlength = "25", @required = "required" })
 
                 @Html.ValidationMessageFor(model => model.RankName, "", new { @class = "danger" })
 
@@ -41,7 +41,7 @@
             <div class="col">
 
                 <label><b>Rank Name:</b></label>
-                @Html.TextBoxFor(m => m.RankAbbreviation, new { @class = "form-control", @required = "required", @onkeyup = "ValInData(this)" })
+                @Html.TextBoxFor(m => m.RankAbbreviation, new { @class = "form-control", @required = "required", @autocomplete = "off" })
 
                 @Html.ValidationMessageFor(model => model.RankAbbreviation, "", new { @class = "danger" })
             </div>

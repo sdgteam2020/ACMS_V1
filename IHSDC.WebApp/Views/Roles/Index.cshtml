@@ -7,13 +7,19 @@
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
+    .custom-card-shadow {
+        box-shadow: -1px 2px 16px 3px;
+        padding: 0.5rem;
+    }
+    .custom-table-responsive {
+        margin-left: 1rem;
+        padding-right: 2rem;
+    }
 </style>
-<div class="card-body" style="box-shadow: -1px 2px 16px 3px; padding: 0.5rem;">
+<div class="card-body custom-card-shadow">
 
-    @*<p>
-        @Html.ActionLink("Create New", "Create", new object { }, new { @class = "btn btn-primary" })
-    </p>*@
-    <div class="table-responsive" style=" margin-left: 1rem; padding-right: 2rem;">
+
+    <div class="table-responsive custom-table-responsive">
         <table class="table">
             <tr>
                 <th>
@@ -69,7 +75,7 @@
 
 
                     </td>
-                    
+
                 </tr>
             }
 

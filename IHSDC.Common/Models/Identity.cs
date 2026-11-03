@@ -34,18 +34,19 @@ namespace IHSDC.Common.Models
         /// </summary>
         #region Application User Properties
         public int IntId { get; set; }
-        public string DEFwdAuth { get; set; }
-        public string GEBFwdAuth { get; set; }
+        
         public string Active { get; set; }
         public string EstablishmentFull { get; set; }
         //public string Sqn { get; set; }
         public string EstablishmentAbbreviation { get; set; }
         public string Appointment { get; set; }
+        [MaxLength(256)]
         public string PersonnelNumber { get; set; }
         public string Rank { get; set; }
         public string FullName { get; set; }
         public bool IsPasswordHealthy { get; set; }
         public int Unit_ID { get; set; }
+        [MaxLength(12)]
         public string MobNo { get; set; }
 
         public int UserTypeId { get; set; }

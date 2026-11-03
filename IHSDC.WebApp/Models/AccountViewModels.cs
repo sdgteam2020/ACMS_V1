@@ -399,8 +399,7 @@ namespace IHSDC.WebApp.Models
         {
             this.Username = user.UserName;
             this.EstablishmentFull = user.EstablishmentFull;
-            this.DEFwdAuth = user.DEFwdAuth;
-            this.GEBFwdAuth = user.GEBFwdAuth;
+            
             this.Active = user.Active;
             this.EstablishmentAbbreviation = user.EstablishmentAbbreviation;
             this.Appointment = user.Appointment;
@@ -464,8 +463,6 @@ namespace IHSDC.WebApp.Models
         public DeletetUserViewModel(ApplicationUser user)
         {
             this.Username = user.UserName;
-            this.DEFwdAuth = user.DEFwdAuth;
-            this.GEBFwdAuth = user.GEBFwdAuth;
             this.Active = user.Active;
             this.EstablishmentFull = user.EstablishmentFull;
             this.EstablishmentAbbreviation = user.EstablishmentAbbreviation;

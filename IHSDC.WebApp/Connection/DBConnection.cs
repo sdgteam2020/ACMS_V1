@@ -170,7 +170,7 @@ namespace IHSDC.WebApp.Connection
         }
         public IList<DashAvi> GetAviatorForDashboard2(int procid, int Unit_ID, int UserId, string Ip, string Remarks)
         {
-            var data = GetDataInList<DashAvi>("Dashboard @procId=@p0,@UserId  = @p1, @Unit_id=@p2,@Ip=@p3,@Remarks=@p4", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(UserId) ?? DBNull.Value), new SqlParameter("@p2", (object)(Unit_ID) ?? DBNull.Value), new SqlParameter("@p3", (object)(Ip) ?? DBNull.Value), new SqlParameter("@p4", (object)(Remarks) ?? DBNull.Value)).ToList();
+            var data = GetDataInList<DashAvi>("Dashboard @procId=@p0,@UserId  = @p1, @Unit_id=@p2,@Ip=@p3,@Remarks=@p4,@FullName=@p5", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(UserId) ?? DBNull.Value), new SqlParameter("@p2", (object)(Unit_ID) ?? DBNull.Value), new SqlParameter("@p3", (object)(Ip) ?? DBNull.Value), new SqlParameter("@p4", (object)(Remarks) ?? DBNull.Value), new SqlParameter("@p5", (object)(SessionManager.UserFullName) ?? DBNull.Value)).ToList();
 
 
 

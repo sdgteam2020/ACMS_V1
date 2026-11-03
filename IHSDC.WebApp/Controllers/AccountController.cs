@@ -266,9 +266,6 @@ namespace IHSDC.WebApp.Controllers
                 var CurrentUser = _db.Users.FirstOrDefault(i => i.UserName == User.Identity.Name);
                 var EditUser = _db.Users.FirstOrDefault(i => i.Id == model.UserId);
                 var DEFwdAuth = _db.Users.FirstOrDefault();
-               
-                EditUser.DEFwdAuth = model.DEFwdAuth;
-                EditUser.GEBFwdAuth = model.GEBFwdAuth;
                 EditUser.Active = model.Active;
                 EditUser.EstablishmentFull = model.EstablishmentFull;
                
@@ -1397,8 +1394,6 @@ namespace IHSDC.WebApp.Controllers
                         Rank = model.Rank,
                         PersonnelNumber = model.Number,
                         FullName = model.FullName,
-                        DEFwdAuth = model.DEFwdAuth,
-                        GEBFwdAuth = model.GEBFwdAuth,
                         Active = model.Active,
                         EstablishmentFull = model.EstablishmentFull,
                         EstablishmentAbbreviation = model.EstablishmentAbbreviation,
@@ -1548,8 +1543,6 @@ namespace IHSDC.WebApp.Controllers
                         Rank = model.Rank,
                         PersonnelNumber = model.Number,
                         FullName = model.FullName,
-                        DEFwdAuth = model.DEFwdAuth,
-                        GEBFwdAuth = model.GEBFwdAuth,
                         Active = model.Active,
                         EstablishmentFull = model.EstablishmentFull,
                         EstablishmentAbbreviation = model.EstablishmentAbbreviation,

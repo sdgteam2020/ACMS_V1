@@ -16,6 +16,7 @@ namespace IHSDC.Common.Database
             string databaseName = EF.DatabaseName;
             SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder
             {
+
                 DataSource = serverName,
                 InitialCatalog = databaseName,
                 IntegratedSecurity = false,
@@ -28,7 +29,7 @@ namespace IHSDC.Common.Database
             sqlBuilder.ConnectTimeout = 15;
             sqlBuilder.UserID = EF.DatabaseUsername;
             sqlBuilder.Password = EF.DatabasePassword;
-
+            sqlBuilder["Column Encryption Setting"] = "Enabled";
             string providerString = sqlBuilder.ToString();
 
             return sqlBuilder.ToString();

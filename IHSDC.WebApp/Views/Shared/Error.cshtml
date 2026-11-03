@@ -3,22 +3,25 @@
     ViewBag.Title = "Error";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
 }
+<link href="@Url.Content("~/DeveloperCSS/Error.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<div class="error-top-bar"></div>
 
-<div style="background-color: #A52A2A; color: White; height: 10px;">
-</div>
-<div style="background-color: #F5F5DC; color: White; height: 170px;">
-    <div style=" padding:20px;">
-        <h3>
-            Application Error:
-        </h3>
+<div class="error-container">
+    <div class="error-content">
+        <h3>Application Error:</h3>
+
         <h4>
             Sorry, an error occurred while processing your request.
         </h4>
-        <h6>@Html.ActionLink("Go Back To Home Page", "Index", "Home")</h6>
+
+        <h6>
+            @Html.ActionLink("Go Back To Home Page", "Index", "Home")
+        </h6>
+
         <br />
         <br />
     </div>
 </div>
-<div style="background-color: #A52A2A; color: White; height: 20px;">
-</div>
+
+<div class="error-bottom-bar"></div>
 

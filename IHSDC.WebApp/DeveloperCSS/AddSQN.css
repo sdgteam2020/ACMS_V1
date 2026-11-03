@@ -1,0 +1,56 @@
+﻿
+
+.squadron-card-body {
+    box-shadow: -1px 2px 16px 3px;
+}
+
+
+.squadron-title {
+    text-align: center;
+    box-shadow: 0 1px 1px;
+}
+
+
+.squadron-command-col {
+    margin-left: 10px;
+}
+
+
+.squadron-button-col {
+    margin-left: 10%;
+}
+
+
+.squadron-add-button {
+    margin-top: 2rem;
+}
+
+
+.squadron-table-container {
+    margin-left: 1rem;
+    padding-right: 2rem;
+}
+
+
+.squadron-edit-icon {
+    width: 30px;
+    height: 30px;
+    border: 0;
+}
+
+
+.squadron-order-icon {
+    color: #f00a0a;
+}
+
+
+.squadron-no-record {
+    font-weight: 600;
+    color: red;
+    text-align: center;
+}
+
+.error-label {
+    color: red;
+}
+

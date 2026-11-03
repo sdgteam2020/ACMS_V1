@@ -1,0 +1,134 @@
+﻿.container {
+    height: 100vh;
+    width: 100vw;
+}
+
+.center {
+    display: block;
+    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 12%;
+}
+
+#textContainer {
+    display: inline;
+}
+
+.asdc-main-container {
+    height: 100%;
+    box-shadow: 6px 2px 10px 0px !important;
+    background-color: #46bdf4;
+    margin-top: 20px;
+}
+
+
+.asdc-text-center {
+    text-align: center;
+}
+
+
+.asdc-logo {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 50%;
+}
+
+
+.asdc-current-time {
+    font-weight: bold;
+    color: white;
+    text-align: right;
+    display: block;
+}
+
+.asdc-time-value {
+    float: right;
+}
+
+.asdc-welcome-text {
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.asdc-welcome-heading {
+    font-weight: bold;
+    color: white;
+}
+
+
+.asdc-main-heading {
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+    font-size: 24px;
+}
+
+
+.asdc-address {
+    color: white;
+}
+
+
+.asdc-registration-message {
+    color: yellow;
+}
+
+
+.asdc-contact-row {
+    margin-top: 3rem;
+    margin-left: 10rem;
+    color: white;
+    padding-bottom: 250px;
+}
+
+
+.asdc-contact-image {
+    height: 8rem;
+    border-radius: 50%;
+}
+
+.asdc-contact-image-square {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 51%;
+}
+
+.asdc-contact-image-round {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 50%;
+}
+
+
+.asdc-eoffice-heading {
+    margin-top: 2.5rem;
+    font-weight: bold;
+}
+
+
+.asdc-contact-details {
+    margin-top: 2.5rem;
+    color: white;
+}
+
+
+.asdc-contact-heading {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+
+.asdc-contact-bold {
+    font-weight: bold;
+}
+
+
+.asdc-contact-last-column {
+    margin-bottom: 7rem;
+}
+
+
+.asdc-user-guide-link {
+    color: white;
+}

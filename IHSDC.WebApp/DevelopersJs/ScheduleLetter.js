@@ -524,4 +524,26 @@ $(document).on("click", ".saveAddScheduleLetter", function (event) {
     return false;
 
 });
-       
+
+
+let message = '@message';
+let messageStatus = '@messageStatus';
+let messagemidStatus = '@messagemidStatus ';
+if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);
+function CheckFromDate(obj) {
+    document.getElementById("ToDate").value = null;
+}
+
+
+function CheckToDate(obj) {
+
+    let FromDate = $('#FromDate').val();
+    let ToDate = $(obj).val();
+    let F = new Date(FromDate)
+    let T = new Date(ToDate)
+    if (T < F) {
+        swal("To Date can't be Greater than From Date", "", "warning"); $(obj).val("");
+    }
+
+}

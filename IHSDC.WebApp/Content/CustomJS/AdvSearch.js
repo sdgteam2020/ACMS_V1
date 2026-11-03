@@ -545,7 +545,7 @@ function binddata(Id, value, count, ddlconid) {
 
              
                 if (result[0].Type == "TEXT") {
-                    listFiled = '<input style="width:200px"  type="text" id="vlaue' + count + '" class="form-control ml-2" required/>';
+                    listFiled = '<input"  type="text" id="vlaue' + count + '" class="form-control ml-2" required/>';
                     $("#" + ddlconid + " option[value='>']").remove();
                     $("#" + ddlconid + " option[value='<']").remove();
                     $("#" + ddlconid + " option[value='>=']").remove();
@@ -554,20 +554,20 @@ function binddata(Id, value, count, ddlconid) {
                 }
                 else if (result[0].Type == "NUM") {
                     $("#" + ddlconid + " option[value='Like']").remove();
-                    listFiled = '<input style="width:200px"  type="number" id="vlaue' + count + '" class="form-control ml-2" required/>';
+                    listFiled = '<input  type="number" id="vlaue' + count + '" class="form-control ml-2" required/>';
                 }
                 else if (result[0].Type == "CAL") {
                     $("#" + ddlconid + " option[value='Like']").remove();
-                    listFiled = ' <input style="width:200px"  class="form-control datepicker3 ml-2" id="vlaue' + count + '" placeholder="dd/mm/yyyy" required type="text" value="" required>';
+                    listFiled = ' <input  class="form-control datepicker3 ml-2" id="vlaue' + count + '" placeholder="dd/mm/yyyy" required type="text" value="" required>';
                 }
                 else if (result[0].Type == "DECI") {
                     $("#" + ddlconid + " option[value='Like']").remove();
                    
-                    listFiled = '<input style="width:200px"  type="text" id="vlaue' + count + '" class="form-control ml-2" onchange="CheckMinute(this)" onkeypress = "return blockSpecialChar(event)" required/>';
+                    listFiled = '<input  type="text" id="vlaue' + count + '" class="form-control ml-2"  required/>';
                 }
                 else {
                     
-                    listFiled += '<select style="width:200px"  id="vlaue' + count + '" class="form-control ml-2 vlaue" required>'
+                    listFiled += '<select   id="vlaue' + count + '" class="form-control ml-2 vlaue" required>'
                     $("#" + ddlconid + " option[value='>']").remove();
                     $("#" + ddlconid + " option[value='<']").remove();
                     $("#" + ddlconid + " option[value='>=']").remove();
@@ -633,8 +633,7 @@ function GetDynamicquery(DynamicId) {
 
                 for (var j = 0; j < 1; j++) {
                     DataBindByDynamicQuery(result[j].Id, result[j].Name, result[j].TableName);
-                   // alert(result[j].Id + '----' + result[j].Name);
-                 //   listGD += '<option value=' + result[j].Id + '>' + result[j].Name + '</option>';
+                  
                 }
 
 
@@ -788,7 +787,7 @@ function DataBindByDynamicQuery(ProcId, Finalquery, HeaderName) {
 
                     list += '</tr>';
 
-                    /*alert(result[j].ArmyNumber);*/
+                    
                 }
 
                 list += '</tbody>';
@@ -806,9 +805,7 @@ function DataBindByDynamicQuery(ProcId, Finalquery, HeaderName) {
                 
             });
 
-            //$('#ttbody').dataTable({
-            //    paging: false
-            //});
+           
         }
     });
 }

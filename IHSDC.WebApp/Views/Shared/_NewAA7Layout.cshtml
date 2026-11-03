@@ -18,492 +18,43 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>ACMS </title>
-  
-    <link href="~/NewContent/vendor/bootstrap/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
- 
-    <link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
- 
-    <link href="~/NewContent/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
-    <link href="~/NewContent/css/sb-admin.css" rel="stylesheet">
- 
-    <link href="~/NewContent/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <link href="~/NewContent/css/Sidebar.css" rel="stylesheet">
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/font-awesome/css/font-awesome.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
+
+    <link href="@Url.Content("~/NewContent/vendor/fontawesome-free/css/all.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" type="text/css">
+
+    <link href="@Url.Content("~/NewContent/vendor/datatables/dataTables.bootstrap4.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
+
+    <link href="@Url.Content("~/NewContent/css/sb-admin.css" )?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" >
+
+    <link href="@Url.Content("~/NewContent/bootstrap-datepicker.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/css/Sidebar.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
 
     <link rel="icon" href="~/Images/dgis_ico.png" type="image/x-icon">
 
-  
-    <link rel="stylesheet" href="~/NewContent/dataTable4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/NewContent/dataTable4/css/buttons.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/NewContent/dataTable4/css/responsive.bootstrap4.min.css">
-    <link href="~/NewContent/dataTable4/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/searchBuilder.dataTables.min.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/dataTables.dateTime.min.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/buttons.dataTables.min.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/colReorder.dataTables.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="@Url.Content("~/NewContent/dataTable4/css/dataTables.bootstrap4.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion">
+    <link rel="stylesheet" href="@Url.Content("~/NewContent/dataTable4/css/buttons.bootstrap4.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion">
+    <link rel="stylesheet" href="@Url.Content("~/NewContent/dataTable4/css/responsive.bootstrap4.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion">
+    <link href="@Url.Content("~/NewContent/dataTable4/css/jquery.dataTables.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/searchBuilder.dataTables.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/dataTables.dateTime.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/buttons.dataTables.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/colReorder.dataTables.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
     <!--Notification bell-->
-    <link href="~/NewContent/vendor/bootstrap/css/owl.carousel.min.css" rel="stylesheet" />
-    <link href="~/NewContent/vendor/bootstrap/css/fonts/icomoon/style.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/select2.min.css" rel="stylesheet" />
-    <link href="~/css/chatbot/chatbot.css" rel="stylesheet">
-    <style>
-
-
-        .sidebar {
-        }
-
-        .danger {
-            color: red;
-        }
-
-        .header {
-            opacity: 3;
-            background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
-            z-index: 10
-        }
-
-        .sticky {
-            position: fixed;
-            top: 0;
-            width: 100%;
-        }
-
-        .form-control {
-            border: 1px solid #8d94a9 !important;
-        }
-
-        .dropdown-item:hover {
-            background: #4CAF50 !important;
-          
-            border-radius: 13px;
-        }
-
-        .content {
-            padding: 7rem 0;
-        }
-
-        .custom-dropdown .btn:active, .custom-dropdown .btn:focus {
-            -webkit-box-shadow: none !important;
-            box-shadow: none !important;
-            outline: none;
-        }
-
-        .custom-dropdown .btn.btn-custom {
-            border: 1px solid #efefef;
-        }
-
-        .custom-dropdown .title-wrap {
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .custom-dropdown .title {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .custom-dropdown .dropdown-link {
-            color: #888;
-            display: inline-block;
-            padding-right: 0px;
-            position: relative;
-        }
-
-            .custom-dropdown .dropdown-link .wrap-icon {
-                font-size: 30px;
-            }
-
-            .custom-dropdown .dropdown-link .number {
-                width: 24px;
-                height: 24px;
-                line-height: 20px;
-                border-radius: 50%;
-                background: #007bff;
-                position: absolute;
-                font-size: 13px;
-                top: -10px;
-                right: -10px;
-                border: 2px solid #fff;
-                color: #fff;
-                text-align: center;
-            }
-
-        .custom-dropdown .dropdown-menu {
-            border: 1px solid transparent;
-            -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
-            box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
-           
-            padding-top: 0;
-            padding-bottom: 0;
-            padding: 10px;
-            opacity: 0;
-            /*left: 0 !important;*/
-            left: -350px;
-            -webkit-transition: .3s margin-top ease, .3s opacity ease, .3s visibility ease;
-            -o-transition: .3s margin-top ease, .3s opacity ease, .3s visibility ease;
-            transition: .3s margin-top ease, .3s opacity ease, .3s visibility ease;
-            visibility: hidden;
-            max-width: 380px;
-        }
-
-            .custom-dropdown .dropdown-menu.active {
-                opacity: 1;
-                visibility: visible;
-                margin-top: 10px !important;
-            }
-
-        .custom-dropdown .custom-notifications {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            height: 200px;
-            overflow-y: scroll;
-            border-bottom: 1px solid #efefef;
-        }
-
-            .custom-dropdown .custom-notifications > li {
-                display: block;
-                font-size: 14px;
-                margin-bottom: 10px;
-            }
-
-                .custom-dropdown .custom-notifications > li:last-child {
-                    margin-bottom: 0;
-                }
-
-                .custom-dropdown .custom-notifications > li > a {
-                    display: block;
-                    padding: 20px;
-                    color: #bfbfbf;
-                }
-
-                    .custom-dropdown .custom-notifications > li > a:hover {
-                        background: #f9f9f9;
-                    }
-
-                    .custom-dropdown .custom-notifications > li > a .img {
-                        -webkit-box-flex: 0;
-                        -ms-flex: 0 0 40px;
-                        flex: 0 0 40px;
-                    }
-
-                        .custom-dropdown .custom-notifications > li > a .img img {
-                            width: 40px;
-                            border-radius: 50%;
-                        }
-
-                    .custom-dropdown .custom-notifications > li > a .text {
-                        margin-top: 0px;
-                    }
-
-                        .custom-dropdown .custom-notifications > li > a .text strong {
-                            font-weight: 700;
-                            color: #000;
-                        }
-
-                .custom-dropdown .custom-notifications > li.unread a {
-                    background: #fffaef;
-                }
-
-        .user-avatar {
-            width: 50px;
-            height: 40px;
-            background-color: black;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            margin-left: -20px;
-            margin-right: 10px;
-        }
-
-        .item {
-            position: relative;
-         
-            display: inline-block;
-        }
-
-        .notify-badge {
-            position: absolute;
-            right: -19px;
-            top: 0px;
-            background: red;
-            text-align: center;
-            border-radius: 30px 30px 30px 30px;
-            color: white;
-            padding: 5px 10px;
-            font-size: 16px;
-            margin-top: -14px;
-            font-weight: bold;
-        }
-
-        .infologin {
-            font-size: 6px;
-        }
-
-        .imglogo {
-            max-height: 10%;
-            max-width: 10%;
-        }
-
-        .imglogout {
-            max-height: 20px;
-            max-width: 20px;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-
-        .tooltip-text {
-            visibility: hidden;
-            position: absolute;
-            z-index: 1;
-            width: 150px;
-            color: white;
-            font-size: 14px;
-            background-color: #192733;
-            border-radius: 10px;
-            padding: 2px 5px 2px 5px;
-        }
-
-        .hover-text:hover .tooltip-text {
-            visibility: visible;
-        }
-
-        #top {
-            top: -40px;
-            left: -50%;
-        }
-
-        #bottom {
-            top: 45px;
-            left: -45%;
-        }
-
-        #left {
-            top: -8px;
-            right: 120%;
-        }
-
-        #right {
-            top: -8px;
-            left: 120%;
-        }
-
-        .hover-text {
-            position: relative;
-            display: inline-block;
-            margin: 40px;
-            font-family: Arial;
-            text-align: center;
-        }
-
-        .card {
-            box-shadow: -1px 1px 16px 1px;
-            margin-top: 5px;
-        }
-
-        @@media only screen and (min-width: 700px) {
-            .infologin {
-                font-size: 18px;
-            }
-
-            .imglogo {
-                max-height: 100px;
-                max-width: 100px;
-            }
-
-            .imglogout {
-                max-height: 50px;
-                max-width: 50px;
-                margin-left: 20px;
-                margin-right: 20px;
-            }
-
-            .imgback {
-                margin-left: 100px;
-                margin-top: 0px;
-                height: 105px;
-            }
-
-            .footertitle {
-                font-size: 22px;
-            }
-          
-
-            .footersubtitle {
-                font-size: 12px;
-            }
-        }
-
-        @@media only screen and (max-width: 690px) {
-            .infologin {
-                font-size: 4px;
-            }
-
-            .imglogo {
-                max-height: 26px;
-                max-width: 26px;
-            }
-
-            .imglogout {
-                margin-top: -10px;
-                max-height: 17px;
-                max-width: 17px;
-                margin-left: 20px;
-                margin-right: 20px;
-            }
-
-            .navbar {
-                padding: 0.1rem 0.1rem
-            }
-
-            .imgback {
-                margin-left: 5px;
-                margin-top: 0px;
-                max-height: 25px;
-                max-width: 135px;
-            }
-        }
-       
-        .sidebar-toggle-btn {
-            margin-left: 10px;
-        }
-        .sidebar-menu-icon {
-            color: white;
-            font-size: 18px;
-        }
-        .user-dropdown {
-            float: right;
-            margin-top: 0;
-        }
-        .user-edit-icon {
-            color: white;
-            font-size: 26px;
-        }
-        .nav-link.home-link {
-            color: white;
-        }
-        .dashboard-icon {
-            color: white;
-            font-size: 15px;
-        }
-        .dashboard-brand {
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-        }
-      
-        .menu-link {
-            color: white;
-            font-size: 16px;
-        }
-
-     
-        .menu-icon {
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-       
-        .menu-text {
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-            margin-right: 3px;
-        }
-
-       
-        .dropdown-text {
-            font-size: 16px;
-        }
-
-       
-        .menu-link:hover {
-            color: lightgray;
-            text-decoration: none;
-        }
-
-            .menu-link:hover .menu-icon,
-            .menu-link:hover .menu-text {
-                color: lightgray;
-            }  
-
-        .menu-text1 {
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .initiate-text {
-            margin-right: 3px;
-        }
-
-        .conference-text {
-            margin-right: 0;
-            margin-top: -9px;
-        }
-        .custom-nav-link {
-            color: white;
-        }
-
-          
-        .add-separator {
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-            margin-right: 3px;
-        }
-        .custom-navbar-text {
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-            margin-right: 0;
-            margin-top: -9px;
-        }
-        .master-menu-link {
-            font-size: 16px;
-        }
-        .print-icon {
-            color: white;
-        }
-        .report-menu-link {
-    font-size: 16px;
-}
-        .envelope-icon {
-            margin-left: 10px;
-        }
-        .custom-navbar-text {
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-        }
-        .download-icon {
-            margin-left: 10px;
-        }
-        .download-icon-color {
-            margin-left: 10px;
-            color: white;
-        }
-        .hidden-section {
-            display: none;
-        }
-        .footer-subtitle-custom {
-            float: right;
-            font-size: 18px;
-        }
-        .asdc-chat-title {
-            text-decoration: none;
-        }
-    </style>
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/owl.carousel.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/fonts/icomoon/style.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/select2.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/css/chatbot/chatbot.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">  
+    <link href="@Url.Content("~/DeveloperCSS/Layout.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"
+          rel="stylesheet" />
 </head>
 <body id="page-top" class="sidebar-toggled">
     <div class="header" id="myHeader">
-       
+
         <nav class="navbar navbar-expand  static-top text-light">
-            <img src="~/Content/images/armylogo.png" class="imglogo" />   
+            <img src="~/Content/images/armylogo.png" class="imglogo" />
             <button class="btn btn-link btn-sm text-white order-1 order-sm-0 sidebar-toggle-btn" href="#">
                 <i class="fas fa-bars sidebar-menu-icon"></i>
             </button>
@@ -572,7 +123,7 @@
                     }
 
                 </div>
-               
+
 
             </div>
         </nav>
@@ -595,16 +146,16 @@
                 {
 
                     <li class="nav-item active">
-                    <a class="nav-link home-link" href='@Url.Action("Index", "Home")'>
+                        <a class="nav-link home-link" href='@Url.Action("Index", "Home")'>
 
-                        <i class="fas fa-fw fa-tachometer-alt text-light dashboard-icon"></i>
-                        <span class="navbar-brand mr-1 text-light dashboard-brand">
-                            Dashboard
-                        </span>
-                    </a>
-                </li>
-                  
-                  
+                            <i class="fas fa-fw fa-tachometer-alt text-light dashboard-icon"></i>
+                            <span class="navbar-brand mr-1 text-light dashboard-brand">
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle menu-link"
                            href="#"
@@ -725,32 +276,32 @@
                 }
                 if (SessionManager.RoleId == enum1.GSO1 || SessionManager.RoleId == enum1.Sponsor || SessionManager.RoleId == enum1.Nodal)
                 {
-        <li class="nav-item">
-            
-                <a class="nav-link custom-nav-link" href="~/ACC/AddAgenda">
-                    <i class="fas fa-check-circle"></i>
-                    <span class="navbar-brand text-light add-separator">
-                        Add /
-                    </span>
-                    <span class="navbar-brand text-light custom-navbar-text">
-                        View
-                    </span>
-                    <span class="navbar-brand text-light custom-navbar-text">
-                        Agenda
-                    </span>
-                    <span class="navbar-brand text-light custom-navbar-text">
-                        Pt
-                    </span>
-                </a>
-        </li>
+                    <li class="nav-item">
+
+                        <a class="nav-link custom-nav-link" href="~/ACC/AddAgenda">
+                            <i class="fas fa-check-circle"></i>
+                            <span class="navbar-brand text-light add-separator">
+                                Add /
+                            </span>
+                            <span class="navbar-brand text-light custom-navbar-text">
+                                View
+                            </span>
+                            <span class="navbar-brand text-light custom-navbar-text">
+                                Agenda
+                            </span>
+                            <span class="navbar-brand text-light custom-navbar-text">
+                                Pt
+                            </span>
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle master-menu-link"
-   href="#"
-   id="MasterM1"
-   role="button"
-   data-toggle="dropdown"
-   aria-haspopup="true"
-   aria-expanded="false">
+                           href="#"
+                           id="MasterM1"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
                             <i class="fas fa-print print-icon"></i>
                             <span class="navbar-brand text-light add-separator">
                                 Reports
@@ -773,7 +324,7 @@
                             }
 
 
-                        <span class="navbar-brand mr-1 text-light custom-navbar-text">Inbox</span>
+                            <span class="navbar-brand mr-1 text-light custom-navbar-text">Inbox</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -857,7 +408,7 @@
                                 <div class="newblink" href="#">New</div>
                                 <span class="navbar-brand mr-1 text-light custom-navbar-text">Folder &</span>
                                 <span class="navbar-brand mr-1 text-light custom-navbar-text">Resource</span>
-                               <span class="navbar-brand text-light custom-navbar-text">
+                                <span class="navbar-brand text-light custom-navbar-text">
                                     Corner
                                 </span>
                             </a>
@@ -865,7 +416,7 @@
 
                                 <a class="dropdown-item master-menu-link" id="master1" href='~/PolicyFolder/PolicyFolder' )>View Folder & Resource</a>
                                 <a class="dropdown-item master-menu-link" id="master1" href='~/Master/AddPolicy' )>Upload Folder & Resource</a>
-                                <a  class="dropdown-item master-menu-link" id="master1" href='~/Master/AddFolderControl' )>Manage Folder & Resource Access Permission</a>
+                                <a class="dropdown-item master-menu-link" id="master1" href='~/Master/AddFolderControl' )>Manage Folder & Resource Access Permission</a>
                             </div>
                         </li>
                     }
@@ -902,7 +453,7 @@
                             <div class="col-md-2"></div>
                             <div class="col-md-8 text-center footertitle"> <p class="mb-0  text-light">Copyright © 2023. Developed by <span class="text-danger text-light">Army Software Development Centre (ASDC), DGIS</span></div>
                             <div class="col-md-2">
-                              
+
                                 <div class="footersubtitle text-nowrap mt-2 footer-subtitle-custom">
                                     <label class="text-light mr-2">Visitors -</label>
                                     <label class="text-light mr-2">Today : <span id="spnTodayCnt"></span></label>
@@ -914,7 +465,7 @@
                     </div>
                 </div>
             </footer>
-            
+
             <!-- Chat dialog -->
             <div id="asdcChat"
                  class="asdc-chat"
@@ -949,13 +500,13 @@
             </div>
 
         </div>
-      
+
     </div>
-    
+
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-   
+
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -975,840 +526,53 @@
     </div>
     <!-- Bootstrap core JavaScript-->
     <div class="hidden-section">
-        <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
-        <script src="~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <!-- Core plugin JavaScript-->
-        <script src="~/NewContent/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="@Url.Content("~/NewContent/vendor/jquery-easing/jquery.easing.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <!-- Page level plugin JavaScript-->
-        <script src="~/NewContent/vendor/datatables/jquery.dataTables.js"></script>
-        <script src="~/NewContent/vendor/datatables/dataTables.bootstrap4.js"></script>
+        <script src="@Url.Content("~/NewContent/vendor/datatables/jquery.dataTables.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/vendor/datatables/dataTables.bootstrap4.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <!-- Custom scripts for all pages-->
-        <script src="~/NewContent/js/sb-admin.min.js"></script>
+        <script src="@Url.Content("~/NewContent/js/sb-admin.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <!-- Demo scripts for this page-->
-        <script src="~/NewContent/js/demo/datatables-demo.js"></script>
-        <script src="~/NewContent/bootstrap-datepicker.min.js"></script>
-        <script src="~/NewContent/jszip.min.js"></script>
-        <script src="~/NewContent/docx-preview.js"></script>
-        <script src="~/NewContent/bootstrap.min.js"></script>
+        <script src="@Url.Content("~/NewContent/js/demo/datatables-demo.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/bootstrap-datepicker.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/jszip.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/docx-preview.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/bootstrap.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <!--dataTable4-->
-        <script src="~/NewContent/dataTable4/js/jquery.dataTables.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/dataTables.buttons.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/buttons.bootstrap4.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/jszip.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/pdfmake.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/vfs_fonts.js"></script>
-        <script src="~/NewContent/dataTable4/js/buttons.html5.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/buttons.print.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/buttons.colVis.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/dataTables.responsive.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/responsive.bootstrap4.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/dataTables.colReorder.min.js"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/jquery.dataTables.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.bootstrap4.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.buttons.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/buttons.bootstrap4.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/jszip.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/pdfmake.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/vfs_fonts.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/buttons.html5.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/buttons.print.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/buttons.colVis.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.responsive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/responsive.bootstrap4.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.colReorder.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
-        <script src="~/NewContent/dataTable4/js/dataTables.searchBuilder.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/dataTables.dateTime.min.js"></script>
-        <script src="~/NewContent/dataTable4/js/fnMultiFilter.js"></script>
-        <script src="~/NewContent/vendor/bootstrap/js/popper.min.js"></script>
-        <script src="~/NewContent/vendor/bootstrap/js/owl.carousel.min.js"></script>
-        <script src="~/NewContent/vendor/bootstrap/js/main.js"></script>
-        <script src="~/NewContent/dataTable4/js/select2.min.js"></script>
-        <script src="~/Content/CustomJS/SignUpfmReg.js"></script>
-        <script src="~/Content/lib/crypto-js/crypto-js.js"></script>
-        <script src="~/Content/lib/crypto-js/crypto-js.min.js"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.searchBuilder.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.dateTime.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/fnMultiFilter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/vendor/bootstrap/js/popper.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/vendor/bootstrap/js/owl.carousel.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/vendor/bootstrap/js/main.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/NewContent/dataTable4/js/select2.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/Content/CustomJS/SignUpfmReg.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/Content/CustomJS/SignUpfmReg.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/Content/lib/crypto-js/crypto-js.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/Content/lib/crypto-js/crypto-js.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     </div>
-    <script>
-        window.onscroll = function () { myFunction() };
 
-        var header = document.getElementById("myHeader");
-        var sticky = header.offsetTop;
+    <script src="@Url.Content("~/Content/CustomJS/email.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    <script src="@Url.Content("~/DevelopersJs/Layout.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
-        function myFunction() {
-            if (window.pageYOffset > sticky) {
-                header.classList.add("sticky");
-            } else {
-                header.classList.remove("sticky");
-            }
-        }
-    </script>
-    <script>
-        const currentPage = window.location.pathname;
-       
-        const links = document.querySelectorAll(".sidebar a");
-        for (let i = 0; i < links.length; i++) {
-            if (links[i].href === currentPage) {
-                links[i].classList.add("active");
-            }
-        }
-    </script>
-   
-    <script>
-        $(document).ready(function () {
-
-            
-            $('.aj1 ul li ').find('a').each(function () {
-                var text = $(this).attr("href");
-                if (window.location.pathname.replace(window.location.origin, "") == text) {
-                    var ss = (window.location.pathname.replace(window.location.origin, "")).replace("/", "").split("/")
-                   
-                    $(this).addClass("active");
-
-                    if ($(this).html() == 'User Log' || $(this).html() == 'Aviator Log') {
-                        $("#pagesDropdownlog").addClass('active')
-                    }
-                    else if ($(this).html() == 'Comd' || $(this).html() == 'Corps' || $(this).html() == 'Bde' || $(this).html() == 'Sqn' || $(this).html() == 'Unit') {
-                        $("#MasterM1").addClass('active')
-                    }
-                    else if ($(this).html() == 'Rank' || $(this).html() == 'Gender' || $(this).html() == 'Posting Type' || $(this).html() == 'Foreign Visit' || $(this).html() == 'Honour Award' || $(this).html() == 'Arm Service' || $(this).html() == 'Civ Edn' || $(this).html() == 'Course' || $(this).html() == 'Examiner Appt' || $(this).html() == 'Appt' || $(this).html() == 'Course Grading') {
-                        $("#MasterM2").addClass('active')
-                    }
-                    else if ($(this).html() == 'Special Qual' || $(this).html() == 'Special Qual Status') {
-                        $("#pagesDropdown1").addClass('active')
-                    }
-                    else if ($(this).html() == 'Type of Medical' || $(this).html() == 'Medical Cat' || $(this).html() == 'Medical Institute' || $(this).html() == 'COPE Code' || $(this).html() == 'Status Medical') {
-                        $("#pagesDropdown2").addClass('active')
-                    }
-                    else if ($(this).html() == 'Aircraft Type(Heptr)' || $(this).html() == 'AC(Heptr) Master' || $(this).html() == 'CAT/IR' || $(this).html() == 'Instr CAT' || $(this).html() == 'Aviator Status(Heptr)') {
-                        $("#pagesDropdown3").addClass('active')
-                    }
-                    else if ($(this).html() == 'Aircraft Type(RPAS)' || $(this).html() == 'AC(RPAS) Master' || $(this).html() == 'RPAS Substream' || $(this).html() == 'RPAS CAT' || $(this).html() == 'RPAS Instr CAT' || $(this).html() == 'Aviator Status(RPAS)') {
-                        $("#pagesDropdown4").addClass('active')
-                    }
-                   
-                }
-                else {
-                    $(this).removeClass("active");
-                }
-            });
-           
-        });
-    </script>
-
-    <script type="text/javascript">
-
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth();
-        $('.datepicker').datepicker({
-          
-            minViewMode: 1,
-            weekStart: 1,
-            daysOfWeekHighlighted: "6,0",
-            autoclose: true,
-            todayHighlight: true,
-            startDate: new Date(year - 15, month, '01'),
-            endDate: new Date(year, month, '31')
-        });
-        $('.datepicker3').datepicker({
-            format: "dd/M/yyyy",
-            autoclose: true,
-        });
-       
-    </script>
-
-    <script>
-        $(document).ready(function () {
-          
-            $('.sidebar a').click(function () {
-               
-                $('.sidebar a').removeClass('active');
-               
-                $(this).addClass('active');
-            });
-        });
-    </script>
-
-    <script>
-        function ValInData(input) {
-            var regex = /[^a-zA-Z0-9 . / ( ) _ -]/g;
-            input.value = input.value.replace(regex, "");
-        }
-        function ValInDataConfTitle(input) {
-            var regex = /[^a-zA-Z0-9 .  ( ) _ -]/g;
-            input.value = input.value.replace(regex, "");
-        }
-    </script>
-    <script>
-       
-        function ValOnlyNum(element) {
-            // Remove any non-numeric characters
-            element.value = element.value.replace(/\D/g, '');
-        }
-    </script>
-    <script src="~/Content/CustomJS/email.js"></script>
-    <script>
-        function ValInData1(input) {
-            var regex = /[^0-9]/g;
-            input.value = input.value.replace(regex, "");
-        }
-    </script>
-    <script>
-        (function () {
-            const dialog = document.getElementById('asdcChat');
-            const handle = dialog.querySelector('.asdc-chat-header');
-
-            let dragging = false;
-            let startX = 0, startY = 0;      // mouse/touch position at mousedown
-            let startLeft = 0, startTop = 0; // dialog position at mousedown
-
-           
-            function getDialogRect() {
-                const r = dialog.getBoundingClientRect();
-              
-                if (dialog.style.left === '' && dialog.style.right !== '') {
-                    dialog.style.left = (window.innerWidth - r.right) + 'px';
-                    dialog.style.top = (r.top) + 'px';
-                    dialog.style.right = 'auto';
-                    dialog.style.bottom = 'auto';
-                }
-                return dialog.getBoundingClientRect();
-            }
-
-            function onStart(clientX, clientY) {
-                if (dialog.classList.contains('fullscreen')) return; // no drag in fullscreen
-                dragging = true;
-                const rect = getDialogRect();
-                startX = clientX;
-                startY = clientY;
-                startLeft = rect.left;
-                startTop = rect.top;
-
-               
-                document.body.style.userSelect = 'none';
-            }
-
-            function onMove(clientX, clientY) {
-                if (!dragging) return;
-                const dx = clientX - startX;
-                const dy = clientY - startY;
-
-                // new pos
-                let newLeft = startLeft + dx;
-                let newTop = startTop + dy;
-
-              
-                const rect = dialog.getBoundingClientRect();
-                const maxLeft = window.innerWidth - rect.width;
-                const maxTop = window.innerHeight - rect.height;
-
-                newLeft = Math.max(0, Math.min(newLeft, maxLeft));
-                newTop = Math.max(0, Math.min(newTop, maxTop));
-
-                dialog.style.left = newLeft + 'px';
-                dialog.style.top = newTop + 'px';
-                dialog.style.right = 'auto';
-                dialog.style.bottom = 'auto';
-            }
-
-            function onEnd() {
-                dragging = false;
-                document.body.style.userSelect = '';
-            }
-
-            // Mouse events
-            handle.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
-            document.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
-            document.addEventListener('mouseup', onEnd);
-
-        
-            handle.addEventListener('touchstart', (e) => {
-                const t = e.touches[0];
-                onStart(t.clientX, t.clientY);
-            }, { passive: true });
-
-            document.addEventListener('touchmove', (e) => {
-                if (!dragging) return;
-                const t = e.touches[0];
-                onMove(t.clientX, t.clientY);
-            }, { passive: true });
-
-            document.addEventListener('touchend', onEnd);
-
-          
-            const fullscreenBtn = document.getElementById('asdcFullscreen');
-            fullscreenBtn?.addEventListener('click', () => {
-                if (!dialog.classList.contains('fullscreen')) {
-                  
-                    dialog.style.bottom = '20px';
-                    dialog.style.right = '20px';
-                    dialog.style.left = '';
-                    dialog.style.top = '';
-                }
-            });
-        })();
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const button = document.getElementById("asdcChatToggle");
-            const tooltip = button.querySelector(".tooltip-bubble");
-
-            button.addEventListener("mouseenter", function () {
-                const rect = button.getBoundingClientRect();
-                const spaceAbove = rect.top;
-                const spaceBelow = window.innerHeight - rect.bottom;
-
-                if (spaceAbove < 60 && spaceBelow > spaceAbove) {
-                    tooltip.setAttribute("data-position", "bottom");
-                } else {
-                    tooltip.setAttribute("data-position", "top");
-                }
-            });
-        });
-
-        const chat = document.getElementById("asdcChat");
-        const fullscreenBtn = document.getElementById("asdcFullscreen");
-
-        fullscreenBtn.addEventListener("click", () => {
-            chat.classList.toggle("fullscreen");
-            fullscreenBtn.textContent = chat.classList.contains("fullscreen") ? "🗗" : "⛶";
-        });
-
-        const btn = document.getElementById("asdcChatToggle");
-        let isDragging = false, offsetX, offsetY;
-
-        btn.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            offsetX = e.clientX - btn.getBoundingClientRect().left;
-            offsetY = e.clientY - btn.getBoundingClientRect().top;
-            btn.style.cursor = "grabbing";
-        });
-
-        document.addEventListener("mousemove", (e) => {
-            if (!isDragging) return;
-            btn.style.left = (e.clientX - offsetX) + "px";
-            btn.style.top = (e.clientY - offsetY) + "px";
-            btn.style.right = "auto";  // prevent snapping back
-            btn.style.bottom = "auto";
-        });
-
-        document.addEventListener("mouseup", () => {
-            isDragging = false;
-            btn.style.cursor = "grab";
-        });
-        // --- State ---
-        let isOpen = false;
-        let isSending = false;
-        let welcomeShown = false;
-        let lastUserQuery = "";
-        let heartbeatTimer = null;
-
-        // Elements
-        const dlg = document.getElementById('asdcChat');
-        const toggleBtn = document.getElementById('asdcChatToggle');
-        const closeBtn = document.getElementById('asdcClose');
-        const chatBox = document.getElementById('asdcChatBox');
-        const inputEl = document.getElementById('asdcQuery');
-        const sendBtn = document.getElementById('asdcSend');
-        const loadingEl = document.getElementById('asdcLoading');
-
-        // Focus-trap support
-        function focusableElements(root) {
-            return Array.from(root.querySelectorAll(
-                'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
-            )).filter(el => !el.disabled && el.offsetParent !== null);
-        }
-
-        function openChat() {
-            if (isOpen) return;
-            dlg.hidden = false;
-            toggleBtn.setAttribute('aria-expanded', 'true');
-            isOpen = true;
-
-            // First-time welcome
-            if (!welcomeShown) {
-                showWelcome();
-                welcomeShown = true;
-            }
-
-           
-            const f = focusableElements(dlg);
-            if (f.length) f[0].focus();
-
-           
-            requestAnimationFrame(() => {
-                chatBox.scrollTop = chatBox.scrollHeight;
-            });
-
-            // Close on ESC
-            document.addEventListener('keydown', onEsc, { capture: true });
-            dlg.addEventListener('keydown', trapFocus);
-        }
-
-        function closeChat() {
-            if (!isOpen) return;
-            dlg.hidden = true;
-            toggleBtn.setAttribute('aria-expanded', 'false');
-            isOpen = false;
-
-        
-            if (heartbeatTimer) {
-                clearInterval(heartbeatTimer);
-                heartbeatTimer = null;
-            }
-
-          
-            toggleBtn.focus();
-
-            document.removeEventListener('keydown', onEsc, { capture: true });
-            dlg.removeEventListener('keydown', trapFocus);
-        }
-
-        function onEsc(e) {
-            if (e.key === 'Escape') {
-                closeChat();
-                e.preventDefault();
-            }
-        }
-
-        function trapFocus(e) {
-            if (e.key !== 'Tab') return;
-            const f = focusableElements(dlg);
-            if (!f.length) return;
-            const first = f[0];
-            const last = f[f.length - 1];
-            if (e.shiftKey && document.activeElement === first) {
-                last.focus();
-                e.preventDefault();
-            } else if (!e.shiftKey && document.activeElement === last) {
-                first.focus();
-                e.preventDefault();
-            }
-        }
-
-        // Toggle
-        // Toggle
-        toggleBtn.addEventListener('click', () => {
-            if (isOpen) {
-                closeChat();
-            } else {
-                openChat();
-                sendQuery('warmup', true); // silent ping
-
-            }
-
-            // ✅ Start heartbeat on first toggle click
-            if (!heartbeatTimer) {
-                heartbeatTimer = setInterval(() => {
-                    sendQuery('warmup', true); // silent ping
-                }, 240000);
-            }
-        });
-        closeBtn.addEventListener('click', closeChat);
-
-        // Submit handlers
-        sendBtn.addEventListener('click', () => sendQuery());
-        inputEl.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') sendQuery();
-        });
-
-        // Dynamic viewport height var (mobile keyboards)
-        function setVhVar() {
-            const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-            document.documentElement.style.setProperty('--asdc-vh', vh + 'px');
-        }
-        setVhVar();
-        window.addEventListener('resize', setVhVar);
-        if (window.visualViewport) window.visualViewport.addEventListener('resize', setVhVar);
-
-        // --- UI helpers (vanilla, no Tailwind) ---
-        function scrollToBottom(el, smooth = true) {
-            const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
-            el.scrollTo({ top: el.scrollHeight, behavior: smooth && nearBottom ? 'smooth' : 'auto' });
-        }
-
-        let stopStreaming = false;
-
-        function streamText(container, text, speed = 1, onDone, onChunk) {
-            let i = 0;
-            (function tick() {
-                if (stopStreaming) {
-                    stopStreaming = false; // reset for next use
-                    return; // stop streaming immediately
-                }
-                if (i < text.length) {
-                    const ch = text[i] === "\n" ? "<br>" : text[i];
-                    container.innerHTML += ch;
-                    if (onChunk) onChunk();
-                    i++;
-                    setTimeout(tick, speed);
-                } else {
-                    if (onDone) onDone();
-                }
-            })();
-        }
-
-        // --- Unified feedback block: meta → controls → 👍 → 👎 ---
-        function appendFeedbackBlock(container, meta, role, text, textDiv) {
-            const feedbackDiv = document.createElement('div');
-            feedbackDiv.className = 'asdc-feedback';
-
-            // ---- Controls container
-            const controls = document.createElement('div');
-            controls.className = 'asdc-controls';
-
-            // ---- Common: Copy button
-            const copyBtn = document.createElement('button');
-            copyBtn.type = 'button';
-            copyBtn.className = 'asdc-icon-btn';
-            copyBtn.title = 'Copy';
-            copyBtn.textContent = '📋';
-            copyBtn.onclick = () => {
-                navigator.clipboard.writeText(text);
-                copyBtn.textContent = '✅';
-                setTimeout(() => (copyBtn.textContent = '📋'), 1500);
-            };
-
-            if (role === 'user') {
-                // ✅ USER: Only Edit + Copy
-                const editBtn = document.createElement('button');
-                editBtn.type = 'button';
-                editBtn.className = 'asdc-icon-btn';
-                editBtn.title = 'Edit & resend';
-                editBtn.textContent = '✏️';
-                editBtn.onclick = () => makeEditable(textDiv, text);
-
-                controls.appendChild(editBtn);
-                controls.appendChild(copyBtn);
-
-            } else {
-                // 🤖 BOT: Like/Dislike (+ you can keep Copy or remove if you want)
-                const like = document.createElement('button');
-                like.type = 'button';
-                like.className = 'asdc-icon-btn';
-                like.title = 'Like';
-                like.textContent = '👍';
-
-                const dislike = document.createElement('button');
-                dislike.type = 'button';
-                dislike.className = 'asdc-icon-btn';
-                dislike.title = 'Dislike';
-                dislike.textContent = '👎';
-
-                // If you do NOT want Copy for bot, remove next line:
-                controls.appendChild(copyBtn);
-
-                feedbackDiv.addEventListener('click', (ev) => {
-                    if (ev.target === like) rateResponse('like');
-                    if (ev.target === dislike) rateResponse('dislike');
-                });
-
-                feedbackDiv.appendChild(like);
-                feedbackDiv.appendChild(dislike);
-            }
-
-            // ---- Meta (optional, usually for bot)
-            if (meta && (meta.duration || meta.scores)) {
-                const metaDiv = document.createElement('div');
-                metaDiv.className = 'asdc-meta';
-
-                if (meta.duration) {
-                    const duration = Number(meta.duration).toFixed(2);
-                    const timeSpan = document.createElement('span');
-                    timeSpan.textContent = `⏱️ ${duration}s`;
-                    timeSpan.title = `Response time: ${duration} seconds`;
-                    metaDiv.appendChild(timeSpan);
-                }
-                if (meta.scores) {
-                    const scoreSpan = document.createElement('span');
-                    if (typeof meta.scores === 'object') {
-                        const vals = Object.values(meta.scores).map(v => Number(v).toFixed(2));
-                        scoreSpan.textContent = ` 🔍 ${vals.join(", ")}`;
-                        scoreSpan.title = `Similarity scores: ${vals.join(", ")}`;
-                    } else {
-                        const score = Number(meta.scores).toFixed(2);
-                        scoreSpan.textContent = ` 🔍 ${score}`;
-                        scoreSpan.title = `Similarity score: ${score}`;
-                    }
-                    metaDiv.appendChild(scoreSpan);
-                }
-                feedbackDiv.appendChild(metaDiv);
-            }
-
-            // Append controls last so they align to the right
-            feedbackDiv.appendChild(controls);
-            container.appendChild(feedbackDiv);
-        }
-
-        // --- MAIN: addMessage using unified feedback block ---
-        function addMessage(role, text, options = {}) {
-            const { stream = false, link = "", meta = null } = options;
-
-            const row = document.createElement('div');
-            row.className = role === 'user' ? 'asdc-row asdc-row--me' : 'asdc-row asdc-row--bot';
-
-            const icon = document.createElement('div');
-            icon.className = 'asdc-icon';
-            icon.setAttribute('aria-hidden', 'true');
-            if (role === 'user') {
-                icon.innerHTML = `<img src="/css/chatbot/user4.png" alt="User" height="20" width="26">`;
-            } else {
-                // Inline SVG for robot
-                icon.innerHTML = `
-                           <svg xmlns="http://www.w3.org/2000/svg" height="18" width="24" viewBox="0 0 640 512" fill="green">
-                          <path d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z"/>
-</svg>
-                            `;
-            }
-
-            const bubble = document.createElement('div');
-            bubble.className = role === 'user' ? 'asdc-bubble asdc-bubble--me' : 'asdc-bubble asdc-bubble--bot';
-
-            const contentWrap = document.createElement('div');
-            contentWrap.className = 'asdc-bubble-content';
-
-            const textDiv = document.createElement('div');
-            textDiv.className = 'asdc-text';
-            textDiv.innerHTML = stream ? '' : text;
-
-            contentWrap.appendChild(textDiv);
-
-            if (link) {
-                const linkDiv = document.createElement('div');
-                linkDiv.className = 'asdc-link';
-                linkDiv.innerHTML = link;
-                contentWrap.appendChild(linkDiv);
-            }
-
-            // USER: (no feedback block unless you want it — uncomment to enable)
-            if (role === 'user') {
-                appendFeedbackBlock(contentWrap, null, role, text, textDiv);
-            }
-
-            if (role === 'bot') {
-                if (stream) {
-                    // Create stop button
-                    const stopBtn = document.createElement('button');
-                    stopBtn.type = 'button';
-                    stopBtn.className = 'asdc-icon-btn asdc-stop-btn';
-                    stopBtn.title = 'Stop response';
-                    stopBtn.textContent = '⏹️';
-
-                    // when clicked, set stop flag and remove button
-                    stopBtn.onclick = () => {
-                        stopStreaming = true;
-                        stopBtn.remove();
-                    };
-
-                    contentWrap.appendChild(stopBtn);
-
-                    streamText(
-                        textDiv,
-                        text,
-                        1,
-                        () => {
-                            stopBtn.remove(); // remove button after finish
-                            appendFeedbackBlock(contentWrap, meta, role, text, textDiv);
-                            scrollToBottom(chatBox);
-                        },
-                        () => scrollToBottom(chatBox)
-                    );
-                } else {
-                    appendFeedbackBlock(contentWrap, meta, role, text, textDiv);
-                }
-            }
-
-            bubble.appendChild(contentWrap);
-
-            if (role === 'user') {
-                row.appendChild(bubble);
-                row.appendChild(icon);
-            } else {
-                row.appendChild(icon);
-                row.appendChild(bubble);
-            }
-
-            chatBox.appendChild(row);
-            requestAnimationFrame(() => scrollToBottom(chatBox));
-        }
-
-        // --- Edit UI ---
-        function makeEditable(textDiv, originalText) {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'asdc-edit-wrap';
-
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = originalText;
-            input.className = 'asdc-edit-input';
-
-            const btns = document.createElement('div');
-            btns.className = 'asdc-edit-btns';
-
-            const cancel = document.createElement('button');
-            cancel.type = 'button';
-            cancel.className = 'asdc-btn asdc-btn--gray';
-            cancel.textContent = 'Cancel';
-            cancel.onclick = () => {
-                textDiv.textContent = originalText;
-                wrapper.remove();
-            };
-
-            const send = document.createElement('button');
-            send.type = 'button';
-            send.className = 'asdc-btn asdc-btn--blue';
-            send.textContent = 'Send';
-            send.onclick = () => {
-                const val = input.value.trim();
-                if (val) {
-                    textDiv.textContent = val;
-                    wrapper.remove();
-                    sendQuery(val);
-                }
-            };
-
-            btns.appendChild(cancel);
-            btns.appendChild(send);
-            wrapper.appendChild(input);
-            wrapper.appendChild(btns);
-
-            // replace current text with editor
-            textDiv.textContent = '';
-            textDiv.appendChild(wrapper);
-            input.focus();
-        }
-
-        function showWelcome() {
-            addMessage('bot', '👋 Welcome! How can I assist you today?');
-        }
-
-        function rateResponse(type) {
-            const msg = document.createElement('div');
-            msg.className = 'asdc-bubble asdc-bubble--note';
-            msg.textContent = type === 'like' ? '👍 Thanks for liking the response!' : '👎 Thanks for your feedback!';
-            chatBox.appendChild(msg);
-            scrollToBottom(chatBox);
-
-            fetch("https://dgis.army.mil/chatbot/asdcfeedback/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ feedback: type, query: lastUserQuery, collection_name: "chatbot_acms" })
-            }).catch(() => { });
-        }
-
-        // --- Network ---
-        async function sendQuery(optionalQuery = null, silent = false) {
-            if (isSending) return;
-
-            const userQuery = (optionalQuery ?? inputEl.value).trim();
-            if (!userQuery) return;
-
-            isSending = true;
-            lastUserQuery = userQuery;
-
-            if (!silent) {
-                addMessage('user', userQuery);
-                inputEl.value = '';
-                inputEl.disabled = true;
-                sendBtn.disabled = true;
-                loadingEl.hidden = false;
-                chatBox.setAttribute('aria-busy', 'true');
-            }
-
-            const t0 = performance.now();
-            try {
-                const res = await fetch("https://dgis.army.mil/chatbot/asdcask/", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ query: userQuery, collection_name: "chatbot_acms" })
-                });
-                const data = await res.json();
-                const t1 = performance.now();
-                const roundTrip = (t1 - t0) / 1000;
-
-                if (!silent) {
-                    loadingEl.hidden = true;
-                    chatBox.setAttribute('aria-busy', 'false');
-                    addMessage(
-                        'bot',
-                        data.answer || "Please ask a question related to the website.",
-                        { stream: true, link: data.link || "", meta: { duration: data.duration ?? roundTrip, scores: data.scores ?? null } }
-                    );
-                }
-            } catch {
-                if (!silent) {
-                    loadingEl.hidden = true;
-                    chatBox.setAttribute('aria-busy', 'false');
-                    addMessage('bot', '❌ Error processing your request.');
-                }
-            } finally {
-                isSending = false;
-                if (!silent) {
-                    inputEl.disabled = false;
-                    sendBtn.disabled = false;
-                    inputEl.focus();
-                }
-            }
-        }
-    </script>
-    <style>
-        #watermark {
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: red;
-            font-size: 18px;
-            pointer-events: none;
-            -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            position: relative;
-            overflow: hidden;
-        }
-       
-
-        .dropdown-item:hover {
-            background: linear-gradient(to top left, #ff9933 22%, #cc99ff 90%);
-        }
-
-        .dropdown-item {
-            font-weight: 500;
-        }
-
-        .fix {
-            background-image: linear-gradient(120deg,#a1c4fd 0,#c2e9fb 100%);
-        }
-
-        .collapsCol {
-            background-image: linear-gradient(120deg,#a1c4fd 0,#c2e9fb 100%);
-            max-height: 44px;
-        }
-
-        .btnCol {
-            font-size: 22px;
-            color: white;
-            font-weight: 500;
-            margin-top: -14px;
-        }
-    </style>
     @RenderSection("scripts", required: false)
-    <script>
-        $(document).ready(function () {
-            $("#loading").hide();
-            $(document).ajaxStart(function () {
-                $("#loading").show();
-            }).ajaxStop(function () {
-                $("#loading").hide();
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: '/Master/GetCounter',
-                type: 'POST',
-                data: { "Proc": "16" },
-                success: function (result) {
-                    if (result.length > 0) {
-                        $('#spnComdName').html(result[0].ComdName);
-                        $('#spnTodayCnt').html(result[0].Today);
-                        $('#spnMonthlyCnt').html(result[0].CurrentMonth);
-                        $('#spnTotalCnt').html(result[0].Total);
-                    }
-                    else {
-                        $('#spnComdName').html(result[0].ComdName);
-                        $('#spnTodayCnt').html("0");
-                        $('#spnMonthlyCnt').html("0");
-                        $('#spnTotalCnt').html("0");
-                    }
-                }
-            });
-        });
-    </script>
+
+
 </body>

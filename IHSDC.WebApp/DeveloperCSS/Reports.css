@@ -1,0 +1,28 @@
+﻿
+.center {
+    text-align: center;
+}
+
+.custom-card-body {
+    box-shadow: -1px 1px 16px 1px;
+    margin-top: 5px;
+}
+
+.custom-row-padding {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.custom-row-paddings {
+    padding-left: 10px;
+}
+
+.custom-report-btn {
+    margin-right: 10px;
+}
+
+.custom-back-text {
+    color: white;
+}
+
+

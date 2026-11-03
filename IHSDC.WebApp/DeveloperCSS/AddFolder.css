@@ -1,0 +1,19 @@
+﻿.select2-selection__choice__remove {
+    display: none !important;
+}
+
+.table-striped tbody tr:hover td {
+    background-color: #f1f1f1;
+}
+
+.table td, .table th {
+    text-align: left;
+    padding: 8px;
+}
+
+.user-column {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 0;
+}

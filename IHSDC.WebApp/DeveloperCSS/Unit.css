@@ -1,0 +1,31 @@
+﻿
+.error-label {
+    color: red;
+}
+
+.custom-btn-margin {
+    margin-top: 2.0rem;
+}
+
+.custom-card-body {
+    padding: 0.3rem;
+    border: 0px solid #89CFF0;
+    width: 600px;
+}
+
+.custom-row-margin {
+    margin-left: 1rem;
+}
+
+.custom-required-text {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.custom-table-responsive {
+    margin-left: 1rem;
+    padding-right: 2rem;
+}
+
+

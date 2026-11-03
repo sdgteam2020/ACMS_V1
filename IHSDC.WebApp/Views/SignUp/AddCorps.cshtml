@@ -16,66 +16,37 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>ACMS - SignUp</title>
-    <style>
-        .error-label {
-            color: red;
-        }
+    <link href="@Url.Content("~/DeveloperCSS/Corps.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    <script src="@Url.Content("~/Content/CustomJS/AviatorJS.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    <link href="@Url.Content("~/Content/css/dashboard.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/font-awesome/css/font-awesome.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
 
-        .custom-btn-margin {
-            margin-top: 2.5rem;
-        }
+    <link href="@Url.Content("~/NewContent/vendor/fontawesome-free/css/all.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" type="text/css">
 
-        .custom-card-body {
-            padding: 0.3rem;
-            border: 0px solid #89CFF0;
-            width: 600px;
-        }
+    <link href="@Url.Content("~/NewContent/vendor/datatables/dataTables.bootstrap4.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
 
-        .custom-row-margin {
-            margin-left: 1rem;
-        }
+    <link href="@Url.Content("~/NewContent/css/sb-admin.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
 
-        .custom-required-text {
-            color: red;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .custom-table-responsive {
-            margin-left: 1rem;
-            padding-right: 2rem;
-        }
-    </style>
-    <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Content/CustomJS/AviatorJS.js"></script>
-    <link href="~/Content/css/dashboard.css" rel="stylesheet">
-    <link href="~/NewContent/vendor/bootstrap/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-    <link href="~/NewContent/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-    <link href="~/NewContent/css/sb-admin.css" rel="stylesheet">
-
-    <link href="~/NewContent/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <link href="~/NewContent/css/Sidebar.css" rel="stylesheet">
+    <link href="@Url.Content("~/NewContent/bootstrap-datepicker.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/css/Sidebar.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
 
     <link rel="icon" href="~/Images/dgis_ico.png" type="image/x-icon">
 
 
-    <link rel="stylesheet" href="~/NewContent/dataTable4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/NewContent/dataTable4/css/buttons.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/NewContent/dataTable4/css/responsive.bootstrap4.min.css">
-    <link href="~/NewContent/dataTable4/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/searchBuilder.dataTables.min.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/dataTables.dateTime.min.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/buttons.dataTables.min.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/colReorder.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@Url.Content("~/NewContent/dataTable4/css/dataTables.bootstrap4.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion">
+    <link rel="stylesheet" href="@Url.Content("~/NewContent/dataTable4/css/buttons.bootstrap4.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion">
+    <link rel="stylesheet" href="@Url.Content("~/NewContent/dataTable4/css/responsive.bootstrap4.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion">
+    <link href="@Url.Content("~/NewContent/dataTable4/css/jquery.dataTables.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/searchBuilder.dataTables.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/dataTables.dateTime.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/buttons.dataTables.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/colReorder.dataTables.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
-    <link href="~/NewContent/vendor/bootstrap/css/owl.carousel.min.css" rel="stylesheet" />
-    <link href="~/NewContent/vendor/bootstrap/css/fonts/icomoon/style.css" rel="stylesheet" />
-    <link href="~/NewContent/dataTable4/css/select2.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/owl.carousel.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/fonts/icomoon/style.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/dataTable4/css/select2.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
 
 </head>
@@ -148,162 +119,57 @@
 </div>
 
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
-<script src="~/Content/css/sweetalert.min.js"></script>
-<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.validate.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.dropdownsearch').select2();
-    });
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/DevelopersJs/Corps.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+<link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+<link href="@Url.Content("~/NewContent/vendor/fontawesome-free/css/all.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" type="text/css" media="only screen">
+<link href="@Url.Content("~/NewContent/css/sb-admin.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+<script src="@Url.Content("~/Content/CustomJS/SignUpfmReg.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
-        var messaget = '@ViewBag.ButtonName';
+<script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
+<script src="@Url.Content("~/NewContent/vendor/jquery-easing/jquery.easing.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
-    $(".OrderbyId").off("click").click(function () {
-        var orderby = $(this).closest("td").find(".spnOrderbyId").html();
-        updateorder(orderby);
-      
-    });
-    function updateorder(orderby) {
+<script src="@Url.Content("~/NewContent/vendor/datatables/jquery.dataTables.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/vendor/datatables/dataTables.bootstrap4.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
-        $.ajax({
-            url: '/Master/CorpsOrderby',
-            type: 'POST',
-            data: { "OrderbyId": orderby }, //get the search string
-            success: function (result) {
+<script src="@Url.Content("~/NewContent/js/sb-admin.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
-
-                if (result== 0) {
-
-                    swal("Successfully!", "Update Order Successfully", "success");
-                    location.reload();
-
-                }
-
-            }
-        });
-
-
-
-    }
-
-   
-    function AddConfirmationDgs(obj, ActionName, Submit) {
-        event.preventDefault();
-
-      
-        $('.error-label').remove();
-
-        
-        var emptyFields = [];
-        $('form').find(':input[required]').each(function () {
-            if ($.trim($(this).val()) === '') {
-                emptyFields.push(this);
-            }
-        });
-
-    
-        if (emptyFields.length > 0) {
-            var firstEmptyField = emptyFields[0];
-            $(firstEmptyField).after('<label class="error-label">This field is required</label>');
-            return;
-        }
-
-      
-        if (messaget == "Add") {
-            swal({
-                title: "Please Confirm",
-                text: "",
-                type: "warning",
-
-                showCancelButton: true,
-                cancelButtonText: "Cancel",
-                cancelButtonColor: "#FF0000",
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Add",
-
-                closeOnCancel: true,
-                closeOnConfirm: false
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('form').submit();
-                    }
-                });
-        } else {
-            swal({
-                title: "Please Confirm",
-                text: "",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Update",
-                cancelButtonText: "Cancel",
-
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('form').submit();
-                    }
-                });
-        }
-    }
-
-      var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus ';
-    if (message)
-        sweetAlert(message, messagemidStatus, messageStatus);
-</script>
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
-<script src="~/Content/css/sweetalert.min.js"></script>
-<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
-<link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="only screen">
-<link href="~/NewContent/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="only screen">
-<link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" media="only screen">
-<link href="~/NewContent/css/sb-admin.css" rel="stylesheet" media="only screen">
-<script src="~/Content/CustomJS/SignUpfmReg.js"></script>
-
-<script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
-<script src="~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<script src="~/NewContent/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<script src="~/NewContent/vendor/datatables/jquery.dataTables.js"></script>
-<script src="~/NewContent/vendor/datatables/dataTables.bootstrap4.js"></script>
-
-<script src="~/NewContent/js/sb-admin.min.js"></script>
-
-<script src="~/NewContent/js/demo/datatables-demo.js"></script>
-<script src="~/NewContent/bootstrap-datepicker.min.js"></script>
-<script src="~/NewContent/jszip.min.js"></script>
-<script src="~/NewContent/docx-preview.js"></script>
-<script src="~/NewContent/bootstrap.min.js"></script>
+<script src="@Url.Content("~/NewContent/js/demo/datatables-demo.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/bootstrap-datepicker.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/jszip.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/docx-preview.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/bootstrap.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <!--dataTable4-->
-<script src="~/NewContent/dataTable4/js/jquery.dataTables.min.js"></script>
-<script src="~/NewContent/dataTable4/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/NewContent/dataTable4/js/dataTables.buttons.min.js"></script>
-<script src="~/NewContent/dataTable4/js/buttons.bootstrap4.min.js"></script>
-<script src="~/NewContent/dataTable4/js/jszip.min.js"></script>
-<script src="~/NewContent/dataTable4/js/pdfmake.min.js"></script>
-<script src="~/NewContent/dataTable4/js/vfs_fonts.js"></script>
-<script src="~/NewContent/dataTable4/js/buttons.html5.min.js"></script>
-<script src="~/NewContent/dataTable4/js/buttons.print.min.js"></script>
-<script src="~/NewContent/dataTable4/js/buttons.colVis.min.js"></script>
-<script src="~/NewContent/dataTable4/js/dataTables.responsive.min.js"></script>
-<script src="~/NewContent/dataTable4/js/responsive.bootstrap4.min.js"></script>
-<script src="~/NewContent/dataTable4/js/dataTables.colReorder.min.js"></script>
-<script src="~/NewContent/dataTable4/js/dataTables.searchBuilder.min.js"></script>
-<script src="~/NewContent/dataTable4/js/dataTables.dateTime.min.js"></script>
-<script src="~/NewContent/dataTable4/js/fnMultiFilter.js"></script>
-<script src="~/NewContent/vendor/bootstrap/js/popper.min.js"></script>
-<script src="~/NewContent/vendor/bootstrap/js/owl.carousel.min.js"></script>
-<script src="~/NewContent/vendor/bootstrap/js/main.js"></script>
-<script src="~/NewContent/dataTable4/js/select2.min.js"></script>
-<script src="~/Content/CustomJS/SignUpfmReg.js"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/jquery.dataTables.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.bootstrap4.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.buttons.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/buttons.bootstrap4.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/jszip.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/pdfmake.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/vfs_fonts.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/buttons.html5.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/buttons.print.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/buttons.colVis.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.responsive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/responsive.bootstrap4.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.colReorder.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.searchBuilder.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/dataTables.dateTime.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/fnMultiFilter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/vendor/bootstrap/js/popper.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/vendor/bootstrap/js/owl.carousel.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/vendor/bootstrap/js/main.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/dataTable4/js/select2.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/SignUpfmReg.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

@@ -7,7 +7,7 @@
     var messageStatus = TempData["messageStatus"] ?? string.Empty;
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
 
-    ViewBag.Title = "Conf Type";
+    ViewBag.Title = "Add Folder";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
 }
 
@@ -17,30 +17,8 @@
      ? Convert.ToInt32(ViewBag.FolderControlId)
      : 0;
 }
-<style>
-    .select2-selection__choice__remove {
-        display: none !important;
-    }
 
-    .table-striped tbody tr:hover td {
-        background-color: #f1f1f1;
-    }
-
-    .table td, .table th {
-        text-align: left;
-        padding: 8px;
-    }
-
-    .user-column {
-        /*     word-wrap: break-word;
-        white-space: normal;*/
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        max-width: 0; /* Adjust this value to control the visible width */
-    }
-</style>
-
+<link href="@Url.Content("~/DeveloperCSS/AddFolder.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
 @using (Html.BeginForm("AddFolderControl", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -155,79 +133,26 @@
 }
 
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
-<script src="~/Content/css/sweetalert.min.js"></script>
-<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
-<link href="~/DeveloperCSS/Master.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.validate.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<link href="@Url.Content("~/DeveloperCSS/Master.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
     @Styles.Render("~/Content/cssjqryUi")
 
 
     <head runat="server">
-        <script src="~/Scripts/bootstrap-multiselect.js"></script>
-        <link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('.optselected').prop('disabled', true);
-                $('#PolicyId').select2({
-                    allowClear: false
-                });
-                $('.dropdownsearch').select2();
-                function removeSelectedValue() {
-                    $('#mySelect2').val(null).trigger('change');
-                }
-                $(".select2-search__field").on('keydown', function (e) {
-                    if (e.which === 8 && !e.target.value.length) {
-                        e.stopImmediatePropagation();
-                        e.preventDefault();
-                    }
-                });
-
-                $("#removeSelectedValueButton").click(function () {
-                    removeSelectedValue();
-                });
-            });
-
-            $(function () {
-                $('#ddlUsers').multiselect({
-                    includeSelectAllOption: true,
-                    selectAllValue: 'multiselect-all',
-                    enableFiltering: true,
-                    enableCaseInsensitiveFiltering: true,
-                    maxHeight: '300',
-                    buttonWidth: '230',
-                });
-            });
-
-            $("#ddlUsers").change(function () {
-
-                var selected = $("#ddlUsers option:selected");
-                var Users = "";
-                var arrSelected = [];
-                selected.each(function () {
-                    arrSelected.push($(this).val());
-                    Users += $(this).val() + ",";
-                });
-                Users = Users.slice(0, -1);
-
-                $('#Users').val(Users);
-            });
-
-        </script>
+        <script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+        
     </head>
 
-    <script src="~/DevelopersJs/EncryptePayload.js"></script>
-    <script src="~/DevelopersJs/AddFolderControl.js"></script>
-    <script>
-     var message = '@message';
-  var messageStatus = '@messageStatus';
-  var messagemidStatus = '@messagemidStatus ';
-  if (message)
-      sweetAlert(message, messagemidStatus, messageStatus);
-    </script>
+    <script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    <script src="@Url.Content("~/DevelopersJs/AddFolderControl.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    
 
 }

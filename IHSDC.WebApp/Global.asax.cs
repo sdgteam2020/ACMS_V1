@@ -55,7 +55,7 @@ namespace IHSDC.WebApp
                 {
                     try
                     {
-                        //call controller to initialize this service for controller
+                      
                         return new PolicyCornerController(AllPath[0], _docPathServices);
                     }
                     catch 
@@ -77,15 +77,7 @@ namespace IHSDC.WebApp
 
         public void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            //string referer = Request.ServerVariables["HTTP_REFERER"];
-            //string login = Request.CurrentExecutionFilePath;
-            //if (referer == null && login != "/")
-            //{
-            //    if ((referer == null && login != "/Account/Login"))
-            //    {
-            //        Response.Redirect("/Account/Login");
-            //    }
-            //}
+            
         }
     }
 

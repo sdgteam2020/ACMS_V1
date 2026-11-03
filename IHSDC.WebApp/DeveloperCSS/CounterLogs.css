@@ -1,0 +1,102 @@
+﻿
+@media print {
+
+    @page {
+        size: A3 landscape;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    body:: after
+
+{
+    content: none !important;
+}
+
+.card-page {
+    break-after: page;
+}
+
+    .card-page:last-of-type {
+        break-after: auto;
+    }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: gray;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: gray;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.top-border-black {
+    border-top: 1px solid black;
+}
+
+.lowzoom-card {
+    box-shadow: -1px 2px 16px 3px;
+    padding: 0.5rem;
+}
+
+.custom-text-center {
+    text-align: center;
+}
+
+.custom-hidden {
+    display: none;
+}
+
+.custom-table-spacing {
+    margin-left: 1rem;
+    padding-right: 2rem;
+}
+
+.custom-modal-dialog {
+    margin-top: 130px;
+    width: 400mm;
+    max-width: 100%;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.custom-modal-body {
+    max-height: 600px;
+    overflow: auto;
+}
+
+.custom-watermark {
+    transform: rotate(-45deg);
+    z-index: 10000;
+    opacity: 0.3;
+    color: #8e9191;
+    position: fixed;
+    left: 6%;
+    top: 39%;
+    font-size: 80px;
+    font-weight: 500;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+

@@ -1,15 +1,19 @@
 ﻿let messaget = '@ViewBag.ButtonName';
 
-
+let message = '@message';
+let messageStatus = '@messageStatus';
+let messagemidStatus = '@messagemidStatus ';
+if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);
 
 $(".saveAddFolderControlConfirm").on("click", function (event) {
 
     event.preventDefault();
 
-    // Remove any existing error labels
+   
     $('.error-label').remove();
 
-    // Check if all required form fields are filled in
+   
     let emptyFields = [];
     $('form').find(':input[required]').each(function () {
         if ($.trim($(this).val()) === '') {
@@ -17,17 +21,17 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
         }
     });
 
-    // If there are empty fields, display an error message for the first empty field
+  
     if (emptyFields.length > 0) {
         let firstEmptyField = emptyFields[0];
         $(firstEmptyField).after('<label class="error-label">This field is required</label>');
         return;
     }
 
-    // Get selected users from multiselect
+  
     let selectedUsers = $("#ddlUsers").val();
 
-    // If your model expects comma separated user IDs
+  
     let users = selectedUsers ? selectedUsers.join(",") : "";
 
     const payload = {
@@ -73,11 +77,10 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
 
                     data: {
                         Request: encrypted,
-                       // id: id,
+                    
                         btnval: buttonName,
 
-                        // Required because controller has
-                        // [ValidateAntiForgeryToken]
+                       
                         __RequestVerificationToken:
                             $('input[name="__RequestVerificationToken"]').val()
                     },
@@ -96,7 +99,7 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
                         },
                             function () {
 
-                                // Reload page after success
+                              
                                 window.location.href = '/Master/AddFolderControl';
 
                             });
@@ -118,4 +121,51 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
             }
         });
 });
+
+
+    $(document).ready(function () {
+        $('.optselected').prop('disabled', true);
+    $('#PolicyId').select2({
+        allowClear: false
+                });
+    $('.dropdownsearch').select2();
+    function removeSelectedValue() {
+        $('#mySelect2').val(null).trigger('change');
+                }
+    $(".select2-search__field").on('keydown', function (e) {
+                    if (e.which === 8 && !e.target.value.length) {
+        e.stopImmediatePropagation();
+    e.preventDefault();
+                    }
+                });
+
+    $("#removeSelectedValueButton").click(function () {
+        removeSelectedValue();
+                });
+            });
+
+    $(function () {
+        $('#ddlUsers').multiselect({
+            includeSelectAllOption: true,
+            selectAllValue: 'multiselect-all',
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            maxHeight: '300',
+            buttonWidth: '230',
+        });
+            });
+
+    $("#ddlUsers").change(function () {
+
+                let selected = $("#ddlUsers option:selected");
+    let Users = "";
+    let arrSelected = [];
+    selected.each(function () {
+        arrSelected.push($(this).val());
+    Users += $(this).val() + ",";
+                });
+    Users = Users.slice(0, -1);
+
+    $('#Users').val(Users);
+            });
 

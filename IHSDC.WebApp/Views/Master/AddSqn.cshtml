@@ -9,61 +9,7 @@
     ViewBag.Title = "Add SQN ";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
 }
-<style>
-  
-    .squadron-card-body {
-        box-shadow: -1px 2px 16px 3px;
-    }
-
-   
-    .squadron-title {
-        text-align: center;
-        box-shadow: 0 1px 1px;
-    }
-
-  
-    .squadron-command-col {
-        margin-left: 10px;
-    }
-
-  
-    .squadron-button-col {
-        margin-left: 10%;
-    }
-
-  
-    .squadron-add-button {
-        margin-top: 2rem;
-    }
-
-    
-    .squadron-table-container {
-        margin-left: 1rem;
-        padding-right: 2rem;
-    }
-
-  
-    .squadron-edit-icon {
-        width: 30px;
-        height: 30px;
-        border: 0;
-    }
-
-    
-    .squadron-order-icon {
-        color: #f00a0a;
-    }
-
-   
-    .squadron-no-record {
-        font-weight: 600;
-        color: red;
-        text-align: center;
-    }
-    .error-label {
-        color: red;
-    }
-</style>
+<link href="@Url.Content("~/DeveloperCSS/AddSQN.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 @{
     string myValue = @ViewBag.ButtonName;
 }
@@ -206,121 +152,14 @@
 }
 
 
-<script src="~/scripts/jquery-3.3.1.js"></script>
+<script src="@Url.Content("~/scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
 
-<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
-<script src="~/Content/css/sweetalert.min.js"></script>
-<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
-<script src="~/Scripts/jquery.validate.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/Content/CustomJS/Filter.js"></script>
-<script type="text/javascript">
-     var messaget = '@ViewBag.ButtonName';
-
-    $(".OrderbyId").off("click").click(function () {
-        var orderby = $(this).closest("td").find(".spnOrderbyId").html();
-        updateorder(orderby);
-        // CorpsOrderby
-    });
-    function updateorder(orderby) {
-
-        $.ajax({
-            url: '/Master/sqnOrderby',
-            type: 'POST',
-            data: { "OrderbyId": orderby }, //get the search string
-            success: function (result) {
-
-
-                if (result == 0) {
-
-                    swal("Successfully!", "Update Order Successfully", "success");
-                    location.reload();
-
-                }
-
-            }
-        });
-
-
-
-    }
-    $(document).ready(function () {
-        $(document).on("click", ".squadron-add-button", function () {
-            AddConfirmation(
-                this,
-                $(this).data("url"),
-                $(this).data("action")
-            );
-        });
-    });
-    function AddConfirmation(obj, ActionName, Submit) {
-        event.preventDefault();
-
-        // Remove any existing error labels
-        $('.error-label').remove();
-
-        // Check if all required form fields are filled in
-        var emptyFields = [];
-        $('form').find(':input[required]').each(function () {
-            if ($.trim($(this).val()) === '') {
-                emptyFields.push(this);
-            }
-        });
-
-        // If there are empty fields, display an error message for the first empty field
-        if (emptyFields.length > 0) {
-            var firstEmptyField = emptyFields[0];
-            $(firstEmptyField).after('<label class="error-label">This field is required</label>');
-            return;
-        }
-
-        // If all fields are filled, display the confirmation dialog
-        if (messaget == "Add") {
-            swal({
-                title: "Please Confirm",
-                text: "",
-                type: "warning",
-
-                showCancelButton: true,
-                cancelButtonText: "Cancel",
-                cancelButtonColor: "#FF0000",
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Add",
-
-                closeOnCancel: true,
-                closeOnConfirm: false
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('form').submit();
-                    }
-                });
-        } else {
-            swal({
-                title: "Please Confirm",
-                text: "",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Update",
-                cancelButtonText: "Cancel",
-
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $('form').submit();
-                    }
-                });
-        }
-    }
-
-   var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus ';
-    if (message)
-        sweetAlert(message, messagemidStatus, messageStatus);
-</script>
+<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/Filter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/DevelopersJs/AddSqn.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

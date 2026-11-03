@@ -19,82 +19,8 @@
      : 0;
 }
 <head>
-    <style>
-        .clickable-div {
-            cursor: pointer;
-        }
-
-        .container {
-            position: relative;
-            width: 100%;
-        }
-
-        .horizontal-layout {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-left: 650px;
-            margin-top: 15px;
-        }
-
-        .conf-section {
-            position: absolute;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-        }
-
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 999; 
-          
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgb(0,0,0); 
-            background-color: rgba(0,0,0,0.4); 
-        }
-
-     
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-           
-            border: 1px solid #888;
-           
-        }
-       
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-        .card-shadow {
-            box-shadow: -1px 2px 16px 3px;
-        }
-
-        .heading-center {
-            text-align: center;
-        }
-
-        .custom-row-spacing {
-            margin-top: 10px;
-            margin-left: 25px;
-        }
-    </style>
-
+    
+    <link href="@Url.Content("~/DeveloperCSS/AddPolicy.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
 </head>
 <div class="container">
@@ -268,20 +194,20 @@
         </div>
 
 
-<script src="~/scripts/jquery-3.3.1.js"></script>
-<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
-<script src="~/Content/css/sweetalert.min.js"></script>
-<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
-<link href="~/DeveloperCSS/Master.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.validate.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/Scripts/bootstrap-multiselect.js"></script>
-<link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="@Url.Content("~/scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<link href="@Url.Content("~/DeveloperCSS/Master.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
-<link href="~/NewContent/SearchDate/dataTables.dataTables.css" rel="stylesheet" />
+<link href="@Url.Content("~/NewContent/SearchDate/dataTables.dataTables.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
-<script src="~/NewContent/SearchDate/jquery-3.7.1.js"></script>
-<script src="~/NewContent/SearchDate/moment.min.js"></script>
+<script src="@Url.Content("~/NewContent/SearchDate/jquery-3.7.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/SearchDate/moment.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
 <div class="modal" id="DocuLog">
     <div class="modal-dialog custom-modal-dialog">
@@ -324,8 +250,8 @@
         </div>
     </div>
 </div>
-<script src="~/DevelopersJs/EncryptePayload.js"></script>
-<script src="~/DevelopersJs/AddPolicy.js"></script>
+<script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/DevelopersJs/AddPolicy.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script>
     $(document).ready(function () {
     // Iterate over each row in the table to get the file counts

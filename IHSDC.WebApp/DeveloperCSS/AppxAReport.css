@@ -1,0 +1,144 @@
+﻿
+
+body {
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+table {
+    border: 1px solid #a0a3a8;
+    border-collapse: collapse;
+}
+
+    table th {
+        background-color: #0cafff !important;
+        print-color-adjust: exact;
+        color: white;
+        font-weight: bold;
+    }
+
+    table th, table td {
+        padding: 5px;
+        border: 1px solid #a0a3a8;
+    }
+
+@media print {
+    @page {
+        size: A4 portrait;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    body::after {
+        content: none !important;
+    }
+
+    .card-page {
+        break-after: page;
+    }
+
+        .card-page:last-of-type {
+            break-after: auto;
+        }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background-color: gray;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background-color: gray;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .dt-buttons {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+}
+
+.custom-restricted-header {
+    text-align: center;
+}
+
+.custom-row-right {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.custom-row-center {
+    text-align: center;
+}
+
+.custom-summary-heading {
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.custom-row-margin-top {
+    margin-top: 12px;
+}
+
+.custom-text-black {
+    color: black;
+}
+
+.custom-appx-table {
+    margin-top: 10px;
+}
+
+.custom-tr-center {
+    text-align: center;
+}
+
+.custom-th-left {
+    text-align: left;
+}
+
+.custom-nodal-text {
+    margin-left: 1px;
+}
+
+.custom-sponsor-text {
+    margin-left: 0px;
+}
+
+.custom-th-left {
+    text-align: left;
+}
+
+.custom-watermark {
+    transform: rotate(-45deg);
+    z-index: 10000;
+    opacity: 0.3;
+    color: #8e9191;
+    position: fixed;
+    left: 6%;
+    top: 39%;
+    font-size: 80px;
+    font-weight: 500;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+

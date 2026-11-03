@@ -1,0 +1,72 @@
+﻿
+.clickable-div {
+    cursor: pointer;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.horizontal-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 650px;
+    margin-top: 15px;
+}
+
+.conf-section {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.card-shadow {
+    box-shadow: -1px 2px 16px 3px;
+}
+
+.heading-center {
+    text-align: center;
+}
+
+.custom-row-spacing {
+    margin-top: 10px;
+    margin-left: 25px;
+}
+

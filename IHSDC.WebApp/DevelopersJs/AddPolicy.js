@@ -32,8 +32,7 @@
             },
             error: function () {
                 $("#tbody").html("");
-                //let modal = document.getElementById("DocuUpload");
-                //modal.style.display = "none";
+                
             }
         });
     });
@@ -54,7 +53,7 @@
                         (min === '' && max === '') ||
                         (min === '' && date <= max) ||
                         (min <= date && max === '') ||
-                        (min <= date && date < adjustMaxDate(max)) // adjustMaxDate function excludes the maximum date
+                        (min <= date && date < adjustMaxDate(max)) 
                     ) {
                         return true;
                     }
@@ -97,7 +96,7 @@
         if (max !== '') {
             let adjustedMaxDate = new Date(max);
             adjustedMaxDate.setDate(adjustedMaxDate.getDate() + 1); // Add one day
-            // alert(adjustedMaxDate);
+           
             return adjustedMaxDate;
 
         }
@@ -238,10 +237,10 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
 
     event.preventDefault();
 
-    // Remove any existing error labels
+   
     $('.error-label').remove();
 
-    // Check if all required form fields are filled in
+  
     let emptyFields = [];
     $('form').find(':input[required]').each(function () {
         if ($.trim($(this).val()) === '') {
@@ -249,10 +248,10 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
         }
     });
 
-    // If there are empty fields, display an error message for the first empty field
+  
     if (emptyFields.length > 0) {
         let firstEmptyField = emptyFields[0];
-        $(firstEmptyField).after('<label class="error-label" style="color: red;">This field is required</label>');
+        $(firstEmptyField).after('<label class="error-label">This field is required</label>');
         return;
     }
 
@@ -273,7 +272,7 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
     let id = $("#id").val();
     let oldid = $("#oldid").val();
 
-    // Get Add / Update directly from clicked button
+   
     let buttonName = $(this).val();
 
     console.log("Payload:", payload);
@@ -304,12 +303,11 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
 
                     data: {
                         Request: encrypted,
-                        //id: id,
+                      
                         btnval: buttonName,
                         oldid: oldid,
 
-                        // Required because controller has
-                        // [ValidateAntiForgeryToken]
+                       
                         __RequestVerificationToken:
                             $('input[name="__RequestVerificationToken"]').val()
                     },
@@ -328,7 +326,7 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
                         },
                             function () {
 
-                                // Reload page after success
+                               
                                 window.location.href = '/Master/AddPolicy';
 
                             });

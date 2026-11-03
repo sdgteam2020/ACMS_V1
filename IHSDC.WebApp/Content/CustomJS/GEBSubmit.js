@@ -263,12 +263,12 @@ function GetChilds(obj) {
                 $.each(result, function (i, r) {
                     
                     let html = '<tr>' +                       
-                        '<td  style="font-weight:bold;width: 10%;">' + '<label>' + r.UserName + ' </label>'  + '</td>' +                        
-                        '<td  style="font-weight:bold;width: 10%;">' + '<input id="chkcheckbox"  type="checkbox" />' + '</td>' +
-                        '<td style="display:none">' + '<input id="ChildId"  value=' + r.ChildId + ' type="hidden" />' + '</td>' +
-                        '<td style="display:none">' + '<input id="RoleName"  value=' + r.RoleName + ' type="hidden" />' + '</td>' +
-                        '<td style="display:none">' + '<input id="UserName"  value=' + r.UserName + ' type="hidden" />' + '</td>' +
-                        '<td style="display:none">' + '<input id="TypeOfUnit"  value=' + r.TypeOfUnit + ' type="TypeOfUnit" />' + '</td>' +                        
+                        '<td>' + '<label>' + r.UserName + ' </label>'  + '</td>' +                        
+                        '<td>' + '<input id="chkcheckbox"  type="checkbox" />' + '</td>' +
+                        '<td>' + '<input id="ChildId"  value=' + r.ChildId + ' type="hidden" />' + '</td>' +
+                        '<td>' + '<input id="RoleName"  value=' + r.RoleName + ' type="hidden" />' + '</td>' +
+                        '<td>' + '<input id="UserName"  value=' + r.UserName + ' type="hidden" />' + '</td>' +
+                        '<td>' + '<input id="TypeOfUnit"  value=' + r.TypeOfUnit + ' type="TypeOfUnit" />' + '</td>' +                        
                         '</tr>'
                     
                     $(html).appendTo($("#childTable"));
@@ -306,8 +306,8 @@ function GetChildsList(obj) {
                 $.each(result, function (i, r) {
 
                     let html = '<tr>' +
-                        '<td  style="font-weight:bold;width: 10%;">' + '<label>' + r.UserName + ' </label>' + '</td>' +
-                        '<td  style="font-weight:bold;width: 10%;">' + '<label>' + r.TypeOfUnit + ' </label>' + '</td>' +
+                        '<td>' + '<label>' + r.UserName + ' </label>' + '</td>' +
+                        '<td>' + '<label>' + r.TypeOfUnit + ' </label>' + '</td>' +
                         '</tr>';
 
                     $(html).appendTo($("#childTable"));

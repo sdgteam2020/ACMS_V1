@@ -7,97 +7,7 @@
     ViewBag.Title = "AP Logs";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
 }
-<style id="table_style" type="text/css">
-    @@media print {
-
-        @@page {
-            size: A3 landscape;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        body::after {
-            content: none !important;
-        }
-
-        .card-page {
-            break-after: page;
-        }
-
-            .card-page:last-of-type {
-                break-after: auto;
-            }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 10px;
-            background-color: gray;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 10px;
-            background-color: gray;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-    }
-    .custom-watermark {
-        transform: rotate(-45deg);
-        z-index: 10000;
-        opacity: 0.3;
-        color: #8e9191;
-        position: fixed;
-        left: 6%;
-        top: 39%;
-        font-size: 80px;
-        font-weight: 500;
-        display: grid;
-        justify-content: center;
-        align-content: center;
-    }
-    .custom-card-body {
-        box-shadow: -1px 2px 16px 3px;
-        padding: 0.5rem;
-    }
-    .custom-text-center {
-        text-align: center;
-    }
-    .custom-hidden {
-        display: none;
-    }
-    .custom-table-spacing {
-        margin-left: 1rem;
-        padding-right: 2rem;
-    }
-    .custom-modal-dialog {
-        margin-top: 130px;
-        width: 440mm;
-        max-width: 100%;
-        box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5);
-    }
-    .custom-paragraph {
-        margin-left: 10px;
-        margin-right: 10px;
-        font-size: 15px;
-        font-family: Arial, sans-serif;
-    }
-    .custom-modal-body {
-        max-height: 600px;
-        overflow: auto;
-    }
-   
-</style>
+<link href="@Url.Content("~/DeveloperCSS/APLogs.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 <div class="card-body custom-card-body" id="lowzoom">
     <div class="row">
         <div class="col">
@@ -196,14 +106,14 @@
 
     }
 </div>
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
-<script src="~/Content/css/sweetalert.min.js"></script>
-<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
-<link href="~/NewContent/SearchDate/dataTables.dataTables.css" rel="stylesheet" />
-<script src="~/NewContent/SearchDate/jquery-3.7.1.js"></script>
-<script src="~/NewContent/SearchDate/moment.min.js"></script>
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<link href="@Url.Content("~/NewContent/SearchDate/dataTables.dataTables.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<script src="@Url.Content("~/NewContent/SearchDate/jquery-3.7.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/NewContent/SearchDate/moment.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <div class="modal fade" id="APUserLog">
     <div class="modal-dialog custom-modal-dialog">
         <div class="modal-content">
@@ -252,84 +162,6 @@
     <input type="hidden" id="userName" name="userName" />
     <input type="hidden" id="ReturnUrl" name="ReturnUrl" />
 </form>
-
-<script>
-    $(document).ready(function () {
-        $('.BtnUserLog').click(function () {
-            
-            var row = $(this).closest('tr');
-            var aviatorId = row.find('.Aviator_ID').text();
-            var userName = row.find('.User_Name').text();
-
-
-            $('#ReturnUrl').val('APLOG^' + userName);
-
-            
-          $.ajax({
-            url: '@Url.Action("clientIp", "Master")',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                if (response === 1) {
-                    $.ajax({
-                        url: '@Url.Action("Login", "Account")',
-                        type: 'POST',
-                        data: $('#myForm').serialize(),
-                        success: function(response) {
-                            if (response == 1) {
-                                window.location.href = '@Url.Action("AddInboxNotingFwd", "ACC")';
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            alert('Error: ' + error);
-                        }
-                    });
-                    return true;
-                } else {
-                    alert("Error. Please Contact System Admin");
-                    return false;
-                }
-            },
-            error: function(xhr, status, error) {
-                alert('Error:', error);
-            }
-        });
-        });
-    });
-</script>
-
-
-<script type="text/javascript">
-        $('.CloseLogpoup').on('click', function (e) {
-            var modal = document.getElementById("APUserLog");
-            modal.style.display = "none";
-        });
-
-
-
-
-        $(document).ready(function () {
-            $('#dataTable').DataTable({
-                paging: true, 
-                info: true, 
-                "lengthMenu": [5, 10, 25, 50], 
-                "pageLength": 5 
-            });
-        });
-
-    function PrintDiv() {
-        var divToPrint = document.getElementById('APUserLog');
-        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-        popupWin.document.open();
-        var table_style = document.getElementById("table_style").innerHTML;
-        popupWin.document.write('<style type = "text/css">');
-        popupWin.document.write(table_style);
-        popupWin.document.write('</style>')
-        popupWin.document.title = 'MonthWiseUsersLog';
-        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '<div class="custom-watermark">' + '@(ViewBag.ipadd)' + "" + '</html>');
-        popupWin.document.close();
-    }
-
-</script>
+<script src="@Url.Content("~/DevelopersJs/APUser.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
 

@@ -25,8 +25,7 @@
                         <th class="center">Pers Details/Contact No</th>
                         <th class="center">Unit</th>
                        
-                        <th class="center">Data Entry Fwd Auth</th>
-                        <th class="center">GEB Fwd Auth</th>
+                       
                         <th class="center">Status</th>
                         <th>Edit</th>
                         <th>Del</th>
@@ -59,12 +58,7 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.EstablishmentFull)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DEFwdAuth)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.GEBFwdAuth)
-                                </td>
+                                
                                 <td>
 
                                     @if (item.Active.ToString() == "1")
@@ -116,20 +110,4 @@
 
 </div>
 
-<style>
-    .green {
-        height: 30px;
-        width: 30px;
-        background-color: #008000;
-        border-radius: 50%;
-        display: inline-block;
-    }
-
-    .red {
-        height: 30px;
-        width: 30px;
-        background-color: #ff0000;
-        border-radius: 50%;
-        display: inline-block;
-    }
-</style>
+<link href="@Url.Content("~/DeveloperCSS/HierarchyUsers.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />

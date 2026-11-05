@@ -11,55 +11,11 @@
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
     ViewBag.Title = "Edit User";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; }
+<head>
+    <link href="@Url.Content("~/DeveloperCSS/EditUser.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
-<style>
-    .form-group {
-        margin-bottom: 0rem !important;
-    }
+</head>
 
-    .custom-card-body {
-        width: 50%;
-        box-shadow: -1px 1px 8px 1px;
-        margin-top: 5px;
-        margin-left: 450px;
-    }
-
-    .custom-card-padding {
-        padding: 0.3rem;
-        border: 0px solid #89CFF0;
-    }
-
-    .custom-form-group {
-        width: 300px;
-    }
-
-    .custom-label {
-        margin-top: 8px;
-        margin-left: 12px;
-    }
-
-    .required-star {
-        color: red;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .custom-label {
-        margin-top: 8px;
-        margin-left: 12px;
-    }
-    .hidden-user-type {
-        display: none;
-    }
-    .role-dropdown {
-        width: 270px;
-        height: 35px;
-        background-color: #f2f2f2;
-    }
-    .custom-margin-left {
-        margin-left: 1rem;
-    }
-</style>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -134,9 +90,9 @@
                             </div>
 
                             <div class="form-group required custom-form-group">
-                                @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
+                                @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label d-none" })
                                 <div class="col-md-12">
-                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @autocomplete = "off" })
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control d-none", @autocomplete = "off" })
                                 </div>
                             </div>
                         </div>
@@ -168,8 +124,8 @@
                                 </div>
                             </div>
 
-                            <div class="form-group required custom-form-group">
-                                <label class="custom-label">Bde</label>
+                            <div class="form-group required custom-form-group d-none">
+                                <label class="custom-label d-none">Bde</label>
                                 <div class="col-md-12">
                                     @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @autocomplete = "off", @required = true })
                                     <select id="spnBde" class="form-control"></select>
@@ -387,107 +343,9 @@
 
 }
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Content/CustomJS/SignUp.js"></script>
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/SignUp.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<script>
-    function validateInput(input) {
-        let regex = /[^0-9]/g;
-        input.value = input.value.replace(regex, "");
-    }
-    function ValInData(input) {
-        let regex = /[^a-zA-Z0-9 ]/g;
-        input.value = input.value.replace(regex, "");
-    }
-
-    function ValInDataReg(input) {
-        let regex = /[^a-zA-Z0-9]/g;
-        input.value = input.value.replace(regex, "");
-    }
-</script>
-<script>
-
-    $(document).ready(function () {
-        $(document).on("keyup", ".username-input", function () {
-            ValInData(this);
-        });
-    });
-    $(document).ready(function () {
-        $('.username-input').on('input', function () {
-            validateInput(this);
-        });
-    });
-
-    $(document).ready(function () {
-
-
-
-       
-        $('#spnUnit_ID').change(function () {
-
-            $("#Unit_ID").val($('#spnUnit_ID').val());
-        });
-
-        $('#UserTypeId').change(function () {
-
-           
-        });
-        var unit_id = '@ViewBag.sel_unit_id';
-        var roles_id = '@ViewBag.sel_roles_id';
-        var user_id = '@ViewBag.UserId';
-        var pass = '@ViewBag.pass';
-        $("#Unit_ID").val(unit_id);
-
-        $(".Roles").val(roles_id);
-        $("#Password").val(pass);
-        $("#UserId").val(user_id);
-
-        $('#ComdId').val(@ViewBag.ComdId);
-        $('#CorpId').val(@ViewBag.CorpId);
-        BindCorp($("#ComdId").val());
-        BindBde($("#ComdId").val(), $("#CorpId").val());
-        BindUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
-
-
-
-    });
-    
-
-
-    $('#ComdId').change(function () {
-        $('#CorpId').val(1);
-        $('#BdeId').val(1);
-
-        BindCorp($("#ComdId").val());
-        BindBde($("#ComdId").val(), $("#CorpId").val());
-        BindUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
-    });
-
-
-    $('#spnCorp').change(function () {
-        $("#CorpId").val($('#spnCorp').val());
-        BindBde($("#ComdId").val(), $("#CorpId").val());
-        BindUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
-    });
-
-    $('#spnBde').change(function () {
-        $("#BdeId").val($('#spnBde').val());
-        BindUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
-    });
-
-    $('#spnUnit').change(function () {
-        $("#Unit_ID").val($('#spnUnit').val());
-    });
-    var dropdown = document.getElementById("rolesDropdown");
-    dropdown.addEventListener("keydown", function (event) {
-        event.preventDefault();
-    });
-
-             var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus';
-    if (message)
-            sweetAlert(message, messagemidStatus, messageStatus);
-</script>
+<script src="@Url.Content("~/DevelopersJs/EditUser.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

@@ -1,0 +1,182 @@
+﻿
+.closed-agenda-body {
+    min-height: 150px;
+}
+
+.ht {
+    height: 7rem;
+}
+
+.custom-card-body {
+    min-height: 150px;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0.55rem !important;
+}
+
+.flip-card-link {
+    height: 7rem;
+    width: 9rem;
+    border-radius: 19px;
+}
+
+.flip-card-inner {
+    border-radius: 19px;
+}
+
+.dropdown-item:hover {
+    background: #4CAF50 !important;
+    border-radius: 13px;
+}
+
+
+.flip-card-inner:hover {
+    background: #4CAF50;
+    font-size: 19px !important;
+}
+
+    .flip-card-inner:hover > .icon {
+        color: white !important;
+    }
+
+
+.icon:hover {
+    color: white !important;
+}
+
+.flip-card-link {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+
+
+
+
+#div1 {
+    box-sizing: border-box;
+    width: 150px;
+    height: 100px;
+    padding: 3px;
+    border: 3px solid blue;
+}
+
+
+
+
+
+.border-left-primary {
+    border-left: .25rem solid #4e73df !important;
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.pb-2, .py-2 {
+    padding-bottom: .5rem !important;
+}
+
+.border-left-success {
+    border-left: .25rem solid #1cc88a !important;
+}
+
+.border-left-info {
+    border-left: .25rem solid #36b9cc !important;
+}
+
+.border-left-warning {
+    border-left: .25rem solid #f6c23e !important;
+}
+
+.text-gray-300 {
+    color: #dddfeb !important;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+.mb-3 {
+    margin-bottom: 0.3rem !important;
+}
+
+.clickable-div {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+#word-container {
+    min-height: 400px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+
+
+.closed-agenda-print-heading {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.closed-agenda-print-watermark {
+    transform: rotate(-45deg);
+    z-index: 10000;
+    opacity: 0.3;
+    color: #8e9191;
+    position: fixed;
+    top: 39%;
+    left: 6%;
+    font-size: 80px;
+    font-weight: 500px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+

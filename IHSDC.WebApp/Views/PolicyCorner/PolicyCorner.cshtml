@@ -1,0 +1,247 @@
+﻿@model IHSDC.WebApp.Models.PolicyCRUD
+
+@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+
+    ViewBag.Title = "Policy";
+    Layout = "~/Views/Shared/_NewAA7Layout.cshtml";
+    int sno = 0;
+    int sno1 = 0;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="@Url.Content("~/DeveloperCSS/PolicyFolder.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+
+</head>
+
+@using (Html.BeginForm("AddPolicy", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <body>
+        <div class="col">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 headingtext">Policy Corner</div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+        <div class="card-body folder-card-body">
+
+            <div class="col">
+                <div class="row">
+                    <marquee id="marquee" class="folder-marquee"
+          width="100%" direction="left" height="30px">     
+                        <p> *** Please upload PSO Booklet ***</p>
+                    </marquee>
+                </div>
+            </div>
+
+
+            <div class="row">
+                @functions {
+                    List<string> GetFilesInFolder(string folderName)
+                    {
+                        var folderPath = Server.MapPath("~/Policy/" + folderName);
+                        var files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+                        var fileList = new List<string>();
+                        foreach (var filePath in files)
+                        {
+                            var fileName = Path.GetFileName(filePath);
+                            var fullPath = filePath;
+                            fileList.Add(fullPath);
+                        }
+                        return fileList;
+                    }
+                }
+                @if (ViewBag.count > 0)
+                {
+                    foreach (var item in Model.ILPolicyCRUD)
+                    {
+                        if (item.TypeOfDocu == 2)
+                        {
+                            <div class="policy card-2 col-md-3">
+                                <div class="PolicyModelOpen">
+                                    <span class="spncardid d-none">@Html.DisplayFor(modelItem => item.PolicyName)</span>
+                                    <span class="spnTypeofdocu d-none">@Html.DisplayFor(modelItem => item.TypeOfDocu)</span>
+                                    <span class="spnPolicyId d-none">@Html.DisplayFor(modelItem => item.PolicyId)</span>
+                                    <span class="spnArmyNumber d-none">@SessionManager.ArmyNo</span>
+
+                                    <h4 class="policy-title">
+                                        @Html.DisplayFor(modelItem => item.PolicyName)
+                                    </h4>
+
+                                    <a href="#" id="btnPopup" class="policy-search-link">
+                                        <div class="policy-search-content">
+                                            <img src="~/Images/search_pol.png" class="policy-search-image" />
+                                            <h3 class="animate-charcter">Click to Search</h3>
+                                        </div>
+                                    </a>
+                                    <p class="policy-remarks">
+                                        @Html.DisplayFor(modelItem => item.PolicyRemarks)
+                                    </p>
+
+                                </div>
+                                <button type="button" class="btn showpopupFile policy-show-button">
+                                    Show File
+                                </button>
+                                <br />
+                                <div class="col policy-download-section">
+                                    <a href="https://dgis.army.mil/App_Data/online.zip">Download Hastakshar SEWA and run setup.</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="policy card-1 col-md-3">
+                                <div class="PolicyModelOpen">
+                                    <span class="spncardid d-none">@Html.DisplayFor(modelItem => item.PolicyName)</span>
+                                    <span class="spnTypeofdocu d-none">@Html.DisplayFor(modelItem => item.TypeOfDocu)</span>
+                                    <span class="spnPolicyId d-none">@Html.DisplayFor(modelItem => item.PolicyId)</span>
+                                    <span class="spnArmyNumber d-none">@SessionManager.ArmyNo</span>
+
+                                    <h4 class="policy-title">
+                                        @Html.DisplayFor(modelItem => item.PolicyName)
+                                    </h4>
+                                    <a href="#" id="btnPopup" class="policy-search-link">
+                                        <div class="policy-search-content">
+                                            <img src="~/Images/search_pol.png" class="policy-search-image" />
+                                            <h3 class="animate-charcter">Click to Search</h3>
+                                        </div>
+                                    </a>
+                                    <p class="policy-remarks">
+                                        @Html.DisplayFor(modelItem => item.PolicyRemarks)
+                                    </p>
+
+                                </div>
+
+                                <button type="button" class="btn showpopupFile policy-show-button">
+                                    Show File
+                                </button>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+
+            <div class="row">
+                <p class="policy-instructions">
+                    * To view, search and download Confd Docus, 2FA (Two Factor Authentication) is mandatory. Pl apch GSO-1, SD-2(32919) for enabling the access of confd docus on your Domain ID. Once access permission is granted,<br />
+                    &nbsp;&nbsp;pl download Online ver of Hastakshar SEWA and run setup to install it on ADN PC.<br /><br />
+                    Note : <a href="https://dgis.army.mil/dgisapp.html" target="_blank"><strong><u>Hastakshar SEWA</u></strong></a> instl is reqd on your ADN PC for 2FA. Request pl download the Online setup of Hastakshar SEWA(for ADN PC only) and run it.<br />
+                    * Pl apch Army Software Devp Centre(ASDC) at 39644 for asst wrt "Hastakshar SEWA".
+                </p>
+            </div>
+
+
+
+
+        </div>
+
+    </body>
+
+}
+</html>
+<div id="ShowFileModal" class="modal">
+    <div class="modal-dialog show-file-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header text-center">
+                <p class="modal-heading">
+                    <span id="spnShowFilePolicyName" class="modal-policy-name"></span>
+                    <span id="spnShowFileDocType" class="d-none"></span>
+                </p>
+                <button type="button" class="btn btn-danger CloseShowFilepoup" data-dismiss="modal">&times;</button>
+            </div>
+          
+                <div class="modal-body show-file-body" id="ShowFileData">
+                    <table class="table" id="dataTable2">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th class="center">S/No</th>
+                                <th class="center">FileName</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tShowFilebody">
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+            </div>
+    </div>
+</div>
+
+<div id="PolicyModal" class="modal">
+    <div class="modal-content policy-modal-content">
+
+        <div class="centered">
+            <img src="~/Images/searchEngine.png" height="70px" />
+        </div>
+        <div class="modal-header text-center">
+            < <p class="modal-heading">
+                <span id="spnPolicyName" class="modal-policy-name"></span>
+                <span id="spnDocType" class="d-none"></span>
+                <span id="spnPId" class="d-none"></span>
+                <span id="SpnArmyNumber1" class="d-none">@SessionManager.ArmyNo</span>
+            </p>
+            <div class="bar1">
+                <input class="searchbarPol" type="text" id="searchTerm" title="Search" placeholder="Search here">
+                <div class="buttons">
+                    <img src="@Url.Content("~/Images/search_pol.png")" id="searchSubmit" class="search-submit" alt="Search" />
+
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger Closepoup" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body policy-modal-body" id="APLogData">
+            <div class="table-responsive ">
+                <table class="table d-none" id="dataTable1">
+                    <thead class="bg-info text-white">
+                        <tr>
+                            <th class="center">S/No</th>
+                            <th class="center file-column">File</th>
+                            <th class="center content-column">Content</th>
+                            <th class="center"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+
+                </table>
+            </div>
+
+
+        </div>
+        <footerPolicy>
+            <div class="footerPolicy-content">
+                <p><img src="~/Images/asdc_logo.png" width="45px" height="45px" /> Copyright © 2023. Developed by Army Software Development Centre (ASDC), DGIS</p>
+            </div>
+        </footerPolicy>
+    </div>
+</div>
+
+
+
+
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/GEBSubmit.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/AddUpdateFilter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/AviatorJS.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/PolicyCorner.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+
+

@@ -18,7 +18,6 @@
      : 0;
 }
 
-<link href="@Url.Content("~/DeveloperCSS/AddFolder.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
 @using (Html.BeginForm("AddFolderControl", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -46,7 +45,7 @@
                 </div>
                 <div class="col-md-4">
                     <label><b>Users:</b></label>
-                    @Html.TextBoxFor(m => m.Users, new { @class = "hidden-field" ,@autocomplete = "off" })
+                    @Html.TextBoxFor(m => m.Users, new { @class = "hidden-field", @autocomplete = "off" })
 
                     <div id="OrgId">
                         <select id="ddlUsers" multiple="multiple" name="UserPolicies" class="form-control">
@@ -146,13 +145,15 @@
 
 
     <head runat="server">
+        <link href="@Url.Content("~/DeveloperCSS/AddFolder.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+
         <script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-        
+
     </head>
 
     <script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     <script src="@Url.Content("~/DevelopersJs/AddFolderControl.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-    
+
 
 }

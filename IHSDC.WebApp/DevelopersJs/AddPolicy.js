@@ -348,3 +348,25 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
             }
         });
 });
+
+
+    $(document).ready(function () {
+        // Iterate over each row in the table to get the file counts
+        $('#dataTable tr').each(function () {
+            let policyName = $(this).find('td.DocuUpload').find('#spncardid').text().trim();
+            if (policyName && policyName.length > 0) {
+                let FName = window.btoa(policyName);
+                let countUrl = '@Url.Action("GetFilesCount", "Master")' + '?FName=' + encodeURIComponent(FName);
+                let $fileCountDisplay = $(this).find('#fileCountDisplay');
+                $.getJSON(countUrl, function (data) {
+                    $fileCountDisplay.text(data.fileCount);
+                });
+            }
+        });
+});
+
+let message = '@message';
+let messageStatus = '@messageStatus';
+let messagemidStatus = '@messagemidStatus ';
+    if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);

@@ -1,0 +1,54 @@
+﻿@using IHSDC.WebApp.Connection
+@using Microsoft.AspNet.Identity
+@using IHSDC.WebApp.Helper
+@using IHSDC.WebApp.Models
+@{
+
+    var message = TempData["Message"] ?? string.Empty;
+    var messageStatus = TempData["messageStatus"] ?? string.Empty;
+    var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
+    int sno = 0;
+}
+
+@model IEnumerable<SearchableItem>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @{ sno++; }
+            @sno
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParagraphBefore)
+            <b>@Html.DisplayFor(modelItem => item.MatchedParagraph)</b>
+            @item.ParagraphAfter
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.FileName))
+            {
+                var relativePath = item.FilePath.Substring(item.FilePath.IndexOf("Policy"));
+                var fullUrl = Request.Url.GetLeftPart(UriPartial.Authority) + "/" + relativePath.Replace("\\", "/");
+
+                <a href="@Url.Action("DownloadpdfWithWatermark2FA", "PolicyCorner", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.FileName.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(fullUrl),type=IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.DocType),Pid=IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.Policy)})" target="_blank">
+                    <div class="pdf">
+
+                    </div>
+                </a>
+            }
+            else
+            {
+            }
+        </td>
+    </tr>
+}
+@if (sno == 0)
+{
+        <tr class="text-center">
+            <td colspan=4 class="text-center"> 
+                No Record Found
+            </td>
+        </tr>
+        }

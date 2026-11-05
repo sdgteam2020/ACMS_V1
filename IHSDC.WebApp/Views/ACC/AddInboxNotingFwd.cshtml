@@ -15,32 +15,11 @@
 @{
     var watermarkText = ViewBag.ipadd;
 }
-<style>
+<head>
+    <link href="@Url.Content("~/DeveloperCSS/InboxNoting.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+</head>
+<script src="@Url.Content("~/NewContent/vendor/jquery/jquery-3.6.0.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
-    .inbox-hidden-field {
-        display: none;
-    }
-
-    .clickable-div {
-        cursor: pointer;
-    }
-
-    .container {
-        position: relative;
-        width: 100%;
-    }
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th, td {
-        text-align: left;
-        padding: 8px;
-    }
-</style>
-<script src="~/NewContent/vendor/jquery/jquery-3.6.0.min.js"></script>
 <div class="container">
     <div class="card">
 
@@ -233,200 +212,20 @@
         }
     </div>
 </div>
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Content/CustomJS/DeleteConfirmation.js"></script>
-<script src="~/Content/CustomJS/AddUpdateFilter.js"></script>
-<script src="~/Content/CustomJS/AviatorJS.js"></script>
-<script src="~/Content/css/sweetalert.min.js"></script>
-<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/AddUpdateFilter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/CustomJS/AviatorJS.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
-<script src="~/Content/CustomJS/CloseAll.js"></script>
+<script src="@Url.Content("~/Content/CustomJS/CloseAll.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
     @Styles.Render("~/Content/cssjqryUi")
 
-    <script>
-        var watermarkText = @Html.Raw(Json.Encode(watermarkText));
-    </script>
-    <script>
-        $("body").addClass("loading");
-        $(document).ready(function () {
-            var table = $('#Inbox').DataTable({
-                lengthChange: true,
-                pageLength: 50,
-                aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
-
-                dom: 'lBfrtip',
-                buttons: [
-                    'copy',
-                    'excel',
-                    'csv',
-
-                    {
-                        text: 'PDF',
-                        extend: 'pdfHtml5',
-                        action: function (e, dt, node, config) {
-                            PrintDiv();
-                        }
-                    },
-                    'colvis',
-                ],
-            });
-            var buttonContainer = table.buttons().container().appendTo('#Inbox_wrapper .col-md-6:eq(0)');
-
-            buttonContainer.insertBefore(table.table().container());
-
-        });
-        function PrintDiv() {
-            var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-            popupWin.addEventListener('load', function () { popupWin.print(); }, { once: true });
-            popupWin.document.open();
-
-            var tableStyles = `<style type="text/css">
-                                                            .inbox-print-title { text-align: center; margin-top: 20px; }
-                                                            .inbox-print-watermark { transform: rotate(-45deg); z-index: 10000; opacity: 0.3; color: #8e9191; position: fixed; top: 39%; left: 6%; font-size: 80px; font-weight: 500; display: grid; justify-content: center; align-content: center; }
-                                                            table {
-                                                                width: 100%;
-                                                                border-collapse: collapse;
-                                                                margin-bottom: 20px;
-                                                            }
-                                                            th, td {
-                                                                padding: 8px;
-                                                                border: 1px solid #ddd;
-                                                                text-align: center;
-                                                            }
-                                                            th {
-                                                                background-color: #f2f2f2;
-                                                                color: black;
-                                                            }
-                                                            @@media print {
-
-                                                                @@page {
-                                                                    margin-top: 10px;
-                                                                    margin-bottom: 10px;
-                                                                }
-
-                                                                body::after {
-                                                                    content: none !important;
-                                                                }
-                                                                .card-page {
-                                                                    break-after: page;
-                                                                }
-                                                                    .card-page:last-of-type {
-                                                                        break-after: auto;
-                                                                    }
-                                                                footer {
-                                                                    position: fixed;
-                                                                    bottom: 0;
-                                                                    left: 0;
-                                                                    right: 0;
-                                                                    height: 10px;
-                                                                    background-color: gray;
-                                                                    color: white;
-                                                                    text-align: center;
-                                                                    padding: 10px;
-                                                                }
-                                                                header {
-                                                                    position: fixed;
-                                                                    top: 0;
-                                                                    left: 0;
-                                                                    right: 0;
-                                                                    height: 10px;
-                                                                    background-color: gray;
-                                                                    color: white;
-                                                                    text-align: center;
-                                                                    padding: 10px;
-                                                                }
-                                                            }
-                                                        </style>`;
-            var table = $('#Inbox').DataTable();
-            var visibleColumns = table.columns(':visible').header().toArray();
-            var filteredData = table.rows({ search: 'applied' }).data().toArray();
-            var tableHTML = '<table>';
-            tableHTML += '<thead>';
-            tableHTML += '<tr>';
-            visibleColumns.forEach(function (header) {
-                tableHTML += '<th>' + header.innerHTML + '</th>';
-            });
-            tableHTML += '</tr>';
-            tableHTML += '</thead>';
-            tableHTML += '<tbody>';
-            for (var i = 0; i < filteredData.length; i++) {
-                tableHTML += '<tr>';
-                for (var j = 0; j < filteredData[i].length; j++) {
-                    if (!table.column(j).visible()) {
-                        continue;
-                    }
-                    tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                }
-                tableHTML += '</tr>';
-            }
-            tableHTML += '</tbody>';
-
-            tableHTML += '</table>';
-            var pageHeading = '<h1 class="inbox-print-title">Inbox</h1>';
-            popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><body>' + tableHTML + '<div class="inbox-print-watermark">' + watermarkText + '</div></body></html>');
-            popupWin.document.close();
-        }
-
-
-    </script>
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', 'a[data-navigation-url]', function () {
-                window.location.href = $(this).attr('data-navigation-url');
-            });
-            $('.clickable-div').click(function () {
-                var href = $(this).data('href');
-                window.location.href = href;
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-
-            var table = $('#Inbox').DataTable();
-            $('#ChkAll').on('click', function () {
-                var rows = table.rows({ 'search': 'applied' }).nodes();
-                $('input[type="checkbox"]', rows).prop('checked', this.checked);
-                if (!this.checked) {
-                    $('#ChkAll').prop('checked', false);
-                }
-            });
-            $('#Inbox tbody').on('change', 'input[type="checkbox"]', function () {
-                if (!this.checked) {
-                    var el = $('#ChkAll').get(0);
-                    if (el && el.checked && ('indeterminate' in el)) {
-                        el.indeterminate = true;
-                    }
-                }
-            });
-        });
-
-        var row;
-        function start() {
-            row = event.target;
-        }
-        function dragover() {
-            var e = event;
-            e.preventDefault();
-
-            let children = Array.from(e.target.parentNode.parentNode.children);
-            if (children.indexOf(e.target.parentNode) > children.indexOf(row))
-                e.target.parentNode.after(row);
-            else
-                e.target.parentNode.before(row);
-        }
-    </script>
-    <script type="text/javascript">
-    var today = new Date();
-    var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus';
-    if (message)
-            sweetAlert(message, messagemidStatus, messageStatus);
-    </script>
+<script src="@Url.Content("~/DevelopersJs/InboxNoting.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
 }
 

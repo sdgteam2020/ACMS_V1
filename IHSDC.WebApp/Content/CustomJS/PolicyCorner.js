@@ -1,5 +1,5 @@
 ﻿
-var baseUrl = "";
+let baseUrl = "";
 $(document).ready(function () {
     $("#pageloader").hide();
 });
@@ -39,11 +39,24 @@ function CheckDGISLatestVersion() {
         });
     });
 }
+$(document).ready(function () {
 
+    $("#searchSubmit").on("click", function () {
+        navigateToSearch();
+    });
+
+});
+$(document).ready(function () {
+
+    $("#searchSubmit").on("click", function () {
+        navigateToSearch();
+    });
+
+});
 function navigateToSearch() {
     debugger;
     document.querySelector('.table-responsive').style.display = 'block';
-    var Armyno = $('#SpnArmyNumber1').html();
+    let Armyno = $('#SpnArmyNumber1').html();
     if ($('#spnDocType').html() == 2)
 
    
@@ -81,7 +94,7 @@ function navigateToSearch() {
                 } else if (response[0].Status == '404') {
                     sweetAlert(response[0].Remarks, '', 'info');
                     $("#tbody").html("");
-                    var modal = document.getElementById("PolicyModal");
+                    let modal = document.getElementById("PolicyModal");
                     modal.style.display = "none";
                 }
             }
@@ -90,7 +103,7 @@ function navigateToSearch() {
         function errorhandle(response) {
             sweetAlert('Hastakshar SEWA Not Running/Not Installed.', 'To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.', 'error');
             $("#tbody").html("");
-            var modal = document.getElementById("PolicyModal");
+            let modal = document.getElementById("PolicyModal");
             modal.style.display = "none";
         }
 
@@ -104,10 +117,10 @@ function navigateToSearch() {
                     if (result) {
                         if (result.ValidatePersID2FAResult === true) {
 
-                            var searchTermValue = window.btoa($('#searchTerm').val());
-                            var otherParamValue = window.btoa($('#spnPolicyName').html());
-                            var Type = window.btoa($('#spnDocType').html());
-                            var Pid = window.btoa($('#spnPId').html());
+                            let searchTermValue = window.btoa($('#searchTerm').val());
+                            let otherParamValue = window.btoa($('#spnPolicyName').html());
+                            let Type = window.btoa($('#spnDocType').html());
+                            let Pid = window.btoa($('#spnPId').html());
 
                             $.ajax({
                                 url: '/PolicyCorner/Search',
@@ -120,7 +133,7 @@ function navigateToSearch() {
                                 },
                                 error: function () {
                                     $("#tbody").html("");
-                                    var modal = document.getElementById("PolicyModal");
+                                    let modal = document.getElementById("PolicyModal");
                                     modal.style.display = "none";
                                 }
                             });
@@ -128,7 +141,7 @@ function navigateToSearch() {
                         } else {
                             sweetAlert('You are not authorized for this policy', '', 'info');
                             $("#tbody").html("");
-                            var modal = document.getElementById("PolicyModal");
+                            let modal = document.getElementById("PolicyModal");
                             modal.style.display = "none";
                         }
                     }
@@ -140,10 +153,10 @@ function navigateToSearch() {
         }
     }
     else {
-        var searchTermValue = window.btoa($('#searchTerm').val());
-        var otherParamValue = window.btoa($('#spnPolicyName').html());
-        var Type = window.btoa($('#spnDocType').html());
-        var Pid = window.btoa($('#spnPId').html());
+        let searchTermValue = window.btoa($('#searchTerm').val());
+        let otherParamValue = window.btoa($('#spnPolicyName').html());
+        let Type = window.btoa($('#spnDocType').html());
+        let Pid = window.btoa($('#spnPId').html());
 
         $.ajax({
             url: '/PolicyCorner/Search',
@@ -157,7 +170,7 @@ function navigateToSearch() {
             },
             error: function () {
                 $("#tbody").html("");
-                var modal = document.getElementById("PolicyModal");
+                let modal = document.getElementById("PolicyModal");
                 modal.style.display = "none";
             }
         });
@@ -167,12 +180,12 @@ function navigateToSearch() {
 
 
 $('.Closepoup').on('click', function (e) {
-    var modal = document.getElementById("PolicyModal");
+    let modal = document.getElementById("PolicyModal");
     modal.style.display = "none";
 });
 
 $('.CloseShowFilepoup').on('click', function (e) {
-    var modal = document.getElementById("ShowFileModal");
+    let modal = document.getElementById("ShowFileModal");
     modal.style.display = "none";
 });
 
@@ -180,15 +193,15 @@ $('.CloseShowFilepoup').on('click', function (e) {
 $('.showpopupFile').on('click', function (e) {
     $('#spnShowFilePolicyName').text($(this).closest("div").find('.spncardid').html());
     $('#spnShowFileDocType').text($(this).closest("div").find('.spnTypeofdocu').html());
-    var fileText = window.btoa($('#spnShowFilePolicyName').html());
-    var fileType = window.btoa($('#spnShowFileDocType').html());
+    let fileText = window.btoa($('#spnShowFilePolicyName').html());
+    let fileType = window.btoa($('#spnShowFileDocType').html());
     $.ajax({
         url: '/PolicyCorner/GetFilesToShow',
         type: 'GET',
         data: { FName: fileText, Type: fileType },
         success: function (data) {
             $("#tShowFilebody").html(data);
-            var modal = document.getElementById("ShowFileModal");
+            let modal = document.getElementById("ShowFileModal");
             modal.style.display = "block";
         },
         error: function () {
@@ -206,8 +219,8 @@ $('.PolicyModelOpen').on('click', function (e) {
     $('#SpnArmyNumber1').text($(this).closest("div").find('.spnArmyNumber').html());
 
     $("#dataTable1").addClass("d-none");
-    var ArmyNo = $(this).closest("div").find('.spnArmyNumber').html();
-    var PolicyTmpId = $(this).closest("div").find('.spnPolicyId').html();
+    let ArmyNo = $(this).closest("div").find('.spnArmyNumber').html();
+    let PolicyTmpId = $(this).closest("div").find('.spnPolicyId').html();
 
     if ($(this).closest("div").find('.spnTypeofdocu').html() == 2)
     
@@ -242,7 +255,7 @@ $('.PolicyModelOpen').on('click', function (e) {
                 } else if (response[0].Status == '404') {
                     sweetAlert(response[0].Remarks, '', 'info');
                     $("#tbody").html("");
-                    var modal = document.getElementById("PolicyModal");
+                    let modal = document.getElementById("PolicyModal");
                     modal.style.display = "none";
                 }
             }
@@ -253,7 +266,7 @@ $('.PolicyModelOpen').on('click', function (e) {
             sweetAlert('Hastakshar SEWA Not Running/Not Installed.', 'To install Hastakshar SEWA - Download ADN version of Hastakshar SEWA and run the setup.', 'error');
            
             $("#tbody").html("");
-            var modal = document.getElementById("PolicyModal");
+            let modal = document.getElementById("PolicyModal");
             modal.style.display = "none";
         }
 
@@ -269,12 +282,12 @@ $('.PolicyModelOpen').on('click', function (e) {
                         if (result.ValidatePersID2FAResult === true) {
                             SaveDataForTokenAccess();
                             $("#tbody").html("");
-                            var modal = document.getElementById("PolicyModal");
+                            let modal = document.getElementById("PolicyModal");
                             modal.style.display = "block";
                         } else {
                             sweetAlert('You are not authorized for this policy', '', 'info');
                             $("#tbody").html("");
-                            var modal = document.getElementById("PolicyModal");
+                            let modal = document.getElementById("PolicyModal");
                             modal.style.display = "none";
                         }
                     }
@@ -288,7 +301,7 @@ $('.PolicyModelOpen').on('click', function (e) {
         function SaveDataForTokenAccess() {
 
             //   alert('Test123');
-            var PlId = window.btoa(PolicyTmpId);
+            let PlId = window.btoa(PolicyTmpId);
             $.ajax({
                 url: '/PolicyCorner/AddAccessLog',
                 type: 'POST',
@@ -310,7 +323,7 @@ $('.PolicyModelOpen').on('click', function (e) {
 
     }
     else if ($(this).closest("div").find('.spnTypeofdocu').html() == 0 || $(this).closest("div").find('.spnTypeofdocu').html() == 1) {
-        var PlId = window.btoa(PolicyTmpId);
+        let PlId = window.btoa(PolicyTmpId);
         $.ajax({
             url: '/PolicyCorner/AddAccessLog',
             type: 'POST',
@@ -330,15 +343,53 @@ $('.PolicyModelOpen').on('click', function (e) {
         });
 
         $("#tbody").html("");
-        var modal = document.getElementById("PolicyModal");
+        let modal = document.getElementById("PolicyModal");
         modal.style.display = "block";
     }
 
     else {
 
         $("#tbody").html("");
-        var modal = document.getElementById("PolicyModal");
+        let modal = document.getElementById("PolicyModal");
         modal.style.display = "block";
 
     }
 });
+
+window.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        e.preventDefault();
+    }
+});
+
+window.addEventListener("wheel", function (e) {
+
+    e.preventDefault();
+});
+
+       
+    let input = document.getElementById("searchTerm");
+    input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("searchSubmit").click();
+        }
+    });
+
+let marquee = document.getElementById('marquee');
+
+    marquee.addEventListener('mouseover', function () {
+        this.stop();
+    });
+
+    marquee.addEventListener('mouseout', function () {
+        this.start();
+    });
+
+let message = '@message';
+let messageStatus = '@messageStatus';
+let messagemidStatus = '@messagemidStatus ';
+    if (message)
+        sweetAlert(message, messagemidStatus, messageStatus);
+
+

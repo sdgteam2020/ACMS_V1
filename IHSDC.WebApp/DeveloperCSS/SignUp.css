@@ -1,0 +1,188 @@
+﻿
+.modal-dialog-fullscreen {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+}
+
+.modal-content-fullscreen {
+    height: 100%;
+    border-radius: 0;
+}
+
+.modal-body-fullscreen {
+    overflow-y: auto;
+}
+
+.info-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.info-message {
+    display: none;
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #FCFFC3;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    width: 420px;
+    text-align: left;
+    z-index: 1;
+}
+
+    .info-message::after {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent silver transparent;
+    }
+
+
+.info-container-role {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.info-message-role {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #FCFFC3;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    width: 420px;
+    text-align: left;
+    z-index: 1;
+}
+
+    .info-message-role::after {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent silver transparent;
+    }
+
+
+.signup-style-01 {
+    margin-top: -5rem;
+}
+
+.signup-style-02 {
+    height: 105px;
+    min-height: 105px;
+    width: 105px;
+    min-width: 105px;
+}
+
+.signup-style-03 {
+    height: 110px;
+    margin-left: -155px;
+}
+
+.signup-style-04 {
+    width: 100%;
+    box-shadow: -1px 1px 8px 1px;
+    margin-top: 10px;
+    background-color: white;
+}
+
+.signup-style-05 {
+    padding: 0.3rem;
+    border: 0px solid #89CFF0;
+}
+
+.signup-style-06 {
+    width: 300px;
+}
+
+.signup-style-07 {
+    padding-left: 15px;
+}
+
+.signup-style-08 {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.signup-style-09 {
+    background-color: #f2f2f2 !important;
+}
+
+#addunitmodel .modal-header.signup-style-10,
+#addApptModal .modal-header.signup-style-10,
+#addDgsModal .modal-header.signup-style-10 {
+    background-color: #1775b8 !important;
+    color: white !important;
+}
+
+#addunitmodel .signup-style-11,
+#addApptModal .signup-style-11,
+#addDgsModal .signup-style-11 {
+    position: absolute !important;
+    right: 15px !important;
+}
+
+#addunitmodel .signup-style-12 {
+    margin-top: 2.0rem !important;
+}
+
+#addApptModal .signup-style-13,
+#addDgsModal .signup-style-13 {
+    padding: 0.3rem !important;
+    border: 0px solid #89CFF0 !important;
+    width: 650px !important;
+}
+
+#addApptModal .signup-style-14,
+#addDgsModal .signup-style-14 {
+    padding: 0.3rem !important;
+    border: 0px solid #89CFF0 !important;
+    width: 630px !important;
+}
+
+.signup-style-15 {
+    color: white;
+}
+
+.signup-style-16 {
+    background: linear-gradient(90deg, rgba(0,211,255,1) 0%, rgba(12,141,242,1) 66%, rgba(22,125,207,1) 99%);
+    opacity: 3.8;
+    position: fixed;
+    border-bottom: 2px;
+    width: 100%;
+    height: 36px;
+}
+
+.signup-style-17 {
+    font-size: 22px;
+}
+
+.signup-style-18 {
+    background-color: #f2f2f2;
+}
+
+#addunitmodel .modal-body-list .signup-style-19 {
+    max-height: 300px !important;
+    overflow-y: auto !important;
+}
+
+

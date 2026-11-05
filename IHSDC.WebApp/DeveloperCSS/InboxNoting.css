@@ -1,0 +1,26 @@
+﻿
+
+.inbox-hidden-field {
+    display: none;
+}
+
+.clickable-div {
+    cursor: pointer;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+

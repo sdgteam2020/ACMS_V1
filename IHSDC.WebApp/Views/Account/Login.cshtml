@@ -17,28 +17,10 @@
     <meta name="author" content="">
     <title>ACMS - Login</title>
     <!-- Bootstrap core CSS-->
-    <script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Content/CustomJS/AviatorJS.js"></script>
-    <link href="~/Content/css/dashboard.css" rel="stylesheet">
-    <script type="text/javascript">
-        $("#chk").click(function () {
-            if ($(this).prop("checked")) {
-                $("#pass").attr("type", "text");
-            }
-            else {
-
-                $("#pass").attr("type", "password");
-            }
-        });
-        $(document).ready(function () {
-            $("#pass").val("");
-        });
-        var message = '@message';
-        var messageStatus = '@messageStatus';
-        var messagemidStatus = '@messagemidStatus';
-        if (message)
-            sweetAlert(message, messagemidStatus, messageStatus);
-    </script>
+    <script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    <script src="@Url.Content("~/Content/CustomJS/AviatorJS.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    <link href="@Url.Content("~/Content/css/dashboard.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
+    
 
 </head>
 <header class="masthead">
@@ -91,6 +73,7 @@
                                     </span>
 
                                 </div>
+
 
                                 <div class="card-body custom-login-card-body">
 
@@ -244,47 +227,13 @@
 </header>
 
 
-<script src="~/NewContent/vendor/jquery/jquery.min.js"></script>
-<script src="~/Content/css/sweetalert.min.js"></script>
-<link href="~/Content/css/sweetalert.css" rel="stylesheet" />
-<link href="~/NewContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="only screen">
-<link href="~/NewContent/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="only screen">
-<link href="~/NewContent/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" media="only screen">
-<link href="~/NewContent/css/sb-admin.css" rel="stylesheet" media="only screen">
-<link href="~/DeveloperCSS/Login.css" rel="stylesheet" />
+<script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+<link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+<link href="@Url.Content("~/NewContent/vendor/fontawesome-free/css/all.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" type="text/css" media="only screen">
+<link href="@Url.Content("~/NewContent/css/sb-admin.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+<link href="@Url.Content("~/DeveloperCSS/Login.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
-<script type="text/javascript">
-
-      var message = '@message';
-    var messageStatus = '@messageStatus';
-    var messagemidStatus = '@messagemidStatus ';
-    if (message)
-        sweetAlert(message, messagemidStatus, messageStatus);
-
-  
-
-        $("#chk").click(function () {
-            if ($(this).prop("checked")) {
-                $("#pass").attr("type", "text");
-            }
-            else {
-
-                $("#pass").attr("type", "password");
-            }
-        });
-        $(document).ready(function () {
-            $("#pass").val("");
-        });
-
-        var message = '@message';
-        var messageStatus = '@messageStatus';
-        var messagemidStatus = '@messagemidStatus';
-        if (message) {
-            if (message == "s") {
-                SubmitToken(this, '/Account/Login', 'Your Token is not connected. Connect Token and Login again', 'SubmitGEB2IC')
-            }
-            if (message == "b") {
-                SubmitToken(this, '/Account/Login', 'Public Key not Found. Ask Admin to install your public key.', 'SubmitGEB2IC')
-            }
-        }
-</script>
+<script src="@Url.Content("~/DevelopersJs/Login.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

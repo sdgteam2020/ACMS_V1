@@ -1,3 +1,9 @@
 2026-10-22 14:44:46: User Registered and redirect to login page. log ContactUs 0
 2026-10-30 14:37:59: User Registered and redirect to login page. log ContactUs 0
 2026-11-02 16:41:55: User Registered and redirect to login page. log ContactUs 1
+03-Nov-26 12:08:26 PM: User Registered and redirect to login page. log ContactUs 1
+03-Nov-26 12:08:54 PM: User Registered and redirect to login page. log ContactUs 1
+03-Nov-26 3:21:29 PM: User Registered and redirect to login page. log ContactUs 1
+03-Nov-26 5:29:04 PM: User Registered and redirect to login page. log ContactUs 1
+04-Nov-26 11:51:37 AM: User Registered and redirect to login page. log ContactUs 1
+04-Nov-26 11:53:08 AM: User Registered and redirect to login page. log ContactUs 1

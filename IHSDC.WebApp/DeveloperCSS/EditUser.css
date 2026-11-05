@@ -1,0 +1,57 @@
+﻿
+.form-group {
+    margin-bottom: 0rem !important;
+}
+
+.custom-card-body {
+    width: 50%;
+    box-shadow: -1px 1px 8px 1px;
+    margin-top: 5px;
+    margin-left: 450px;
+}
+
+.custom-card-padding {
+    padding: 0.3rem;
+    border: 0px solid #89CFF0;
+}
+
+.custom-form-group {
+    width: 300px;
+}
+
+.custom-label {
+    margin-top: 8px;
+    margin-left: 12px;
+}
+
+.required-star {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.custom-label {
+    margin-top: 8px;
+    margin-left: 12px;
+}
+
+.hidden-user-type {
+    display: none;
+}
+
+.role-dropdown {
+    width: 270px;
+    height: 35px;
+    background-color: #f2f2f2;
+}
+
+.custom-margin-left {
+    margin-left: 1rem;
+}
+
+
+.roles-dropdown {
+    width: 280px;
+    height: 35px;
+    background-color: #f2f2f2;
+}

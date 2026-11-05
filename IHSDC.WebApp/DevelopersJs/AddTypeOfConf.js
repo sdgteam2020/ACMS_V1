@@ -1,6 +1,11 @@
 ﻿
     let messaget = '@ViewBag.ButtonName';
 
+let message = '@message';
+let messageStatus = '@messageStatus';
+let messagemidStatus = '@messagemidStatus ';
+if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);
 
 $(".updateTypeConf").on("click", function () {
     debugger;

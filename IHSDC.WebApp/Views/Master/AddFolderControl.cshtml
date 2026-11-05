@@ -17,7 +17,10 @@
      ? Convert.ToInt32(ViewBag.FolderControlId)
      : 0;
 }
+<head>
+    <link href="@Url.Content("~/DeveloperCSS/AddFolder.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
+</head>
 
 @using (Html.BeginForm("AddFolderControl", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -145,8 +148,7 @@
 
 
     <head runat="server">
-        <link href="@Url.Content("~/DeveloperCSS/AddFolder.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-
+        
         <script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 

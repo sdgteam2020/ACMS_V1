@@ -213,20 +213,7 @@ function ValInData1(input) {
 
     document.addEventListener("DOMContentLoaded", function () {
             const button = document.getElementById("asdcChatToggle");
-    const tooltip = button.querySelector(".tooltip-bubble");
-
-    button.addEventListener("mouseenter", function () {
-                const rect = button.getBoundingClientRect();
-    const spaceAbove = rect.top;
-    const spaceBelow = window.innerHeight - rect.bottom;
-
-    if (spaceAbove < 60 && spaceBelow > spaceAbove) {
-        tooltip.setAttribute("data-position", "bottom");
-                } else {
-        tooltip.setAttribute("data-position", "top");
-                }
-            });
-        });
+   
 
     const chat = document.getElementById("asdcChat");
     const fullscreenBtn = document.getElementById("asdcFullscreen");
@@ -239,12 +226,7 @@ function ValInData1(input) {
     const btn = document.getElementById("asdcChatToggle");
     let isDragging = false, offsetX, offsetY;
 
-        btn.addEventListener("mousedown", (e) => {
-        isDragging = true;
-    offsetX = e.clientX - btn.getBoundingClientRect().left;
-    offsetY = e.clientY - btn.getBoundingClientRect().top;
-    btn.style.cursor = "grabbing";
-        });
+   
 
         document.addEventListener("mousemove", (e) => {
             if (!isDragging) return;
@@ -256,7 +238,7 @@ function ValInData1(input) {
 
         document.addEventListener("mouseup", () => {
         isDragging = false;
-    btn.style.cursor = "grab";
+  
         });
 
     let isOpen = false;
@@ -349,22 +331,7 @@ function ValInData1(input) {
         }
 
       
-        toggleBtn.addEventListener('click', () => {
-            if (isOpen) {
-        closeChat();
-            } else {
-        openChat();
-    sendQuery('warmup', true); 
-
-            }
-
-    // ✅ Start heartbeat on first toggle click
-    if (!heartbeatTimer) {
-        heartbeatTimer = setInterval(() => {
-            sendQuery('warmup', true); // silent ping
-        }, 240000);
-            }
-        });
+    
     closeBtn.addEventListener('click', closeChat);
 
       
@@ -723,24 +690,25 @@ $(document).ready(function () {
 
 
 
-    $(document).ready(function () {
-        $.ajax({
-            url: '/Master/GetCounter',
-            type: 'POST',
-            data: { "Proc": "16" },
-            success: function (result) {
-                if (result.length > 0) {
-                    $('#spnComdName').html(result[0].ComdName);
-                    $('#spnTodayCnt').html(result[0].Today);
-                    $('#spnMonthlyCnt').html(result[0].CurrentMonth);
-                    $('#spnTotalCnt').html(result[0].Total);
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Master/GetCounter',
+                type: 'POST',
+                data: { "Proc": "16" },
+                success: function (result) {
+                    if (result.length > 0) {
+                        $('#spnComdName').html(result[0].ComdName);
+                        $('#spnTodayCnt').html(result[0].Today);
+                        $('#spnMonthlyCnt').html(result[0].CurrentMonth);
+                        $('#spnTotalCnt').html(result[0].Total);
+                    }
+                    else {
+                        $('#spnComdName').html(result[0].ComdName);
+                        $('#spnTodayCnt').html("0");
+                        $('#spnMonthlyCnt').html("0");
+                        $('#spnTotalCnt').html("0");
+                    }
                 }
-                else {
-                    $('#spnComdName').html(result[0].ComdName);
-                    $('#spnTodayCnt').html("0");
-                    $('#spnMonthlyCnt').html("0");
-                    $('#spnTotalCnt').html("0");
-                }
-            }
+            });
         });
-        });
+    });

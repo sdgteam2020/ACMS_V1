@@ -35,6 +35,8 @@
         @using (Html.BeginForm("AddInboxNotingFwd", "ACC", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="card-body">
+                <input type="hidden" class="d-none" id="txtwaterMark" value=@Html.Raw(Json.Encode(watermarkText)) />
+
                 <div class="row">
                     <div class="col-sm-12">
 

@@ -1,7 +1,4 @@
-﻿
-
-let watermarkText = Html.Raw(Json.Encode(watermarkText));
-
+﻿let watermarkText = $('#txtwaterMark').val();
  
         $(document).ready(function () {
             let table = $('#Analysis').DataTable({

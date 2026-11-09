@@ -1,8 +1,4 @@
-﻿let message = '@message';
-let messageStatus = '@messageStatus';
-let messagemidStatus = '@messagemidStatus ';
-if (message)
-    sweetAlert(message, messagemidStatus, messageStatus);
+﻿
     let messaget = '@ViewBag.ButtonName';
 
     $(".OrderbyId").off("click").click(function () {
@@ -22,70 +18,85 @@ if (message)
                 }
             }
         });
-    }
+}
+
 
 $(".saveAddBranchConfirm").on("click", function () {
-        event.preventDefault();
 
-    // Remove any existing error labels
-    $('.error-label').remove();
+    event.preventDefault();
 
-    // Check if all required form fields are filled in
+    var $form = $(this).closest("form");
+
+
+    $form.find(".error-label").remove();
+
+
     let emptyFields = [];
-    $('form').find(':input[required]').each(function () {
-            if ($.trim($(this).val()) === '') {
-        emptyFields.push(this);
-            }
-        });
 
-        // If there are empty fields, display an error message for the first empty field
-        if (emptyFields.length > 0) {
-            let firstEmptyField = emptyFields[0];
-    $(firstEmptyField).after('<label class="error-label">This field is required</label>');
-    return;
+    $form.find(":input[required]").each(function () {
+
+        if ($.trim($(this).val() || "") === "") {
+            emptyFields.push(this);
         }
 
-    // If all fields are filled, display the confirmation dialog
-    if (messaget == "Add") {
-        swal({
-            title: "Please Confirm",
-            text: "",
-            type: "warning",
+    });
 
-            showCancelButton: true,
-            cancelButtonText: "Cancel",
-            cancelButtonColor: "#FF0000",
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Add",
+    if (emptyFields.length > 0) {
 
-            closeOnCancel: true,
-            closeOnConfirm: false
-        },
-            function (isConfirm) {
-                if (isConfirm) {
-                    $('form').submit();
-                }
-            });
-        } else {
-        swal({
-            title: "Please Confirm",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Update",
-            cancelButtonText: "Cancel",
+        let firstEmptyField = emptyFields[0];
 
-            closeOnConfirm: false,
-            closeOnCancel: true
-        },
-            function (isConfirm) {
-                if (isConfirm) {
-                    $('form').submit();
-                }
-            });
-        }
+        $(firstEmptyField).after(
+            '<label class="error-label">This field is required</label>'
+        );
+
+        $(firstEmptyField).focus();
+        return false;
     }
-    );
+
+    let buttonName = $(this).val() || "";
+
+
+
+    swal({
+        title: "Please Confirm",
+        text: "",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText:
+            buttonName === "Add"
+                ? "Yes, Add"
+                : "Yes, Update",
+        closeOnCancel: true,
+        closeOnConfirm: false
+    }, function (isConfirm) {
+
+        if (isConfirm) {
+
+            swal({
+                title: "",
+                text:
+                    buttonName === "Add"
+                        ? "Added successfully!"
+                        : "Updated successfully!",
+                type: "success",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true
+            }, function () {
+
+                // Submit form after clicking OK
+                $form[0].submit();
+
+            });
+
+        }
+
+    });
+
+});
+
+
 
  

@@ -1,7 +1,7 @@
 ﻿
-let watermarkText = Html.Raw(Json.Encode(watermarkText));
-   
-        $("body").addClass("loading");
+let watermarkText = $('#txtwaterMark').val();
+ 
+     $("body").addClass("loading");
         $(document).ready(function () {
             let table = $('#Inbox').DataTable({
                 lengthChange: true,

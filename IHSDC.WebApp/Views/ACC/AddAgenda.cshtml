@@ -16,8 +16,9 @@
 
 
 <head>
-    <link href="@Url.Content("~/DeveloperCSS/AddAgenda.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+
     <link href="@Url.Content("~/NewContent/css/sb-admin.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
+    <link href="@Url.Content("~/DeveloperCSS/AddAgenda.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 </head>
 
 
@@ -38,6 +39,9 @@
         <span id="spnArmyNumber" class="agenda-inline-style-01">@SessionManager.ArmyNo</span>
         <span id="spnDefaultPolicy" class="agenda-inline-style-01"></span>
         <span id="spnConfTypeId" class="agenda-inline-style-01"></span>
+        <input type="hidden" class="d-none" id="txtUserIntId" value="@SessionManager.UserIntId" />
+        <input type="hidden" class="d-none" id="txtUserId" value="@SessionManager.UserId" />
+        <input type="hidden" class="d-none" id="txtwaterMark" value=@Html.Raw(Json.Encode(watermarkText)) />
 
         @Html.HiddenFor(m => m.Inbox_ID)
         @Html.HiddenFor(m => m.FinalSubmitYN)

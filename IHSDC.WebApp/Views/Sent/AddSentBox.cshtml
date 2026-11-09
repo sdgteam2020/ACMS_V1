@@ -37,6 +37,8 @@
         {
 
           <div class="card-body custom-card-body">
+              <input type="hidden" class="d-none" id="txtwaterMark" value=@Html.Raw(Json.Encode(watermarkText)) />
+
               <div class="row">
                   <div class="col-md-12">
                       <div class="table-responsive">
@@ -106,11 +108,11 @@
                                               <td>
                                                   @if (item.IsRead == 0)
                                                   {
-                                                            <button class="btn custom-unread-btn" disabled>Unread</button>
+                                                      <button class="btn custom-unread-btn" disabled>Unread</button>
                                                   }
                                                   else
                                                   {
-                                                            <button class="btn custom-read-btn" disabled>Read</button>
+                                                      <button class="btn custom-read-btn" disabled>Read</button>
                                                   }
                                               </td>
                                               <td>

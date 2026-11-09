@@ -42,7 +42,7 @@ $('#Schedule_ID').change(function () {
 });
 
   
-        let watermarkText = @Html.Raw(Json.Encode(watermarkText));
+      
     
         $(document).ready(function () {
             let table = $('#Analysis').DataTable({

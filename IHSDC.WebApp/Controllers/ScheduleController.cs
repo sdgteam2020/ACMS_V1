@@ -174,6 +174,7 @@ namespace IHSDC.WebApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ScheduleLetter(string Request, string btnval, string oldid)
         {
             try

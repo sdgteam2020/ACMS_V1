@@ -1,4 +1,4 @@
-﻿
+﻿let watermarkText = $('#txtwaterMark').val();
     $('#changenodalPopup').on('shown.bs.modal', function (e) {
 
     });
@@ -52,7 +52,6 @@
         $('#CloseReason').val("");
         });
 
-let watermarkText = Html.Raw(Json.Encode(watermarkText));
 
     $(document).ready(function () {
         let table = $('#Inbox').DataTable({

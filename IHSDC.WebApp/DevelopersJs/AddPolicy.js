@@ -356,17 +356,30 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
             let policyName = $(this).find('td.DocuUpload').find('#spncardid').text().trim();
             if (policyName && policyName.length > 0) {
                 let FName = window.btoa(policyName);
-                let countUrl = '@Url.Action("GetFilesCount", "Master")' + '?FName=' + encodeURIComponent(FName);
+                       
                 let $fileCountDisplay = $(this).find('#fileCountDisplay');
-                $.getJSON(countUrl, function (data) {
-                    $fileCountDisplay.text(data.fileCount);
+                $.ajax({
+                    url: '/Master/GetFilesCount',
+                    type: 'POST',
+
+                    data: {
+                        FName: FName
+
+                        
+                    },
+
+                    success: function (response) {
+                        
+                        $fileCountDisplay.text(response.fileCount);
+                    },
+
+                    error: function (xhr) {
+
+                        console.log("Error:", xhr.error);
+                    }
                 });
+               
             }
         });
 });
 
-let message = '@message';
-let messageStatus = '@messageStatus';
-let messagemidStatus = '@messagemidStatus ';
-    if (message)
-    sweetAlert(message, messagemidStatus, messageStatus);

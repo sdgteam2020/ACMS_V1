@@ -33,6 +33,7 @@
 
         @using (Html.BeginForm("ScheduleLetter", "Schedule", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+
             <div class="card-body mt-4 custom-card-body">
                 <div class="row">
 
@@ -48,28 +49,62 @@
                                 <div class="col-md-4">
                                     <label><b>Type of Conf</b></label>
                                     @Html.DropDownListFor(m => m.TypeOfConfId, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfConf(), "--Select Type of Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })
+
                                 </div>
+                                <label>
+                                    <b>
+                                        @Html.ValidationMessageFor(m => m.TypeOfConfId,"",new { @class = "text-danger" })
+                                    </b>
+                                </label>
                                 <div class="col-md-4">
                                     <label><b>Start Dt</b></label>
-                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control datepicker3", @required = true, @placeholder = "dd/mmm/yyyy" })
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control datepicker3", @required = true, @autocomplete = "off", @placeholder = "dd/mmm/yyyy" })
+
                                 </div>
+                                <label>
+                                    <b>
+                                        @Html.ValidationMessageFor(m => m.FromDate,"", new { @class = "text-danger" })
+                                    </b>
+                                </label>
                                 <div class="col-md-4">
                                     <label><b>End Dt</b></label>
-                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control datepicker3", @required = true, @placeholder = "dd/mmm/yyyy" })
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control datepicker3", @required = true, @autocomplete = "off", @placeholder = "dd/mmm/yyyy" })
+
                                 </div>
+                                <label>
+                                    <b>
+                                        @Html.ValidationMessageFor(m => m.ToDate,"", new { @class = "text-danger" })
+                                    </b>
+                                </label>
                                 <div class="col-md-4">
                                     <label><b> Subject / Title of Conf</b></label>
 
                                     @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @maxlength = "100", @required = true, @autocomplete = "off" })
+
                                 </div>
+                                <label>
+                                    <b>
+                                        @Html.ValidationMessageFor(m => m.Subject,"", new { @class = "text-danger" })
+                                    </b>
+                                </label>
                                 <div class="col-md-4">
                                     <label><b>Ref varter No with Dt</b></label>
                                     @Html.TextBoxFor(m => m.ScheduleRefNoDt, new { @class = "form-control", @maxlength = "100", @required = true, @autocomplete = "off" })
+
                                 </div>
+                                <label>
+                                    <b>
+                                        @Html.ValidationMessageFor(m => m.ScheduleRefNoDt,"", new { @class = "text-danger" })
+                                    </b>
+                                </label>
                                 <div class="col-md-4">
                                     <label><b>Remark</b></label>
-                                    @Html.TextBoxFor(m => m.Remark, new { @class = "form-control", @maxlength = "100", @required = true , @autocomplete = "off" })
+                                    @Html.TextBoxFor(m => m.Remark, new { @class = "form-control", @maxlength = "100", @required = true, @autocomplete = "off" })
+                                   
                                 </div>
+                                <label><b>
+    @Html.ValidationMessageFor(m => m.Remark,"", new { @class = "text-danger" })
+</b></label>
 
                             </div>
                             <div class="row custom-row">
@@ -321,7 +356,7 @@
                                         <th class="left">Remark</th>
                                         <th class="center">Action</th>
                                         <th class="left">Status (Open/Close)</th>
-                                       
+
 
                                     </tr>
                                 </thead>
@@ -415,19 +450,21 @@
 <script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
     @Styles.Render("~/Content/cssjqryUi")
 
 
-<head runat="server">
-    <script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-    <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-    <script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-    <script src="@Url.Content("~/DevelopersJs/ScheduleLetter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-    <link href="@Url.Content("~/DeveloperCSS/ScheduleLetter.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-</head>
+    <head runat="server">
+        <script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+        <script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <script src="@Url.Content("~/DevelopersJs/ScheduleLetter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        <link href="@Url.Content("~/DeveloperCSS/ScheduleLetter.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    </head>
 
-  
+
 }

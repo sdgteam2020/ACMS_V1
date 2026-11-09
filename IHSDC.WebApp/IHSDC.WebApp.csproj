@@ -3286,6 +3286,7 @@
     <Content Include="Views\PolicyCorner\PolicyCorner.cshtml" />
     <Content Include="Views\PolicyCorner\_SearchResults.cshtml" />
     <Content Include="Views\PolicyCorner\_ShowFile.cshtml" />
+    <Content Include="Views\Shared\_CommonJsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

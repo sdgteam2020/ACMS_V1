@@ -1,4 +1,4 @@
-﻿
+﻿let watermarkText = $('#txtwaterMark').val();
     const tooltipContainers = document.querySelectorAll('.tooltip-container');
 
     tooltipContainers.forEach(container => {
@@ -15,7 +15,7 @@
         });
     });
 
-        let watermarkText = Html.Raw(Json.Encode(watermarkText));
+
 
 
     $(document).ready(function () {

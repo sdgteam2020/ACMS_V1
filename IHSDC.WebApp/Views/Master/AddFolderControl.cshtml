@@ -17,6 +17,7 @@
      ? Convert.ToInt32(ViewBag.FolderControlId)
      : 0;
 }
+@*@Html.Partial("~/Views/Shared/_CommonJsPartial.cshtml")*@
 <head>
     <link href="@Url.Content("~/DeveloperCSS/AddFolder.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
@@ -148,7 +149,7 @@
 
 
     <head runat="server">
-        
+
         <script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 

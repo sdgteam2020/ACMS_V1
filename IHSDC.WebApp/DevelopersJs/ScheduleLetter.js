@@ -526,11 +526,6 @@ $(document).on("click", ".saveAddScheduleLetter", function (event) {
 });
 
 
-let message = '@message';
-let messageStatus = '@messageStatus';
-let messagemidStatus = '@messagemidStatus ';
-if (message)
-    sweetAlert(message, messagemidStatus, messageStatus);
 function CheckFromDate(obj) {
     document.getElementById("ToDate").value = null;
 }

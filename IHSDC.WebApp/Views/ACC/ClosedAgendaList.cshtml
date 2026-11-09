@@ -60,6 +60,7 @@
                 @Html.HiddenFor(m => m.CategoryId)
                 @Html.HiddenFor(m => m.SponsorCategoryId)
             }
+            <input type="hidden" class="d-none" id="txtwaterMark" value=@Html.Raw(Json.Encode(watermarkText)) />
 
 
             <div class="card-body closed-agenda-body">
@@ -95,12 +96,12 @@
                                                 </td>
                                                 <td>@Html.DisplayFor(modelItem => item.Inbox_ID)</td>
 
-                                        <td class="RefLetter-container">
-                                            @Html.DisplayFor(modelItem => item.Conf)
-                                            <div class="RefLetter">
-                                                @Html.DisplayFor(modelItem => item.RefLetter)
-                                            </div>
-                                        </td>
+                                                <td class="RefLetter-container">
+                                                    @Html.DisplayFor(modelItem => item.Conf)
+                                                    <div class="RefLetter">
+                                                        @Html.DisplayFor(modelItem => item.RefLetter)
+                                                    </div>
+                                                </td>
 
 
 
@@ -126,18 +127,18 @@
                                     else
                                     {
 
-                            }
-                        </tbody>
-                    </table>
+                                    }
+                                </tbody>
+                            </table>
 
 
 
 
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-    </div>
+            </div>
 
         }
     </div>

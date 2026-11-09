@@ -1,5 +1,6 @@
-﻿
-
+﻿let UserIntId = $('#txtUserIntId').val();
+let UserId = $('#txtUserId').val();
+let watermarkText = $('#txtwaterMark').val();
     document.querySelectorAll('.agenda-navigate').forEach(function (element) {
         element.onclick = function () {
             location.href = this.getAttribute('data-agenda-url');
@@ -238,9 +239,10 @@ tooltipContainers.forEach(container => {
     });
 }
 
-    let watermarkText = Html.Raw(Json.Encode(watermarkText));
 
-    $(document).ready(function () {
+$(document).ready(function () {
+   
+    
         $('.dropdownsearch').select2();
 });
 
@@ -414,7 +416,7 @@ $(document).ready(function () {
 
     BindOrganizerCategory($("#spnScheduleId").html());
     GetOrganizerId($("#spnScheduleId").html());
-
+   
     $('#spnCategoryId').change(function () {
         $("#CategoryId").val($('#spnCategoryId').val());
     });
@@ -436,8 +438,8 @@ $(document).ready(function () {
         GetOrganizerId($("#Schedule_ID").val())
     });
 
-    if ($('#spnGSOId').val() == @SessionManager.UserId) {
-        if ($('#spnsponsor').val() != @SessionManager.UserIntId) {
+    if ($('#spnGSOId').val() == UserId) {
+        if ($('#spnsponsor').val() != UserIntId) {
             $('#btnsubmit').addClass('agenda-script-hidden');
         }
     }
@@ -453,7 +455,7 @@ function GetOrganizerId(Schedule_ID) {
             if (result.length > 0) {
 
                 if (result[0].OrganizerCatId != "") {
-                    if (result[0].LetterCreatedBy == @SessionManager.UserIntId) {
+                    if (result[0].LetterCreatedBy == UserIntId) {
                         $('#spnCategoryId').prop('disabled', false);
                     }
                     else {
@@ -469,7 +471,7 @@ function GetOrganizerId(Schedule_ID) {
                 }
 
                 if (result[0].BranchIds != "") {
-                    if (result[0].LetterCreatedBy == @SessionManager.UserIntId) {
+                    if (result[0].LetterCreatedBy == UserIntId) {
                         $('#spnBranch').prop('disabled', false);
                     }
                     else {
@@ -486,7 +488,7 @@ function GetOrganizerId(Schedule_ID) {
 
                 if (result[0].SponsorCatId != "") {
                     if ($('#Inbox_ID').val() != 0) {
-                        if ($('#spnsponsor').html() == @SessionManager.UserIntId || result[0].LetterCreatedBy == @SessionManager.UserIntId) {
+                        if ($('#spnsponsor').html() == UserIntId || result[0].LetterCreatedBy == UserIntId) {
 
                             $('#spnSponsorId').prop('disabled', false);
                         }
@@ -507,7 +509,7 @@ function GetOrganizerId(Schedule_ID) {
                 }
 
                 if (result[0].NodalCatId != "") {
-                    if ($('#spnNode').html() == @SessionManager.UserIntId || result[0].LetterCreatedBy == @SessionManager.UserIntId) {
+                    if ($('#spnNode').html() == UserIntId || result[0].LetterCreatedBy == UserIntId) {
                         $('#spnNodalId').prop('disabled', false);
                     }
                     else {

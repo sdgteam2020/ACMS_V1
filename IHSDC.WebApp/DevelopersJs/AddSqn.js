@@ -100,8 +100,4 @@
         }
     }
 
-    let message = '@message';
-    let messageStatus = '@messageStatus';
-    let messagemidStatus = '@messagemidStatus ';
-    if (message)
-    sweetAlert(message, messagemidStatus, messageStatus);
+  

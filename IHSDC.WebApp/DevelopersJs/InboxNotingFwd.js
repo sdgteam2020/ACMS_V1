@@ -1,10 +1,8 @@
-﻿
+﻿let watermarkText = $('#txtwaterMark').val();
 
-    let watermarkText = Html.Raw(Json.Encode(watermarkText));
-
-    let message = Html.Raw(Json.Encode(message));
-    let messageStatus = Html.Raw(Json.Encode(messageStatus));
-    let messagemidStatus = Html.Raw(Json.Encode(messagemidStatus));
+    //let message = Html.Raw(Json.Encode(message));
+    //let messageStatus = Html.Raw(Json.Encode(messageStatus));
+    //let messagemidStatus = Html.Raw(Json.Encode(messagemidStatus));
 
     $(document).ready(function () {
 
@@ -149,9 +147,9 @@
                 let id = $('#Schedule_ID').val();
     let encrypt = window.btoa(id);
 
-    let url = @Html.Raw(Json.Encode(Url.Action("SearchInboxNoting", "AgendaPointMerge")))
-    + "?Conf=" + encrypt;
-
+    //let url = @Html.Raw(Json.Encode(Url.Action("SearchInboxNoting", "AgendaPointMerge")))
+    //+ "?Conf=" + encrypt;
+        let url = 'dff';
     window.location.href = url;
             });
 

@@ -32,7 +32,7 @@ namespace IHSDC.WebApp.Controllers
             {
                 FileList Files = new FileList();
                 string FolderName = "";
-                if (!string.IsNullOrEmpty(FName))
+                 if (!string.IsNullOrEmpty(FName))
                 {
                     FolderName = RepositryManager.EncryptionManager.Decryption(FName);
                 }

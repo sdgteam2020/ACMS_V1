@@ -16,7 +16,7 @@
          ? Convert.ToInt32(ViewBag.CorpsId)
          : 0;
 }
-
+@*@Html.Partial("~/Views/Shared/_CommonJsPartial.cshtml")*@
 @using (Html.BeginForm("AddCorps", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 

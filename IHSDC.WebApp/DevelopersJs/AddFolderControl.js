@@ -1,10 +1,5 @@
 ﻿let messaget = '@ViewBag.ButtonName';
 
-let message = '@message';
-let messageStatus = '@messageStatus';
-let messagemidStatus = '@messagemidStatus ';
-if (message)
-    sweetAlert(message, messagemidStatus, messageStatus);
 
 $(".saveAddFolderControlConfirm").on("click", function (event) {
 
@@ -144,7 +139,8 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
                 });
             });
 
-    $(function () {
+$(function () {
+   
         $('#ddlUsers').multiselect({
             includeSelectAllOption: true,
             selectAllValue: 'multiselect-all',
@@ -168,4 +164,5 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
 
     $('#Users').val(Users);
             });
+
 

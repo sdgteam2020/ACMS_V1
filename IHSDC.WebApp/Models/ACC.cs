@@ -76,18 +76,24 @@ namespace IHSDC.WebApp.Models
 
     public class ScheduleLetter : ACCCommon
     {
+        [Required(ErrorMessage = "Please select a type of conference.")]
         public int TypeOfConfId { get; set; }
         public string TypeOfConf { get; set; }
         public int ScheduleId { get; set; }
+        [Required(ErrorMessage = "FromDate is required.")]
         public string FromDate { get; set; }
+        [Required(ErrorMessage = "ToDate is required.")]
         public string ToDate { get; set; }
+        [Required(ErrorMessage = "Subject is required.")]
         public string Subject { get; set; }
         public int Comd { get; set; }
         public string ComdName { get; set; }
         public string SubmitByComd { get; set; }
         public bool IsSubmit { get; set; }
         public bool IsNotification { get; set; }
+        [Required(ErrorMessage = "Remark is required.")]
         public string Remark { get; set; }
+        [Required(ErrorMessage = "Schedule Reference is required.")]
         public string ScheduleRefNoDt { get; set; }
         public int isClosed { get; set; }
         public IList<ScheduleLetter> ILScheduleLetter { get; set; }

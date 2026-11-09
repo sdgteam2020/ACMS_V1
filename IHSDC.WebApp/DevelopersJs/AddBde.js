@@ -32,71 +32,80 @@
     $(document).on("click", ".js-add-bdecat", function (event) {
         AddConfirmation(this, '/Master/AddBdeCat', 'AddBdeCat');
     });
-    function AddConfirmation(obj, ActionName, Submit) {
-        event.preventDefault();
+   
+
+function AddConfirmation(obj, ActionName, Submit) {
+
+    event.preventDefault();
+
+    var $form = $(this).closest("form");
 
 
-    $('.error-label').remove();
+    $form.find(".error-label").remove();
 
 
     let emptyFields = [];
-    $('form').find(':input[required]').each(function () {
-            if ($.trim($(this).val()) === '') {
-        emptyFields.push(this);
-            }
-        });
 
+    $form.find(":input[required]").each(function () {
 
-        if (emptyFields.length > 0) {
-            let firstEmptyField = emptyFields[0];
-    $(firstEmptyField).after('<label class="error-label">This field is required</label>');
-    return;
+        if ($.trim($(this).val() || "") === "") {
+            emptyFields.push(this);
         }
 
+    });
 
-    if (messaget == "Add") {
-        swal({
-            title: "Please Confirm",
-            text: "",
-            type: "warning",
+    if (emptyFields.length > 0) {
 
-            showCancelButton: true,
-            cancelButtonText: "Cancel",
-            cancelButtonColor: "#FF0000",
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Add",
+        let firstEmptyField = emptyFields[0];
 
-            closeOnCancel: true,
-            closeOnConfirm: false
-        },
-            function (isConfirm) {
-                if (isConfirm) {
-                    $('form').submit();
-                }
-            });
-        } else {
-        swal({
-            title: "Please Confirm",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Update",
-            cancelButtonText: "Cancel",
+        $(firstEmptyField).after(
+            '<label class="error-label">This field is required</label>'
+        );
 
-            closeOnConfirm: false,
-            closeOnCancel: true
-        },
-            function (isConfirm) {
-                if (isConfirm) {
-                    $('form').submit();
-                }
-            });
-        }
+        $(firstEmptyField).focus();
+        return false;
     }
 
-    let message = '@message';
-    let messageStatus = '@messageStatus';
-    let messagemidStatus = '@messagemidStatus ';
-    if (message)
-    sweetAlert(message, messagemidStatus, messageStatus);
+    let buttonName = $(this).val() || "";
+
+
+
+    swal({
+        title: "Please Confirm",
+        text: "",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText:
+            buttonName === "Add"
+                ? "Yes, Add"
+                : "Yes, Update",
+        closeOnCancel: true,
+        closeOnConfirm: false
+    }, function (isConfirm) {
+
+        if (isConfirm) {
+
+            swal({
+                title: "",
+                text:
+                    buttonName === "Add"
+                        ? "Added successfully!"
+                        : "Updated successfully!",
+                type: "success",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true
+            }, function () {
+
+                // Submit form after clicking OK
+                $form[0].submit();
+
+            });
+
+        }
+
+    });
+
+};

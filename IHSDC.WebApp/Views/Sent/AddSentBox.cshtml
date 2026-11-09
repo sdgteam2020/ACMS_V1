@@ -163,7 +163,7 @@
                                               <td>
                                                   @if (!string.IsNullOrEmpty(item.WordFile))
                                                   {
-                                                      <a href="@item.WordFilePath" target="_blank" download="@item.AmendWordFileName">
+                                                      <a href="@Url.Content(item.WordFile)" target="_blank" download="@item.AmendWordFileName">
                                                           <div class="word">
                                                           </div>
                                                       </a>

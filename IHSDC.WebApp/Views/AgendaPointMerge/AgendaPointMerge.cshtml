@@ -125,7 +125,7 @@
                                                     {
                                                         <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.ConfId.ToString()) })" target="_blank">
                                                             <div class="pdf">
-                                                                <input type="text" class="item-upload-hidden" id="ItemUpload" value="@item.Upload" />
+                                                                <input type="text" class="item-upload-hidden" id="ItemUpload" value="@item.UploadPath.ToString()" />
                                                             </div>
                                                         </a>
                                                     }
@@ -133,7 +133,7 @@
                                                 <td>
                                                     @if (!string.IsNullOrEmpty(item.WordFile))
                                                     {
-                                                        <a href="@item.WordFilePath" target="_blank" download="@item.AmendWordFileName">
+                                                        <a href="@Url.Content(item.WordFilePath)" target="_blank" download="@item.AmendWordFileName">
                                                             <div class="word">
 
                                                             </div>

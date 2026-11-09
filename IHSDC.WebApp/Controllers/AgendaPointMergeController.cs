@@ -276,7 +276,11 @@ namespace IHSDC.WebApp.Controllers
                             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
                             using (var client = new WebClient())
                             {
-                                byte[] pdfData = client.DownloadData(pdfName);
+                                string physicalPath = Server.MapPath(pdfName);
+                                
+
+                                byte[] pdfData = System.IO.File.ReadAllBytes(physicalPath);
+                                //byte[] pdfData = client.DownloadData(pdfName);
                                 using (var inputPdfStream = new MemoryStream(pdfData))
                                 {
                                     var reader = new PdfReader(inputPdfStream);
@@ -622,9 +626,9 @@ namespace IHSDC.WebApp.Controllers
 
                         Suppmodel.SuppFileName = originalFileName;
 
-                        Suppmodel.SuppFilePath =
-                            Request.Url.GetLeftPart(UriPartial.Authority)
-                            + "/Uploads/" + fileModel.FileName;
+                        //Suppmodel.SuppFilePath =
+                        //    Request.Url.GetLeftPart(UriPartial.Authority)
+                        //    + "/Uploads/" + fileModel.FileName;
 
                         Suppmodel.UploadBy =
                             Convert.ToInt32(Session["UserIntId"]);
@@ -688,7 +692,13 @@ namespace IHSDC.WebApp.Controllers
                 return Redirect("/Error/Error");
             }
         }
-
+        private string GenerateNewFileName(string originalFileName)
+        {
+            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            var fileExtension = Path.GetExtension(originalFileName);
+            var filename = Path.GetFileNameWithoutExtension(originalFileName);
+            return filename + timestamp + fileExtension;
+        }
         #endregion
     }
 }

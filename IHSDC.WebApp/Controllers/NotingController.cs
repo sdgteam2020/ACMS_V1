@@ -275,7 +275,8 @@ namespace IHSDC.WebApp.Controllers
                     }
 
                     var filePath = Path.Combine(Server.MapPath("~/Uploads"), fileModel.FileName);
-                    Notingmodel.Attachment = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + fileModel.FileName;
+                    Notingmodel.Attachment =fileModel.FileName;
+                    //Notingmodel.Attachment = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + fileModel.FileName;
                     System.IO.File.WriteAllBytes(filePath, fileModel.Data);
                 }
 
@@ -356,7 +357,8 @@ namespace IHSDC.WebApp.Controllers
                     }
 
                     var filePath = Path.Combine(Server.MapPath("~/Uploads"), fileModel.FileName);
-                    Notingmodel.Attachment = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + fileModel.FileName;
+                    Notingmodel.Attachment =fileModel.FileName;
+                    // Notingmodel.Attachment = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + fileModel.FileName;
                     System.IO.File.WriteAllBytes(filePath, fileModel.Data);
                 }
 

@@ -2,6 +2,7 @@
 using IHSDC.WebApp.Connection;
 using IHSDC.WebApp.DTO;
 using IHSDC.WebApp.Helper;
+using IHSDC.WebApp.Helper;
 using IHSDC.WebApp.Models;
 using iText.Signatures;
 using iTextSharp.text;
@@ -13,6 +14,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -30,7 +32,6 @@ using static IHSDC.WebApp.Filters.CustomFilters;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 using static iTextSharp.text.pdf.AcroFields;
 using PdfReader = iTextSharp.text.pdf.PdfReader;
-using IHSDC.WebApp.Helper;
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -267,7 +268,7 @@ namespace IHSDC.WebApp.Controllers
                             }
 
                             var filePath = Server.MapPath("~/Uploads") + "\\" + ConfTypeId + "_" + LetterSubject + "\\pdf\\" + fileModel.FileName;
-                            model.UploadPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + ConfTypeId + "_" + LetterSubject + "/pdf/" + fileModel.FileName;
+                            //model.UploadPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + ConfTypeId + "_" + LetterSubject + "/pdf/" + fileModel.FileName;
                             System.IO.File.WriteAllBytes(filePath, fileModel.Data);
                             FilePaths = FilePaths + "," + fileModel.FileName;
 
@@ -301,7 +302,7 @@ namespace IHSDC.WebApp.Controllers
                             }
 
                             var filePath = Server.MapPath("~/Uploads") + "\\" + ConfTypeId + "_" + LetterSubject + "\\Word\\" + fileModel.FileName;
-                            model.WordFilePath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + ConfTypeId + "_" + LetterSubject + "/Word/" + fileModel.FileName;
+                            //model.WordFilePath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + ConfTypeId + "_" + LetterSubject + "/Word/" + fileModel.FileName;
                             System.IO.File.WriteAllBytes(filePath, fileModel.Data);
                             FilePaths = FilePaths + "," + fileModel.FileName;
 
@@ -1298,31 +1299,52 @@ namespace IHSDC.WebApp.Controllers
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                 ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
                 System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                WebClient client = new WebClient();
-                byte[] pdfBytes = client.DownloadData(pathss);
+                
+                string physicalPath = Server.MapPath(pathss);
+                if (!System.IO.File.Exists(physicalPath))
+                {
+                    return HttpNotFound("PDF file not found.");
+                }
+
+                byte[] pdfBytes = System.IO.File.ReadAllBytes(physicalPath);
+
                 using (MemoryStream ms = new MemoryStream())
                 {
-
-                    PdfReader reader = new PdfReader(pdfBytes);
-                    using (PdfStamper stamper = new PdfStamper(reader, ms))
+                    using (PdfReader reader = new PdfReader(pdfBytes))
                     {
-                        int pageCount = reader.NumberOfPages;
-                        BaseFont baseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
-                        PdfContentByte content;
-
-                        for (int i = 1; i <= pageCount; i++)
+                        using (PdfStamper stamper = new PdfStamper(reader, ms))
                         {
-                            content = stamper.GetOverContent(i);
-                            content.SaveState();
-                            content.SetFontAndSize(baseFont, 48);
-                            content.SetColorFill(BaseColor.GRAY);
-                            content.BeginText();
-                            content.ShowTextAligned(iTextSharp.text.Element.ALIGN_CENTER, watermarkText, reader.GetPageSizeWithRotation(i).Width / 2, reader.GetPageSizeWithRotation(i).Height / 2, 45);
-                            content.EndText();
-                            content.RestoreState();
+                            int pageCount = reader.NumberOfPages;
+
+                            BaseFont baseFont = BaseFont.CreateFont(
+                                BaseFont.HELVETICA,
+                                BaseFont.WINANSI,
+                                BaseFont.NOT_EMBEDDED
+                            );
+
+                            for (int i = 1; i <= pageCount; i++)
+                            {
+                                PdfContentByte content = stamper.GetOverContent(i);
+
+                                content.SaveState();
+                                content.SetFontAndSize(baseFont, 48);
+                                content.SetColorFill(BaseColor.GRAY);
+
+                                content.BeginText();
+
+                                content.ShowTextAligned(
+                                    iTextSharp.text.Element.ALIGN_CENTER,
+                                    watermarkText,
+                                    reader.GetPageSizeWithRotation(i).Width / 2,
+                                    reader.GetPageSizeWithRotation(i).Height / 2,
+                                    45
+                                );
+
+                                content.EndText();
+                                content.RestoreState();
+                            }
                         }
                     }
-
 
                     return File(ms.ToArray(), "application/pdf", filename);
                 }

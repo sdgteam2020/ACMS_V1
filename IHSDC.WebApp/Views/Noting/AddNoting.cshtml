@@ -84,6 +84,7 @@
                                 </div>
                                 <br />
                                 @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", accept = ".pdf", disabled = "disabled", @class = "noting-inline-1 noting-event-1" })
+                                <input type="hidden" id="pdfPath" value="@Url.Content(Model.UploadPath ?? "")" />
                                 @if (ViewBag.UploadPath != "")
                                 {
                                     <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.ConfId.ToString()) })" class="pdfdownload noting-inline-10">
@@ -93,10 +94,11 @@
                                 @Html.TextBoxFor(m => m.UploadPath, new { @class = "form-control noting-inline-1 noting-event-2", @readonly = true, @required = true })
 
                                 @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", accept = ".Doc,.Docx", disabled = "disabled", @class = "noting-inline-1 noting-event-3" })
+                                <input type="hidden" id="wordPath" value="@Url.Content(Model.WordFilePath ?? "")" />
 
                                 @if (ViewBag.WordFilePath != "")
                                 {
-                                    <a href="@ViewBag.WordFilePath" target="_blank" download="@Model.AmendWordFileName">
+                                    <a href="@Url.Content(@ViewBag.WordFilePath)" target="_blank" download="@Model.AmendWordFileName">
                                         <div class="worddownload noting-inline-11">&nbsp;Download</div>
                                     </a>
                                 }

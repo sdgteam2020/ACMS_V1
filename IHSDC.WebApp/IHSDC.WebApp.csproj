@@ -1233,6 +1233,7 @@
     <Content Include="css\chatbot\download7.png" />
     <Content Include="css\chatbot\favicon.png" />
     <Content Include="css\chatbot\user4.png" />
+    <Content Include="DeveloperCSS\layout.css" />
     <Content Include="DeveloperCSS\Login.css" />
     <Content Include="DeveloperCSS\Master.css" />
     <Content Include="DeveloperCSS\ScheduleLetter.css" />

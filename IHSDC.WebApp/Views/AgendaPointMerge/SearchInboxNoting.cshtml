@@ -262,7 +262,7 @@
                                                                 <input type="text"
                                                                        class="item-upload-hidden"
                                                                        id="ItemUpload"
-                                                                       value="@item.Upload" />
+                                                                       value="@item.UploadPath.ToString()" />
                                                             </div>
                                                         </a>
                                                     }
@@ -271,7 +271,8 @@
                                                 <td>
                                                     @if (!string.IsNullOrEmpty(item.WordFile))
                                                     {
-                                                        <a href="@item.WordFilePath"
+
+                                                        <a href="@Url.Content(item.WordFilePath)"
                                                            target="_blank"
                                                            download="@item.AmendWordFileName">
 

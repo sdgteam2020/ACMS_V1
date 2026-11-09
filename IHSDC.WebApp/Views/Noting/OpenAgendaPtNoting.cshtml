@@ -433,6 +433,7 @@
                                 </div>
                                 <br />
                                 @Html.TextBoxFor(m => m.Upload, new { @class = "refactor-style-25", type = "file", id = "files", accept = ".pdf", disabled = "disabled" })
+                                <input type="hidden" id="pdfPath" value="@(string.IsNullOrEmpty(Model.UploadPath) ? "" : Url.Content(Model.UploadPath.Replace("\\", "/")))" />
                                 @if (ViewBag.UploadPath != "")
                                 {
                                     <a href="@Url.Action("DownloadAgendaWithWatermark", "ACC", new { title = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.Title.ToString()),path = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(ViewBag.UploadPath.ToString()),ConfId = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(Model.ConfId.ToString()) })" class="pdfdownload refactor-style-5">
@@ -450,10 +451,11 @@
                                 <br />
 
                                 @Html.TextBoxFor(m => m.WordFile, new { @class = "refactor-style-25", type = "file", id = "Wordfiles", accept = ".Doc,.Docx", disabled = "disabled" })
+                                <input type="hidden" id="wordPath" value="@(string.IsNullOrEmpty(Model.WordFilePath) ? "" : Url.Content(Model.WordFilePath.Replace("\\", "/")))" />
 
                                 @if (ViewBag.WordFilePath != "")
                                 {
-                                    <a href="@ViewBag.WordFilePath" target="_blank" download="@Model.AmendWordFileName">
+                                    <a href="@Url.Content(ViewBag.WordFilePath)" target="_blank" download="@Model.AmendWordFileName">
                                         <div class="worddownload refactor-style-6">&nbsp;Download</div>
                                     </a>
                                 }
@@ -1138,7 +1140,7 @@
     <script>
 
         $(document).ready(function () {
-            var pdfUrl = $("#files").attr('value');
+            var pdfUrl = $("#pdfPath").attr('value');
             if (pdfUrl) {
                 fetch(pdfUrl)
                     .then(response => {
@@ -1185,7 +1187,7 @@
     <script>
         $(function () {
             $('#files').on('change', PreviewPDF);
-            $('#Wordfiles').on('change', function () { if (typeof PreviewWordDoc === 'function') PreviewWordDoc(); });
+            $('#wordPath').on('change', function () { if (typeof PreviewWordDoc === 'function') PreviewWordDoc(); });
             $('#Attachmentfiles').on('change', function () { checkPDFHeader(this); });
             $('#UploadPath, #WordFilePath, #txtComment, #OpenReason, #CloseReason, #txtForward, #FwdComment').on('keyup', function () { if (typeof ValInData === 'function') ValInData(this); });
             $('#UploadPath, #WordFilePath').on('keypress', function (e) { if (typeof onlyAlphaNumeric === 'function' && onlyAlphaNumeric(e) === false) e.preventDefault(); });

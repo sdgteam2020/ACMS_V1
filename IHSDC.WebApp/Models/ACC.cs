@@ -316,3 +316,6 @@ namespace IHSDC.WebApp.Models
         public int YCoordinate { get; set; }
     }
 }
+
+
+

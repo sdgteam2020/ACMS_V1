@@ -1234,7 +1234,6 @@
     <Content Include="css\chatbot\download7.png" />
     <Content Include="css\chatbot\favicon.png" />
     <Content Include="css\chatbot\user4.png" />
-<<<<<<< HEAD
     <Content Include="DeveloperCSS\Add.css" />
     <Content Include="DeveloperCSS\AddAgenda.css" />
     <Content Include="DeveloperCSS\AddBde.css" />
@@ -1260,9 +1259,6 @@
     <Content Include="DeveloperCSS\InboxNoting.css" />
     <Content Include="DeveloperCSS\InboxNotingFwd.css" />
     <Content Include="DeveloperCSS\Layout.css" />
-=======
-    <Content Include="DeveloperCSS\layout.css" />
->>>>>>> server-side-validation
     <Content Include="DeveloperCSS\Login.css" />
     <Content Include="DeveloperCSS\Master.css" />
     <Content Include="DeveloperCSS\OpenAgendaPtNoting.css" />

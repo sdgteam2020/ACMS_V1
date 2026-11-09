@@ -379,8 +379,8 @@ namespace IHSDC.WebApp.Connection
             @CategoryId=@p17,
             @SponsorCategoryId=@p18,
             @NodalCategoryId=@p19,
-            @WordFile=@p20,
-            @WordFilePath=@p21",
+            @WordFile=@p20",
+           
 
                 new SqlParameter("@p0", (object)procid ?? DBNull.Value),
                 new SqlParameter("@p1", (object)model.Inbox_ID ?? DBNull.Value),
@@ -401,7 +401,6 @@ namespace IHSDC.WebApp.Connection
 
                 new SqlParameter("@p6", (object)model.Title ?? DBNull.Value),
                 new SqlParameter("@p7", (object)model.Upload ?? DBNull.Value),
-                new SqlParameter("@p8", (object)model.UploadPath ?? DBNull.Value),
                 new SqlParameter("@p9", (object)model.Summary ?? DBNull.Value),
                 new SqlParameter("@p10", (object)model.Status ?? DBNull.Value),
                 new SqlParameter("@p11", (object)model.DateTimeOfUpdate ?? DBNull.Value),
@@ -429,8 +428,8 @@ namespace IHSDC.WebApp.Connection
                     Value = NullIfZero(model.NodalCategoryId)
                 },
 
-                new SqlParameter("@p20", (object)model.WordFile ?? DBNull.Value),
-                new SqlParameter("@p21", (object)model.WordFilePath ?? DBNull.Value)
+                new SqlParameter("@p20", (object)model.WordFile ?? DBNull.Value)
+                
             ).ToList();
 
             return data;

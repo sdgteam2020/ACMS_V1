@@ -217,11 +217,11 @@
 
   
 
-               let message = '@message';
-    let messageStatus = '@messageStatus';
-    let messagemidStatus = '@messagemidStatus ';
-    if (message)
-			sweetAlert(message, messagemidStatus, messageStatus);
+   //            let message = '@message';
+   // let messageStatus = '@messageStatus';
+   // let messagemidStatus = '@messagemidStatus ';
+   // if (message)
+			//sweetAlert(message, messagemidStatus, messageStatus);
 
 
    
@@ -241,7 +241,7 @@
    
 
         $(document).ready(function () {
-            let pdfUrl = $("#files").attr('value');
+            var pdfUrl = $("#pdfPath").attr('value');
             if (pdfUrl) {
                 fetch(pdfUrl)
                     .then(response => {

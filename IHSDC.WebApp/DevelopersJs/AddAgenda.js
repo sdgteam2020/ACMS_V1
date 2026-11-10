@@ -405,11 +405,11 @@ popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><bo
 popupWin.document.close();
 }
 
-let message = '@message';
-let messageStatus = '@messageStatus';
-let messagemidStatus = '@messagemidStatus ';
-if (message)
-    sweetAlert(message, messagemidStatus, messageStatus);
+//let message = '@message';
+//let messageStatus = '@messageStatus';
+//let messagemidStatus = '@messagemidStatus ';
+//if (message)
+//    sweetAlert(message, messagemidStatus, messageStatus);
 
 
 $(document).ready(function () {
@@ -657,7 +657,7 @@ function BindOrganizerCategory(Schedule_ID) {
 
 $(document).ready(function () {
 
-    let pdfUrl = $("#files").attr('value');
+    var pdfUrl = $("#pdfPath").attr('value');
     if (pdfUrl !== undefined) {
         if (pdfUrl) {
             pdfUrl += "?t=" + new Date().getTime();

@@ -241,10 +241,8 @@ function PreviewPDF() {
                 });
             });
         });
-  
-
         $(document).ready(function () {
-            let pdfUrl = $("#files").attr('value');
+            var pdfUrl = $("#pdfPath").attr('value');
             if (pdfUrl) {
                 fetch(pdfUrl)
                     .then(response => {
@@ -287,14 +285,14 @@ function PreviewPDF() {
             }
         });
 
-   
         $(function () {
             $('#files').on('change', PreviewPDF);
-            $('#Wordfiles').on('change', function () { if (typeof PreviewWordDoc === 'function') PreviewWordDoc(); });
+            $('#wordPath').on('change', function () { if (typeof PreviewWordDoc === 'function') PreviewWordDoc(); });
             $('#Attachmentfiles').on('change', function () { checkPDFHeader(this); });
             $('#UploadPath, #WordFilePath, #txtComment, #OpenReason, #CloseReason, #txtForward, #FwdComment').on('keyup', function () { if (typeof ValInData === 'function') ValInData(this); });
             $('#UploadPath, #WordFilePath').on('keypress', function (e) { if (typeof onlyAlphaNumeric === 'function' && onlyAlphaNumeric(e) === false) e.preventDefault(); });
             $('.notingprint').on('click', PrintChatDiv);
             $('#btnExport').on('click', function (e) { e.preventDefault(); PrintDiv(); });
         });
+ 
  

@@ -259,7 +259,8 @@
                             const selectedFile = pdfFile;
                             if (selectedFile.type === "application/pdf" || selectedFile.name.endsWith(".pdf")) {
                                 const embed = document.createElement("object");
-                                embed.data = URL.createObjectURL(selectedFile);
+                                embed.data = URL.createObjectURL(selectedFile) +
+                                    "#toolbar=0&navpanes=0";
                                 embed.type = "application/pdf";
                                 embed.width = "100%";
                                 embed.height = "450px";

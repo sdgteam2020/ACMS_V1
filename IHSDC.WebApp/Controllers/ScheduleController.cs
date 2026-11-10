@@ -245,8 +245,7 @@ namespace IHSDC.WebApp.Controllers
                                 }
                             }
 
-                            //int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
-                            //model.ScheduleId = item;
+                           
                             var data = con.ScheduleLetter_CRUD(11, model);
                             if (data[0].IsSuccess == true)
                             {

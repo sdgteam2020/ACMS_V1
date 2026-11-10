@@ -7,16 +7,16 @@
 @{ ViewBag.Title = "Appx A Report";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; }
 
-
-<link href="@Url.Content("~/DeveloperCSS/AppxAReport.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-
+<head>
+    <link href="@Url.Content("~/DeveloperCSS/AppxAReport.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+</head>
 
 <body>
 
     <div class="row">
         <div class="col">
-            <a class="btn btn-info float-right mb-1" href="javascript:history.back()" target="_top">Back</a>
-
+         
+            <a href="#" class="btn btn-info float-right mb-1 btnBack">Back</a>
         </div>
     </div>
     <div class="card card-page">

@@ -1,17 +1,10 @@
 ﻿
     
-     let message = '@message';
-     let messageStatus = '@messageStatus';
-     let messagemidStatus = '@messagemidStatus ';
-    if (message)
-            sweetAlert(message, messagemidStatus, messageStatus);
 
-  
-
-        $(document).ready(function () {
+$(document).ready(function () {
+   
             $('#spnScheduleId').change(function () {
                 $("#ScheduleId").val($('#spnScheduleId').val());
-
                 let typeofConf = $("#TypeOfConfId").val();
                 let scheduleid = $("#ScheduleId").val();
                 $.ajax({

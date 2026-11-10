@@ -286,8 +286,34 @@
 $(document).on("click", ".saveAddScheduleLetter", function (event) {
 
     event.preventDefault();
-    debugger;
- 
+  
+    var $form = $(this).closest("form");
+
+
+    $form.find(".error-label").remove();
+
+
+    let emptyFields = [];
+
+    $form.find(":input[required]").each(function () {
+
+        if ($.trim($(this).val() || "") === "") {
+            emptyFields.push(this);
+        }
+
+    });
+
+    if (emptyFields.length > 0) {
+
+        let firstEmptyField = emptyFields[0];
+
+        $(firstEmptyField).after(
+            '<label class="error-label">This field is required</label>'
+        );
+
+        $(firstEmptyField).focus();
+        return false;
+    }
     // Get encrypted ID exactly as it exists
     let id = $("#id").val() || "";
     let oldids = $("#oldid").val() || "";
@@ -526,19 +552,46 @@ $(document).on("click", ".saveAddScheduleLetter", function (event) {
 });
 
 
+
 function CheckFromDate(obj) {
     document.getElementById("ToDate").value = null;
 }
 
+$(document).on("change", ".validate", function () {
+
+    CheckToDate(this);
+
+});
 
 function CheckToDate(obj) {
 
-    let FromDate = $('#FromDate').val();
+    let FromDate = $("#FromDate").val();
     let ToDate = $(obj).val();
-    let F = new Date(FromDate)
-    let T = new Date(ToDate)
-    if (T < F) {
-        swal("To Date can't be Greater than From Date", "", "warning"); $(obj).val("");
+    
+    if (FromDate === "") {
+        swal("Please select From Date first.", "", "warning");
+        $(obj).val("");
+        return false;
+    }
+  
+    if (ToDate === "") {
+        return false;
     }
 
+    let F = new Date(FromDate);
+    let T = new Date(ToDate);
+
+    if (T < F) {
+       
+        swal(
+            "To Date cannot be greater than From Date.",
+            "",
+            "warning"
+        );
+
+        $(obj).val("");
+        return false;
+    }
+
+    return true;
 }

@@ -83,6 +83,13 @@
         format: "dd/M/yyyy",
     autoclose: true,
         });
+$('.datepicker4').datepicker({
+    format: "dd/M/yyyy",
+    startDate: new Date(),
+    autoclose: true,
+    todayHighlight: true,
+    orientation: "bottom auto"
+});
 
 
 

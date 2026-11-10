@@ -19,3 +19,6 @@
 .center {
     text-align: center;
 }
+.error-label {
+    color: red;
+}

@@ -32,40 +32,8 @@
 
 $(".saveAddComdConfirm").on("click", function () {
 
-    event.preventDefault();
-
-    var $form = $(this).closest("form");
-
-
-    $form.find(".error-label").remove();
-
-
-    let emptyFields = [];
-
-    $form.find(":input[required]").each(function () {
-
-        if ($.trim($(this).val() || "") === "") {
-            emptyFields.push(this);
-        }
-
-    });
-
-    if (emptyFields.length > 0) {
-
-        let firstEmptyField = emptyFields[0];
-
-        $(firstEmptyField).after(
-            '<label class="error-label">This field is required</label>'
-        );
-
-        $(firstEmptyField).focus();
-        return false;
-    }
-
+    event.preventDefault();  
     let buttonName = $(this).val() || "";
-
-
-
     swal({
         title: "Please Confirm",
         text: "",

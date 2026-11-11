@@ -39,25 +39,6 @@
     });
     function AddConfirmation(obj, ActionName, Submit) {
         event.preventDefault();
-
-    // Remove any existing error labels
-    $('.error-label').remove();
-
-    // Check if all required form fields are filled in
-    let emptyFields = [];
-    $('form').find(':input[required]').each(function () {
-            if ($.trim($(this).val()) === '') {
-        emptyFields.push(this);
-            }
-        });
-
-        // If there are empty fields, display an error message for the first empty field
-        if (emptyFields.length > 0) {
-            let firstEmptyField = emptyFields[0];
-    $(firstEmptyField).after('<label class="error-label">This field is required</label>');
-    return;
-        }
-
     // If all fields are filled, display the confirmation dialog
     if (messaget == "Add") {
         swal({

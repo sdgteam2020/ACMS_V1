@@ -10,37 +10,7 @@
 $(document).on("click", ".saveAddUnitConfirm", function (event) {
 
     event.preventDefault();
-    debugger;
   
-    $('.error-label').remove();
-
-   
-    let emptyFields = [];
-
-    $('form').find(':input[required]').each(function () {
-
-        let value = $(this).val();
-
-        if (value == null || $.trim(value.toString()) === '') {
-            emptyFields.push(this);
-        }
-    });
-
-    if (emptyFields.length > 0) {
-
-        let firstEmptyField = emptyFields[0];
-
-        $(firstEmptyField).after(
-            '<label class="error-label">This field is required</label>'
-        );
-
-        $(firstEmptyField).focus();
-
-        return false;
-    }
-
-
-   
     let id = $("#id").val() || "";
 
    

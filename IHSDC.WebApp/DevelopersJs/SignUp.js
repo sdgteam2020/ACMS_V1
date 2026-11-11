@@ -234,9 +234,6 @@ if ($("#CorpId").val() != 0) {
         });
 
 
-let message = '@message';
-let messageStatus = '@messageStatus';
-let messagemidStatus = '@messagemidStatus';
 
 if (message) {
     if (message == "s") {

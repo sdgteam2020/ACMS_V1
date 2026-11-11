@@ -30,9 +30,6 @@ function SubmitGEBLetter(obj, ActionName, titleMessage, Submit) {
 $(document).on("click", ".btnGEBConfirmation", function (e) {
 
     e.preventDefault();
-
-    debugger;
-
     let obj = this;
 
     let ActionName = $(this).attr("data-action");
@@ -58,21 +55,50 @@ function SubmitGEBConfirmation(obj, ActionName, titleMessage, Submit) {
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Yes, Submit it!",
-        cancelButtonText: "No, cancel ",
+        cancelButtonText: "No, Cancel",
         closeOnConfirm: false,
-        closeOnCancel: false
+        closeOnCancel: true
     },
-        function (isConfirm) {
-            if (isConfirm) {
-                let id = $(obj).attr('data-id');
-                let fid = $(obj).attr('data-fid');
-                location.href = ActionName + '?id=' + id + '&fid=' + fid;
 
-            } else {
-                swal("Not Submitted!", "", "info");
+        function (isConfirm) {
+
+            if (isConfirm) {
+
+                let id = $(obj).attr("data-id");
+                let fid = $(obj).attr("data-fid");
+
+                
+                swal({
+                    title: "",
+                    text: "Your request has been confirmed.",
+                    type: "success",
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "OK",
+                    closeOnConfirm: true
+                },
+
+                    function () {
+
+                        
+                        location.href = ActionName
+                            + "?id=" + encodeURIComponent(id)
+                            + "&fid=" + encodeURIComponent(fid);
+
+                    });
+
             }
-        }
-    );
+            else {
+
+                swal(
+                    "Cancelled!",
+                    "Your request has been cancelled.",
+                    "info"
+                );
+
+            }
+
+        });
+
 }
 $(document).on("click", ".btnMailRevert", function (e) {
 

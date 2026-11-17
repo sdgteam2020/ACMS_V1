@@ -19,7 +19,7 @@
         });
     });
     $(document).ready(function () {
-        $('.username-input').on('input', function () {
+        $('.username-mob-input').on('input', function () {
             validateInput(this);
         });
     });
@@ -74,4 +74,229 @@
                         event.preventDefault();
                     });
                    
+$(document).ready(function () {
+    $("#adduserForm").on("submit", async function (e) {
+        debugger;
+        e.preventDefault();
+        let $form = $("#adduserForm");
+        if (!$form.valid()) {
 
+            return false;
+        }
+        let id = $("#id").val() || "";
+        var role = $("#rolesDropdown").val();
+        
+
+        let buttonName = $(".saveAddConfirm").val() || "";
+
+        const payload = {
+
+            Username: $("#Username").val() || "",
+
+            Password: $("#Password").val() || "",
+            ConfirmPassword: $("#ConfirmPassword").val() || "",
+            Rank: $("#Rank").val() || "",
+            Number: $("#Number").val() || "",
+            FullName: $("#FullName").val() || "",
+            ComdId: $("#ComdId").val() || "",
+            CorpId: $("#CorpId").val() || "",
+            BdeId: $("#BdeId").val() || "",
+            Appointment: $("#Appointment").val() || "",
+            Roles: [role],
+            ASCON: $("#ASCON").val() || "",
+            Active: $("#Active").val() || "",
+            MobNo: $("#MobNo").val() || "",
+            Unit_ID: $("#Unit_ID").val() || "",
+           
+        };
+
+
+
+
+        let jsonData = JSON.stringify(payload);
+
+        let encrypted;
+
+        try {
+
+            encrypted = encryptPayloadData(jsonData);
+
+        }
+        catch (error) {
+
+           
+
+            swal({
+                title: "Encryption Failed!",
+                text: error.message || "Unable to encrypt request.",
+                type: "error",
+                confirmButtonColor: "#DD6B55"
+            });
+
+            return false;
+        }
+
+
+        if (!encrypted) {
+
+            console.error("Encrypted request is empty.");
+
+            swal({
+                title: "Error",
+                text: "Unable to create encrypted request.",
+                type: "error",
+                confirmButtonColor: "#DD6B55"
+            });
+
+            return false;
+        }
+
+
+        swal({
+
+            title: "Are you sure?",
+
+            text: "",
+
+            type: "warning",
+
+            showCancelButton: true,
+
+            confirmButtonColor: "#DD6B55",
+
+            confirmButtonText:
+                buttonName === "Add"
+                    ? "Yes, Add"
+                    : "",
+
+            cancelButtonText: "Cancel",
+
+            closeOnConfirm: false,
+
+            closeOnCancel: true
+
+        },
+            function (isConfirm) {
+
+                if (!isConfirm) {
+                    return;
+                }
+
+
+                let token =
+                    $('input[name="__RequestVerificationToken"]').val();
+
+
+                console.log("Request:", encrypted);
+                console.log("ID:", id);
+                console.log("btnval:", buttonName);
+                console.log("Token:", token);
+
+
+                $.ajax({
+
+                    url: '/Account/Add',
+
+                    type: 'POST',
+
+                    data: {
+
+                        Request: encrypted,
+                        __RequestVerificationToken: token
+                    },
+
+
+                    success: function (response) {
+
+                        console.log(response);
+
+                        // SERVER-SIDE VALIDATION ERROR
+                        if (response && response.success === false) {
+
+                            let firstError = Object.values(response.errors || {})
+                                .flat()[0] || response.message || "";
+
+                            $("#addnameValidation")
+                                .text(firstError)
+                                .removeClass("d-none");
+
+                            swal({
+                                title: "Failed!",
+                                text: response.message || "Validation failed.",
+                                type: "error",
+                                confirmButtonColor: "#DD6B55"
+                            });
+
+                            return;
+                        }
+
+
+                        swal({
+
+                            title: "",
+
+                            text:
+                                buttonName === "Add"
+                                    ? "User Created Successfully!"
+                                    : "",
+
+                            type: "success",
+
+                            confirmButtonColor: "#DD6B55",
+
+                            confirmButtonText: "OK",
+
+                            closeOnConfirm: true
+
+                        },
+                            function () {
+
+                                window.location.href =
+                                    '/Account/Hierarchy';
+
+                            });
+
+                    },
+
+
+                    error: function (xhr) {
+
+                        console.error(
+                            "Status:",
+                            xhr.status
+                        );
+
+                        console.error(
+                            "Response:",
+                            xhr.responseText
+                        );
+
+
+                        swal({
+
+                            title:
+                                buttonName === "Add"
+                                    ? "Add Failed!"
+                                    : "Update Failed!",
+
+                            text:
+                                xhr.responseText ||
+                                "Something went wrong.",
+
+                            type: "error",
+
+                            confirmButtonColor: "#DD6B55"
+
+                        });
+
+                    }
+
+                });
+
+            });
+
+
+        return false;
+
+    });
+});

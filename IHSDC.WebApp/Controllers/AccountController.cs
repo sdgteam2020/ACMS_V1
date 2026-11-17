@@ -259,16 +259,68 @@ namespace IHSDC.WebApp.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(EditUserViewModel model)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(String Request, string btnval)
         {
-            if (ModelState.IsValid)
+            EditUserViewModel model = new EditUserViewModel();
+                 
+            var session = SessionHeplers.GetObject<DtoSessions>(
+            System.Web.HttpContext.Current.Session,
+            "Token");
+
+            if (session == null)
             {
+                return Json(new
+                {
+                    success = false,
+                    message = "Session expired."
+                });
+            }
+
+            model = AESEncrytDecry.DecryptAESWithDTO<EditUserViewModel>(
+               Request,
+               session.Salt);
+            if (model == null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Invalid request."
+                });
+            }
+            else
+            {
+                TryValidateModel(model);
+
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+
+                            x => x.Value.Errors
+                                .Select(e =>
+                                    string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                        ? "Invalid value."
+                                        : e.ErrorMessage
+                                )
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the error field.",
+                        errors = errors
+                    });
+                }
                 var CurrentUser = _db.Users.FirstOrDefault(i => i.UserName == User.Identity.Name);
                 var EditUser = _db.Users.FirstOrDefault(i => i.Id == model.UserId);
                 var DEFwdAuth = _db.Users.FirstOrDefault();
                 EditUser.Active = model.Active;
                 EditUser.EstablishmentFull = model.EstablishmentFull;
-               
+
                 EditUser.Appointment = model.Appointment;
                 EditUser.MobNo = model.MobNo;
                 EditUser.Rank = model.Rank;
@@ -297,15 +349,16 @@ namespace IHSDC.WebApp.Controllers
                     UserManager.AddToRole(EditUser.Id, "User");
                 }
 
-               
+
                 _db.Entry(EditUser).State = EntityState.Modified;
                 _db.SaveChanges();
-              
-                DisplayMessage("User editted successfully", "s", "s");
+
+                DisplayMessage("User edited successfully", "s", "s");
                 return RedirectToAction("Hierarchy");
+
+               
+                return View(model);
             }
-            Warning("Please correct the errors", true);
-            return View(model);
         }
 
     
@@ -1352,127 +1405,177 @@ namespace IHSDC.WebApp.Controllers
 
         [HttpPost]
         [Authorize]
-      
-        public async Task<ActionResult> Add(RegisterViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Add(string Request)
         {
+            RegisterViewModel model = new RegisterViewModel();
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var session = SessionHeplers.GetObject<DtoSessions>(
+                  System.Web.HttpContext.Current.Session,
+                  "Token");
 
-
-
-                    if (model.Active == null)
+                    if (session == null)
                     {
-                        model.Active = "0";
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Session expired."
+                        });
                     }
 
-                    var CurrentUser = UserManager.FindById(User.Identity.GetUserId());
-                    if (CurrentUser == null)
+                     model = AESEncrytDecry.DecryptAESWithDTO<RegisterViewModel>(
+                        Request,
+                        session.Salt);
+                    if (model == null)
                     {
-                        UnitCRUD UnitCR = new UnitCRUD();
-                        var CurrentUser1 = con.UnitCRUD(13, UnitCR);
-                        string UserID = CurrentUser1[0].id;
-
-                        var CurrentUser2 = UserManager.FindById(UserID);
-
-                        model.CreatedByIntId = 1;
-                        model.Superior = CurrentUser2;
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Invalid request."
+                        });
                     }
                     else
                     {
+                        TryValidateModel(model);
 
-                        model.CreatedByIntId = 1;
-                        model.Superior = CurrentUser;
-                    }
-
-                    var NewUser = new Common.Models.ApplicationUser
-                    {
-                        UserName = model.Username.ToLower(),
-                        Email = string.Format("{0}@{1}", model.Username.ToLower(), Common.Configurations.Application.MailDomain),
-                        EmailConfirmed = true,
-                        Rank = model.Rank,
-                        PersonnelNumber = model.Number,
-                        FullName = model.FullName,
-                        Active = model.Active,
-                        EstablishmentFull = model.EstablishmentFull,
-                        EstablishmentAbbreviation = model.EstablishmentAbbreviation,
-                        CreatedByIntId = 1,
-                        CreatedOn = DateTime.Now,
-                        Superior = model.Superior,
-                        PhoneNumber = model.ASCON,
-                        Unit_ID = model.Unit_ID,
-                        UserTypeId = model.UserTypeId,
-                        ParentId = model.ParentId,
-                        Appointment = model.Appointment,
-                        MobNo = model.MobNo
-                    };
-
-                    var result = await UserManager.CreateAsync(NewUser, model.Password);
-                    if (result.Succeeded)
-                    {
-
-                        try
+                        if (!ModelState.IsValid)
                         {
-                            foreach (var role in model.Roles)
+                            var errors = ModelState
+                                .Where(x => x.Value.Errors.Count > 0)
+                                .ToDictionary(
+                                    x => x.Key,
+
+                                    x => x.Value.Errors
+                                        .Select(e =>
+                                            string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                                ? "Invalid value."
+                                                : e.ErrorMessage
+                                        )
+                                        .First()
+                                );
+
+                            return Json(new
                             {
-                                UserManager.AddToRole(NewUser.Id, role);
-                                
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            UserManager.AddToRole(NewUser.Id, "User");
-                        }
-
-
-                        using (var db = new ApplicationDbContext())
-                        {
-                            db.Hierarchy.Add(new Hierarchy
-                            {
-                                UserId = NewUser.Superior.IntId,
-                                ChildId = NewUser.IntId
+                                success = false,
+                                message = "Please correct the error field.",
+                                errors = errors
                             });
-                            db.SaveChanges();
                         }
 
-                        Common.Helpers.Identity.Hierarchy.UpdateHierarchyTable();
-
-                        string GetSalt = AESEncrytDecry.GetSalt();
-
-                        DtoSessions dtoSessions = new DtoSessions
+                        if (model.Active == null)
                         {
-                            Salt = GetSalt
-                        };
+                            model.Active = "0";
+                        }
 
-                        SessionHeplers.SetObject(HttpContext.Session, "Token", dtoSessions);
-
-                        if (model.Active == "0")
+                        var CurrentUser = UserManager.FindById(User.Identity.GetUserId());
+                        if (CurrentUser == null)
                         {
-                           
-                            await SignInManager.SignInAsync(
-                                NewUser,
-                                isPersistent: false,
-                                rememberBrowser: false);
+                            UnitCRUD UnitCR = new UnitCRUD();
+                            var CurrentUser1 = con.UnitCRUD(13, UnitCR);
+                            string UserID = CurrentUser1[0].id;
 
-                           
-                            Session["UserIntId"] = NewUser.IntId;
-                            Session["UserId"] = NewUser.Id;
-                            Session["Username"] = NewUser.UserName;
+                            var CurrentUser2 = UserManager.FindById(UserID);
 
-                            SessionManager.UserName = NewUser.UserName;
-                            SessionManager.UserId = NewUser.Id;
-                            SessionManager.Active = "0";
-
-                            return RedirectToAction("ContactUs", "Home");
+                            model.CreatedByIntId = 1;
+                            model.Superior = CurrentUser2;
                         }
                         else
                         {
-                            DisplayMessage("User Created Successfully !", "", "s");
-                            return RedirectToAction("Hierarchy", "Account");
+
+                            model.CreatedByIntId = 1;
+                            model.Superior = CurrentUser;
                         }
+
+                        var NewUser = new Common.Models.ApplicationUser
+                        {
+                            UserName = model.Username.ToLower(),
+                            Email = string.Format("{0}@{1}", model.Username.ToLower(), Common.Configurations.Application.MailDomain),
+                            EmailConfirmed = true,
+                            Rank = model.Rank,
+                            PersonnelNumber = model.Number,
+                            FullName = model.FullName,
+                            Active = model.Active,
+                           
+                            CreatedByIntId = 1,
+                            CreatedOn = DateTime.Now,
+                            Superior = model.Superior,
+                            PhoneNumber = model.ASCON,
+                            Unit_ID = model.Unit_ID,
+                            UserTypeId = 0,
+                            ParentId = 0,
+                            Appointment = model.Appointment,
+                            MobNo = model.MobNo
+                        };
+
+                        var result = await UserManager.CreateAsync(NewUser, model.Password);
+                        if (result.Succeeded)
+                        {
+
+                            try
+                            {
+                                foreach (var role in model.Roles)
+                                {
+                                    UserManager.AddToRole(NewUser.Id, role);
+
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                UserManager.AddToRole(NewUser.Id, "User");
+                            }
+
+
+                            using (var db = new ApplicationDbContext())
+                            {
+                                db.Hierarchy.Add(new Hierarchy
+                                {
+                                    UserId = NewUser.Superior.IntId,
+                                    ChildId = NewUser.IntId
+                                });
+                                db.SaveChanges();
+                            }
+
+                            Common.Helpers.Identity.Hierarchy.UpdateHierarchyTable();
+
+                            string GetSalt = AESEncrytDecry.GetSalt();
+
+                            DtoSessions dtoSessions = new DtoSessions
+                            {
+                                Salt = GetSalt
+                            };
+
+                            SessionHeplers.SetObject(HttpContext.Session, "Token", dtoSessions);
+
+                            if (model.Active == "0")
+                            {
+
+                                await SignInManager.SignInAsync(
+                                    NewUser,
+                                    isPersistent: false,
+                                    rememberBrowser: false);
+
+
+                                Session["UserIntId"] = NewUser.IntId;
+                                Session["UserId"] = NewUser.Id;
+                                Session["Username"] = NewUser.UserName;
+
+                                SessionManager.UserName = NewUser.UserName;
+                                SessionManager.UserId = NewUser.Id;
+                                SessionManager.Active = "0";
+
+                                return RedirectToAction("ContactUs", "Home");
+                            }
+                            else
+                            {
+                                DisplayMessage("User Created Successfully !", "", "s");
+                                return RedirectToAction("Hierarchy", "Account");
+                            }
+                        }
+                        AddErrors(result);
                     }
-                    AddErrors(result);
                 }
                 catch (Exception)
                 {

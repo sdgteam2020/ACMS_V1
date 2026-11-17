@@ -21,10 +21,20 @@
 }
 
 
-$(".saveAddBranchConfirm").on("click", function () {
+$(document).ready(function () {
+    $("#branchForm").on("submit", async function (e) {
 
-    event.preventDefault();
-    let buttonName = $(this).val() || "";
+        e.preventDefault();
+        let $form = $("#branchForm");
+        if (!$form.valid()) {
+
+            return false;
+        }
+        let id = $("#id").val() || "";
+        let btnval = $("#btnval").val();
+        let buttonName = $(".saveAddBranchConfirm").val() || "";
+        let BranchName = $("#BranchName").val();
+        
     swal({
         title: "Please Confirm",
         text: "",
@@ -42,27 +52,87 @@ $(".saveAddBranchConfirm").on("click", function () {
 
         if (isConfirm) {
 
-            swal({
-                title: "",
-                text:
-                    buttonName === "Add"
-                        ? "Added successfully!"
-                        : "Updated successfully!",
-                type: "success",
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "OK",
-                closeOnConfirm: true
-            }, function () {
+            $.ajax({
+                url: '/Master/AddBranch',
+                type: 'POST',
 
-                // Submit form after clicking OK
-                $form[0].submit();
+                data: {
+                    __RequestVerificationToken:
+                        $('#branchForm input[name="__RequestVerificationToken"]').val(),
 
+                    id: id,
+                    BranchName: BranchName,
+                  
+                    btnval: btnval
+                },
+
+                success: function (response) {
+
+                    console.log(response);
+
+                    // SERVER-SIDE VALIDATION ERROR
+                    if (response && response.success === false) {
+
+                        let firstError = Object.values(response.errors || {})
+                            .flat()[0] || response.message || "";
+
+                        $("#BranchNameValidation")
+                            .text(firstError)
+                            .removeClass("d-none");
+
+                        swal({
+                            title: "Failed!",
+                            text: response.message || "Validation failed.",
+                            type: "error",
+                            confirmButtonColor: "#DD6B55"
+                        });
+
+                        return;
+                    }
+
+                    // SUCCESS
+
+
+                    swal({
+                        title: "",
+                        text: btnval === "Add"
+                            ? "Added successfully!"
+                            : "Updated successfully!",
+                        type: "success",
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "OK",
+                        closeOnConfirm: true
+                    }, function () {
+
+                        window.location.href = '/master/AddBranch';
+
+
+
+                    });
+
+                },
+
+                error: function (xhr, status, error) {
+
+                    console.error("Status:", xhr.status);
+                    console.error("Response:", xhr.responseText);
+                    console.error("Error:", error);
+
+                    swal({
+                        title: "Request Failed!",
+                        text: "HTTP Status: " + xhr.status,
+                        type: "error",
+                        confirmButtonColor: "#DD6B55"
+                    });
+                }
             });
+
+
 
         }
 
     });
-
+    });
 });
 
 

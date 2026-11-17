@@ -16,12 +16,10 @@ namespace IHSDC.Common.Models
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+         
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
 
-            // Add custom user claims here
-            // IntId
-            // Unit/ Fmn
+           
 
 
             return userIdentity;
@@ -29,15 +27,12 @@ namespace IHSDC.Common.Models
 
 
 
-        /// <summary>
-        /// All additional properties for user comes here
-        /// </summary>
         #region Application User Properties
         public int IntId { get; set; }
         
         public string Active { get; set; }
         public string EstablishmentFull { get; set; }
-        //public string Sqn { get; set; }
+        
         public string EstablishmentAbbreviation { get; set; }
         public string Appointment { get; set; }
         [MaxLength(256)]
@@ -55,9 +50,7 @@ namespace IHSDC.Common.Models
         public ICollection<ApplicationUserRole> UserRoles { get; set; }
         #endregion
 
-        /// <summary>
-        /// Donot change anything below
-        /// </summary>
+     
         #region Audit Properties
         [Display(Name = "Created By")]
         public int CreatedByIntId { get; set; }
@@ -271,7 +264,7 @@ namespace IHSDC.Common.Models
 
     public class ApptDetails
     {
-        //public Guid Id { get; set; }
+       
         [Required]
         [Display(Name = "Service Number")]
         public string ServiceNumber { get; set; }

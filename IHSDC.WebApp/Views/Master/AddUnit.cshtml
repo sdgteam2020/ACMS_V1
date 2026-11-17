@@ -14,7 +14,8 @@
      ? Convert.ToInt32(ViewBag.Unit_ID)
      : 0;
 }
-@using (Html.BeginForm("AddUnit", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
+@using (Html.BeginForm("AddUnit", "Master", FormMethod.Post, new { id = "unitForm", enctype = "multipart/form-data" }))
 {
 
     <div class="card-body custom-card-shadow">
@@ -33,17 +34,21 @@
 
             <input id="Command" name="Command" class="d-none" value="0" />
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "danger" })
-            <div class="col custom-col-margin-left">
-                <label><b>Branch Name</b></label>
-                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @maxlength = "50", @required = "required", @autocomplete = "off" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col custom-col-margin-left">
+            <label><b>Branch Name</b></label>
+            @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @maxlength = "50", @required = "required", @autocomplete = "off" })
 
-                @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "danger" })
-            </div>
+            @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "text-danger" })
+            <span id="UnitNameValidation"
+                  class="text-danger d-none"
+                  role="alert">
+            </span>
+        </div>
             <div class="col custom-col-margin-left">
                 <label><b>Comd/PSOs Name</b></label>
                 @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd/PSOs --", new { @data_show_subtext = "true", @class = "select form-control", @required = "required", @data_live_search = "true", @maxlength = "20" })
-                @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "danger" })
+                @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "text-danger" })
             </div>
             <div class="col custom-col-margin-left">
                 <label><b>DGs Name</b></label>
@@ -52,11 +57,13 @@
                 <select name="Corps" id="spnCorpsId" class="select form-control" required>
                     <option value=0>-Select DGs-</option>
                 </select>
+                @Html.ValidationMessageFor(model => model.CorpsId, "", new { @class = "text-danger" })
+               
             </div>
 
 
             <div class="col custom-col-margin-left">
-                <button type="button" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddUnitConfirm custom-button-top1">@ViewBag.ButtonName</button>
+                <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddUnitConfirm custom-button-top1">@ViewBag.ButtonName</button>
             </div>
         </div>
         <div class="dropdown-divider"></div>
@@ -116,9 +123,6 @@
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 <link href="@Url.Content("~/DeveloperCSS/Master.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-
 <script src="@Url.Content("~/Content/CustomJS/Filter1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/AddUnit.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

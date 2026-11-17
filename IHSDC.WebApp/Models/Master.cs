@@ -25,8 +25,9 @@ namespace IHSDC.WebApp.Models
     public class Rank
     {
         public int RankId { get; set; }
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the rank name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string RankName { get; set; }
 
         public string RankAbbreviation { get; set; }
@@ -46,11 +47,18 @@ namespace IHSDC.WebApp.Models
     {
         public int PolicyId { get; set; }
 
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the policy name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string PolicyName { get; set; }
-        public string PolicyRemarks { get; set; }
+        [Required(ErrorMessage = "Please enter the policy remarks.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
+        public string PolicyRemarks { get; set; }     
+        [Required(ErrorMessage = "Please select a PDF file.")]
+       
         public string Upload { get; set; }
+        [Required(ErrorMessage = "Please select a type of document.")]
         public int TypeOfDocu { get; set; }
         public string TypeOfDocuName { get; set; }
         public string PolicyFolder { get; set; }
@@ -66,9 +74,11 @@ namespace IHSDC.WebApp.Models
     public class ComdCRUD : Common
     {
         public int ComdId { get; set; }
+        [Required(ErrorMessage = "Please enter the comd name.")]
+        [StringLength(100, MinimumLength = 3,
+            ErrorMessage = "Comd Name must be between 3 and 100 characters.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
 
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         public string ComdName { get; set; }
         public IList<ComdCRUD> ILComdCRUD { get; set; }
     }
@@ -99,6 +109,7 @@ namespace IHSDC.WebApp.Models
     public class FolderControlPermissionCRUD : Common
     {
         public int FolderControlId { get; set; }
+        [Required(ErrorMessage = "Please select a folder name.")]
         public int PolicyId { get; set; }
         public string PolicyName { get; set; }
 
@@ -121,8 +132,9 @@ namespace IHSDC.WebApp.Models
     {
         public int CategoryId { get; set; }
 
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the category name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string CategoryName { get; set; }
 
         public int ScheduleId { get; set; }
@@ -134,8 +146,9 @@ namespace IHSDC.WebApp.Models
     {
         public int BranchId { get; set; }
 
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the branch name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string BranchName { get; set; }
         public int ScheduleId { get; set; }
         public IList<BranchCRUD> ILBranchCRUD { get; set; }
@@ -145,9 +158,13 @@ namespace IHSDC.WebApp.Models
     public class Appointment
     {
         public int ApptId { get; set; }
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the appt name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string Appt { get; set; }
+        [Required(ErrorMessage = "Please enter the appt abbreviation.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string ApptAbbreviation { get; set; }
         public IList<Appointment> IAppt { get; set; }
     }
@@ -155,8 +172,9 @@ namespace IHSDC.WebApp.Models
     {
         public int SqnId { get; set; }
 
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the sqn name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string SqnName { get; set; }
 
         public int ComdId { get; set; }
@@ -173,7 +191,7 @@ namespace IHSDC.WebApp.Models
     {
         public int BdeCatId { get; set; }
         [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
         public string BdeCatName { get; set; }
 
         public int ComdId { get; set; }
@@ -186,9 +204,12 @@ namespace IHSDC.WebApp.Models
     public class RankCRUD : Common
     {
         public int RankId { get; set; }
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the rank name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string RankName { get; set; }
+        [Required(ErrorMessage = "Please enter the rank abbreviation.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
 
         public string RankAbbreviation { get; set; }
         public IList<RankCRUD> ILRankCRUD { get; set; }
@@ -197,11 +218,13 @@ namespace IHSDC.WebApp.Models
     public class CorpsCRUD : Common
     {
         public int CorpsId { get; set; }
-        // [Required(ErrorMessage = "required!")]
-        // [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the corps name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string CorpsName { get; set; }
-        // [Required(ErrorMessage = "required!")]
-        // [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please select a comd.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public int ComdId { get; set; }
         public string ComdName { get; set; }
         public IList<CorpsCRUD> ILCorpsCRUD { get; set; }
@@ -219,34 +242,42 @@ namespace IHSDC.WebApp.Models
     public class UnitCRUD : Common
     {
         public int Unit_ID { get; set; }
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the branch name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string UnitName { get; set; }
 
-        //[Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+      
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string BdeCat { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string Corps { get; set; }
 
         public int SqnId { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string Sqn { get; set; }
 
 
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string TypeOfUnit { get; set; }
 
-        //[Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+     
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string Command { get; set; }
+        [Required(ErrorMessage = "Please select a comd.")]
         public int ComdId { get; set; }
 
         public int ComdIdUnit { get; set; }
         public int BdeCatId { get; set; }
         public int CorpsId { get; set; }
+        [Required(ErrorMessage = "Please select a corps.")]
         public int CorpId { get; set; }
 
 
@@ -269,24 +300,30 @@ namespace IHSDC.WebApp.Models
         public int PUserId { get; set; }
         public int Unit_ID { get; set; }
         [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string UnitName { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string UserName { get; set; }
 
-        //[Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+      
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string BdeCat { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string Corps { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string TypeOfUnit { get; set; }
 
         [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string Command { get; set; }
 
         public IList<UserListCRUD> ILUserListCRUD { get; set; }
@@ -306,9 +343,11 @@ namespace IHSDC.WebApp.Models
     {
         public int TypeOfConfId { get; set; }
 
-        [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [Required(ErrorMessage = "Please enter the conf name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string TypeOfConf { get; set; }
+        [Required(ErrorMessage = "Please select a policy.")]
         public int PolicyId { get; set; }
         public string PolicyName { get; set; }
         public IList<TypeofConfCRUD> ILTypeofConfCRUD { get; set; }
@@ -420,10 +459,12 @@ namespace IHSDC.WebApp.Models
     public class ApptCRUD : Common
     {
         public int ApptId { get; set; }
-        [Required(ErrorMessage = "required!")]
-        // [RegularExpression("^[a-zA-Z0-9-,)(>< ]*$", ErrorMessage = "Only Alphabets, Numbers and brackets allowed.")]
-
+        [Required(ErrorMessage = "Please enter the appt name.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
         public string Appt { get; set; }
+        [Required(ErrorMessage = "Please enter the appt abbreviation.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string ApptAbbreviation { get; set; }
         public IList<ApptCRUD> ILApptCRUD { get; set; }
     }
@@ -509,7 +550,8 @@ namespace IHSDC.WebApp.Models
         public int PolicyId { get; set; }
 
         [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9 ()-]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+
         public string PolicyName { get; set; }
         public string PolicyRemarks { get; set; }
         public string Upload { get; set; }
@@ -522,7 +564,7 @@ namespace IHSDC.WebApp.Models
         public int UserPolicyControlId { get; set; }
         public int UpdatedByUserId { get; set; }
         public IList<PolicyFolderCRUD> ILPolicyFolderCRUD { get; set; }
-        //   public IList<SearchableItem> ISearchableItem { get; set; }
+        
     }
 
 
@@ -596,7 +638,7 @@ namespace IHSDC.WebApp.Models
         {
             DBConnection con = new DBConnection();
             Appointment model = new Appointment();
-            //var data = con.GetDataInList<Appointment>("SELECT [ApptId],[Appt] FROM [dbo].[Tbl_Appt] WHERE  IsActive = 1  AND IsDeleted = 0 order by Appt").ToList();
+          
             var data = con.GetDataInList<Appointment>("SELECT [ApptId],[Appt] FROM [dbo].[Tbl_Appt] WHERE  IsActive = 1  AND IsDeleted = 0 order by orderby ASC").ToList();
 
             return new SelectList(data, "ApptId", "Appt");
@@ -857,13 +899,7 @@ namespace IHSDC.WebApp.Models
         }
 
 
-        //public SelectList LoadScheduleSearch(int ClosedYN)
-        //{
-        //    DBConnection con = new DBConnection();
-        //    ScheduleLetter model = new ScheduleLetter();
-        //    model.isClosed = ClosedYN;
-        //    return new SelectList(con.CreateAPCRUD(4, model), "ScheduleId", "Subject");
-        //}
+     
 
         public SelectList LoadTypeOfConf()
         {
@@ -909,36 +945,7 @@ namespace IHSDC.WebApp.Models
                 new SelectListItem{Value="2",Text="Appx B"},
             }, "Value", "Text");
         }
-        //public SelectList LoadCategory()
-        //{
-        //    return new SelectList(new SelectListItem[]{
-        //        new SelectListItem{Value="1",Text="Command Session"},
-        //        new SelectListItem{Value="2",Text="MS Day"},
-        //        new SelectListItem{Value="3",Text="Strat Day"},
-        //        new SelectListItem{Value="4",Text="PSO Session / Update"},
-        //        new SelectListItem{Value="5",Text="On File / Mutually Resolved"},
-        //        new SelectListItem{Value="6",Text="Closed / Resolved"},
-        //        new SelectListItem{Value="7",Text="Dropped"},
-        //    }, "Value", "Text");
-        //}
-
-
-        //public SelectList LoadRanks()
-        //{
-        //    return new SelectList(new SelectListItem[]{
-
-        //        new SelectListItem{Text="LT",Value="Lt"},
-        //        new SelectListItem{Text="CAPT",Value="Capt"},
-        //        new SelectListItem{Text="MAJ",Value="Maj"},
-        //         new SelectListItem{Text="LT COL",Value="Lt Col"},
-        //        new SelectListItem{Text="COL",Value="Col"},
-        //        new SelectListItem{Text="BRIG",Value="Brig"},
-        //        new SelectListItem{Text="MAJ GEN",Value="Maj Gen"},
-        //        new SelectListItem{Text="LT GEN",Value="Lt Gen"},
-        //         new SelectListItem{Text="GEN",Value="Gen"}
-
-        //    }, "Value", "Text");
-        //}
+   
 
         public SelectList LoadResults()
         {
@@ -1010,30 +1017,7 @@ namespace IHSDC.WebApp.Models
             }, "Value", "Text");
         }
 
-        //public SelectList LoadMedicalStatus()
-        //{
-        //    return new SelectList(new SelectListItem[]{
-        //        new SelectListItem{Value="",Text="--Select Medical Status"},
-        //        new SelectListItem { Text = "NA", Value = "NA" },
-        //        new SelectListItem{Value="Flying Fit",Text="Flying Fit"},
-        //        new SelectListItem{Value="Flying Unfit",Text="Flying Unfit"},
-        //        new SelectListItem{Value="Flying Temporarily Fit",Text="Flying Temporarily Fit"},
-        //        new SelectListItem{Value="Flying Temporarily UnFit",Text="Flying Permanently UnFit"},
-        //        new SelectListItem{Value="Fit for CoPilot Duties",Text="Fit for CoPilot Duties"}
-        //    }, "Value", "Text");
-        //}
-
-        //public SelectList LoadTypeofMedical()
-        //{
-        //    return new SelectList(new SelectListItem[]{
-        //      new SelectListItem() {Text = "--Select--", Value=""},
-        //       new SelectListItem { Text = "NA", Value = "NA" },
-        //       new SelectListItem() {Text = "AME", Value="AME"},
-        //       new SelectListItem() {Text = "PME", Value="PME"},
-        //        new SelectListItem() {Text = "SME", Value="SME"},
-
-        //    }, "Value", "Text");
-        //}
+   
 
 
 
@@ -1269,19 +1253,10 @@ namespace IHSDC.WebApp.Models
           new SelectListItem { Text = "Rank", Value = "R.RankName" },
            new SelectListItem { Text = "Arm Service", Value = "d.ArmServiceName" },
           new SelectListItem { Text = "Gender", Value = "G.Gender" },
-           //new SelectListItem { Text = "Civ Edn", Value = "CE.CivEdn" },
-           // new SelectListItem { Text = "Date of Seniority", Value = "DateOfSeniority" },
+          
              new SelectListItem { Text = "Date of Rank", Value = "DateOfRank" },
 
-          //new SelectListItem { Text = "Last Name", Value = "LastName" },
-           //new SelectListItem { Text = "Gender_ID", Value = "Gender_ID" },
-             //new SelectListItem { Text = "First Name", Value = "FirstName" },
-            //new SelectListItem { Text = "Appt_ID", Value = "Appt_ID" },
-          //new SelectListItem { Text = " Aircraft Name  ", Value = "AircraftName" },
-          //new SelectListItem { Text = "DateOfBirth", Value = "DateOfBirth" },
-          //new SelectListItem { Text = "DateOfWings", Value = "DateOfWings" },
-          //new SelectListItem { Text = "CatCardNo", Value = "CatCardNo" },
-          //new SelectListItem { Text = "DateofIssueCatCard", Value = "DateofIssueCatCard" },
+        
 
           }
         , "Value", "Text");
@@ -1308,10 +1283,7 @@ namespace IHSDC.WebApp.Models
               new SelectListItem { Text = "Course Star tDate", Value = "CourseStartDate" },
               new SelectListItem { Text = "Course End Date", Value = "CourseEndDate" },
              
-              //new SelectListItem { Text = "Course Grading", Value = "CourseGrading" },
-              //new SelectListItem { Text = "Instructor Grading", Value = "InstructorGrading" },
-              //new SelectListItem { Text = "Special Award", Value = "Special_Award" },
-              //new SelectListItem { Text = "Notes", Value = "Notes" },
+            
           }
         , "Value", "Text");
         }
@@ -1323,19 +1295,7 @@ namespace IHSDC.WebApp.Models
               new SelectListItem { Text = "Aircraft Type", Value = "a.AircraftType" },
               new SelectListItem { Text = "Aircraft", Value = "HeptrRPAMaster.AircraftName" },
                new SelectListItem { Text = "Status Aircraft", Value = "StatusAircraft.StatusAircraft" },
-              //new SelectListItem { Text = "CAT Card Date", Value = "CatCardDate" },
-              //new SelectListItem { Text = "CAT IR", Value = "CatIR" },
-              //new SelectListItem { Text = "CAT IR Date", Value = "CatIRDate" },
-        
-              //new SelectListItem { Text = "Instr CAT", Value = "InstrCat" },
-              //new SelectListItem { Text = "RPA DOW Date", Value = "RPAdowDate" },
-              //new SelectListItem { Text = "RPA Substream", Value = "RPASubstream" },
-              //new SelectListItem { Text = "RPA CAT Card No", Value = "RPA_CatCardNo" },
-              //new SelectListItem { Text = "RPA CAT Card Date", Value = "RPA_CatCardDate" },
-              //new SelectListItem { Text = "RPA CAT", Value = "RPA_Cat" },
-              //new SelectListItem { Text = "RPA CAT Date", Value = "RPA_CatDate" },
-              //new SelectListItem { Text = "RPA Instr CAT", Value = "RPA_Instr_Cat" },
-              //new SelectListItem { Text = "RPA Instr CAT Date", Value = "RPA_Instr_CatDate" },
+             
              
           }
         , "Value", "Text");
@@ -1351,12 +1311,7 @@ namespace IHSDC.WebApp.Models
                new SelectListItem { Text = "Medical Start Date", Value = "MedicalStartDate" },
               new SelectListItem { Text = "Medical End Date", Value = "MedicalEndDate" },
               new SelectListItem { Text = "Medical Cat", Value = "MC.MedicalCat" },
-              //new SelectListItem { Text = "Cope Code", Value = "CC.CopeCode" },
              
-              //new SelectListItem { Text = "Medical Cat Date", Value = "MedicalCatDate" },
-              //new SelectListItem { Text = "Duration In Weeks", Value = "c.DurationInWeeks" },
-              //new SelectListItem { Text = "ReCat Due Date", Value = "ReCatDueDate" },
-              //new SelectListItem { Text = "Medical Status", Value = "SM.StatusMedical" },
           }
         , "Value", "Text");
         }
@@ -1392,8 +1347,7 @@ namespace IHSDC.WebApp.Models
               new SelectListItem { Text = "Accident Cat", Value = "AC.AccidentCatName" },
                new SelectListItem { Text = "Date of Accident", Value = "DateOfAccidentIncident" },
                new SelectListItem { Text = "Place of Accident", Value = "PlaceOfAccidentIncident" },
-               //new SelectListItem { Text = "Details Of Accident Incident", Value = "DetailsOfAccidentIncident" },
-               //new SelectListItem { Text = "Blameworthy", Value = "Blameworthy" },
+             
                new SelectListItem { Text = "Aircraft Name", Value = "HeptrRPAMaster.AircraftName" },
               
           }
@@ -1439,28 +1393,11 @@ namespace IHSDC.WebApp.Models
             return new SelectList(new SelectListItem[]{
                  new SelectListItem { Text = "Unit Name", Value = "f.UnitName" },
               new SelectListItem { Text = "Mobile No", Value = "MobileNo" },
-               //new SelectListItem { Text = "LandLine No", Value = "LandLineNo" },
+              
                new SelectListItem { Text = "NOK", Value = "NOK" },
-               //new SelectListItem { Text = "Relation With Nok", Value = "RelationWithNok" },
-               //new SelectListItem { Text = "Marital Status", Value = "MaritalStatus" },
+              
                new SelectListItem { Text = "Name of Spouse", Value = "NameOfSpouse" },
-               //new SelectListItem { Text = "Contact No of Spouse", Value = "ContactNoOfSpouse" },
-               //new SelectListItem { Text = "Email of Spouse", Value = "EmailOfSpouse" },
-               //new SelectListItem { Text = "Residental HouseNo ", Value = "ResidentalHouseNo" },
-               //new SelectListItem { Text = "Residental Village Street", Value = "ResidentalVillage_Street" },
-               //new SelectListItem { Text = "Residental Post Office", Value = "ResidentalPostOffice" },
-               //new SelectListItem { Text = "Residental Tehsil", Value = "ResidentalTehsil" },
-               //new SelectListItem { Text = "City", Value = "City" },
-               //new SelectListItem { Text = "Residental District", Value = "ResidentalDistrict" },
-               //new SelectListItem { Text = "Residental State", Value = "ResidentalState" },
-               //new SelectListItem { Text = "Residental Pincode", Value = "ResidentalPincode" },
-               //new SelectListItem { Text = "Permanent House No", Value = "PermanentHouseNo" },
-               //new SelectListItem { Text = "Permanent Village Street", Value = "PermanentVillage_Street" },
-               //new SelectListItem { Text = "Permanent Post Office", Value = "PermanentPostOffice" },
-               //new SelectListItem { Text = "Permanent Tehsil", Value = "PermanentTehsil" },
-               //new SelectListItem { Text = "Permanent District", Value = "PermanentDistrict" },
-               //new SelectListItem { Text = "Permanent State", Value = "PermanentState" },
-               //new SelectListItem { Text = "Permanent Pincode", Value = "PermanentPincode" },
+              
 
           }
       , "Value", "Text");
@@ -1472,19 +1409,7 @@ namespace IHSDC.WebApp.Models
             return new SelectList(new SelectListItem[]{
                  new SelectListItem { Text = "Unit Name", Value = "f.UnitName" },
               new SelectListItem { Text = "Aircraft Name", Value = "HeptrRPAMaster.AircraftName" },
-              //new SelectListItem { Text = "Day Dual Hrs", Value = "DayDualHrs" },
-              // new SelectListItem { Text = "Day Solo Hrs", Value = "DaySoloHrs" },
-              // new SelectListItem { Text = "Day Copilot Hrs", Value = "DayCopilotHrs" },
-              // new SelectListItem { Text = "Night Dual Hrs", Value = "NightDualHrs" },
-              // new SelectListItem { Text = "Night Solo Hrs", Value = "NightSoloHrs" },
-              // new SelectListItem { Text = "Night Copilot Hrs", Value = "NightCopilotHrs" },
-              // new SelectListItem { Text = "NVG Exp", Value = "NVGExp" },
-              // new SelectListItem { Text = "WSO Exp", Value = "WSOExp" },
-              // new SelectListItem { Text = "IF Actual", Value = "IF_Actual" },
-              // new SelectListItem { Text = "Instr Day Hrs", Value = "InstrDayHrs" },
-              // new SelectListItem { Text = "IMC Hrs", Value = "IMCHrs" },
-              // new SelectListItem { Text = "SIF Hrs", Value = "SIFHrs" },
-              // new SelectListItem { Text = "ALH Sml Hrs", Value = "ALHSmlHrs" },
+             
                new SelectListItem { Text = "Month", Value = "Month" },
                new SelectListItem { Text = "Year", Value = "Year" },
 
@@ -1525,11 +1450,7 @@ namespace IHSDC.WebApp.Models
         , "Value", "Text");
         }
 
-        // else if (select == "NA") { Item1.Selected = true; }
-        //else if (select == "INITIAL CAT") { Item2.Selected = true; }
-        //else if (select == "UPGRADED") { Item3.Selected = true; }
-        //else if (select == "RENEWED") { Item4.Selected = true; }
-        //else if (select == "DOWNGRADED") { Item5.Selected = true; }
+        
 
         public SelectList LoadAppearingRemarks()
         {
@@ -1566,8 +1487,7 @@ namespace IHSDC.WebApp.Models
         }
 
 
-        //LoadModule
-        //LoadSubModule
+     
         public SelectList LoadModule()
         {
             DBConnection con = new DBConnection();

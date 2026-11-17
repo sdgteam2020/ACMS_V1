@@ -17,7 +17,7 @@
     });
 
     $('.DocuUpload').on('click', function (e) {
-
+        debugger;
         $('#spnPolicyName').text($(this).closest("td").find('#spncardid').html());
         let filetext = window.btoa($('#spnPolicyName').html());
         $.ajax({
@@ -176,6 +176,7 @@ $(document).ready(function () {
 
     function AddConfirmation(obj, ActionName, Submit) {
         event.preventDefault();
+        let $form = $(this).closest("form");
         if (messaget == "Add") {
             swal({
                 title: "Please Confirm",
@@ -217,30 +218,18 @@ $(document).ready(function () {
         }
     }
 
-$(".saveAddPolicyConfirm").on("click", function (event) {
+$(document).ready(function () {
+    $("#policyForm").on("submit", async function (e) {
+        debugger;
+        e.preventDefault();
+        let $form = $("#policyForm");
+        if (!$form.valid()) {
 
-    event.preventDefault();
-
-   
-    $('.error-label').remove();
-
-  
-    let emptyFields = [];
-    $('form').find(':input[required]').each(function () {
-        if ($.trim($(this).val()) === '') {
-            emptyFields.push(this);
+            return false;
         }
-    });
-
+      
+        let buttonName = $(".saveAddPolicyConfirm").val() || "";
   
-    if (emptyFields.length > 0) {
-        let firstEmptyField = emptyFields[0];
-        $(firstEmptyField).after('<label class="error-label">This field is required</label>');
-        return;
-    }
-
-   
-
     const payload = {
       
         PolicyName: $("#PolicyName").val(),
@@ -255,10 +244,6 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
 
     let id = $("#id").val();
     let oldid = $("#oldid").val();
-
-   
-    let buttonName = $(this).val();
-
     console.log("Payload:", payload);
     console.log("JSON:", jsonData);
     console.log("Encrypted:", encrypted);
@@ -297,8 +282,26 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
                     },
 
                     success: function (response) {
-
                         console.log(response);
+                        // SERVER-SIDE VALIDATION ERROR
+                        if (response && response.success === false) {
+
+                            let firstError = Object.values(response.errors || {})
+                                .flat()[0] || response.message || "";
+
+                            $("#PolicyNameValidation")
+                                .text(firstError)
+                                .removeClass("d-none");
+
+                            swal({
+                                title: "Failed!",
+                                text: response.message || "Validation failed.",
+                                type: "error",
+                                confirmButtonColor: "#DD6B55"
+                            });
+
+                            return;
+                        }
 
                         swal({
                             title: "",
@@ -331,6 +334,7 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
                 });
             }
         });
+    });
 });
 
 
@@ -367,3 +371,50 @@ $(".saveAddPolicyConfirm").on("click", function (event) {
         });
 });
 
+document.getElementById("files").addEventListener("change", function () {
+
+    var files = this.files;
+    var errorMessage = document.getElementById("fileError");
+
+    errorMessage.textContent = "";
+
+    var maxSize = 5 * 1024 * 1024; // 5 MB
+
+    for (var i = 0; i < files.length; i++) {
+
+        var file = files[i];
+
+        // Check PDF extension
+        if (file.name.split('.').pop().toLowerCase() !== "pdf") {
+            errorMessage.textContent = "Only PDF files are allowed.";
+            swal({
+                title: "",
+                text:"Only PDF files are allowed.",               
+                type: "success",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true
+              
+            });
+
+            this.value = "";
+            return;
+        }
+
+        // Check file size
+        if (file.size > maxSize) {
+            errorMessage.textContent = "File size should not exceed 5 MB.";
+            swal({
+                title: "",
+                text: "File size should not exceed 5 MB.",
+                type: "success",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true
+                
+            });
+            this.value = "";
+            return;
+        }
+    }
+});

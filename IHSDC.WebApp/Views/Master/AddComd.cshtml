@@ -5,7 +5,7 @@
     var message = TempData["Message"] ?? string.Empty;
     var messageStatus = TempData["messageStatus"] ?? string.Empty;
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
- 
+
 
     ViewBag.Title = "Add Comd ";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
@@ -16,8 +16,8 @@
     string myValue = @ViewBag.ButtonName;
 }
 
-
-@using (Html.BeginForm("AddComd", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
+@using (Html.BeginForm("AddComd", "Master", FormMethod.Post, new { id = "comdForm", enctype = "multipart/form-data" }))
 {
 
     <div class="card-body custom-card-shadow">
@@ -32,19 +32,23 @@
             @Html.Hidden("btnval", myValue)
             <div class="col-md-3">
                 @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "danger" })
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="col">
                     <label><b> Comd/PSOs  Name:</b></label>
                     @Html.TextBoxFor(m => m.ComdName, new { @class = "form-control", @maxlength = "25", @autocomplete = "off", @required = "required" })
 
-                    @Html.ValidationMessageFor(model => model.ComdName, "", new { @class = "danger" })
-
+                    @Html.ValidationMessageFor(m => m.ComdName, "", new { @class = "text-danger" })
+                    <span id="ComdNameValidation"
+                          class="text-danger d-none"
+                          role="alert">
+                    </span>
                 </div>
             </div>
 
 
             <div class="col-sm-6 custom-left-margin">
-                <button type="button" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddComdConfirm custom-button-top">@ViewBag.ButtonName</button>
+                <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddComdConfirm custom-button-top">@ViewBag.ButtonName</button>
             </div>
         </div>
         <div class="dropdown-divider"></div>
@@ -107,10 +111,6 @@
 <script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-
-<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-
 <script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 <link href="@Url.Content("~/DeveloperCSS/Master.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />

@@ -16,10 +16,10 @@
 
 </head>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { id = "edituserForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-   
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         <div class="col-md-12">
@@ -35,6 +35,15 @@
                     <div class="col-md-4"></div>
                     <span id="spnUserTypeId" class="hidden-user-type">@ViewData["UserTypeId"]</span>
                     <span id="UnitId" class="hidden-user-type">@ViewData["UnitId"]</span>
+                    <span id="userID" class="hidden-user-type">@ViewBag.UserId</span>
+                    <input type="hidden" id="hdnComdId" value="@ViewBag.ComdId" />
+                    <input type="hidden" id="hdnCorpId" value="@ViewBag.CorpId" />
+
+                    <input type="hidden" id="hdn_unit_id" value="@ViewBag.sel_unit_id" />
+                    <input type="hidden" id="hdn_roles_id" value="@ViewBag.sel_roles_id" />
+                    <input type="hidden" id="hdn_user_id" value="@ViewBag.UserId" />
+                  
+
                 </div>
                 <hr />
                 @if (SessionManager.RoleId == enum1.Administrator)
@@ -47,13 +56,15 @@
                             <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Username, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control username-input", @maxlength = "20", @autocomplete = "off" })
+                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control username-input", @disabled = "disabled", @maxlength = "20", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Roles, new { @class = "col-md-12 control-label Roles" })
                                 <div class="col-md-12">
-                                    @Html.DropDownListFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewData["Roles"], new { @class = "Roles role-dropdown" })
+                                    @Html.DropDownListFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewData["Roles"], new { id = "rolesDropdown", @class = "Roles role-dropdown" })
+                                    @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -61,17 +72,19 @@
                                 @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(model => model.Active, (new IHSDC.WebApp.Models.MasterModels()).LoadActive(), "--Select --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
 
-                      
+
                         <div class="form-row row-cols-3">
                             <!-- Second Row -->
                             <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.Number, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control username-input", @maxlength = "10", @autocomplete = "off" })
+                                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control username-input", @maxlength = "8", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -79,13 +92,14 @@
                                 @Html.LabelFor(m => m.Rank, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(m => m.Rank, (new IHSDC.WebApp.Models.MasterModels()).LoadRanks(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
-
+                                    @Html.ValidationMessageFor(model => model.Rank, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.FullName, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.TextBoxFor(m => m.FullName, new { @class = "form-control username-input", @maxlength = "50", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -107,6 +121,7 @@
                                 </a>
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                    @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "text-danger" })
                                 </div>
 
                             </div>
@@ -114,7 +129,7 @@
                             <div class="form-group required custom-form-group">
                                 <label class="custom-label">DGs</label>
                                 <span class="required-star">*</span>
-                             
+
                                 <a href='@Url.Action("AddCorps", "Master")' )>
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
@@ -155,21 +170,22 @@
                                 <div class="col-md-12">
 
                                     @Html.DropDownListFor(m => m.Appointment, (new IHSDC.WebApp.Models.MasterModels()).LoadAppointment(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
-
+                                    @Html.ValidationMessageFor(model => model.Appointment, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.ASCON, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10"})
+                                    @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control username-mob-input", @autocomplete = "off", @maxlength = "5" })
+                                    @Html.ValidationMessageFor(model => model.ASCON, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.MobNo, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10", @required = true })
-
+                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control username-mob-input", @autocomplete = "off", @maxlength = "10", @required = true })
+                                    @Html.ValidationMessageFor(model => model.MobNo, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -184,25 +200,28 @@
 
                         <div class="form-row row-cols-3">
                             <!-- First Row -->
-                           <div class="form-group required custom-form-group">
-                               @Html.LabelFor(m => m.Username, new { @class = "col-md-12 control-label" })
-                               <div class="col-md-12">
-                                   @Html.TextBoxFor(m => m.Username, new { @class = "form-control username-input", @maxlength = "20", @autocomplete = "off", @readonly = "readonly" })
-                               </div>
-                           </div>
-                           <div class="form-group required custom-form-group">
-                               @Html.LabelFor(m => m.Roles, new { @class = "col-md-12 control-label Roles" })
-                               <div class="col-md-12">
-                                   @Html.DropDownListFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewData["Roles"], new { @class = "Roles role-dropdown" })
-                               </div>
-                           </div>
+                            <div class="form-group required custom-form-group">
+                                @Html.LabelFor(m => m.Username, new { @class = "col-md-12 control-label" })
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control username-input", @maxlength = "20", @autocomplete = "off", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group required custom-form-group">
+                                @Html.LabelFor(m => m.Roles, new { @class = "col-md-12 control-label Roles" })
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(m => m.Roles, (IEnumerable<SelectListItem>)ViewData["Roles"], new { @class = "Roles role-dropdown" })
+                                    @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                           <div class="form-group required custom-form-group">
-                               @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-12" })
-                               <div class="col-md-12">
-                                   @Html.DropDownListFor(model => model.Active, (new IHSDC.WebApp.Models.MasterModels()).LoadActive(), "--Select --", new {  @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
-                               </div>
-                           </div>
+                            <div class="form-group required custom-form-group">
+                                @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.Active, (new IHSDC.WebApp.Models.MasterModels()).LoadActive(), "--Select --", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
 
 
@@ -212,6 +231,7 @@
                                 @Html.LabelFor(m => m.Number, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.TextBoxFor(m => m.Number, new { @class = "form-control username-input", @maxlength = "10", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -219,13 +239,14 @@
                                 @Html.LabelFor(m => m.Rank, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(m => m.Rank, (new IHSDC.WebApp.Models.MasterModels()).LoadRanks(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
-
+                                    @Html.ValidationMessageFor(model => model.Rank, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.FullName, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.TextBoxFor(m => m.FullName, new { @class = "form-control username-input", @maxlength = "20", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -233,6 +254,7 @@
                                 @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -243,7 +265,8 @@
                                 <label class="custom-label">Comd/PSOs</label><span class="required-star">*</span>
 
                                 <div class="col-md-12">
-                                    @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                    @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @autocomplete = "off", @class = "select form-control", @data_live_search = "true", @required = true })
+                                    @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "text-danger" })
                                 </div>
 
                             </div>
@@ -289,7 +312,7 @@
                                 <div class="col-md-12">
 
                                     @Html.DropDownListFor(m => m.Appointment, (new IHSDC.WebApp.Models.MasterModels()).LoadAppointment(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
-
+                                    @Html.ValidationMessageFor(model => model.Appointment, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -297,14 +320,15 @@
                                 @Html.LabelFor(m => m.ASCON, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
                                     @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10", @required = true })
+                                    @Html.ValidationMessageFor(model => model.ASCON, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group required custom-form-group">
                                 @Html.LabelFor(m => m.MobNo, new { @class = "col-md-12 control-label" })
                                 <div class="col-md-12">
-                                
-                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10", @required = true })
 
+                                    @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control username-input", @autocomplete = "off", @maxlength = "10", @required = true })
+                                    @Html.ValidationMessageFor(model => model.MobNo, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -316,16 +340,20 @@
                 <hr />
                 <div class="row">
                     <div class="col-12 d-flex justify-content-center">
+                        <span id="editnameValidation"
+                              class="text-danger d-none"
+                              role="alert">
+                        </span>
                         <div class="form-group">
                             <div class="col-md-offset-2 text-center">
-                                <input type="submit" value="Save" class="btn btn-primary" />
+                                <input type="submit" value="Save" class="btn btn-primary saveUpdateConfirm" />
                                 @if (SessionManager.RoleId == enum1.Administrator)
                                 {
                                     <span>
-                                       <a class="btn btn-primary custom-margin-left" href="/Account/Hierarchy">Back to List</a>
+                                        <a class="btn btn-primary custom-margin-left" href="/Account/Hierarchy">Back to List</a>
                                     </span>
                                 }
-                               
+
                             </div>
                         </div>
                     </div>
@@ -348,4 +376,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+<script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/EditUser.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

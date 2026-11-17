@@ -1,9 +1,15 @@
 ﻿let messaget = '@ViewBag.ButtonName';
 
 
-$(".saveAddFolderControlConfirm").on("click", function (event) {
+$(document).ready(function () {
+    $("#folderConForm").on("submit", async function (e) {
+        debugger;
+        e.preventDefault();
+        let $form = $("#folderConForm");
+        if (!$form.valid()) {
 
-    event.preventDefault();
+            return false;
+        }
     let selectedUsers = $("#ddlUsers").val();
     let users = selectedUsers ? selectedUsers.join(",") : "";
 
@@ -20,7 +26,7 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
     let id = $("#id").val();
 
     // Get Add / Update directly from clicked button
-    let buttonName = $(this).val();
+        let buttonName = $(".saveAddFolderControlConfirm").val() || "";
 
     console.log("Payload:", payload);
     console.log("JSON:", jsonData);
@@ -61,7 +67,25 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
                     success: function (response) {
 
                         console.log(response);
+                        // SERVER-SIDE VALIDATION ERROR
+                        if (response && response.success === false) {
 
+                            let firstError = Object.values(response.errors || {})
+                                .flat()[0] || response.message || "";
+
+                            $("#FolderNameValidation")
+                                .text(firstError)
+                                .removeClass("d-none");
+
+                            swal({
+                                title: "Failed!",
+                                text: response.message || "Validation failed.",
+                                type: "error",
+                                confirmButtonColor: "#DD6B55"
+                            });
+
+                            return;
+                        }
                         swal({
                             title: "",
                             text: buttonName === "Add" ? "Add successfully" : "Update successfully",                      
@@ -93,6 +117,7 @@ $(".saveAddFolderControlConfirm").on("click", function (event) {
                 });
             }
         });
+    });
 });
 
 

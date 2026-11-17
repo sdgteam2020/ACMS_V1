@@ -29,15 +29,18 @@
 
 }
 
+$(document).ready(function () {
+    $("#corpsForm").on("submit", async function (e) {
+    e.preventDefault();
+        let $form = $("#corpsForm");
+        if (!$form.valid()) {
 
-$(document).on("click", ".saveAddCorpsConfirm", function (event) {
-
-    event.preventDefault();
-  
+            return false;
+        }
     let id = $("#id").val() || "";
   
-    let buttonName = $(this).val() || "";
-
+   
+        let buttonName = $(".saveAddCorpsConfirm").val() || "";
   
     const payload = {
         
@@ -154,32 +157,29 @@ $(document).on("click", ".saveAddCorpsConfirm", function (event) {
 
                 success: function (response) {
 
-                    console.log("Server Response:", response);
+                    console.log(response);
 
+                    // SERVER-SIDE VALIDATION ERROR
+                    if (response && response.success === false) {
 
-                   
-                    if (
-                        response &&
-                        response.success === false
-                    ) {
+                        let firstError = Object.values(response.errors || {})
+                            .flat()[0] || response.message || "";
+
+                        $("#CorpsNameValidation")
+                            .text(firstError)
+                            .removeClass("d-none");
 
                         swal({
-
                             title: "Failed!",
-
-                            text:
-                                response.message ||
-                                "Unable to save Corps.",
-
+                            text: response.message || "Validation failed.",
                             type: "error",
-
                             confirmButtonColor: "#DD6B55"
                         });
 
                         return;
                     }
 
-
+               
                     swal({
 
                         title: "",
@@ -247,6 +247,7 @@ $(document).on("click", ".saveAddCorpsConfirm", function (event) {
 
     return false;
 
+});
 });
 
 $(document).ready(function () {

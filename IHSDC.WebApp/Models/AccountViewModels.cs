@@ -127,45 +127,33 @@ namespace IHSDC.WebApp.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-
-        [Display(Name = "DE Fwd Auth")]
-        public string DEFwdAuth { get; set; }
-
-
-        [Display(Name = "GEB Fwd Auth")]
-        public string GEBFwdAuth { get; set; }
-
         [Display(Name = "Status")]
         public string Active { get; set; }
 
-        [Display(Name = "Unit / Fmn/ Dte")]
-        public string EstablishmentFull { get; set; }
+        
 
         [Display(Name = "Unit_ID")]
         public int Unit_ID { get; set; }
 
-        // [RegularExpression("^[a-zA-Z0-9-&)(  ]*$", ErrorMessage = "Only Alphabets, Numbers,AND and brackets allowed.")]
-        [Display(Name = "Unit Name")]
-        public string EstablishmentAbbreviation { get; set; }
-
+      
         [Required]
         public string Appointment { get; set; }
 
         [Required]
         [Display(Name = "Pers Number")]
-        //  [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+          [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         public string Number { get; set; }
 
         [Required]
         public string Rank { get; set; }
 
         [Required]
-        // [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+         [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
         [Required]
-        // [RegularExpression(@"^[0-9]+$", ErrorMessage = "ASCON No can only be numbers.")]
+         [RegularExpression(@"^[0-9]+$", ErrorMessage = "ASCON No can only be numbers.")]
         [Display(Name = "ASCON Number")]
         public string ASCON { get; set; }
 
@@ -173,11 +161,6 @@ namespace IHSDC.WebApp.Models
         [Display(Name = "Roles")]
         public string[] Roles { get; set; }
 
-        [Display(Name = "UserType")]
-        public int UserTypeId { get; set; }
-        [Required]
-        [Display(Name = "ParentId")]
-        public int ParentId { get; set; }
         public int CreatedByIntId { get; set; }
         public ApplicationUser Superior { get; set; }
         public int ComdId { get; set; }
@@ -199,6 +182,7 @@ namespace IHSDC.WebApp.Models
         public string SubordinateId { get; set; }
 
         [Required]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
@@ -227,6 +211,7 @@ namespace IHSDC.WebApp.Models
         public string EstablishmentFull { get; set; }
 
         [Required]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         [Display(Name = "Unit Name")]
         public string EstablishmentAbbreviation { get; set; }
 
@@ -234,11 +219,13 @@ namespace IHSDC.WebApp.Models
         public string Appointment { get; set; }
 
         [Required]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         [Display(Name = "Mob No")]
         public string MobNo { get; set; }
 
 
         [Required]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         [Display(Name = "Pers Number")]
         public string Number { get; set; }
 
@@ -246,6 +233,7 @@ namespace IHSDC.WebApp.Models
         public string Rank { get; set; }
 
         [Required]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
@@ -317,7 +305,7 @@ namespace IHSDC.WebApp.Models
 
     public class EditUserViewModel
     {
-        
+       
         [Display(Name = "Username")]
         public string Username { get; set; }
 
@@ -330,14 +318,13 @@ namespace IHSDC.WebApp.Models
 
         [Display(Name = "GEB Fwd Auth")]
         public string GEBFwdAuth { get; set; }
-
+        [Required]
         [Display(Name = "Status")]
         public string Active { get; set; }
 
         [Display(Name = "Unit / Fmn/ Dte")]
         public string EstablishmentFull { get; set; }
-        //[Display(Name = "Unit_ID")]
-        //public int Unit_ID { get; set; }
+     
 
         [Display(Name = "Unit Name")]
         public string EstablishmentAbbreviation { get; set; }
@@ -346,6 +333,8 @@ namespace IHSDC.WebApp.Models
         public string Appointment { get; set; }
 
         [Required]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+     
         [Display(Name = "Pers Number")]
         public string Number { get; set; }
 
@@ -354,6 +343,7 @@ namespace IHSDC.WebApp.Models
 
         [Required]
         [Display(Name = "Full Name")]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         public string FullName { get; set; }
 
         [Required]
@@ -365,21 +355,11 @@ namespace IHSDC.WebApp.Models
         [Display(Name = "Unit_ID")]
         public int Unit_ID { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
+    
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        //[Required]
-        //[Display(Name = "Roles")]
-        //public string[] Roles { get; set; }
-        //[Required]
-        //[Display(Name = "UserType")]
-        //public int UserTypeId { get; set; }
-        //[Required]
-        //[Display(Name = "ParentId")]
-        //public int ParentId { get; set; }
+   
         [Required]
         [Display(Name = "UserType")]
         public int UserTypeId { get; set; }
@@ -392,6 +372,7 @@ namespace IHSDC.WebApp.Models
 
         [Required]
         [Display(Name = "Mob No")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Only numbers allowed")]
         public string MobNo { get; set; }
 
         public EditUserViewModel() { }

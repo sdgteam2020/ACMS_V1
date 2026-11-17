@@ -5,18 +5,18 @@
     var message = TempData["Message"] ?? string.Empty;
     var messageStatus = TempData["messageStatus"] ?? string.Empty;
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
-  
+
 
     ViewBag.Title = "Add Appt ";
     Layout = "~/Views/Shared/_NewAA7Layout.cshtml"; int sno = 0;
 }
 
 @{
-    
+
     string myValue = @ViewBag.ButtonName;
 }
-
-@using (Html.BeginForm("AddAppt", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
+@using (Html.BeginForm("AddAppt", "Master", FormMethod.Post, new { id = "apptForm", enctype = "multipart/form-data" }))
 {
 
     <div class="card-body custom-card-shadow">
@@ -29,23 +29,28 @@
             @Html.Hidden("btnval", myValue)
 
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="col custom-col-left">
                 <label><b>Appt Abbreviation:</b></label>
                 @Html.TextBoxFor(m => m.Appt, new { @class = "form-control", @maxlength = "25", @autocomplete = "off", @required = "required" })
 
-                @Html.ValidationMessageFor(model => model.Appt, "", new { @class = "danger" })
+                @Html.ValidationMessageFor(model => model.Appt, "", new { @class = "text-danger" })
+                <span id="ApptNameValidation"
+                      class="text-danger d-none"
+                      role="alert">
+                </span>
             </div>
 
             <div class="col custom-col-left">
                 <label><b>Appt Name:</b></label>
                 @Html.TextBoxFor(m => m.ApptAbbreviation, new { @class = "form-control", @required = "required", @maxlength = "50", @autocomplete = "off" })
 
-                @Html.ValidationMessageFor(model => model.ApptAbbreviation, "", new { @class = "danger" })
+                @Html.ValidationMessageFor(model => model.ApptAbbreviation, "", new { @class = "text-danger" })
+                
             </div>
 
-            <div class="col-sm-6 custom-left-margin" >
-                <button type="button" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddApptConfirm custom-button-top1">@ViewBag.ButtonName</button>
+            <div class="col-sm-6 custom-left-margin">
+                <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddApptConfirm custom-button-top1">@ViewBag.ButtonName</button>
             </div>
         </div>
         <div class="dropdown-divider"></div>
@@ -58,9 +63,9 @@
                         <th class="center">S/No</th>
                         <th class="center">Appt Abbreviation</th>
                         <th class="center">Appt Name</th>
-                      
+
                         <th class="center">Edit</th>
-                       
+
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -99,7 +104,7 @@
                     }
                     else
                     {
-                          <tr><td colspan="4" class="no-record-found">No Record Found!!!</td></tr>
+                        <tr><td colspan="4" class="no-record-found">No Record Found!!!</td></tr>
                     }
                 </tbody>
             </table>
@@ -113,7 +118,5 @@
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 <link href="@Url.Content("~/DeveloperCSS/Master.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/AddAppt.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 

@@ -268,7 +268,7 @@ namespace IHSDC.WebApp.Controllers
                             }
 
                             var filePath = Server.MapPath("~/Uploads") + "\\" + ConfTypeId + "_" + LetterSubject + "\\pdf\\" + fileModel.FileName;
-                            //model.UploadPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + ConfTypeId + "_" + LetterSubject + "/pdf/" + fileModel.FileName;
+                           
                             System.IO.File.WriteAllBytes(filePath, fileModel.Data);
                             FilePaths = FilePaths + "," + fileModel.FileName;
 

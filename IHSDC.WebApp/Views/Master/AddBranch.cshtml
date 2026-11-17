@@ -13,8 +13,8 @@
     string myValue = @ViewBag.ButtonName;
 }
 
-
-@using (Html.BeginForm("AddBranch", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
+@using (Html.BeginForm("AddBranch", "Master", FormMethod.Post, new { id = "branchForm", enctype = "multipart/form-data" }))
 {
 
     <div class="card-body custom-card-shadow">
@@ -27,19 +27,22 @@
             @Html.Hidden("btnval", myValue)
 
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="col custom-col-left">
                 <label><b>AP Branch Name:</b></label>
                 @Html.TextBoxFor(m => m.BranchName, new { @class = "form-control", @maxlength = "25", @autocomplete = "off", @required = "required" })
 
-                @Html.ValidationMessageFor(model => model.BranchName, "", new { @class = "danger" })
-
+                @Html.ValidationMessageFor(model => model.BranchName, "", new { @class = "text-danger" })
+                <span id="BranchNameValidation"
+                      class="text-danger d-none"
+                      role="alert">
+                </span>
             </div>
 
 
             <div class="col-md-6">
-                <button type="button" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddBranchConfirm custom-button-top1">@ViewBag.ButtonName</button>
+                <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddBranchConfirm custom-button-top1">@ViewBag.ButtonName</button>
             </div>
         </div>
         <div class="dropdown-divider"></div>
@@ -70,14 +73,14 @@
                                     @if (sno != 1)
                                     {
                                         <div class="BranchOrderbyId d-none">@item.Orderby</div>
-                                        <i class="fas fa-2x fa-arrow-circle-up OrderbyId custom-icon-red" ></i>
+                                        <i class="fas fa-2x fa-arrow-circle-up OrderbyId custom-icon-red"></i>
                                     }
                                 </td>
                                 <td>
-                           
-                                        <a href="@Url.Action("AddBranch", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.BranchId.ToString()) })">
-                                            <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
-                                        </a>
+
+                                    <a href="@Url.Action("AddBranch", "Master", new {   id = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(item.BranchId.ToString()) })">
+                                        <img src="~/Content/images/Editnew.png" width="30" height="30" border="0">
+                                    </a>
                                 </td>
 
                             </tr>
@@ -99,9 +102,6 @@
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 <link href="@Url.Content("~/DeveloperCSS/Master.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-
 <script src="@Url.Content("~/DevelopersJs/AddBranch.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 
 

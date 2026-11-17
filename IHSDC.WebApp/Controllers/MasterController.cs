@@ -150,13 +150,17 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                FileList Files = new FileList();
+                List<FileList> Files = new List<FileList>();
                 string FolderName = "";
                 if (!string.IsNullOrEmpty(FName))
                 {
                     FolderName = RepositryManager.EncryptionManager.Decryption(FName);
                 }
                 string PolicyPath = Server.MapPath("~/Policy/") + FolderName;
+                if (!Directory.Exists(Path.Combine(PolicyPath)))
+                {
+                    return PartialView("FileView", Files);
+                }
                 List<string> fileNames = Directory.GetFiles(PolicyPath, "*", SearchOption.AllDirectories).ToList();
 
                 List<FileList> fileList = fileNames.Select(fileName => new FileList
@@ -202,55 +206,128 @@ namespace IHSDC.WebApp.Controllers
         }
 
         [HttpPost]
+
         public ActionResult AddPolicyDocu(PolicyCRUD modal)
         {
             try
             {
+                int maxFileSize = 5 * 1024 * 1024; // 5 MB
+
                 if (Request.Files.Count > 0)
                 {
                     for (int i = 0; i < Request.Files.Count; i++)
                     {
                         var file = Request.Files[i];
-                        if (file != null && file.ContentLength > 0)
+
+                        if (file == null || file.ContentLength == 0)
+                            continue;
+
+                        // Validate file extension
+                        string extension = Path.GetExtension(file.FileName);
+
+                        if (!string.Equals(extension, ".pdf",
+                            StringComparison.OrdinalIgnoreCase))
                         {
-                            var originalFileName = Path.GetFileName(file.FileName);
-
-
-                            var fileModel = new FileModel
-                            {
-                                FileName = originalFileName
-                            };
-
-                            using (var reader = new BinaryReader(file.InputStream))
-                            {
-                                fileModel.Data = reader.ReadBytes(file.ContentLength);
-                            }
-
-                            var filePath = Path.Combine(Server.MapPath("~/Policy/") + modal.PolicyFolder, fileModel.FileName);
-                            System.IO.File.WriteAllBytes(filePath, fileModel.Data);
+                            TempData["message"] = "Only PDF files are allowed.";
+                            return RedirectToAction("AddPolicy",
+                                new { id = string.Empty });
                         }
+
+                        // Validate file size
+                        if (file.ContentLength > maxFileSize)
+                        {
+                            TempData["message"] =
+                                "File size should not exceed 5 MB.";
+
+                            return RedirectToAction("AddPolicy",
+                                new { id = string.Empty });
+                        }
+
+                        // Validate PDF content signature
+                        byte[] pdfSignature = new byte[5];
+
+                        file.InputStream.Position = 0;
+                        int bytesRead = file.InputStream.Read(
+                            pdfSignature, 0, 5);
+
+                        if (bytesRead != 5 ||
+                            Encoding.ASCII.GetString(pdfSignature) != "%PDF-")
+                        {
+                            TempData["message"] = "Invalid PDF file.";
+                            return RedirectToAction("AddPolicy",
+                                new { id = string.Empty });
+                        }
+
+                        // Reset stream position
+                        file.InputStream.Position = 0;
+
+                        var originalFileName =
+                            Path.GetFileName(file.FileName);
+
+                        var fileModel = new FileModel
+                        {
+                            FileName = originalFileName
+                        };
+
+                        using (var reader = new BinaryReader(file.InputStream))
+                        {
+                            fileModel.Data =
+                                reader.ReadBytes(file.ContentLength);
+                        }
+
+                        string folderPath = Path.Combine(
+                            Server.MapPath("~/Policy/"),
+                            modal.PolicyFolder);
+
+                        // Create folder if it does not exist
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+
+                        string filePath = Path.Combine(
+                            folderPath, fileModel.FileName);
+
+                        System.IO.File.WriteAllBytes(
+                            filePath, fileModel.Data);
                     }
+
                     string rootPath = Server.MapPath("~/Policy");
-                    string[] uploadsDirectoryPath = Directory.GetDirectories(rootPath, "*", SearchOption.TopDirectoryOnly);
+
+                    string[] uploadsDirectoryPath =
+                        Directory.GetDirectories(
+                            rootPath, "*",
+                            SearchOption.TopDirectoryOnly);
+
                     AllPath = uploadsDirectoryPath;
+
                     foreach (var item in uploadsDirectoryPath)
                     {
-                        DocPathServices[item] = new SearchService(SearchService.InitializeSearchData(item));
+                        DocPathServices[item] = new SearchService(
+                            SearchService.InitializeSearchData(item));
                     }
-                    DependencyResolver.SetResolver(new MyDependencyResolver(DocPathServices));
-                    TempData["message"] = "File Upload Successfully";
+
+                    DependencyResolver.SetResolver(
+                        new MyDependencyResolver(DocPathServices));
+
+                    TempData["message"] = "Files uploaded successfully.";
                 }
 
-                return RedirectToAction("AddPolicy", new { id = string.Empty });
+                return RedirectToAction("AddPolicy",
+                    new { id = string.Empty });
             }
             catch (SqlException ex)
             {
-
-                StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
+                StringBuilder errorMessages =
+                    ErrorLog.BindErrorLog(ex);
 
                 try
                 {
-                    con.ErrorLogDashboard2(3, errorMessages.ToString().Replace("'", "''"), ex.StackTrace.ToString(), "Database");
+                    con.ErrorLogDashboard2(
+                        3,
+                        errorMessages.ToString().Replace("'", "''"),
+                        ex.StackTrace.ToString(),
+                        "Database");
                 }
                 catch (Exception ex1)
                 {
@@ -262,16 +339,20 @@ namespace IHSDC.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                // Handle generic ones here.  
                 try
                 {
-                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
+                    con.ErrorLogDashboard2(
+                        3,
+                        ex.Message.ToString(),
+                        ex.StackTrace.ToString(),
+                        "Page");
                 }
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
                     return Redirect("/Error/Error");
                 }
+
                 return Redirect("/Error/Error");
             }
         }
@@ -348,7 +429,8 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
-        [HttpPost]        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddPolicy(string Request,string btnval, string oldid)
         {
             try
@@ -378,9 +460,31 @@ namespace IHSDC.WebApp.Controllers
                     });
                 }
                 else {
-                    if (TryValidateModel(model))
+                    TryValidateModel(model);
+                    if (!ModelState.IsValid)
                     {
-                        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                        var errors = ModelState
+                            .Where(x => x.Value.Errors.Count > 0)
+                            .ToDictionary(
+                                x => x.Key,
+
+                                x => x.Value.Errors
+                                    .Select(e =>
+                                        string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                            ? "Invalid value."
+                                            : e.ErrorMessage
+                                    )
+                                    .First()
+                            );
+
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Please correct the error field.",
+                            errors = errors
+                        });
+                    }
+                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                         if (btnval == "Add")
                         {
                             if (model.PolicyId == 0)
@@ -419,7 +523,7 @@ namespace IHSDC.WebApp.Controllers
 
                             }
                         }
-                    }
+                    
                 }
               
                 ViewBag.ButtonName = "Add";
@@ -576,9 +680,32 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                TryValidateModel(model);
+
+                if (!ModelState.IsValid)
                 {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+
+                            x => x.Value.Errors
+                                .Select(e =>
+                                    string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                        ? "Invalid value."
+                                        : e.ErrorMessage
+                                )
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the error field.",
+                        errors = errors
+                    });
+                }
+                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                     if (btnval == "Add")
                     {
 
@@ -605,7 +732,7 @@ namespace IHSDC.WebApp.Controllers
 
                         }
                     }
-                }
+                
                 ViewBag.ButtonName = "Add";
 
                 return RedirectToAction("AddComd", new { id = string.Empty });
@@ -1135,9 +1262,31 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                TryValidateModel(model);
+                if (!ModelState.IsValid)
                 {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+
+                            x => x.Value.Errors
+                                .Select(e =>
+                                    string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                        ? "Invalid value."
+                                        : e.ErrorMessage
+                                )
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the error field.",
+                        errors = errors
+                    });
+                }
+                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                     if (btnval == "Add")
                     {
 
@@ -1164,7 +1313,7 @@ namespace IHSDC.WebApp.Controllers
 
                         }
                     }
-                }
+                
                 ViewBag.ButtonName = "Add";
 
                 return RedirectToAction("AddRank", new { id = string.Empty });
@@ -1310,10 +1459,36 @@ namespace IHSDC.WebApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddAppt(string id, ApptCRUD model, string btnval)
         {
             try
             {
+                TryValidateModel(model);
+
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+
+                            x => x.Value.Errors
+                                .Select(e =>
+                                    string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                        ? "Invalid value."
+                                        : e.ErrorMessage
+                                )
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the error field.",
+                        errors = errors
+                    });
+                }
                 model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                 if (btnval == "Add")
                 {
@@ -1492,6 +1667,7 @@ namespace IHSDC.WebApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCorps(string Request, string btnval)
         {
             try
@@ -1522,8 +1698,32 @@ namespace IHSDC.WebApp.Controllers
                 }
                 else
                 {
-                    if (TryValidateModel(model))
-                    {
+                    TryValidateModel(model);
+                    
+                        if (!ModelState.IsValid)
+                        {
+                            var errors = ModelState
+                                .Where(x => x.Value.Errors.Count > 0)
+                                .ToDictionary(
+                                    x => x.Key,
+
+                                    x => x.Value.Errors
+                                        .Select(e =>
+                                            string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                                ? "Invalid value."
+                                                : e.ErrorMessage
+                                        )
+                                        .First()
+                                );
+
+                            return Json(new
+                            {
+                                success = false,
+                                message = "Please correct the error field.",
+                                errors = errors
+                            });
+                        }
+
                         model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                         if (btnval == "Add")
                         {
@@ -1553,7 +1753,7 @@ namespace IHSDC.WebApp.Controllers
 
                             }
                         }
-                    }
+                    
                 }            
 
                 ViewBag.ButtonName = "Add";
@@ -1746,9 +1946,32 @@ namespace IHSDC.WebApp.Controllers
                 }
                 else
                 {
-                    if (TryValidateModel(model))
+                    TryValidateModel(model);
+                   if (!ModelState.IsValid)
                     {
-                        ViewBag.corpsId = 0;
+                        var errors = ModelState
+                            .Where(x => x.Value.Errors.Count > 0)
+                            .ToDictionary(
+                                x => x.Key,
+
+                                x => x.Value.Errors
+                                    .Select(e =>
+                                        string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                            ? "Invalid value."
+                                            : e.ErrorMessage
+                                    )
+                                    .First()
+                            );
+
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Please correct the error field.",
+                            errors = errors
+                        });
+                    }
+
+                    ViewBag.corpsId = 0;
                         ViewBag.BdeCatId = 0;
                         ViewBag.SqnIdbind = 0;
                         model.UserId = Convert.ToInt32(SessionManager.UserIntId);
@@ -1776,8 +1999,7 @@ namespace IHSDC.WebApp.Controllers
                             {
                                 DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
 
-                            }
-                        }
+                            }                   
                     }
                 }
                 ViewBag.ButtonName = "Add";
@@ -2113,9 +2335,32 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                TryValidateModel(model);
+
+                if (!ModelState.IsValid)
                 {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+
+                            x => x.Value.Errors
+                                .Select(e =>
+                                    string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                        ? "Invalid value."
+                                        : e.ErrorMessage
+                                )
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the error field.",
+                        errors = errors
+                    });
+                }
+                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                     if (btnval == "Add")
                     {
 
@@ -2142,7 +2387,7 @@ namespace IHSDC.WebApp.Controllers
 
                         }
                     }
-                }
+                
                 ViewBag.ButtonName = "Add";
 
                 return RedirectToAction("AddCategory", new { id = string.Empty });
@@ -2325,9 +2570,31 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                TryValidateModel(model);
+                if (!ModelState.IsValid)
                 {
-                    model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+
+                            x => x.Value.Errors
+                                .Select(e =>
+                                    string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                        ? "Invalid value."
+                                        : e.ErrorMessage
+                                )
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the error field.",
+                        errors = errors
+                    });
+                }
+                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                     if (btnval == "Add")
                     {
 
@@ -2354,7 +2621,7 @@ namespace IHSDC.WebApp.Controllers
 
                         }
                     }
-                }
+                
                 ViewBag.ButtonName = "Add";
 
                 return RedirectToAction("AddBranch", new { id = string.Empty });
@@ -2562,9 +2829,32 @@ namespace IHSDC.WebApp.Controllers
                 else
                 {                  
                  model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                    if (TryValidateModel(model))
+                    TryValidateModel(model);
+
+                    if (!ModelState.IsValid)
                     {
-                        if (btnval == "Add")
+                        var errors = ModelState
+                            .Where(x => x.Value.Errors.Count > 0)
+                            .ToDictionary(
+                                x => x.Key,
+
+                                x => x.Value.Errors
+                                    .Select(e =>
+                                        string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                            ? "Invalid value."
+                                            : e.ErrorMessage
+                                    )
+                                    .First()
+                            );
+
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Please correct the error field.",
+                            errors = errors
+                        });
+                    }
+                    if (btnval == "Add")
                         {
                             if (model.FolderControlId == 0)
                             {
@@ -2590,7 +2880,7 @@ namespace IHSDC.WebApp.Controllers
 
                             }
                         }
-                    }
+                    
                 }
                 ViewBag.ButtonName = "Add";
 
@@ -2685,6 +2975,7 @@ namespace IHSDC.WebApp.Controllers
                     ViewBag.ButtonName = "Update";
                     int item = Convert.ToInt32(RepositryManager.EncryptionManager.Decryption(id));
                     model.TypeOfConfId = item;
+                    ViewBag.TypeOfConfId = item;
                     var editdata = con.TypeofConfCRUD(1, model);
                     model = editdata[0];
                 }
@@ -2744,30 +3035,94 @@ namespace IHSDC.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddTypeofConf(string id, TypeofConfCRUD model, string btnval)
+        public ActionResult AddTypeofConf(string Request, string btnval)
         {
             try
             {
-                if (ModelState.IsValid)
+                var session = SessionHeplers.GetObject<DtoSessions>(
+                  System.Web.HttpContext.Current.Session,
+                  "Token");
+
+                if (session == null)
                 {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Session expired."
+                    });
+                }
+
+                TypeofConfCRUD model = AESEncrytDecry.DecryptAESWithDTO<TypeofConfCRUD>(
+                    Request,
+                    session.Salt);
+                if (model == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Invalid request."
+                    });
+                }
+                else
+                {
+                    TryValidateModel(model);
+
+                    if (!ModelState.IsValid)
+                    {
+                        var errors = ModelState
+                            .Where(x => x.Value.Errors.Count > 0)
+                            .ToDictionary(
+                                x => x.Key,
+
+                                x => x.Value.Errors
+                                    .Select(e =>
+                                        string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                            ? "Invalid value."
+                                            : e.ErrorMessage
+                                    )
+                                    .First()
+                            );
+
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Please correct the error field.",
+                            errors = errors
+                        });
+                    }
+
                     model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                     if (btnval == "Add")
                     {
+                        if (model.TypeOfConfId == 0)
+                        {
+                            var data = con.TypeofConfCRUD(2, model);
+                            if (data[0].IsSuccess == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
 
-                        var data = con.TypeofConfCRUD(2, model);
+                            }
+                            if (data[0].IsExist == true)
+                            {
+                                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+
+                            }
+                        }
+
+                    }
+                    if (btnval == "Update")
+                    {
+                        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                        var data = con.TypeofConfCRUD(3, model);
                         if (data[0].IsSuccess == true)
                         {
                             DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
 
                         }
-                        if (data[0].IsExist == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
                     }
-                    
+
                 }
+
                 ViewBag.ButtonName = "Add";
 
                 return RedirectToAction("AddTypeofConf", new { id = string.Empty });
@@ -2805,92 +3160,7 @@ namespace IHSDC.WebApp.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult UpdateTypeofConf(string Request)
-        {
-            try
-            {
-                var session = SessionHeplers.GetObject<DtoSessions>(
-                    System.Web.HttpContext.Current.Session,
-                    "Token");
-
-                if (session == null)
-                {
-                    return Json(new
-                    {
-                        success = false,
-                        message = "Session expired."
-                    });
-                }
-
-                TypeofConfCRUD model = AESEncrytDecry.DecryptAESWithDTO<TypeofConfCRUD>(
-                    Request,
-                    session.Salt);
-                if (model == null)
-                {
-                    return Json(new
-                    {
-                        success = false,
-                        message = "Invalid request."
-                    });
-                }
-                else
-                {
-                    if (TryValidateModel(model))
-                    {
-                        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-
-                        model.TypeOfConfId = Convert.ToInt32(model.TypeOfConfId);
-
-                        var data = con.TypeofConfCRUD(3, model);
-                        if (data[0].IsSuccess == true)
-                        {
-                            DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-
-                        }
-                    }
-                }
-                          
-                return RedirectToAction("AddTypeofConf", new { id = string.Empty });
-
-            }
-            catch (SqlException ex)
-            {
-                StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
-
-                try
-                {
-                    con.ErrorLogDashboard2(
-                        3,
-                        errorMessages.ToString().Replace("'", "''"),
-                        ex.StackTrace,
-                        "Database");
-                }
-                catch
-                {
-                    return Redirect("/Error/Error");
-                }
-
-                return Redirect("/Error/Error");
-            }
-            catch (Exception ex)
-            {
-                try
-                {
-                    con.ErrorLogDashboard2(
-                        3,
-                        ex.Message,
-                        ex.StackTrace,
-                        "Page");
-                }
-                catch
-                {
-                    return Redirect("/Error/Error");
-                }
-
-                return Redirect("/Error/Error");
-            }
-        }
+      
 
         #endregion
 
@@ -3118,6 +3388,7 @@ namespace IHSDC.WebApp.Controllers
 
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetUserLog(int Procid, int UserID, string FromDate, string ToDate)
         {
             try
@@ -3238,6 +3509,7 @@ namespace IHSDC.WebApp.Controllers
 
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetAPUserLog(int Procid, int UserID, string FromDate, string ToDate)
         {
             try
@@ -3285,6 +3557,7 @@ namespace IHSDC.WebApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetAgendaPointUserLog(int Procid, int UserID, string FromDate, string ToDate)
         {
             try
@@ -3378,6 +3651,7 @@ namespace IHSDC.WebApp.Controllers
 
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetCounterLog(int Procid, string Command)
         {
             try
@@ -3632,6 +3906,7 @@ namespace IHSDC.WebApp.Controllers
 
         #region LoadUserList
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetUserList(int Procid, int ForwardID, int scheduleId)
         {
             try

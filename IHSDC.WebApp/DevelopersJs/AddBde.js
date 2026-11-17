@@ -37,6 +37,7 @@
 function AddConfirmation(obj, ActionName, Submit) {
 
     event.preventDefault();
+    let $form = $(this).closest("form");
     let buttonName = $(this).val() || "";
 
     swal({

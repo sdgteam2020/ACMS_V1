@@ -34,7 +34,7 @@
 
     function AddConfirmation(obj, ActionName, Submit) {
         event.preventDefault();
-
+        let $form = $(this).closest("form");
     if (messaget == "Add") {
         swal({
             title: "Please Confirm",

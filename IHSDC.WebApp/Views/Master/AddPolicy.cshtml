@@ -19,12 +19,13 @@
      : 0;
 }
 <head>
-    
+
     <link href="@Url.Content("~/DeveloperCSS/AddPolicy.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
 </head>
+@Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
 <div class="container">
-    @using (Html.BeginForm("AddPolicy", "Master", FormMethod.Post, new { id = "form", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddPolicy", "Master", FormMethod.Post, new { id = "policyForm", enctype = "multipart/form-data" }))
     {
 
         <div class="card-body card-shadow">
@@ -40,22 +41,26 @@
                 @Html.Hidden("btnval", myValue)
                 <div class="row">
                     @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "", new { @class = "danger" })
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="col">
                         <label><b> Folder Name:</b></label>
                         @Html.TextBoxFor(m => m.PolicyName, new { @class = "form-control", @maxlength = "50", @autocomplete = "off", @required = "required" })
-                        @Html.ValidationMessageFor(model => model.PolicyName, "", new { @class = "danger" })
+                        @Html.ValidationMessageFor(model => model.PolicyName, "", new { @class = "text-danger" })
+                        <span id="PolicyNameValidation"
+                              class="text-danger d-none"
+                              role="alert">
+                        </span>
 
                     </div>
                     <div class="col">
                         <label><b>Type of Docu:</b></label>
                         @Html.DropDownListFor(m => m.TypeOfDocu, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfDocu(), "--Select Type of Docu --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch document-dropdown", @required = "required", @data_live_search = "true" })
-                        @Html.ValidationMessageFor(model => model.TypeOfDocu, "", new { @class = "danger" })
+                        @Html.ValidationMessageFor(model => model.TypeOfDocu, "", new { @class = "text-danger" })
                     </div>
                     <div class="col">
                         <label><b>Remarks:</b></label>
                         @Html.TextAreaFor(m => m.PolicyRemarks, new { @class = "form-control policy-remarks", @required = "required", @autocomplete = "off" })
-                        @Html.ValidationMessageFor(model => model.PolicyRemarks, "", new { @class = "danger" })
+                        @Html.ValidationMessageFor(model => model.PolicyRemarks, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="col">
@@ -102,9 +107,9 @@
                                     <td class="DocuUpload">
                                         <span id="spncardid" class="d-none">@Html.DisplayFor(modelItem => item.PolicyName)</span>
                                         <a id="DocuUpload1" href="#" class="link-plain">
-                                           
-                                                <i class="fa fa-upload" aria-hidden="true"></i>
-                                            </a>
+
+                                            <i class="fa fa-upload" aria-hidden="true"></i>
+                                        </a>
                                         <a id="fileCountLink" href="#" class="file-count-link">
                                             <p class="inline-text">
                                                 (<span id="fileCountDisplay">0</span>)
@@ -149,49 +154,53 @@
     {
         <div class="modal" id="DocuUpload">
             <div class="modal-dialog custom-modal-dialog">
-             
-                    <div class="modal-content">
-                        <div class="container">
-                           <p class="custom-title-text">
-                              <span id="spnPolicyName" class="text-red"></span>
-                               @Html.TextBoxFor(m => m.PolicyFolder, new { @class = "d-none" })
-                           </p>
-                            <hr />
+
+                <div class="modal-content">
+                    <div class="container">
+                        <p class="custom-title-text">
+                            <span id="spnPolicyName" class="text-red"></span>
+                            @Html.TextBoxFor(m => m.PolicyFolder, new { @class = "d-none" })
+                        </p>
+                        <hr />
 
 
-                            @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", accept = ".pdf", multiple = "multiple", @autocomplete = "off" })
 
+                        @Html.TextBoxFor(m => m.Upload, new { type = "file",id= "files", accept = ".pdf,application/pdf", multiple = "multiple", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Upload, "", new { @class = "text-danger" })
+                        <span id="fileError" class="text-danger"></span>
+                       
                         <button type="submit" class="btn btn-primary font-bold">
                             Upload
                         </button>
-                            <hr />
-                        </div>
+                       
+                        <hr />
+                    </div>
 
-                        <div class="modal-body modal-scroll-body" id="DocuUploadData">
+                    <div class="modal-body modal-scroll-body" id="DocuUploadData">
 
-                            <table class="table table-striped align-top" id="dataTable2" width="100%" cellspacing="0">
-                                <thead class="bg-info text-white">
-                                    <tr>
-                                        <th class="center">S/No</th>
-                                        <th class="center">File Name</th>
-                                        <th class="center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="btn-group">
-                                <a class="btn btn-danger Closepoup text-white-link">Close</a>
-                            </div>
+                        <table class="table table-striped align-top" id="dataTable2" width="100%" cellspacing="0">
+                            <thead class="bg-info text-white">
+                                <tr>
+                                    <th class="center">S/No</th>
+                                    <th class="center">File Name</th>
+                                    <th class="center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-group">
+                            <a class="btn btn-danger Closepoup text-white-link">Close</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            }
         </div>
+
+    }
+</div>
 
 
 <script src="@Url.Content("~/scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
@@ -199,13 +208,9 @@
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 <link href="@Url.Content("~/DeveloperCSS/Master.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-<script src="@Url.Content("~/Scripts/jquery.validate.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Scripts/bootstrap-multiselect.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-
 <link href="@Url.Content("~/NewContent/SearchDate/dataTables.dataTables.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-
 <script src="@Url.Content("~/NewContent/SearchDate/jquery-3.7.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/NewContent/SearchDate/moment.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 

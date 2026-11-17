@@ -39,6 +39,7 @@
     });
     function AddConfirmation(obj, ActionName, Submit) {
         event.preventDefault();
+        let $form = $(this).closest("form");
     // If all fields are filled, display the confirmation dialog
     if (messaget == "Add") {
         swal({

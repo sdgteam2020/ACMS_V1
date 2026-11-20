@@ -50,7 +50,8 @@ function GetCorps() {
 
 }
 function GetBde() {
-    var data = $('#ComdId').val() + ',' + $('#CorpsId').val();
+    
+    var data = $('#CorpsId').val();
     var list = '';
     list = '<option value=1>No Bde</option>';
     $.ajax({

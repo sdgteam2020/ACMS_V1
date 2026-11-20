@@ -113,7 +113,10 @@ namespace IHSDC.WebApp.Models
     {
         [Required]
         [Display(Name = "Username/Domain Id")]
-        [RegularExpression("^[a-zA-Z0-9 _ ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "User  Name must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string Username { get; set; }
 
         [Required]
@@ -130,8 +133,8 @@ namespace IHSDC.WebApp.Models
         [Display(Name = "Status")]
         public string Active { get; set; }
 
-        
 
+        [Required]
         [Display(Name = "Unit_ID")]
         public int Unit_ID { get; set; }
 
@@ -141,19 +144,27 @@ namespace IHSDC.WebApp.Models
 
         [Required]
         [Display(Name = "Pers Number")]
-          [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [StringLength(8, MinimumLength = 3,
+            ErrorMessage = "Army no must be between 3 and 8 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string Number { get; set; }
 
         [Required]
         public string Rank { get; set; }
 
         [Required]
-         [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "Full name must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
         [Required]
-         [RegularExpression(@"^[0-9]+$", ErrorMessage = "ASCON No can only be numbers.")]
+        [StringLength(5, MinimumLength = 3,
+            ErrorMessage = "ASCON must be between 3 and 5 number.")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "ASCON No can only be numbers.")]
         [Display(Name = "ASCON Number")]
         public string ASCON { get; set; }
 
@@ -163,17 +174,23 @@ namespace IHSDC.WebApp.Models
 
         public int CreatedByIntId { get; set; }
         public ApplicationUser Superior { get; set; }
+        [Required]
         public int ComdId { get; set; }
 
         public int ComdIdSignUp { get; set; }
+        [Required]
         public int CorpId { get; set; }
+        [Required]
         public int BdeId { get; set; }
 
         [Required]
+        [StringLength(10, MinimumLength = 3,
+            ErrorMessage = "Mob no must be between 3 and 5 number.")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Mob No can only be numbers.")]
         [Display(Name = "Mob No")]
         public string MobNo { get; set; }
     }
-
+ 
 
     public class AddSuperiorViewModel
     {
@@ -182,7 +199,8 @@ namespace IHSDC.WebApp.Models
         public string SubordinateId { get; set; }
 
         [Required]
-        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
@@ -211,7 +229,8 @@ namespace IHSDC.WebApp.Models
         public string EstablishmentFull { get; set; }
 
         [Required]
-        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         [Display(Name = "Unit Name")]
         public string EstablishmentAbbreviation { get; set; }
 
@@ -219,7 +238,8 @@ namespace IHSDC.WebApp.Models
         public string Appointment { get; set; }
 
         [Required]
-        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         [Display(Name = "Mob No")]
         public string MobNo { get; set; }
 
@@ -233,7 +253,8 @@ namespace IHSDC.WebApp.Models
         public string Rank { get; set; }
 
         [Required]
-        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
@@ -330,11 +351,14 @@ namespace IHSDC.WebApp.Models
         public string EstablishmentAbbreviation { get; set; }
 
         [Required]
+
         public string Appointment { get; set; }
 
         [Required]
-        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
-     
+        [StringLength(8, MinimumLength = 3,
+            ErrorMessage = "Army no must be between 3 and 8 number.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         [Display(Name = "Pers Number")]
         public string Number { get; set; }
 
@@ -342,11 +366,16 @@ namespace IHSDC.WebApp.Models
         public string Rank { get; set; }
 
         [Required]
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "Full Name must be between 3 and 50 number.")]
         [Display(Name = "Full Name")]
-        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string FullName { get; set; }
 
         [Required]
+        [StringLength(5, MinimumLength = 3,
+            ErrorMessage = "ASCON must be between 3 and 5 number.")]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Only numbers allowed")]
         [Display(Name = "ASCON Number")]
         public string ASCON { get; set; }
@@ -371,6 +400,8 @@ namespace IHSDC.WebApp.Models
         public int BdeId { get; set; }
 
         [Required]
+        [StringLength(10, MinimumLength = 3,
+            ErrorMessage = "mob no must be between 3 and 10 number.")]
         [Display(Name = "Mob No")]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Only numbers allowed")]
         public string MobNo { get; set; }

@@ -95,14 +95,16 @@
 
                             <div class="col-md-12">
                                 @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @required = true, @autocomplete = "off" })
-                                <select id="spnCorp" class="form-control"></select>
+                                <select name="CorpId" id="spnCorp" class="form-control"></select>
+                                @Html.ValidationMessageFor(model => model.CorpId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group d-none">
                             <label class="custom-label">Bde</label>
                             <div class="col-md-12">
                                 @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @required = true, @autocomplete = "off" })
-                                <select id="spnBde" class="form-control"></select>
+                                <select name="BdeId" id="spnBde" class="form-control"></select>
+                                @Html.ValidationMessageFor(model => model.BdeId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group required custom-form-group">
@@ -111,7 +113,8 @@
 
                             <div class="col-md-12">
                                 @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @required = true, @autocomplete = "off" })
-                                <select id="spnUnit" class="form-control" required></select>
+                                <select  name="Unit_ID" id="spnUnit" class="form-control" required></select>
+                                @Html.ValidationMessageFor(model => model.Unit_ID, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>

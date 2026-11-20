@@ -26,8 +26,10 @@ namespace IHSDC.WebApp.Models
     {
         public int RankId { get; set; }
         [Required(ErrorMessage = "Please enter the rank name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(100, MinimumLength = 3,
+            ErrorMessage = "Rank Name must be between 3 and 100 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string RankName { get; set; }
 
         public string RankAbbreviation { get; set; }
@@ -48,12 +50,16 @@ namespace IHSDC.WebApp.Models
         public int PolicyId { get; set; }
 
         [Required(ErrorMessage = "Please enter the policy name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(100, MinimumLength = 3,
+            ErrorMessage = "Policy Name must be between 3 and 100 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string PolicyName { get; set; }
         [Required(ErrorMessage = "Please enter the policy remarks.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(500, MinimumLength = 3,
+            ErrorMessage = "Policy Remarks must be between 3 and 500 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string PolicyRemarks { get; set; }     
         [Required(ErrorMessage = "Please select a PDF file.")]
        
@@ -77,8 +83,8 @@ namespace IHSDC.WebApp.Models
         [Required(ErrorMessage = "Please enter the comd name.")]
         [StringLength(100, MinimumLength = 3,
             ErrorMessage = "Comd Name must be between 3 and 100 characters.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+            ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string ComdName { get; set; }
         public IList<ComdCRUD> ILComdCRUD { get; set; }
     }
@@ -95,7 +101,7 @@ namespace IHSDC.WebApp.Models
         public string PolicyName { get; set; }
         public int UpdatedByUserId { get; set; }
         public IList<UserCRUD> ILUserCRUD { get; set; }
-        // public IList<SearchableItem> ISearchableItem { get; set; }
+       
     }
 
     public class PolicyDropdownItem
@@ -133,8 +139,10 @@ namespace IHSDC.WebApp.Models
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage = "Please enter the category name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "Comd Name must be between 3 and 100 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string CategoryName { get; set; }
 
         public int ScheduleId { get; set; }
@@ -147,8 +155,10 @@ namespace IHSDC.WebApp.Models
         public int BranchId { get; set; }
 
         [Required(ErrorMessage = "Please enter the branch name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "Branch Name must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string BranchName { get; set; }
         public int ScheduleId { get; set; }
         public IList<BranchCRUD> ILBranchCRUD { get; set; }
@@ -159,11 +169,16 @@ namespace IHSDC.WebApp.Models
     {
         public int ApptId { get; set; }
         [Required(ErrorMessage = "Please enter the appt name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(20, MinimumLength = 3,
+            ErrorMessage = "Appointment Name must be between 3 and 20 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string Appt { get; set; }
         [Required(ErrorMessage = "Please enter the appt abbreviation.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+        [StringLength(100, MinimumLength = 3,
+            ErrorMessage = "Appointment Abbreviation must be between 3 and 100 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
 
         public string ApptAbbreviation { get; set; }
         public IList<Appointment> IAppt { get; set; }
@@ -173,8 +188,11 @@ namespace IHSDC.WebApp.Models
         public int SqnId { get; set; }
 
         [Required(ErrorMessage = "Please enter the sqn name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
 
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "SqnName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string SqnName { get; set; }
 
         public int ComdId { get; set; }
@@ -191,9 +209,7 @@ namespace IHSDC.WebApp.Models
     {
         public int BdeCatId { get; set; }
         [Required(ErrorMessage = "required!")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-        public string BdeCatName { get; set; }
-
+       
         public int ComdId { get; set; }
         public string ComdName { get; set; }
         public int CorpsId { get; set; }
@@ -205,12 +221,16 @@ namespace IHSDC.WebApp.Models
     {
         public int RankId { get; set; }
         [Required(ErrorMessage = "Please enter the rank name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "Rank Name must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string RankName { get; set; }
         [Required(ErrorMessage = "Please enter the rank abbreviation.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "RankAbbreviation must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string RankAbbreviation { get; set; }
         public IList<RankCRUD> ILRankCRUD { get; set; }
     }
@@ -219,12 +239,14 @@ namespace IHSDC.WebApp.Models
     {
         public int CorpsId { get; set; }
         [Required(ErrorMessage = "Please enter the corps name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "CorpsName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string CorpsName { get; set; }
         [Required(ErrorMessage = "Please select a comd.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        
+       
         public int ComdId { get; set; }
         public string ComdName { get; set; }
         public IList<CorpsCRUD> ILCorpsCRUD { get; set; }
@@ -243,40 +265,36 @@ namespace IHSDC.WebApp.Models
     {
         public int Unit_ID { get; set; }
         [Required(ErrorMessage = "Please enter the branch name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "UnitName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string UnitName { get; set; }
-
-      
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+       
+       
         public string BdeCat { get; set; }
-
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+      
         public string Corps { get; set; }
 
         public int SqnId { get; set; }
-
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+       
         public string Sqn { get; set; }
 
-
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+       
         public string TypeOfUnit { get; set; }
 
-     
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        
         public string Command { get; set; }
         [Required(ErrorMessage = "Please select a comd.")]
         public int ComdId { get; set; }
 
         public int ComdIdUnit { get; set; }
         public int BdeCatId { get; set; }
+
+        [Required(ErrorMessage = "Please select a corps.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please select a valid corps.")]
         public int CorpsId { get; set; }
+
         [Required(ErrorMessage = "Please select a corps.")]
         public int CorpId { get; set; }
 
@@ -300,30 +318,37 @@ namespace IHSDC.WebApp.Models
         public int PUserId { get; set; }
         public int Unit_ID { get; set; }
         [Required(ErrorMessage = "required!")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+           ErrorMessage = "UnitName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string UnitName { get; set; }
-
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+          ErrorMessage = "UserName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string UserName { get; set; }
 
-      
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+         ErrorMessage = "UserName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string BdeCat { get; set; }
-
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+         ErrorMessage = "UserName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string Corps { get; set; }
-
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+         ErrorMessage = "UserName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+       ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string TypeOfUnit { get; set; }
-
+        [StringLength(50, MinimumLength = 3,
+         ErrorMessage = "UserName must be between 3 and 50 characters.")]
         [Required(ErrorMessage = "required!")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string Command { get; set; }
 
         public IList<UserListCRUD> ILUserListCRUD { get; set; }
@@ -344,8 +369,10 @@ namespace IHSDC.WebApp.Models
         public int TypeOfConfId { get; set; }
 
         [Required(ErrorMessage = "Please enter the conf name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3,
+          ErrorMessage = "TypeOfConf must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string TypeOfConf { get; set; }
         [Required(ErrorMessage = "Please select a policy.")]
         public int PolicyId { get; set; }
@@ -385,7 +412,8 @@ namespace IHSDC.WebApp.Models
     {
         public int GenderId { get; set; }
         [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9-,)(>< ]*$", ErrorMessage = "Only Alphabets, Numbers and brackets allowed.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
 
         public string Gender { get; set; }
         public IList<GenderCRUD> ILGenderCRUD { get; set; }
@@ -419,7 +447,8 @@ namespace IHSDC.WebApp.Models
     {
         public int PostingTypeId { get; set; }
         [Required(ErrorMessage = "required!")]
-        [RegularExpression("^[a-zA-Z0-9-,)(>< ]*$", ErrorMessage = "Only Alphabets, Numbers and brackets allowed.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
 
         public string PostingType { get; set; }
         public IList<PostingTypeCRUD> ILPostingTypeCRUD { get; set; }
@@ -460,11 +489,14 @@ namespace IHSDC.WebApp.Models
     {
         public int ApptId { get; set; }
         [Required(ErrorMessage = "Please enter the appt name.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Appt must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string Appt { get; set; }
         [Required(ErrorMessage = "Please enter the appt abbreviation.")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "ApptAbbreviation must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string ApptAbbreviation { get; set; }
         public IList<ApptCRUD> ILApptCRUD { get; set; }
     }
@@ -550,9 +582,14 @@ namespace IHSDC.WebApp.Models
         public int PolicyId { get; set; }
 
         [Required(ErrorMessage = "required!")]
-        [RegularExpression(@"^(?![0-9 ]+$)(?=.*[A-Z])[A-Z0-9&\/()\-]+(?: [A-Z0-9&\/()\-.]+)*$", ErrorMessage = "Only Alphabets, Numbers and Only A-Z, 0-9, & - / ( ) and single space allowed.")]
-
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "PolicyName must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+        ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string PolicyName { get; set; }
+        [Required(ErrorMessage = "required!")]
+        [StringLength(500, MinimumLength = 3, ErrorMessage = "PolicyRemarks must be between 3 and 500 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+       ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string PolicyRemarks { get; set; }
         public string Upload { get; set; }
         public int TypeOfDocu { get; set; }

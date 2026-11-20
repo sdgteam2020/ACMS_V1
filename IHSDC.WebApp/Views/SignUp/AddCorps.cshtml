@@ -8,6 +8,11 @@
 
     int sno = 0;
 }
+@{
+    string myValue = @ViewBag.ButtonName;
+
+    
+}
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -51,30 +56,43 @@
 
 </head>
 <div class="card-body custom-card-body">
-    @using (Html.BeginForm("AddCorps", "SignUp", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+    @using (Html.BeginForm("AddCorps", "SignUp", FormMethod.Post, new { id = "corpsFormoutside", enctype = "multipart/form-data" }))
     {
         <div class="col">
-         <div class="row custom-row-margin">
-             <div class="col-md-12">
-                 <label><b>Comd/PSOs Name</b></label><span class="custom-required-text">*</span>
-                 @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @maxlength = "20" })
 
-             </div>
-         </div>
+            @Html.HiddenFor(m => m.CorpsId, new { id = "id" })
 
-         <div class="row custom-row-margin">
-             <div class="col-md-12">
-                 <label><b>DGs Name</b></label><span class="custom-required-text">*</span>
-                 @Html.TextBoxFor(m => m.CorpsName, new { @class = "form-control", @maxlength = "25", @autocomplete = "off" })
+            @Html.Hidden("btnval", myValue, new { id = "btnval" })
+            @Html.AntiForgeryToken()
 
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row custom-row-margin">
+                <div class="col-md-12">
+                    <label><b>Comd/PSOs Name </b></label><span class="custom-required-text">*</span>
+                    @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @maxlength = "20" })
+                    @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
+            <div class="row custom-row-margin">
+                <div class="col-md-12">
+                    <label><b>DGs Name </b></label><span class="custom-required-text">*</span>
+                    @Html.TextBoxFor(m => m.CorpsName, new { @class = "form-control", @maxlength = "25", @autocomplete = "off" })
 
-             </div>
-             <div class="col-md-12 text-right">
-                 <button type="button" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success custom-btn-margin js-add-corps">@ViewBag.ButtonName</button>
+                    @Html.ValidationMessageFor(model => model.CorpsName, "", new { @class = "text-danger" })
 
-             </div>
-         </div>
+                </div>
+                <span id="CorpsNameValidation"
+                      class="text-danger d-none"
+                      role="alert">
+                </span>
+                <div class="col-md-12 text-right">
+
+                    <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success custom-btn-margin saveAddCorpsConfirm">@ViewBag.ButtonName</button>
+
+                </div>
+            </div>
 
         </div>
 
@@ -116,6 +134,7 @@
             </table>
         </div>
     }
+    @Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
 </div>
 
 
@@ -173,3 +192,4 @@
 <script src="@Url.Content("~/NewContent/vendor/bootstrap/js/main.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/NewContent/dataTable4/js/select2.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/CustomJS/SignUpfmReg.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+

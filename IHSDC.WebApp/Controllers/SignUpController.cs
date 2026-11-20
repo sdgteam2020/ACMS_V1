@@ -42,10 +42,7 @@ namespace IHSDC.WebApp.Controllers
             else
                 ComdId = Convert.ToInt32(all[0]);
           
-            if (all[1] == "null" || all[1] == "")
-                CorpsId = 0;
-            else
-                CorpsId = Convert.ToInt32(all[1]);
+           
             MasterModels masterModels = new MasterModels();
             var data = masterModels.LoadBdeCAT(ComdId, CorpsId);
             return Json(data);
@@ -110,27 +107,88 @@ namespace IHSDC.WebApp.Controllers
             return View(model);
         }
 
-
-
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCorps(string id, CorpsCRUD model, string btnval)
         {
-            var data = con.CorpsCRUD(1, model);
-            if (data[0].IsSuccess == true)
+            try
             {
-                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-                TempData["message"] = "Save Successfully. Please Select Comd/PSOs Again.";
-            }
-            if (data[0].IsExist == true)
-            {
-                DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
-                TempData["message"] = "Already Exist";
-            }
+                TryValidateModel(model);
 
-            ViewBag.ButtonName = "Add";
-            return Json(new { message = TempData["message"] });
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+
+                            x => x.Value.Errors
+                                .Select(e =>
+                                    string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                        ? "Invalid value."
+                                        : e.ErrorMessage
+                                )
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the error field.",
+                        errors = errors
+                    });
+                }
+                model.UserId = 1;
+                var data = con.CorpsCRUD(1, model);
+                    if (data[0].IsSuccess == true)
+                    {
+                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                        TempData["message"] = "Save Successfully. Please Select Comd/PSOs Again.";
+                    }
+                    if (data[0].IsExist == true)
+                    {
+                        DisplayMessage(data[0].Msg, data[0].MidMsg, data[0].MsgStatus);
+                        TempData["message"] = "Already Exist";
+                    }
+
+                    ViewBag.ButtonName = "Add";
+                    return Json(new { message = TempData["message"] });
+                }
+
+            catch (SqlException ex)
+            {
+
+                StringBuilder errorMessages = ErrorLog.BindErrorLog(ex);
+
+                try
+                {
+                    con.ErrorLogDashboard2(3, errorMessages.ToString().Replace("'", "''"), ex.StackTrace.ToString(), "Database");
+                }
+                catch (Exception ex1)
+                {
+                    _ = ex1.Message;
+                    return Redirect("/Error/");
+                }
+
+                return Redirect("/Error/");
+            }
+            catch (Exception ex)
+            {
+                // Handle generic ones here.  
+                try
+                {
+                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
+                }
+                catch (Exception ex1)
+                {
+                    _ = ex1.Message;
+                    return Redirect("/Error/");
+                }
+                return Redirect("/Error/");
+            }
         }
+
+
         private void DisplayMessage(string message, string midMessage, string messageStatus)
         {
 
@@ -355,11 +413,37 @@ namespace IHSDC.WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddAppt(string id, ApptCRUD model, string btnval)
         {
             try
             {
-                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+                TryValidateModel(model);
+
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+
+                            x => x.Value.Errors
+                                .Select(e =>
+                                    string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                        ? "Invalid value."
+                                        : e.ErrorMessage
+                                )
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the error field.",
+                        errors = errors
+                    });
+                }
+                model.UserId = 1;
                 if (btnval == "Add")
                 {
 

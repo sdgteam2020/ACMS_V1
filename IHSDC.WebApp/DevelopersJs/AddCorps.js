@@ -31,6 +31,7 @@
 
 $(document).ready(function () {
     $("#corpsForm").on("submit", async function (e) {
+        debugger;
     e.preventDefault();
         let $form = $("#corpsForm");
         if (!$form.valid()) {

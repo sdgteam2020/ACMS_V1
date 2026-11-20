@@ -66,7 +66,7 @@ namespace IHSDC.WebApp.Connection
         #region BdeCat
         public IList<BdeCatCRUD> BdeCatCRUD(int procid, BdeCatCRUD model)
         {
-            var data = GetDataInList<BdeCatCRUD>("proc_BdeCat_CRUD @procId=@p0,@BdeCatId=@p1,@BdeCatName=@p2 ,@UserId=@p3,@ComdId=@p4,@CorpsId=@p5,@Orderby=@p6", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(model.BdeCatId) ?? DBNull.Value), new SqlParameter("@p2", (object)(model.BdeCatName) ?? DBNull.Value), new SqlParameter("@p3", (object)(Convert.ToInt16(SessionManager.UserIntId)) ?? DBNull.Value), new SqlParameter("@p4", (object)(model.ComdId) ?? DBNull.Value), new SqlParameter("@p5", (object)(model.CorpsId) ?? DBNull.Value), new SqlParameter("@p6", (object)(model.Orderby) ?? DBNull.Value)).ToList();
+            var data = GetDataInList<BdeCatCRUD>("proc_BdeCat_CRUD @procId=@p0,@BdeCatId=@p1,@BdeCatName=@p2 ,@UserId=@p3,@ComdId=@p4,@CorpsId=@p5,@Orderby=@p6", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(model.BdeCatId) ?? DBNull.Value), new SqlParameter("@p2", (object)(model.ComdName) ?? DBNull.Value), new SqlParameter("@p3", (object)(Convert.ToInt16(SessionManager.UserIntId)) ?? DBNull.Value), new SqlParameter("@p4", (object)(model.ComdId) ?? DBNull.Value), new SqlParameter("@p5", (object)(model.CorpsId) ?? DBNull.Value), new SqlParameter("@p6", (object)(model.Orderby) ?? DBNull.Value)).ToList();
             return data;
         }
         #endregion

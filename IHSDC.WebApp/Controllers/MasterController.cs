@@ -1855,9 +1855,7 @@ namespace IHSDC.WebApp.Controllers
             }
             try
             {
-                ViewBag.corpsId = 1;
-                ViewBag.BdeCatId = 1;
-                ViewBag.SqnIdbind = 1;
+               
                 ViewBag.ButtonName = "Add";
                 UnitCRUD model = new UnitCRUD();
                 if (id != null && id != string.Empty)
@@ -1971,9 +1969,7 @@ namespace IHSDC.WebApp.Controllers
                         });
                     }
 
-                    ViewBag.corpsId = 0;
-                        ViewBag.BdeCatId = 0;
-                        ViewBag.SqnIdbind = 0;
+                   
                         model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                         if (btnval == "Add")
                         {
@@ -2208,10 +2204,10 @@ namespace IHSDC.WebApp.Controllers
                 ComdId = 0;
             else
                 ComdId = Convert.ToInt32(all[0]);
-            if (all[1] == "null")
-                CorpsId = 0;
-            else
-                CorpsId = Convert.ToInt32(all[1]);
+            //if (all[1] == "null")
+            //    CorpsId = 0;
+            //else
+            //    CorpsId = Convert.ToInt32(all[1]);
             MasterModels masterModels = new MasterModels();
             var data = masterModels.LoadBdeCAT(ComdId, CorpsId);
             return Json(data);
@@ -2226,15 +2222,7 @@ namespace IHSDC.WebApp.Controllers
                 ComdId = 0;
             else
                 ComdId = Convert.ToInt32(all[0]);
-            if (all[1] == "null")
-                CorpsId = 0;
-            else
-                CorpsId = Convert.ToInt32(all[1]);
-
-            if (all[2] == "null")
-                SqnId = 0;
-            else
-                SqnId = Convert.ToInt32(all[2]);
+           
             MasterModels masterModels = new MasterModels();
             var data = masterModels.LoadGetSQNId(ComdId, CorpsId, SqnId);
             return Json(data);

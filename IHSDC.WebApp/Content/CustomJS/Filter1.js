@@ -13,9 +13,9 @@
     $("#ComdId").change(function () {
         GetCorps();
     });
-    $("#spnCorpsId").change(function () {
-        GetBde();
-    });
+    //$("#spnCorpsId").change(function () {
+    //    GetBde();
+    //});
     $("#BdeCatId").change(function () {
         GetSQN();
     });
@@ -56,7 +56,8 @@ function GetCorps() {
 
 }
 function GetBde() {
-    var data = $('#ComdId').val() + ',' + $('#CorpsId').val();
+    //var data = $('#ComdId').val() + ',' + $('#CorpsId').val();
+    var data =  $('#CorpsId').val();
     var list = '';
     list = '<option value=1>-No Bde-</option>';
     $.ajax({
@@ -88,7 +89,8 @@ function GetBde() {
 
 }
 function GetSQN() {
-    var data = $('#ComdId').val() + ',' + $('#CorpsId').val() + ',' + $('#BdeCatId').val();
+   
+    var data = $('#ComdId').val();
     var list = '';
     list = '<option value=1>-No SQN-</option>';
     $.ajax({

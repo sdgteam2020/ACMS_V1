@@ -35,10 +35,7 @@
                 @Html.TextBoxFor(m => m.Appt, new { @class = "form-control", @maxlength = "25", @autocomplete = "off", @required = "required" })
 
                 @Html.ValidationMessageFor(model => model.Appt, "", new { @class = "text-danger" })
-                <span id="ApptNameValidation"
-                      class="text-danger d-none"
-                      role="alert">
-                </span>
+
             </div>
 
             <div class="col custom-col-left">
@@ -46,9 +43,12 @@
                 @Html.TextBoxFor(m => m.ApptAbbreviation, new { @class = "form-control", @required = "required", @maxlength = "50", @autocomplete = "off" })
 
                 @Html.ValidationMessageFor(model => model.ApptAbbreviation, "", new { @class = "text-danger" })
-                
-            </div>
 
+            </div>
+            <span id="ApptNameValidation"
+                  class="text-danger d-none"
+                  role="alert">
+            </span>
             <div class="col-sm-6 custom-left-margin">
                 <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddApptConfirm custom-button-top1">@ViewBag.ButtonName</button>
             </div>

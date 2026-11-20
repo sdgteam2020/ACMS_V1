@@ -35,52 +35,114 @@
     }
 
 
-    function AddConfirmationDgs(obj, ActionName, Submit) {
-        event.preventDefault();
-        let $form = $(this).closest("form");
-    if (messaget == "Add") {
-        swal({
-            title: "Please Confirm",
-            text: "",
-            type: "warning",
+$(document).on("submit", "#corpsFormoutside", function (e) {
 
-            showCancelButton: true,
-            cancelButtonText: "Cancel",
-            cancelButtonColor: "#FF0000",
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Add",
+    e.preventDefault();
+    debugger;
+    let $form = $(this);
 
-            closeOnCancel: true,
-            closeOnConfirm: false
-        },
-            function (isConfirm) {
-                if (isConfirm) {
-                    $('form').submit();
-                }
-            });
-        } else {
-        swal({
-            title: "Please Confirm",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Update",
-            cancelButtonText: "Cancel",
-
-            closeOnConfirm: false,
-            closeOnCancel: true
-        },
-            function (isConfirm) {
-                if (isConfirm) {
-                    $('form').submit();
-                }
-            });
-        }
+    // Run client-side validation
+    if (!$form.valid()) {
+        return false;
     }
 
-    let message = '@message';
-    let messageStatus = '@messageStatus';
-    let messagemidStatus = '@messagemidStatus ';
-    if (message)
-    sweetAlert(message, messagemidStatus, messageStatus);
+    let id = $form.find("#id").val() || "";
+    let btnval = $form.find("#btnval").val() || "";
+
+    let buttonName = $form.find(".saveAddCorpsConfirm").val() || "";
+
+    let CorpsName = $form.find("#CorpsName").val();
+    let ComdId = $form.find("#ComdId").val();
+
+    // Hide previous server-side errors
+    $("#CorpsNameValidation")
+        .text("")
+        .addClass("d-none");
+
+    swal({
+        title: "Please Confirm",
+        text: "",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: buttonName === "Add"
+            ? "Yes, Add"
+            : "Yes, Update",
+        closeOnCancel: true,
+        closeOnConfirm: false
+
+    }, function (isConfirm) {
+
+        if (!isConfirm) {
+            return;
+        }
+
+        $.ajax({
+            url: '/SignUp/AddCorps',
+            type: 'POST',
+
+            // Automatically includes AntiForgeryToken and form fields
+            data: $form.serialize(),
+
+            success: function (response) {
+
+                console.log(response);
+
+                // Server-side validation errors
+                if (response && response.success === false) {
+
+                    let firstError = Object.values(response.errors || {})
+                        .flat()[0] || response.message || "Validation failed.";
+
+                    $("#CorpsNameValidation")
+                        .text(firstError)
+                        .removeClass("d-none");
+
+                    swal({
+                        title: "Failed!",
+                        text: response.message || "Validation failed.",
+                        type: "error",
+                        confirmButtonColor: "#DD6B55"
+                    });
+
+                    return;
+                }
+
+                // Success
+                swal({
+                    title: "Success!",
+                    text: btnval === "Add"
+                        ? "Added successfully!"
+                        : "Updated successfully!",
+                    type: "success",
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "OK",
+                    closeOnConfirm: true
+
+                }, function () {
+
+                    $('#addDgsModal').modal('hide');
+
+                    window.location.href = '/SignUp/AddCorps';
+                });
+            },
+
+            error: function (xhr, status, error) {
+
+                console.error("Status:", xhr.status);
+                console.error("Response:", xhr.responseText);
+                console.error("Error:", error);
+
+                swal({
+                    title: "Request Failed!",
+                    text: "HTTP Status: " + xhr.status,
+                    type: "error",
+                    confirmButtonColor: "#DD6B55"
+                });
+            }
+        });
+    });
+
+    return false;
+});

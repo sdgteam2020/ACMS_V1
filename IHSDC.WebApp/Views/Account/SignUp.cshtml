@@ -32,13 +32,10 @@
     <link href="@Url.Content("~/NewContent/dataTable4/css/select2.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     <link href="@Url.Content("~/DeveloperCSS/SignUp.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-
-
-
-
-
-
-
+    <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    
 
 </head>
 <header class="masthead">
@@ -55,21 +52,26 @@
         </div>
     </nav>
     <div class="card-body signup-style-04">
+
+
         <div class="card-body">
             <div class="card-body signup-style-05">
                 <div class="row">
                     <div class="col-md-4"></div>
-                    <div class="col-md-4 headingtext">CREATE NEW USERHJHJKJHKJHKKJ</div>
+                    <div class="col-md-4 headingtext">CREATE NEW USER</div>
                     <div class="col-md-4"></div>
 
                 </div>
                 <hr />
-                @using (Html.BeginForm("Add", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
+                @using (Html.BeginForm("Add", "Account", FormMethod.Post, new { id = "adduserForm", @class = "form-horizontal", role = "form" }))
                 {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(m => m.Active)
                     @Html.HiddenFor(m => m.Password)
                     @Html.HiddenFor(m => m.ConfirmPassword)
-                    @Html.HiddenFor(m => m.Username)
+
+                    <input type="hidden" id="Username" value="@Html.DisplayFor(m => m.Username)" />
                     @Html.AntiForgeryToken()
                     <form>
                         <div class="container">
@@ -98,7 +100,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @maxlength = "10", @required = true, @autocomplete = "off" })
+                                        @Html.TextBoxFor(m => m.Number, new { @class = "form-control username-input", @maxlength = "8", @required = true, @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group required signup-style-06">
@@ -107,6 +110,7 @@
                                     </label><font class="signup-style-08">*</font>
                                     <div class="col-md-12">
                                         @Html.DropDownListFor(m => m.Rank, (new IHSDC.WebApp.Models.MasterModels()).LoadRanks(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true", @required = true })
+                                        @Html.ValidationMessageFor(model => model.Rank, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +120,8 @@
                                         @Html.LabelFor(m => m.FullName)
                                     </label><font class="signup-style-08">*</font>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @required = true, @maxlength = "50", @autocomplete = "off" })
+                                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control username-input", @required = true, @maxlength = "50", @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group required signup-style-06">
@@ -129,6 +134,7 @@
                                     </a>
                                     <div class="col-md-12">
                                         @Html.DropDownListFor(m => m.Appointment, (new IHSDC.WebApp.Models.MasterModels()).LoadAppointment(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })
+                                        @Html.ValidationMessageFor(model => model.Appointment, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group required signup-style-06">
@@ -154,7 +160,8 @@
                                 <div class="form-group required signup-style-06">
                                     <label class="signup-style-07">Comd/PSOs</label><font class="signup-style-08">*</font>
                                     <div class="col-md-12">
-                                        @Html.DropDownListFor(m => m.ComdIdSignUp, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })
+                                        @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })
+                                        @Html.ValidationMessageFor(model => model.ComdId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group required signup-style-06">
@@ -165,20 +172,22 @@
 
                                     <div class="col-md-12">
                                         @Html.TextBoxFor(m => m.CorpId, new { @class = "form-control d-none", @required = true, @autocomplete = "off" })
-                                        <select id="spnCorp" class="form-control d-flex"></select>
+                                        <select name="CorpId" id="spnCorp" class="form-control d-flex"></select>
+                                        @Html.ValidationMessageFor(model => model.CorpId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group required signup-style-06">
                                     <label class="signup-style-07">Branch</label><font class="signup-style-08">*</font>
 
 
-                                    <a id="addbranch" href="#" data-url="/SignUp/AddUnitNew" title="Click to Add New Branch in case your respective Branch is not already avbl in dropdown list.">
+                                    <a id="addbranch" href="#" data-url="@Url.Action("AddUnitNew", "SignUp")" title="Click to Add New Branch in case your respective Branch is not already avbl in dropdown list.">
 
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     </a>
                                     <div class="col-md-12">
                                         @Html.TextBoxFor(m => m.Unit_ID, new { @class = "form-control d-none", @required = true, @autocomplete = "off" })
-                                        <select id="spnUnit" class="form-control" required></select>
+                                        <select name="Unit_ID" id="spnUnit" class="form-control" required></select>
+                                        @Html.ValidationMessageFor(model => model.Unit_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +198,8 @@
                                         @Html.LabelFor(m => m.ASCON)
                                     </label><font class="signup-style-08">*</font>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control", @maxlength = "10", @required = true, @autocomplete = "off" })
+                                        @Html.TextBoxFor(m => m.ASCON, new { @class = "form-control username-mob-input", @maxlength = "5", @required = true, @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.ASCON, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group required signup-style-06">
@@ -197,109 +207,29 @@
                                         @Html.LabelFor(m => m.MobNo)
                                     </label><font class="signup-style-08">*</font>
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control", @maxlength = "10", @required = true, @autocomplete = "off" })
+                                        @Html.TextBoxFor(m => m.MobNo, new { @class = "form-control username-mob-input", @maxlength = "10", @required = true, @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.MobNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4 d-none">
                                     <label>Bde</label>
                                     @Html.TextBoxFor(m => m.BdeId, new { @class = "form-control d-none", @required = true, @autocomplete = "off" })
-                                    <select id="spnBde" class="form-control" }></select>
+                                    <select name="BdeId" id="spnBde" class="form-control" }></select>
                                 </div>
                             </div>
                             <hr />
 
-                            <div id="addunitmodel" class="modal fade" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header d-flex justify-content-center signup-style-10">
-                                            <h5 class="modal-title">Add Branch</h5>
-                                            <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-12">
-
-                                                <div class="col-md-12">
-                                                    <label><b>Comd/PSOs Name</b></label><font class="signup-style-08">*</font>
-                                                    @Html.DropDownList("ComdIdUnit", (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true" })
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label><b>DGs Name</b></label><font class="signup-style-08">*</font>
-
-                                                    <input type="text" class="d-none" id="CorpIdNew" />
-
-                                                    <select id="spnCorpUnit" class="form-control d-flex"></select>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label><b>Branch Name</b></label><font class="signup-style-08">*</font>
-
-                                                    <input type="text" class="form-control" id="UnitName" maxlength="50" />
-
-                                                </div>
-                                                <div class="col-md-12 text-right">
-                                                    <button type="button" value="Add" name="btnval" class="btn btn-success signup-style-12">Add</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal-body-list">
-
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div id="addApptModal" class="modal fade" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-dialog-fullscreen signup-style-13" role="document">
-                                    <div class="modal-content modal-content-fullscreen signup-style-13">
-                                        <div class="modal-header d-flex justify-content-center signup-style-10">
-                                            <h5 class="modal-title">Add Appointment</h5>
-                                            <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-
-                                        <div class="modal-body modal-body-fullscreen signup-style-14">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="addDgsModal" class="modal fade" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-dialog-fullscreen signup-style-13" role="document">
-                                    <div class="modal-content modal-content-fullscreen signup-style-13">
-                                        <div class="modal-header d-flex justify-content-center signup-style-10">
-                                            <h5 class="modal-title">Add DGs</h5>
-                                            <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-
-                                        <div class="modal-body modal-body-fullscreen signup-style-14">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="row">
                                 <div class="col-12 d-flex justify-content-center">
                                     <div class="form-group">
+                                        <span id="addnameValidation"
+                                              class="text-danger d-none"
+                                              role="alert">
+                                        </span>
                                         <div class="col-md-offset-2 text-center">
-                                            <button type="submit" class="btn btn-success">Register</button> &nbsp;
+                                            <input type="submit" class="btn btn-success saveAddConfirm" value="Register" />
+                                            &nbsp;
 
                                             <a class="btn btn-success signup-style-15" id="btnNew">
                                                 Cancel
@@ -312,6 +242,93 @@
                         </div>
                     </form>
                 }
+            </div>
+
+            <div id="addunitmodel" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header d-flex justify-content-center signup-style-10">
+                            <h5 class="modal-title">Add Branch</h5>
+                            <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+
+                                <div class="col-md-12">
+                                    <label><b>Comd/PSOs Name</b></label><font class="signup-style-08">*</font>
+                                    @Html.DropDownList("ComdIdUnit", (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true" })
+                                </div>
+                                <div class="col-md-12">
+                                    <label><b>DGs Name</b></label><font class="signup-style-08">*</font>
+
+                                    <input type="text" class="d-none" id="CorpIdNew" />
+
+                                    <select id="spnCorpUnit" class="form-control d-flex"></select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label><b>Branch Name</b></label><font class="signup-style-08">*</font>
+
+                                    <input type="text" class="form-control" id="UnitName" maxlength="50" />
+
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <button type="button" value="Add" name="btnval" class="btn btn-success signup-style-12">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-body-list">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="addApptModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-fullscreen signup-style-13" role="document">
+                    <div class="modal-content modal-content-fullscreen signup-style-13">
+                        <div class="modal-header d-flex justify-content-center signup-style-10">
+                            <h5 class="modal-title">Add Appointment</h5>
+                            <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body modal-body-fullscreen signup-style-14">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="addDgsModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-fullscreen signup-style-13" role="document">
+                    <div class="modal-content modal-content-fullscreen signup-style-13">
+                        <div class="modal-header d-flex justify-content-center signup-style-10">
+                            <h5 class="modal-title">Add DGs</h5>
+                            <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body modal-body-fullscreen signup-style-14">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -327,3 +344,5 @@
 </header>
 
 <script src="@Url.Content("~/DevelopersJs/SignUp.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/DevelopersJs/Appt.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/DevelopersJs/Corps.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

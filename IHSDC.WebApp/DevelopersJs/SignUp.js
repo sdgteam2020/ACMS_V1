@@ -1,20 +1,31 @@
 ﻿
-    function ValInData1(input) {
-        let regex = /[^0-9]/g;
-        input.value = input.value.replace(regex, "");
-    }
-    function ValInData(input) {
-        let regex = /[^a-zA-Z0-9 ]/g;
-        input.value = input.value.replace(regex, "");
-    }
+function validateInput(input) {
+    let regex = /[^0-9]/g;
+    input.value = input.value.replace(regex, "");
+}
+function ValInData(input) {
+    let regex = /[^a-zA-Z0-9\s\-()._ ]/g;
+    input.value = input.value.replace(regex, "");
+}
 
-    function ValInDataReg(input) {
-        let regex = /[^a-zA-Z0-9]/g;
-        input.value = input.value.replace(regex, "");
-    }
+function ValInDataReg(input) {
+    let regex = /[^a-zA-Z0-9]/g;
+    input.value = input.value.replace(regex, "");
+}
 
 $(document).ready(function () {
-            $('#ComdIdSignUp').val("");
+    $(document).on("keyup", ".username-input", function () {
+        ValInData(this);
+    });
+});
+$(document).ready(function () {
+    $('.username-mob-input').on('input', function () {
+        validateInput(this);
+    });
+});
+
+$(document).ready(function () {
+            $('#ComdId').val("");
         $("#chk").click(function () {
             if ($(this).prop("checked")) {
                 $("#pass").attr("type", "text");
@@ -37,11 +48,11 @@ $(document).ready(function () {
             $('#CorpId').val(1);
             $('#BdeId').val(1);
 
-            BindBde($("#ComdIdSignUp").val(), $("#CorpId").val());
-            BindUnit($("#ComdIdSignUp").val(), $("#CorpId").val(), $("#BdeId").val());
+            BindBde($("#ComdId").val(), $("#CorpId").val());
+            BindUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
         });
 
-        $('#ComdIdSignUp').change(function () {
+        $('#ComdId').change(function () {
             $('#CorpId').val(1);
             $('#BdeId').val(1);
             let value = $(this).val();
@@ -75,28 +86,31 @@ $(document).ready(function () {
 
         $('#spnCorp').change(function () {
             $("#CorpId").val($(this).val());
-            BindBde($("#ComdIdSignUp").val(), $(this).val());
-            BindUnit($("#ComdIdSignUp").val(), $(this).val(), $("#BdeId").val());
+            BindBde($("#ComdId").val(), $(this).val());
+            BindUnit($("#ComdId").val(), $(this).val(), $("#BdeId").val());
         });
 
         $('#spnBde').change(function () {
             $("#BdeId").val($(this).val());
-            BindUnit($("#ComdIdSignUp").val(), $("#CorpId").val(), $(this).val());
+            BindUnit($("#ComdId").val(), $("#CorpId").val(), $(this).val());
         });
 
         $('#spnUnit').change(function () {
             $("#Unit_ID").val($(this).val());
         });
 
+        
 
 
 
-       document.getElementById('addbranch').addEventListener('click', function (e) {
-    e.preventDefault();
+    document.getElementById('addbranch').addEventListener('click', function (e) {
+           e.preventDefault();
+           debugger;
 
-    const url = '@Url.Action("AddUnitNew", "SignUp")';
+        
+        const url ="/SignUp/AddUnitNew";
 
-    fetch(url)
+       fetch(url)
         .then(response => response.json())
         .then(result => {
             if (result.ilUnitCrud.length > 0) {
@@ -150,22 +164,47 @@ $(document).ready(function () {
         .catch(error => {
             console.error('Error loading AddUnit form:', error);
         });
-});
+    });
 
 
 
-        document.getElementById('setAppt').addEventListener('click', function (e) {
-            e.preventDefault();
-            let url = this.getAttribute('data-url');
+    document.getElementById('setAppt').addEventListener('click', function (e) {
 
-            fetch(url)
-                .then(response => response.text())
-                .then(html => {
-                    document.querySelector('#addApptModal .modal-body').innerHTML = html;
-                    $('#addApptModal').modal('show');
-                })
-                .catch(error => console.error('Error loading AddAppt form:', error));
-        });
+        e.preventDefault();
+
+        let url = this.getAttribute('data-url');
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Unable to load form.");
+                }
+                return response.text();
+            })
+            .then(html => {
+
+                let modalBody = document.querySelector(
+                    '#addApptModal .modal-body'
+                );
+
+                modalBody.innerHTML = html;
+
+                let $form = $('#apptFormhoutside');
+
+                // Initialize validation for dynamically loaded form
+                if ($.validator && $.validator.unobtrusive) {
+                    $form.removeData("validator");
+                    $form.removeData("unobtrusiveValidation");
+
+                    $.validator.unobtrusive.parse($form);
+                }
+
+                $('#addApptModal').modal('show');
+            })
+            .catch(error => console.error(
+                'Error loading AddAppt form:', error
+            ));
+    });
 
         document.getElementById('addApptModal').addEventListener('hidden.bs.modal', function () {
             fetch('@Url.Action("ReloadAppointments", "SignUp")')
@@ -182,22 +221,47 @@ $(document).ready(function () {
         });
 
 
-        document.getElementById('setComdId').addEventListener('click', function (e) {
-            e.preventDefault();
-            let url = this.getAttribute('data-url');
+    document.getElementById('setComdId').addEventListener('click', function (e) {
 
-            fetch(url)
-                .then(response => response.text())
-                .then(html => {
-                    document.querySelector('#addDgsModal .modal-body').innerHTML = html;
-                    $('#addDgsModal').modal('show');
-                })
-                .catch(error => console.error('Error loading AddAppt form:', error));
-        });
+        e.preventDefault();
+
+        let url = this.getAttribute('data-url');
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Unable to load form.");
+                }
+                return response.text();
+            })
+            .then(html => {
+
+                let modalBody = document.querySelector(
+                    '#addDgsModal .modal-body'
+                );
+
+                modalBody.innerHTML = html;
+
+                let $form = $('#corpsFormoutside');
+
+                // Initialize validation for dynamically loaded form
+                if ($.validator && $.validator.unobtrusive) {
+                    $form.removeData("validator");
+                    $form.removeData("unobtrusiveValidation");
+
+                    $.validator.unobtrusive.parse($form);
+                }
+
+                $('#addDgsModal').modal('show');
+            })
+            .catch(error => console.error(
+                'Error loading AddDgs form:', error
+            ));
+    });
 
         document.getElementById('addDgsModal').addEventListener('hidden.bs.modal', function () {
 
-            let ComdIdSignUp = $("#ComdIdSignUp").val();
+            let ComdIdSignUp = $("#ComdId").val();
 
             fetch('/SignUp/LoadCorpsNameByCommandId', {
                 method: 'POST',
@@ -235,15 +299,7 @@ if ($("#CorpId").val() != 0) {
 
 
 
-if (message) {
-    if (message == "s") {
-        SubmitToken(this, '/Account/Login', 'Your Token is not connected. Connect Token and Login again', 'SubmitGEB2IC');
-    } else if (message == "b") {
-        SubmitToken(this, '/Account/Login', 'Public Key not Found. Ask Admin to install your public key.', 'SubmitGEB2IC');
-    } else {
-        sweetAlert(message, messagemidStatus, messageStatus);
-    }
-}
+
 
 document.querySelector('.info-container').addEventListener('mouseover', function () {
     const message = document.querySelector('.info-message');
@@ -269,19 +325,14 @@ document.querySelector('.info-container-role').addEventListener('mouseout', func
 
 });
 
-    });
+});
+
 $(document).on("click", ".js-add-appt", function (event) {
+    debugger;
     let appt = $("#Appt").val().trim();
     let apptAbbreviation = $("#ApptAbbreviation").val().trim();
 
-    if (!appt) {
-        sweetAlert("Appt Abbreviation is required.");
-        return;
-    }
-    if (!apptAbbreviation) {
-        sweetAlert("Appt Name is required.");
-        return;
-    }
+ 
     AddConfirmation(this, '/SignUp/AddAppt', 'AddAppt', event);
 });
 function AddConfirmation(obj, ActionName, Submit, event) {
@@ -289,18 +340,12 @@ function AddConfirmation(obj, ActionName, Submit, event) {
     let appt = $("#Appt").val().trim();
     let apptAbbreviation = $("#ApptAbbreviation").val().trim();
 
-    if (!appt) {
-        sweetAlert("Appt Abbreviation is required.");
-        return;
-    }
-    if (!apptAbbreviation) {
-        sweetAlert("Appt Name is required.");
-        return;
-    }
+   
 
     let formData = new FormData($('form')[0]);
     $.ajax({
-        url: '@Url.Action("AddAppt", "SignUp")',
+        url: '/SignUp/AddAppt',
+      
         type: 'POST',
         data: formData,
         contentType: false,
@@ -312,7 +357,8 @@ function AddConfirmation(obj, ActionName, Submit, event) {
             $('#addApptModal').modal('hide');
 
             $.ajax({
-                url: '@Url.Action("ReloadAppointments", "SignUp")',
+                url: '/SignUp/ReloadAppointments',
+             
                 type: 'GET',
                 success: function (data) {
                     let dropdown = $('#Appointment');
@@ -370,7 +416,7 @@ function AddConfirmationDgs(obj, ActionName, Submit, event) {
         processData: false,
         success: function (response) {
             sweetAlert(response.message);
-            $('#ComdIdSignUp').val('').trigger('change');
+            $('#ComdId').val('').trigger('change');
             $('#addDgsModal').modal('hide');
         },
         error: function (xhr, status, error) {
@@ -403,7 +449,8 @@ function AddConfirmationBranch(obj, ActionName, Submit, event) {
     formData.append("spnCorpUnit", spnCorpUnit);
 
     $.ajax({
-        url: '@Url.Action("AddUnitNew", "SignUp")',
+        // url: '@Url.Action("AddUnitNew", "SignUp")',
+        url: '/SignUp/AddUnitNew',
         type: 'POST',
         data: formData,
         contentType: false,
@@ -413,7 +460,7 @@ function AddConfirmationBranch(obj, ActionName, Submit, event) {
 
             sweetAlert(response.message);
 
-            $('#ComdIdSignUp').val(null).trigger('change');
+            $('#ComdId').val(null).trigger('change');
             $('#UnitName').val('');
             $('#ComdIdUnit').val('');
             list = '';
@@ -441,11 +488,7 @@ $("#chk").click(function () {
         $(document).ready(function () {
             $("#pass").val("");
         });
-        let message = '@message';
-        let messageStatus = '@messageStatus';
-        let messagemidStatus = '@messagemidStatus';
-        if (message)
-            sweetAlert(message, messagemidStatus, messageStatus);
+      
 
     $(document).ready(function () {
         $('.dropdownsearch').select2();
@@ -455,11 +498,150 @@ $("#chk").click(function () {
     $(document).ready(function () {
         $('#Number').on('keyup', function () { ValInDataReg(this); });
         $('#FullName, #UnitName').on('keyup', function () { ValInData(this); });
-        $('#ASCON, #MobNo').on('input', function () { ValInData1(this); });
+       
         $('#addunitmodel button[name="btnval"]').on('click', function (event) {
             AddConfirmationBranch(this, '/SignUp/AddUnit', 'SignUp', event);
         });
         $('#btnNew').on('click', function () {
-            location.href = '@Url.Action("Login", "Account")';
+            location.href = '/Account/Login';       
+          
         });
     });
+
+$(document).ready(function () {
+
+    $("#adduserForm").on("submit", function (e) {
+
+        e.preventDefault();
+
+        let $form = $(this);
+
+        if (!$form.valid()) {
+            return false;
+        }
+
+        let buttonName = $(".saveAddConfirm").val() || "Add";
+
+        let role = $("#rolesDropdown").val();
+
+        // RegisterViewModel properties
+        let payload = {
+
+            Username: $("#Username").val(),
+            Password: $("#Password").val(),
+            ConfirmPassword: $("#ConfirmPassword").val(),
+
+            Rank: $("#Rank").val(),
+            Number: $("#Number").val(),
+            FullName: $("#FullName").val(),
+
+            ComdId: $("#ComdId").val(),
+            CorpId: $("#CorpId").val(),
+            BdeId: $("#BdeId").val(),
+
+            Appointment: $("#Appointment").val(),
+
+            Roles: role ? [role] : [],
+
+            ASCON: $("#ASCON").val(),
+            Active: $("#Active").val(),
+
+            MobNo: $("#MobNo").val(),
+            Unit_ID: $("#Unit_ID").val()
+
+        };
+
+        // AntiForgeryToken
+        let token = $('input[name="__RequestVerificationToken"]').val();
+
+        swal({
+            title: "Are you sure?",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: buttonName === "Add"
+                ? "Yes, Add"
+                : "Yes, Update",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: false,
+            closeOnCancel: true
+
+        }, function (isConfirm) {
+
+            if (!isConfirm) {
+                return;
+            }
+
+            $.ajax({
+
+                url: '/Account/Add',
+                type: 'POST',
+
+                data: $.extend({}, payload, {
+                    __RequestVerificationToken: token
+                }),
+
+                success: function (response) {
+
+                    console.log("Server Response:", response);
+
+                    if (response.success === false) {
+
+                        let firstError =
+                            Object.values(response.errors || {}).flat()[0]
+                            || response.message
+                            || "Validation failed.";
+
+                        $("#addnameValidation")
+                            .text(firstError)
+                            .removeClass("d-none");
+
+                        swal({
+                            title: "Failed!",
+                            text: firstError,
+                            type: "error"
+                        });
+
+                        return;
+                    }
+
+                    swal({
+                        title: "",
+                        text: buttonName === "Register"
+                            ? "User Created Successfully!"
+                            : "",
+                        type: "success",
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "OK"
+                    }, function () {
+
+                        window.location.href = '/Home/ContactUs';
+
+                    });
+
+                },
+
+                error: function (xhr, status, error) {
+
+                    console.log("HTTP Status:", xhr.status);
+                    console.log("Error:", error);
+                    console.log("Response:", xhr.responseText);
+
+                    swal({
+                        title: "Request Failed!",
+                        text: xhr.responseText || error,
+                        type: "error"
+                    });
+
+                }
+
+            });
+
+        });
+
+        return false;
+
+    });
+
+});

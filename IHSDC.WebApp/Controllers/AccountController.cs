@@ -1406,40 +1406,14 @@ namespace IHSDC.WebApp.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Add(string Request)
+        public async Task<ActionResult> Add(RegisterViewModel model)
         {
-            RegisterViewModel model = new RegisterViewModel();
+            
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var session = SessionHeplers.GetObject<DtoSessions>(
-                  System.Web.HttpContext.Current.Session,
-                  "Token");
-
-                    if (session == null)
-                    {
-                        return Json(new
-                        {
-                            success = false,
-                            message = "Session expired."
-                        });
-                    }
-
-                     model = AESEncrytDecry.DecryptAESWithDTO<RegisterViewModel>(
-                        Request,
-                        session.Salt);
-                    if (model == null)
-                    {
-                        return Json(new
-                        {
-                            success = false,
-                            message = "Invalid request."
-                        });
-                    }
-                    else
-                    {
-                        TryValidateModel(model);
+                    TryValidateModel(model);
 
                         if (!ModelState.IsValid)
                         {
@@ -1576,7 +1550,7 @@ namespace IHSDC.WebApp.Controllers
                         }
                         AddErrors(result);
                     }
-                }
+                
                 catch (Exception)
                 {
                     var AllRoles = (new ApplicationDbContext()).Roles.OrderBy(r => r.Name).Where(n => n.Name != "Administrator").ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
@@ -1610,8 +1584,9 @@ namespace IHSDC.WebApp.Controllers
            
             return View(model);
         }
+      
 
-        
+
         [Authorize(Roles = "Administrator")]
         public ActionResult AddSuperior()
         {

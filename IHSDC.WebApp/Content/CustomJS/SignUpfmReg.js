@@ -1,22 +1,21 @@
 ﻿$(document).ready(function () {
     
-    $('#ComdIdUnit').change(function () { 
-      
-        if ($('#ComdIdUnit').val() == "") {        
-            list = '';         
+    $('#ComdId').change(function () {
+
+        if ($('#ComdId').val() == "") {
+            list = '';
             $('#spnCorpUnit').html(list);
             $("#CorpId").val("1");
         }
-        else {    
-
-           
+        else {
             $('#CorpId').val(1);
             $('#BdeId').val(1);
-            BindCorpUnit($("#ComdIdUnit").val());
-            BindBde($("#ComdIdUnit").val(), $("#CorpId").val());
-            BindUnitUnit($("#ComdIdUnit").val(), $("#CorpId").val(), $("#BdeId").val());
-        }        
+            BindCorpUnit($("#ComdId").val());
+            BindBde($("#ComdId").val(), $("#CorpId").val());
+            BindUnitUnit($("#ComdId").val(), $("#CorpId").val(), $("#BdeId").val());
+        }
     });
+    
 });
 function BindCorp(ComdId) {
    
@@ -88,7 +87,9 @@ function BindCorpUnit(ComdId) {
 }
 
 function BindBde(ComdId, CorpId) {
+    debugger;
     var data = ComdId + ',' + CorpId;
+   // var data =  CorpId;
     var list = '';
     $.ajax({
         url: '/SignUp/LoadBdeCATbyId',

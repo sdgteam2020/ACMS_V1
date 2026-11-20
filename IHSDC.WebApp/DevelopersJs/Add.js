@@ -4,7 +4,7 @@
         input.value = input.value.replace(regex, "");
     }
     function ValInData(input) {
-        let regex = /[^a-zA-Z0-9 ]/g;
+        let regex = /[^a-zA-Z0-9\s\-()._ ]/g;
         input.value = input.value.replace(regex, "");
     }
 
@@ -70,233 +70,147 @@
                     });
 
                     let dropdown = document.getElementById("rolesDropdown");
-                    dropdown.addEventListener("keydown", function (event) {
-                        event.preventDefault();
-                    });
-                   
+                  
+
 $(document).ready(function () {
-    $("#adduserForm").on("submit", async function (e) {
+
+    $("#adduserForm").on("submit", function (e) {
         debugger;
         e.preventDefault();
-        let $form = $("#adduserForm");
-        if (!$form.valid()) {
 
+        let $form = $(this);
+
+        if (!$form.valid()) {
             return false;
         }
-        let id = $("#id").val() || "";
-        var role = $("#rolesDropdown").val();
-        
 
-        let buttonName = $(".saveAddConfirm").val() || "";
+        let buttonName = $(".saveAddConfirm").val() || "Add";
 
-        const payload = {
+        let role = $("#rolesDropdown").val();
 
-            Username: $("#Username").val() || "",
+        // RegisterViewModel properties
+        let payload = {
 
-            Password: $("#Password").val() || "",
-            ConfirmPassword: $("#ConfirmPassword").val() || "",
-            Rank: $("#Rank").val() || "",
-            Number: $("#Number").val() || "",
-            FullName: $("#FullName").val() || "",
-            ComdId: $("#ComdId").val() || "",
-            CorpId: $("#CorpId").val() || "",
-            BdeId: $("#BdeId").val() || "",
-            Appointment: $("#Appointment").val() || "",
-            Roles: [role],
-            ASCON: $("#ASCON").val() || "",
-            Active: $("#Active").val() || "",
-            MobNo: $("#MobNo").val() || "",
-            Unit_ID: $("#Unit_ID").val() || "",
-           
+            Username: $("#Username").val(),
+            Password: $("#Password").val(),
+            ConfirmPassword: $("#ConfirmPassword").val(),
+
+            Rank: $("#Rank").val(),
+            Number: $("#Number").val(),
+            FullName: $("#FullName").val(),
+
+            ComdId: $("#ComdId").val(),
+            CorpId: $("#CorpId").val(),
+            BdeId: $("#BdeId").val(),
+
+            Appointment: $("#Appointment").val(),
+
+            Roles: role ? [role] : [],
+
+            ASCON: $("#ASCON").val(),
+            Active: $("#Active").val(),
+
+            MobNo: $("#MobNo").val(),
+            Unit_ID: $("#Unit_ID").val()
+
         };
 
-
-
-
-        let jsonData = JSON.stringify(payload);
-
-        let encrypted;
-
-        try {
-
-            encrypted = encryptPayloadData(jsonData);
-
-        }
-        catch (error) {
-
-           
-
-            swal({
-                title: "Encryption Failed!",
-                text: error.message || "Unable to encrypt request.",
-                type: "error",
-                confirmButtonColor: "#DD6B55"
-            });
-
-            return false;
-        }
-
-
-        if (!encrypted) {
-
-            console.error("Encrypted request is empty.");
-
-            swal({
-                title: "Error",
-                text: "Unable to create encrypted request.",
-                type: "error",
-                confirmButtonColor: "#DD6B55"
-            });
-
-            return false;
-        }
-
+        // AntiForgeryToken
+        let token = $('input[name="__RequestVerificationToken"]').val();
 
         swal({
-
             title: "Are you sure?",
-
             text: "",
-
             type: "warning",
-
             showCancelButton: true,
-
             confirmButtonColor: "#DD6B55",
-
-            confirmButtonText:
-                buttonName === "Add"
-                    ? "Yes, Add"
-                    : "",
-
+            confirmButtonText: buttonName === "Add"
+                ? "Yes, Add"
+                : "Yes, Update",
             cancelButtonText: "Cancel",
-
             closeOnConfirm: false,
-
             closeOnCancel: true
 
-        },
-            function (isConfirm) {
+        }, function (isConfirm) {
 
-                if (!isConfirm) {
-                    return;
-                }
+            if (!isConfirm) {
+                return;
+            }
 
+            $.ajax({
 
-                let token =
-                    $('input[name="__RequestVerificationToken"]').val();
+                url: '/Account/Add',
+                type: 'POST',
 
+                data: $.extend({}, payload, {
+                    __RequestVerificationToken: token
+                }),
 
-                console.log("Request:", encrypted);
-                console.log("ID:", id);
-                console.log("btnval:", buttonName);
-                console.log("Token:", token);
+                success: function (response) {
 
+                    console.log("Server Response:", response);
 
-                $.ajax({
+                    if (response.success === false) {
 
-                    url: '/Account/Add',
+                        let firstError =
+                            Object.values(response.errors || {}).flat()[0]
+                            || response.message
+                            || "Validation failed.";
 
-                    type: 'POST',
-
-                    data: {
-
-                        Request: encrypted,
-                        __RequestVerificationToken: token
-                    },
-
-
-                    success: function (response) {
-
-                        console.log(response);
-
-                        // SERVER-SIDE VALIDATION ERROR
-                        if (response && response.success === false) {
-
-                            let firstError = Object.values(response.errors || {})
-                                .flat()[0] || response.message || "";
-
-                            $("#addnameValidation")
-                                .text(firstError)
-                                .removeClass("d-none");
-
-                            swal({
-                                title: "Failed!",
-                                text: response.message || "Validation failed.",
-                                type: "error",
-                                confirmButtonColor: "#DD6B55"
-                            });
-
-                            return;
-                        }
-
+                        $("#addnameValidation")
+                            .text(firstError)
+                            .removeClass("d-none");
 
                         swal({
-
-                            title: "",
-
-                            text:
-                                buttonName === "Add"
-                                    ? "User Created Successfully!"
-                                    : "",
-
-                            type: "success",
-
-                            confirmButtonColor: "#DD6B55",
-
-                            confirmButtonText: "OK",
-
-                            closeOnConfirm: true
-
-                        },
-                            function () {
-
-                                window.location.href =
-                                    '/Account/Hierarchy';
-
-                            });
-
-                    },
-
-
-                    error: function (xhr) {
-
-                        console.error(
-                            "Status:",
-                            xhr.status
-                        );
-
-                        console.error(
-                            "Response:",
-                            xhr.responseText
-                        );
-
-
-                        swal({
-
-                            title:
-                                buttonName === "Add"
-                                    ? "Add Failed!"
-                                    : "Update Failed!",
-
-                            text:
-                                xhr.responseText ||
-                                "Something went wrong.",
-
-                            type: "error",
-
-                            confirmButtonColor: "#DD6B55"
-
+                            title: "Failed!",
+                            text: firstError,
+                            type: "error"
                         });
 
+                        return;
                     }
 
-                });
+                    swal({
+                        title: "",
+                        text: buttonName === "Add"
+                            ? "User Created Successfully!"
+                            : "",
+                        type: "success",
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "OK"
+                    }, function () {
+
+                        window.location.href = '/Account/Hierarchy';
+
+                    });
+
+                },
+
+                error: function (xhr, status, error) {
+
+                    console.log("HTTP Status:", xhr.status);
+                    console.log("Error:", error);
+                    console.log("Response:", xhr.responseText);
+
+                    swal({
+                        title: "Request Failed!",
+                        text: xhr.responseText || error,
+                        type: "error"
+                    });
+
+                }
 
             });
 
+        });
 
         return false;
 
     });
+
 });
+
+
+
+                   
+

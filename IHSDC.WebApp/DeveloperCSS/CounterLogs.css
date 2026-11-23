@@ -7,7 +7,7 @@
         margin-bottom: 10px;
     }
 
-    body:: after
+    body::after
 
 {
     content: none !important;

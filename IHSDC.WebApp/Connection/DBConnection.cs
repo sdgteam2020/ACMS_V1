@@ -84,7 +84,13 @@ namespace IHSDC.WebApp.Connection
 
         public IList<CorpsCRUD> CorpsCRUD(int procid, CorpsCRUD model)
         {
-            var data = GetDataInList<CorpsCRUD>("proc_Corps_CRUD @procId=@p0,@CorpsId=@p1,@CorpsName=@p2 ,@UserId=@p3,@ComdId=@p4,@Orderby=@p5", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(model.CorpsId) ?? DBNull.Value), new SqlParameter("@p2", (object)(model.CorpsName) ?? DBNull.Value), new SqlParameter("@p3", (object)(Convert.ToInt16(SessionManager.UserIntId)) ?? DBNull.Value), new SqlParameter("@p4", (object)(model.ComdId) ?? DBNull.Value), new SqlParameter("@p5", (object)(model.Orderby) ?? DBNull.Value)).ToList();
+            int UserId = Convert.ToInt16(SessionManager.UserIntId);
+            if (UserId == 0)
+            {
+                UserId = model.UserId;
+            }
+               
+            var data = GetDataInList<CorpsCRUD>("proc_Corps_CRUD @procId=@p0,@CorpsId=@p1,@CorpsName=@p2 ,@UserId=@p3,@ComdId=@p4,@Orderby=@p5", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(model.CorpsId) ?? DBNull.Value), new SqlParameter("@p2", (object)(model.CorpsName) ?? DBNull.Value), new SqlParameter("@p3", UserId), new SqlParameter("@p4", (object)(model.ComdId) ?? DBNull.Value), new SqlParameter("@p5", (object)(model.Orderby) ?? DBNull.Value)).ToList();
             return data;
         }
         #endregion
@@ -108,7 +114,12 @@ namespace IHSDC.WebApp.Connection
 
         public IList<UnitCRUD> UnitCRUDNew(int procid, UnitCRUD model)
         {
-            var data = GetDataInList<UnitCRUD>("proc_Unit_CRUD @procId=@p0,@Unit_ID=@p1,@UnitName=@p2,@Command=@p3 ,@Corps=@p4 ,@Sqn=@p5,@BdeCat=@p6  ,@TypeOfUnit=@p7  ,@UserId=@p8,@Isflight=@p9,@ScheduleId=@p10,@Inbox_Id = @p11", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(model.Unit_ID) ?? DBNull.Value), new SqlParameter("@p2", (object)(model.UnitName) ?? DBNull.Value), new SqlParameter("@p3", (object)(model.ComdId) ?? DBNull.Value), new SqlParameter("@p4", (object)(model.CorpId) ?? DBNull.Value), new SqlParameter("@p5", (object)(model.SqnId) ?? DBNull.Value), new SqlParameter("@p6", (object)(model.BdeCatId) ?? DBNull.Value), new SqlParameter("@p7", (object)(model.TypeOfUnit) ?? DBNull.Value), new SqlParameter("@p8", (object)(Convert.ToInt16(SessionManager.UserIntId)) ?? DBNull.Value), new SqlParameter("@p9", (object)(model.IsFlight) ?? DBNull.Value), new SqlParameter("@p10", (object)(model.ScheduleId) ?? DBNull.Value), new SqlParameter("@p11", (object)(model.InboxID) ?? DBNull.Value)).ToList();
+            int UserId = Convert.ToInt16(SessionManager.UserIntId);
+            if (UserId == 0)
+            {
+                UserId = model.UserId;
+            }
+            var data = GetDataInList<UnitCRUD>("proc_Unit_CRUD @procId=@p0,@Unit_ID=@p1,@UnitName=@p2,@Command=@p3 ,@Corps=@p4 ,@Sqn=@p5,@BdeCat=@p6  ,@TypeOfUnit=@p7  ,@UserId=@p8,@Isflight=@p9,@ScheduleId=@p10,@Inbox_Id = @p11", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(model.Unit_ID) ?? DBNull.Value), new SqlParameter("@p2", (object)(model.UnitName) ?? DBNull.Value), new SqlParameter("@p3", (object)(model.ComdId) ?? DBNull.Value), new SqlParameter("@p4", (object)(model.CorpId) ?? DBNull.Value), new SqlParameter("@p5", (object)(model.SqnId) ?? DBNull.Value), new SqlParameter("@p6", (object)(model.BdeCatId) ?? DBNull.Value), new SqlParameter("@p7", (object)(model.TypeOfUnit) ?? DBNull.Value), new SqlParameter("@p8", UserId), new SqlParameter("@p9", (object)(model.IsFlight) ?? DBNull.Value), new SqlParameter("@p10", (object)(model.ScheduleId) ?? DBNull.Value), new SqlParameter("@p11", (object)(model.InboxID) ?? DBNull.Value)).ToList();
             return data;
         }
 
@@ -281,7 +292,12 @@ namespace IHSDC.WebApp.Connection
         #region ApptCRUD
         public IList<ApptCRUD> ApptCRUD(int procid, ApptCRUD model)
         {
-            var data = GetDataInList<ApptCRUD>("proc_Appt_CRUD @procId=@p0,@ApptId=@p1,@Appt=@p2,@ApptAbbreviation=@p3  ,@UserId=@p4,@Orderby=@p5,@NewOrderby=@p6", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(model.ApptId) ?? DBNull.Value), new SqlParameter("@p2", (object)(model.Appt) ?? DBNull.Value), new SqlParameter("@p3", (object)(model.ApptAbbreviation) ?? DBNull.Value), new SqlParameter("@p4", (object)(Convert.ToInt16(SessionManager.UserIntId)) ?? DBNull.Value), new SqlParameter("@p5", (object)(model.Orderby) ?? DBNull.Value), new SqlParameter("@p6", (object)(model.NewOrderby) ?? DBNull.Value)).ToList();
+            int UserId = Convert.ToInt16(SessionManager.UserIntId);
+            if (UserId == 0)
+            {
+                UserId = model.UserId;
+            }
+            var data = GetDataInList<ApptCRUD>("proc_Appt_CRUD @procId=@p0,@ApptId=@p1,@Appt=@p2,@ApptAbbreviation=@p3  ,@UserId=@p4,@Orderby=@p5,@NewOrderby=@p6", new SqlParameter("@p0", (object)(procid) ?? DBNull.Value), new SqlParameter("@p1", (object)(model.ApptId) ?? DBNull.Value), new SqlParameter("@p2", (object)(model.Appt) ?? DBNull.Value), new SqlParameter("@p3", (object)(model.ApptAbbreviation) ?? DBNull.Value), new SqlParameter("@p4", UserId), new SqlParameter("@p5", (object)(model.Orderby) ?? DBNull.Value), new SqlParameter("@p6", (object)(model.NewOrderby) ?? DBNull.Value)).ToList();
             return data;
         }
         #endregion

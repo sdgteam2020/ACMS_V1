@@ -120,7 +120,7 @@ $(document).on("submit", "#apptFormhoutside", function (e) {
 
                     $('#addApptModal').modal('hide');
 
-                    window.location.href = '/SignUp/AddAppt';
+                   // window.location.href = '/SignUp/SignUp';
                 });
             },
 

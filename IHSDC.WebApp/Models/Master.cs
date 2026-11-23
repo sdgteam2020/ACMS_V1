@@ -50,8 +50,8 @@ namespace IHSDC.WebApp.Models
         public int PolicyId { get; set; }
 
         [Required(ErrorMessage = "Please enter the policy name.")]
-        [StringLength(100, MinimumLength = 3,
-            ErrorMessage = "Policy Name must be between 3 and 100 characters.")]
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "Policy Name must be between 3 and 50 characters.")]
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string PolicyName { get; set; }
@@ -117,6 +117,11 @@ namespace IHSDC.WebApp.Models
         public int FolderControlId { get; set; }
         [Required(ErrorMessage = "Please select a folder name.")]
         public int PolicyId { get; set; }
+        [Required(ErrorMessage = "Please enter the policy name.")]
+        [StringLength(50, MinimumLength = 3,
+            ErrorMessage = "Policy Name must be between 3 and 50 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
+            ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string PolicyName { get; set; }
 
         public string RefLetter { get; set; }
@@ -155,8 +160,8 @@ namespace IHSDC.WebApp.Models
         public int BranchId { get; set; }
 
         [Required(ErrorMessage = "Please enter the branch name.")]
-        [StringLength(50, MinimumLength = 3,
-            ErrorMessage = "Branch Name must be between 3 and 50 characters.")]
+        [StringLength(200, MinimumLength = 3,
+            ErrorMessage = "Branch Name must be between 3 and 200 characters.")]
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string BranchName { get; set; }
@@ -221,14 +226,14 @@ namespace IHSDC.WebApp.Models
     {
         public int RankId { get; set; }
         [Required(ErrorMessage = "Please enter the rank name.")]
-        [StringLength(50, MinimumLength = 3,
-            ErrorMessage = "Rank Name must be between 3 and 50 characters.")]
+        [StringLength(150, MinimumLength = 3,
+            ErrorMessage = "Rank Name must be between 3 and 150 characters.")]
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string RankName { get; set; }
         [Required(ErrorMessage = "Please enter the rank abbreviation.")]
-        [StringLength(50, MinimumLength = 3,
-            ErrorMessage = "RankAbbreviation must be between 3 and 50 characters.")]
+        [StringLength(150, MinimumLength = 3,
+            ErrorMessage = "RankAbbreviation must be between 3 and 150 characters.")]
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string RankAbbreviation { get; set; }
@@ -239,8 +244,8 @@ namespace IHSDC.WebApp.Models
     {
         public int CorpsId { get; set; }
         [Required(ErrorMessage = "Please enter the corps name.")]
-        [StringLength(50, MinimumLength = 3,
-            ErrorMessage = "CorpsName must be between 3 and 50 characters.")]
+        [StringLength(150, MinimumLength = 3,
+            ErrorMessage = "CorpsName must be between 3 and 150 characters.")]
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string CorpsName { get; set; }
@@ -287,7 +292,7 @@ namespace IHSDC.WebApp.Models
         public string Command { get; set; }
         [Required(ErrorMessage = "Please select a comd.")]
         public int ComdId { get; set; }
-
+       
         public int ComdIdUnit { get; set; }
         public int BdeCatId { get; set; }
 
@@ -369,8 +374,8 @@ namespace IHSDC.WebApp.Models
         public int TypeOfConfId { get; set; }
 
         [Required(ErrorMessage = "Please enter the conf name.")]
-        [StringLength(50, MinimumLength = 3,
-          ErrorMessage = "TypeOfConf must be between 3 and 50 characters.")]
+        [StringLength(100, MinimumLength = 3,
+          ErrorMessage = "TypeOfConf must be between 3 and 100 characters.")]
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string TypeOfConf { get; set; }
@@ -489,12 +494,12 @@ namespace IHSDC.WebApp.Models
     {
         public int ApptId { get; set; }
         [Required(ErrorMessage = "Please enter the appt name.")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Appt must be between 3 and 50 characters.")]
+        [StringLength(150, MinimumLength = 3, ErrorMessage = "Appt must be between 3 and 150 characters.")]
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string Appt { get; set; }
         [Required(ErrorMessage = "Please enter the appt abbreviation.")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "ApptAbbreviation must be between 3 and 50 characters.")]
+        [StringLength(150, MinimumLength = 3, ErrorMessage = "ApptAbbreviation must be between 3 and 150 characters.")]
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string ApptAbbreviation { get; set; }

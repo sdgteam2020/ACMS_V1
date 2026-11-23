@@ -78,7 +78,7 @@
             <div class="row custom-row-margin">
                 <div class="col-md-12">
                     <label><b>DGs Name </b></label><span class="custom-required-text">*</span>
-                    @Html.TextBoxFor(m => m.CorpsName, new { @class = "form-control", @maxlength = "25", @autocomplete = "off" })
+                    @Html.TextBoxFor(m => m.CorpsName, new { @class = "form-control", @maxlength = "150", @autocomplete = "off" })
 
                     @Html.ValidationMessageFor(model => model.CorpsName, "", new { @class = "text-danger" })
 

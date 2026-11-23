@@ -180,7 +180,7 @@
                                     <label class="signup-style-07">Branch</label><font class="signup-style-08">*</font>
 
 
-                                    <a id="addbranch" href="#" data-url="@Url.Action("AddUnitNew", "SignUp")" title="Click to Add New Branch in case your respective Branch is not already avbl in dropdown list.">
+                                    <a id="addbranch" href="#" data-url="@Url.Action("AddUnit", "SignUp")" title="Click to Add New Branch in case your respective Branch is not already avbl in dropdown list.">
 
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     </a>
@@ -243,61 +243,78 @@
                     </form>
                 }
             </div>
-
             <div id="addunitmodel" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-fullscreen signup-style-13" role="document">
+                    <div class="modal-content modal-content-fullscreen signup-style-13">
                         <div class="modal-header d-flex justify-content-center signup-style-10">
-                            <h5 class="modal-title">Add Branch</h5>
+                            <h5 class="modal-title">Add Appointment</h5>
                             <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12">
-
-                                <div class="col-md-12">
-                                    <label><b>Comd/PSOs Name</b></label><font class="signup-style-08">*</font>
-                                    @Html.DropDownList("ComdIdUnit", (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true" })
-                                </div>
-                                <div class="col-md-12">
-                                    <label><b>DGs Name</b></label><font class="signup-style-08">*</font>
-
-                                    <input type="text" class="d-none" id="CorpIdNew" />
-
-                                    <select id="spnCorpUnit" class="form-control d-flex"></select>
-                                </div>
-                                <div class="col-md-12">
-                                    <label><b>Branch Name</b></label><font class="signup-style-08">*</font>
-
-                                    <input type="text" class="form-control" id="UnitName" maxlength="50" />
-
-                                </div>
-                                <div class="col-md-12 text-right">
-                                    <button type="button" value="Add" name="btnval" class="btn btn-success signup-style-12">Add</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-body-list">
-
-
+                        <div class="modal-body modal-body-fullscreen signup-style-14">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
                         </div>
                     </div>
                 </div>
             </div>
+            @*<div id="addunitmodel" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center signup-style-10">
+                        <h5 class="modal-title">Add Branch</h5>
+                        <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="col-md-12">
+                                <label><b>Comd/PSOs Name</b></label><font class="signup-style-08">*</font>
+                                @Html.DropDownList("ComdIdUnit", (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true" })
+                            </div>
+                            <div class="col-md-12">
+                                <label><b>DGs Name</b></label><font class="signup-style-08">*</font>
+
+                                <input type="text" class="d-none" id="CorpIdNew" />
+
+                                <select id="spnCorpUnit" class="form-control d-flex"></select>
+                            </div>
+                            <div class="col-md-12">
+                                <label><b>Branch Name</b></label><font class="signup-style-08">*</font>
+
+                                <input type="text" class="form-control" id="UnitName" maxlength="50" />
+
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <button type="button" value="Add" name="btnval" class="btn btn-success signup-style-12">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-body-list">
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
 
 
             <div id="addApptModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-fullscreen signup-style-13" role="document">
                     <div class="modal-content modal-content-fullscreen signup-style-13">
                         <div class="modal-header d-flex justify-content-center signup-style-10">
-                            <h5 class="modal-title">Add Appointment</h5>
+                            <h5 class="modal-title">Add Appointmenthhhgg</h5>
                             <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -346,3 +363,4 @@
 <script src="@Url.Content("~/DevelopersJs/SignUp.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/Appt.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/Corps.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/DevelopersJs/Unit.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

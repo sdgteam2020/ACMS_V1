@@ -169,8 +169,9 @@ $(document).ready(function () {
 
 
     document.getElementById('setAppt').addEventListener('click', function (e) {
-
+        debugger;
         e.preventDefault();
+       
 
         let url = this.getAttribute('data-url');
 
@@ -449,7 +450,7 @@ function AddConfirmationBranch(obj, ActionName, Submit, event) {
     formData.append("spnCorpUnit", spnCorpUnit);
 
     $.ajax({
-        // url: '@Url.Action("AddUnitNew", "SignUp")',
+       
         url: '/SignUp/AddUnitNew',
         type: 'POST',
         data: formData,
@@ -507,6 +508,45 @@ $("#chk").click(function () {
           
         });
     });
+
+document.getElementById('addbranch').addEventListener('click', function (e) {
+    debugger;
+    e.preventDefault();
+
+
+    let url = this.getAttribute('data-url');
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Unable to load form.");
+            }
+            return response.text();
+        })
+        .then(html => {
+
+            let modalBody = document.querySelector(
+                '#addunitmodel .modal-body'
+            );
+
+            modalBody.innerHTML = html;
+
+            let $form = $('#apptFormhoutside');
+
+            // Initialize validation for dynamically loaded form
+            if ($.validator && $.validator.unobtrusive) {
+                $form.removeData("validator");
+                $form.removeData("unobtrusiveValidation");
+
+                $.validator.unobtrusive.parse($form);
+            }
+
+            $('#addunitmodel').modal('show');
+        })
+        .catch(error => console.error(
+            'Error loading AddUnit form:', error
+        ));
+});
 
 $(document).ready(function () {
 

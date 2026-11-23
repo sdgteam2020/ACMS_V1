@@ -403,7 +403,7 @@ namespace IHSDC.WebApp.Models
         [StringLength(10, MinimumLength = 3,
             ErrorMessage = "mob no must be between 3 and 10 number.")]
         [Display(Name = "Mob No")]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Only numbers allowed")]
+        [RegularExpression(@"^[0-9]{10}+$", ErrorMessage = "Mob No can only be numbers.")]
         public string MobNo { get; set; }
 
         public EditUserViewModel() { }

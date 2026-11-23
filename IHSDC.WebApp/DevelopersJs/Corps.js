@@ -3,7 +3,7 @@
         $('.dropdownsearch').select2();
     });
 
-    let messaget = '@ViewBag.ButtonName';
+    
 
 
     $(".OrderbyId").off("click").click(function () {
@@ -124,7 +124,7 @@ $(document).on("submit", "#corpsFormoutside", function (e) {
 
                     $('#addDgsModal').modal('hide');
 
-                    window.location.href = '/SignUp/AddCorps';
+                   
                 });
             },
 

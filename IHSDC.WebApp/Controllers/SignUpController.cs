@@ -152,7 +152,8 @@ namespace IHSDC.WebApp.Controllers
                     }
 
                     ViewBag.ButtonName = "Add";
-                    return Json(new { message = TempData["message"] });
+                return RedirectToAction("AddCorps", new { id = string.Empty });
+              
                 }
 
             catch (SqlException ex)
@@ -228,6 +229,7 @@ namespace IHSDC.WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddUnit(string id, UnitCRUD model, string btnval)
         {
             if (ModelState.IsValid)
@@ -283,6 +285,7 @@ namespace IHSDC.WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddUnitNew(string id, UnitCRUD model, string btnval, string spnCorpUnit)
         {
 
@@ -290,8 +293,33 @@ namespace IHSDC.WebApp.Controllers
             model.CorpId = Convert.ToInt32(spnCorpUnitValue);
             model.ComdId = model.ComdIdUnit;
 
-            model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-           
+            model.UserId = 1;
+            TryValidateModel(model);
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .ToDictionary(
+                        x => x.Key,
+
+                        x => x.Value.Errors
+                            .Select(e =>
+                                string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                    ? "Invalid value."
+                                    : e.ErrorMessage
+                            )
+                            .First()
+                    );
+
+                return Json(new
+                {
+                    success = false,
+                    message = "Please correct the error field.",
+                    errors = errors
+                });
+            }
+
             var data = con.UnitCRUDNew(1, model);
             if (data[0].IsSuccess == true)
             {
@@ -307,8 +335,8 @@ namespace IHSDC.WebApp.Controllers
 
 
             ViewBag.ButtonName = "Add";
-          
-            return Json(new { message = TempData["message"] });
+
+            return RedirectToAction("AddUnitNew", new { id = string.Empty });
         }
 
         public ActionResult DeleteUnit(string id)
@@ -472,8 +500,8 @@ namespace IHSDC.WebApp.Controllers
                 }
                 ViewBag.ButtonName = "Add";
 
-                return Json(new { message = TempData["message"] });
-               
+                return RedirectToAction("AddAppt", new { id = string.Empty });
+
             }
             catch (SqlException ex)
             {

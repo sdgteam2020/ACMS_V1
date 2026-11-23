@@ -3430,7 +3430,11 @@ namespace IHSDC.WebApp.Controllers
             //GetIpAddress obj = new GetIpAddress();
             var ipaddress = ClientIPAddress.GetIPAddress();
             //var ipaddress = Request.UserHostAddress;
-            string settingValue = ConfigurationManager.AppSettings["ServerIPAddress"];       
+            string settingValue =
+                Environment.GetEnvironmentVariable(
+                    "ACMS_ServerIPAddress",
+                    EnvironmentVariableTarget.Machine);
+                 
             string userrole = SessionManager.RoleId;
             if (ipaddress == settingValue && userrole == enum1.Administrator.ToString())
             {            

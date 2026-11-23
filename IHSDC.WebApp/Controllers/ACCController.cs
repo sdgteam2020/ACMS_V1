@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -212,156 +213,9 @@ namespace IHSDC.WebApp.Controllers
         }
        
         [HttpPost]
-        public ActionResult AddAgenda(AgendaPointCRUD model)
+        [ValidateAntiForgeryToken]
+        public ActionResult AddAgenda(EncryptedRequestModel encryptedRequest)
         {
-            string FilePaths = "";
-            try
-            {
-                model.UserId = Convert.ToInt32(SessionManager.UserIntId);
-                model.Unit_ID = Convert.ToInt32(SessionManager.Unit_ID);
-
-                if (Convert.ToString(SessionManager.RoleId) != enum1.Administrator)
-                {
-                    if (model.Inbox_ID == 0 && Request.Files[0].ContentLength == 0)
-                    {
-                        DisplayMessage("Please upload Pdf file", "", "w");
-                        return RedirectToAction("AddAgenda", new { id = string.Empty, Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") });
-                    }
-
-                    if (model.Inbox_ID == 0 && Request.Files[1].ContentLength == 0)
-                    {
-                        DisplayMessage("Please upload Word file", "", "w");
-                        return RedirectToAction("AddAgenda", new { id = string.Empty, Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") });
-                    }
-
-                    ScheduleLetter letter = new ScheduleLetter();
-                    letter.ScheduleId = model.Schedule_ID;
-                    var LetterData = con.ScheduleLetter_CRUD(10, letter);
-                    var LetterSubject = LetterData[0].Subject;
-                    var ConfTypeId = LetterData[0].TypeOfConfId;
-
-
-
-                    if (model.Inbox_ID == 0 || Request.Files[0].ContentLength > 0)
-                    {
-                        var file = Request.Files[0];
-                        if (file != null && file.ContentLength > 0)
-                        {
-
-                            var originalFileName = Regex.Replace(Path.GetFileName(file.FileName), @"[^a-zA-Z0-9_.]+", " ");
-                            var newFileName = GenerateNewFileName(originalFileName);
-
-                            var fileModel = new FileModel
-                            {
-                                FileName = newFileName
-                            };
-
-                            using (var reader = new BinaryReader(file.InputStream))
-                            {
-                                fileModel.Data = reader.ReadBytes(file.ContentLength);
-                            }
-
-
-                            if (!Directory.Exists(Path.Combine(Server.MapPath("~/Uploads"), ConfTypeId + "_" + LetterSubject + " /pdf ")))
-                            {
-                                Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Uploads"), ConfTypeId + "_" + LetterSubject + " /pdf "));
-                            }
-
-                            var filePath = Server.MapPath("~/Uploads") + "\\" + ConfTypeId + "_" + LetterSubject + "\\pdf\\" + fileModel.FileName;
-                           
-                            System.IO.File.WriteAllBytes(filePath, fileModel.Data);
-                            FilePaths = FilePaths + "," + fileModel.FileName;
-
-                            model.Upload = fileModel.FileName;
-                        }
-                    }
-                    if (model.Inbox_ID == 0 || Request.Files[1].ContentLength > 0)
-                    {
-                        var file = Request.Files[1];
-                        if (file != null && file.ContentLength > 0)
-                        {
-                            // var originalFileName = Path.GetFileName(file.FileName);
-                            var originalFileName = Regex.Replace(Path.GetFileName(file.FileName), @"[^a-zA-Z0-9_.]+", " ");
-
-
-                            var newFileName = GenerateNewFileName(originalFileName);
-
-                            var fileModel = new FileModel
-                            {
-                                FileName = newFileName
-                            };
-
-                            using (var reader = new BinaryReader(file.InputStream))
-                            {
-                                fileModel.Data = reader.ReadBytes(file.ContentLength);
-                            }
-
-                            if (!Directory.Exists(Path.Combine(Server.MapPath("~/Uploads"), ConfTypeId + "_" + LetterSubject + " /Word ")))
-                            {
-                                Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Uploads"), ConfTypeId + "_" + LetterSubject + " /Word "));
-                            }
-
-                            var filePath = Server.MapPath("~/Uploads") + "\\" + ConfTypeId + "_" + LetterSubject + "\\Word\\" + fileModel.FileName;
-                            //model.WordFilePath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Uploads/" + ConfTypeId + "_" + LetterSubject + "/Word/" + fileModel.FileName;
-                            System.IO.File.WriteAllBytes(filePath, fileModel.Data);
-                            FilePaths = FilePaths + "," + fileModel.FileName;
-
-                            model.WordFile = fileModel.FileName;
-                        }
-                    }
-
-
-                    if ((model.Inbox_ID != 0))
-                    {
-                        if (model.FileName != null)
-                        {
-                            if (model.Upload == null)
-                            {
-                                model.Upload = model.FileName;
-                            }
-                        }
-                    }
-
-                    var data = con.CreateAgendaPoint(1, model);
-                    if (data[0].IsSuccess == true)
-                    {
-                        DisplayMessage(data[0].Msg, "", data[0].MsgStatus);
-                        model.Inbox_ID = Convert.ToInt32(data[0].MidMsg);
-                    }
-
-
-                }
-                ViewBag.ButtonName = "Save";
-
-                if (model.Inbox_ID == 0)
-                {
-                    return RedirectToAction("AddAgenda", new { id = string.Empty });
-                }
-                else
-                {
-                    Session.Remove("AllowedAgendaIds");
-                    return RedirectToAction("AddAgenda", new { id = RepositryManager.EncryptionManager.Encryption(model.Inbox_ID.ToString()), Edit = RepositryManager.EncryptionManager.Encryption("1") });
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle generic ones here.  
-                try
-                {
-                    con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
-                }
-                catch (Exception ex1)
-                {
-                    _ = ex1.Message;
-                    return Redirect("/Error/Error");
-                }
-                return Redirect("/Error/Error");
-            }
-        }
-        [HttpPost]
-        public ActionResult UpdateAgendaEncrypted(EncryptedRequestModel encryptedRequest)
-        {
-            
             string FilePaths = "";
             try
             {
@@ -416,29 +270,190 @@ namespace IHSDC.WebApp.Controllers
                         message = "Unable to decrypt Agenda details."
                     });
                 }
-
+               
                 model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                 model.Unit_ID = Convert.ToInt32(SessionManager.Unit_ID);
 
+                
+
                 if (Convert.ToString(SessionManager.RoleId) != enum1.Administrator)
                 {
-                    if (model.Inbox_ID == 0 && Request.Files[0].ContentLength == 0)
+                    TryValidateModel(model);
+
+                    var pdfFile = Request.Files["Upload"];
+                    var wordFile = Request.Files["WordFile"];
+
+                    const int maxFileSize = 5 * 1024 * 1024;
+
+                    // PDF validation
+                    if (model.Inbox_ID == 0 &&
+                        (pdfFile == null || pdfFile.ContentLength == 0))
                     {
-                        DisplayMessage("Please upload Pdf file", "", "w");
-                        return RedirectToAction("AddAgenda", new { id = string.Empty, Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") });
+                        ModelState.AddModelError(
+                            "Upload",
+                            "Please upload PDF File.");
+                    }
+                    else if (pdfFile != null && pdfFile.ContentLength > 0)
+                    {
+                        string pdfExtension = Path.GetExtension(pdfFile.FileName);
+
+                        if (!string.Equals(pdfExtension, ".pdf",
+                            StringComparison.OrdinalIgnoreCase))
+                        {
+                            ModelState.AddModelError(
+                                "Upload",
+                                "Only PDF files are allowed.");
+                        }
+                        else if (pdfFile.ContentLength >= maxFileSize)
+                        {
+                            ModelState.AddModelError(
+                                "Upload",
+                                "PDF file must be less than 5 MB.");
+                        }
                     }
 
-                    if (model.Inbox_ID == 0 && Request.Files[1].ContentLength == 0)
+                    // Word validation
+                    if (model.Inbox_ID == 0 &&
+                        (wordFile == null || wordFile.ContentLength == 0))
                     {
-                        DisplayMessage("Please upload Word file", "", "w");
-                        return RedirectToAction("AddAgenda", new { id = string.Empty, Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") });
+                        ModelState.AddModelError(
+                            "WordFile",
+                            "Please upload Word File.");
                     }
+                    else if (wordFile != null && wordFile.ContentLength > 0)
+                    {
+                        string wordExtension = Path.GetExtension(wordFile.FileName);
+
+                        if (!string.Equals(wordExtension, ".docx",
+                            StringComparison.OrdinalIgnoreCase))
+                        {
+                            ModelState.AddModelError(
+                                "WordFile",
+                                "Only DOCX files are allowed.");
+                        }
+                        else if (wordFile.ContentLength >= maxFileSize)
+                        {
+                            ModelState.AddModelError(
+                                "WordFile",
+                                "Word file must be less than 5 MB.");
+                        }
+                    }
+
+                    // Stop before writing any file if validation fails.
+                    if (!ModelState.IsValid)
+                    {
+                        var errors = ModelState
+                            .Where(x => x.Value.Errors.Count > 0)
+                            .ToDictionary(
+                                x => x.Key,
+                                x => x.Value.Errors
+                                    .Select(e => e.ErrorMessage)
+                                    .First()
+                            );
+
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Please correct the highlighted fields.",
+                            errors = errors
+                        });
+                    }
+
 
                     ScheduleLetter letter = new ScheduleLetter();
                     letter.ScheduleId = model.Schedule_ID;
                     var LetterData = con.ScheduleLetter_CRUD(10, letter);
                     var LetterSubject = LetterData[0].Subject;
                     var ConfTypeId = LetterData[0].TypeOfConfId;
+
+
+
+                    if (model.Inbox_ID == 0)
+                    {
+                        // PDF Upload
+                        if (pdfFile != null && pdfFile.ContentLength > 0)
+                        {
+                            var originalFileName = Regex.Replace(
+                                Path.GetFileName(pdfFile.FileName),
+                                @"[^a-zA-Z0-9_.]+", " ");
+
+                            var newFileName = GenerateNewFileName(originalFileName);
+
+                            var fileModel = new FileModel
+                            {
+                                FileName = newFileName
+                            };
+
+                            using (var reader = new BinaryReader(pdfFile.InputStream))
+                            {
+                                fileModel.Data = reader.ReadBytes(pdfFile.ContentLength);
+                            }
+
+                            var pdfDirectory = Path.Combine(
+                                Server.MapPath("~/Uploads"),
+                                ConfTypeId + "_" + LetterSubject,
+                                "pdf");
+
+                            if (!Directory.Exists(pdfDirectory))
+                            {
+                                Directory.CreateDirectory(pdfDirectory);
+                            }
+
+                            var filePath = Path.Combine(
+                                pdfDirectory,
+                                fileModel.FileName);
+
+                            System.IO.File.WriteAllBytes(filePath, fileModel.Data);
+
+                            FilePaths += "," + fileModel.FileName;
+
+                            model.Upload = fileModel.FileName;
+                        }
+
+                        // Word Upload
+                        if (wordFile != null && wordFile.ContentLength > 0)
+                        {
+                            var originalFileName = Regex.Replace(
+                                Path.GetFileName(wordFile.FileName),
+                                @"[^a-zA-Z0-9_.]+", " ");
+
+                            var newFileName = GenerateNewFileName(originalFileName);
+
+                            var fileModel = new FileModel
+                            {
+                                FileName = newFileName
+                            };
+
+                            using (var reader = new BinaryReader(wordFile.InputStream))
+                            {
+                                fileModel.Data = reader.ReadBytes(wordFile.ContentLength);
+                            }
+
+                            var wordDirectory = Path.Combine(
+                                Server.MapPath("~/Uploads"),
+                                ConfTypeId + "_" + LetterSubject,
+                                "Word");
+
+                            if (!Directory.Exists(wordDirectory))
+                            {
+                                Directory.CreateDirectory(wordDirectory);
+                            }
+
+                            var filePath = Path.Combine(
+                                wordDirectory,
+                                fileModel.FileName);
+
+                            System.IO.File.WriteAllBytes(filePath, fileModel.Data);
+
+                            FilePaths += "," + fileModel.FileName;
+
+                            model.WordFile = fileModel.FileName;
+                        }
+
+                    }
+
+
+
                     if ((model.Inbox_ID != 0))
                     {
                         if (model.FileName != null)
@@ -449,27 +464,50 @@ namespace IHSDC.WebApp.Controllers
                             }
                         }
                     }
-
+                   
                     var data = con.CreateAgendaPoint(1, model);
+
                     if (data[0].IsSuccess == true)
                     {
-                        //DisplayMessage(data[0].Msg, "", data[0].MsgStatus);
-                        //model.Inbox_ID = Convert.ToInt32(data[0].MidMsg);
-                        //return RedirectToAction("AddAgenda", new { id = string.Empty });
+                        DisplayMessage(data[0].Msg, "", data[0].MsgStatus);
+
+                        model.Inbox_ID = Convert.ToInt32(data[0].MidMsg);
+
+                        Session.Remove("AllowedAgendaIds");
+
+                        string redirectUrl = Url.Action("AddAgenda", "ACC", new
+                        {
+                            id = RepositryManager.EncryptionManager.Encryption(
+                                model.Inbox_ID.ToString()),
+                            Edit = RepositryManager.EncryptionManager.Encryption("1")
+                        });
+
                         return Json(new
                         {
                             success = true,
-                            message = "Update Successfully"
+                            message = data[0].Msg,
+                            redirectUrl = redirectUrl
                         });
                     }
 
+                    return Json(new
+                    {
+                        success = false,
+                        message = data[0].Msg ?? "Unable to save Agenda."
+                    });
 
                 }
-                return Json(new
+                ViewBag.ButtonName = "Save";
+
+                if (model.Inbox_ID == 0)
                 {
-                    success = false,
-                    message = "Invalid or corrupted encrypted payload."
-                });
+                    return RedirectToAction("AddAgenda", new { id = string.Empty });
+                }
+                else
+                {
+                    Session.Remove("AllowedAgendaIds");
+                    return RedirectToAction("AddAgenda", new { id = RepositryManager.EncryptionManager.Encryption(model.Inbox_ID.ToString()), Edit = RepositryManager.EncryptionManager.Encryption("1") });
+                }
             }
             catch (Exception ex)
             {
@@ -481,21 +519,149 @@ namespace IHSDC.WebApp.Controllers
                 catch (Exception ex1)
                 {
                     _ = ex1.Message;
-                    return Json(new
-                    {
-                        success = false,
-                        message = "Invalid or corrupted encrypted payload."
-                    });
+                    return Redirect("/Error/Error");
                 }
-                return Json(new
-                {
-                    success = false,
-                    message = "Invalid or corrupted encrypted payload."
-                });
+                return Redirect("/Error/Error");
             }
+        }
+        //[HttpPost]
+        //public ActionResult UpdateAgendaEncrypted(EncryptedRequestModel encryptedRequest)
+        //{
+            
+        //    string FilePaths = "";
+        //    try
+        //    {
+        //        var session = SessionHeplers.GetObject<DtoSessions>(
+        //           System.Web.HttpContext.Current.Session,
+        //           "Token");
+
+        //        if (session == null)
+        //        {
+        //            return Json(new
+        //            {
+        //                success = false,
+        //                message = "Session expired."
+        //            });
+        //        }
+
+        //        // Check encrypted request and Payload
+        //        if (encryptedRequest == null ||
+        //            string.IsNullOrWhiteSpace(encryptedRequest.Payload))
+        //        {
+        //            return Json(new
+        //            {
+        //                success = false,
+        //                message = "Encrypted payload is missing or empty."
+        //            });
+        //        }
+
+        //        // Decrypt Payload
+        //        AgendaPointCRUD model;
+
+        //        try
+        //        {
+        //            model = AESEncrytDecry.DecryptAESWithDTO<AgendaPointCRUD>(
+        //                encryptedRequest.Payload,
+        //                session.Salt);
+        //        }
+        //        catch (Exception)
+        //        {
+        //            return Json(new
+        //            {
+        //                success = false,
+        //                message = "Invalid or corrupted encrypted payload."
+        //            });
+        //        }
+
+        //        // Check decrypted model
+        //        if (model == null)
+        //        {
+        //            return Json(new
+        //            {
+        //                success = false,
+        //                message = "Unable to decrypt Agenda details."
+        //            });
+        //        }
+
+        //        model.UserId = Convert.ToInt32(SessionManager.UserIntId);
+        //        model.Unit_ID = Convert.ToInt32(SessionManager.Unit_ID);
+
+        //        if (Convert.ToString(SessionManager.RoleId) != enum1.Administrator)
+        //        {
+        //            if (model.Inbox_ID == 0 && Request.Files[0].ContentLength == 0)
+        //            {
+        //                DisplayMessage("Please upload Pdf file", "", "w");
+        //                return RedirectToAction("AddAgenda", new { id = string.Empty, Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") });
+        //            }
+
+        //            if (model.Inbox_ID == 0 && Request.Files[1].ContentLength == 0)
+        //            {
+        //                DisplayMessage("Please upload Word file", "", "w");
+        //                return RedirectToAction("AddAgenda", new { id = string.Empty, Edit = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("1") });
+        //            }
+
+        //            ScheduleLetter letter = new ScheduleLetter();
+        //            letter.ScheduleId = model.Schedule_ID;
+        //            var LetterData = con.ScheduleLetter_CRUD(10, letter);
+        //            var LetterSubject = LetterData[0].Subject;
+        //            var ConfTypeId = LetterData[0].TypeOfConfId;
+        //            if ((model.Inbox_ID != 0))
+        //            {
+        //                if (model.FileName != null)
+        //                {
+        //                    if (model.Upload == null)
+        //                    {
+        //                        model.Upload = model.FileName;
+        //                    }
+        //                }
+        //            }
+
+        //            var data = con.CreateAgendaPoint(1, model);
+        //            if (data[0].IsSuccess == true)
+        //            {
+        //                //DisplayMessage(data[0].Msg, "", data[0].MsgStatus);
+        //                //model.Inbox_ID = Convert.ToInt32(data[0].MidMsg);
+        //                //return RedirectToAction("AddAgenda", new { id = string.Empty });
+        //                return Json(new
+        //                {
+        //                    success = true,
+        //                    message = "Update Successfully"
+        //                });
+        //            }
+
+
+        //        }
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = "Invalid or corrupted encrypted payload."
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle generic ones here.  
+        //        try
+        //        {
+        //            con.ErrorLogDashboard2(3, ex.Message.ToString(), ex.StackTrace.ToString(), "Page");
+        //        }
+        //        catch (Exception ex1)
+        //        {
+        //            _ = ex1.Message;
+        //            return Json(new
+        //            {
+        //                success = false,
+        //                message = "Invalid or corrupted encrypted payload."
+        //            });
+        //        }
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = "Invalid or corrupted encrypted payload."
+        //        });
+        //    }
             
 
-        }
+        //}
 
             [HttpGet]
         public ActionResult FinalSubmitAgenda(string id, string fid)
@@ -790,6 +956,27 @@ namespace IHSDC.WebApp.Controllers
                         return View("~/Views/Error/AccessDenied.cshtml");
                     }
                 }
+                var closeModel = model.closeAgendaModel ?? new CloseAgendaModel();
+
+                var results = new List<ValidationResult>();
+
+                bool isValid = Validator.TryValidateObject(
+                    closeModel,
+                    new ValidationContext(closeModel),
+                    results,
+                    true
+                );
+
+                if (!isValid)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        errors = results.Select(x => x.ErrorMessage).ToList()
+                    });
+                }
+                
+                model.CloseReason=closeModel.CloseReason;
                 var data = con.OpenCloseAgendaPoint(1, model);
                 if (data[0].IsSuccess == true)
                 {

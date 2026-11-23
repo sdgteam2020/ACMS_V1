@@ -13,6 +13,11 @@
 05-Nov-26 12:06:58 PM: User Registered and redirect to login page. log ContactUs 1
 05-Nov-26 4:07:43 PM: User Registered and redirect to login page. log ContactUs 1
 10-Nov-26 11:32:20 AM: User Registered and redirect to login page. log ContactUs 1
+2026-11-13 17:00:45: User Registered and redirect to login page. log ContactUs 1
+2026-11-13 17:00:48: User Registered and redirect to login page. log ContactUs 1
+2026-11-17 11:55:59: User Registered and redirect to login page. log ContactUs 0
+2026-11-20 10:04:46: User Registered and redirect to login page. log ContactUs 0
+2026-11-20 11:43:25: User Registered and redirect to login page. log ContactUs 1
 19-Nov-26 3:51:12 PM: User Registered and redirect to login page. log ContactUs 0
 19-Nov-26 4:12:17 PM: User Registered and redirect to login page. log ContactUs 0
 19-Nov-26 4:12:21 PM: User Registered and redirect to login page. log ContactUs 0

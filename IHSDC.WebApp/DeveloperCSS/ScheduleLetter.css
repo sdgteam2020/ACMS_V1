@@ -22,3 +22,19 @@
 .error-label {
     color: red;
 }
+
+
+/* Validation messages */
+#scheduleLetterForm .field-validation-error {
+    display: block !important;
+    color: #dc3545 !important;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 4px;
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+#scheduleLetterForm .field-validation-valid {
+    display: none;
+}

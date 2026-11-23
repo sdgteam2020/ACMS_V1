@@ -25,15 +25,19 @@
 <div class="container">
 
 
-    @using (Html.BeginForm("AddAgenda", "ACC", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddAgenda", "ACC", FormMethod.Post, new { id = "AddAgendaForm", enctype = "multipart/form-data" }))
     {
+        <input type="hidden" id="hdnMessage" value="@message" />
+        <input type="hidden" id="hdnMessageStatus" value="@messageStatus" />
+        <input type="hidden" id="hdnMessagemidStatus" value="@messagemidStatus" />
         <span id="spnScheduleId" class="agenda-inline-style-01">@Model.Schedule_ID</span>
         <span id="spnNode" class="agenda-inline-style-01">@Model.NodalViewId</span>
         <span id="spnsponsor" class="agenda-inline-style-01">@Model.sponsorId</span>
         <span id="spnUnFreeze" class="agenda-inline-style-01">@Model.AllowEdit</span>
         <span id="spnGSOId" class="agenda-inline-style-01">@Model.ScheduleCreatedById</span>
         <span id="SpnUploadFile" class="agenda-inline-style-01">@ViewBag.UploadPath</span>
-        <span id="SpnWordFilePath" class="agenda-inline-style-01">   @ViewBag.WordFilePath</span>
+        <span id="SpnButtonName" class="agenda-inline-style-01">@ViewBag.ButtonName</span>
+        <span id="SpnWordFilePath" class="agenda-inline-style-01">@ViewBag.WordFilePath</span>
         <span id="spnThumbprint" class="agenda-inline-style-01"></span>
         <span id="spnInboxId" class="agenda-inline-style-01">@Model.Inbox_ID</span>
         <span id="spnArmyNumber" class="agenda-inline-style-01">@SessionManager.ArmyNo</span>
@@ -42,7 +46,7 @@
         <input type="hidden" class="d-none" id="txtUserIntId" value="@SessionManager.UserIntId" />
         <input type="hidden" class="d-none" id="txtUserId" value="@SessionManager.UserId" />
         <input type="hidden" class="d-none" id="txtwaterMark" value=@Html.Raw(Json.Encode(watermarkText)) />
-
+        @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.Inbox_ID)
         @Html.HiddenFor(m => m.FinalSubmitYN)
         @Html.HiddenFor(m => m.FromInbox)
@@ -97,7 +101,7 @@
                                                     <button class="btnUpload">Upload pdf file</button>
                                                     @Html.TextBoxFor(m => m.Upload, new { type = "file", id = "files", accept = ".pdf", @class = "agenda-validate-pdf" })
                                                     <input type="hidden" id="pdfPath" value="@(string.IsNullOrEmpty(Model.UploadPath) ? "" : Url.Content(Model.UploadPath.Replace("\\", "/")))" />
-                                                 
+
                                                 }
                                                 else
                                                 {
@@ -131,13 +135,14 @@
                                                 {
                                                     <button class="btnUpload">Upload Word file</button>
                                                     @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", accept = ".Docx", @class = "agenda-validate-word" })
-                                            <input type="hidden" id="wordPath" value="@(string.IsNullOrEmpty(Model.WordFilePath) ? "" : Url.Content(Model.WordFilePath.Replace("\\", "/")))" />
+                                                    <input type="hidden" id="wordPath" value="@(string.IsNullOrEmpty(Model.WordFilePath) ? "" : Url.Content(Model.WordFilePath.Replace("\\", "/")))" />
                                                 }
                                                 else
                                                 {
                                                     <button class="btnUpload">Upload Word file</button>
                                                     @Html.TextBoxFor(m => m.WordFile, new { type = "file", id = "Wordfiles", accept = ".Docx", @disabled = "disabled", @class = "agenda-validate-word" })
-                                            <input type="hidden" id="wordPath" value="@(string.IsNullOrEmpty(Model.WordFilePath) ? "" : Url.Content(Model.WordFilePath.Replace("\\", "/")))" />
+                                                    <input type="hidden" id="wordPath" value="@(string.IsNullOrEmpty(Model.WordFilePath) ? "" : Url.Content(Model.WordFilePath.Replace("\\", "/")))" />
+
                                                 }
 
                                             </div>
@@ -198,15 +203,16 @@
                                                                     else
                                                                     {
                                                                         @Html.DropDownListFor(m => m.Schedule_ID, (new IHSDC.WebApp.Models.MasterModels()).LoadSchedule(1), "--Select Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })
+                                                                        @Html.ValidationMessageFor(m => m.Schedule_ID, "", new { @class = "text-danger" })
                                                                     }
                                                                 }
 
                                                             </div>
 
                                                         </div>
-                                                        <div class="row row-cols-1 font-weight-bold">
+                                                        <div class="row row-cols-1 ">
                                                             <div class="col">
-                                                                <p class="mb-0">Title(<span id="characterCount">500</span>&nbsp;Characters)&nbsp;<span class="agenda-inline-style-11">*</span></p>
+                                                                <p class="mb-0 font-weight-bold">Title(<span id="characterCount">500</span>&nbsp;Characters)&nbsp;<span class="agenda-inline-style-11">*</span></p>
                                                                 @if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
                                                                 {
 
@@ -227,7 +233,7 @@
                                                                     </a>
                                                                 </div>
                                                                 <div id="suggestionBox"></div>
-
+                                                                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
                                                         <div class="row row-cols-2 font-weight-bold">
@@ -241,12 +247,13 @@
                                                                 <p class="mb-0">Sponsor&nbsp;<span class="agenda-inline-style-11">*</span></p>
 
                                                                 @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control agenda-validate-input agenda-only-alphanumeric", @readonly = true, @required = true })
+                                                                @Html.ValidationMessageFor(m => m.UnitName, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
 
-                                                        <div class="row row-cols-2 font-weight-bold">
+                                                        <div class="row row-cols-2">
                                                             <div class="col">
-                                                                <p class="mb-0">Summary(<span id="characterCountsum">1000</span>&nbsp;Characters)</p>
+                                                                <p class="mb-0  font-weight-bold">Summary(<span id="characterCountsum">1000</span>&nbsp;Characters)</p>
                                                                 @if (Convert.ToInt32(SessionManager.UserId) == Model.NodalViewId)
                                                                 {
 
@@ -258,6 +265,7 @@
 
 
                                                                 }
+                                                                @Html.ValidationMessageFor(m => m.Summary, "", new { @class = "text-danger" })
                                                             </div>
 
                                                             <div class="col">
@@ -336,7 +344,7 @@
                                                             </div>
                                                         </div>
                                                     }
-
+                                                    <span id="FileValidationSpan" class="text-danger d-none"></span>
 
                                                     <div class="d-flex justify-content-center agenda-inline-style-14">
                                                         @if (Model.IsView == false)
@@ -563,23 +571,22 @@
 
 
                 </div>
-                <footerPolicy>
-                    <div class="footerPolicy-content">
-                        <p><img src="~/Images/asdc_logo.png" width="45px" height="45px" /> Copyright © 2023. Developed by Army Software Development Centre (ASDC), DGIS</p>
-                    </div>
-                </footerPolicy>
+                @*<footerPolicy>
+                        <div class="footerPolicy-content">
+                            <p><img src="~/Images/asdc_logo.png" width="45px" height="45px" /> Copyright © 2023. Developed by Army Software Development Centre (ASDC), DGIS</p>
+                        </div>
+                    </footerPolicy>*@
             </div>
         </div>
     }
-
+    @Html.Partial("_ValidationScriptsPartial")
 </div>
-<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+@*<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
 <script src="@Url.Content("~/Content/CustomJS/GEBSubmit.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-<script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<script src="@Url.Content("~/NewContent/mammoth.browser.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+@*<script src="@Url.Content("~/NewContent/mammoth.browser.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
 <script src="@Url.Content("~/Content/CustomJS/DigitalSign.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/AddAgenda.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

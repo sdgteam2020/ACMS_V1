@@ -1,4 +1,19 @@
-﻿
+﻿$(document).ready(function () {
+    $("#myForm3").on("submit", async function (e) {
+       
+        e.preventDefault(); // stop normal submit
+
+        var $form = $(this);
+
+        // Validate actual form
+        if (!$form.valid()) {
+            $("#CommentErrorOpen").removeClass('d-none');
+            return false;
+        }
+        $("#CommentErrorOpen").addClass('d-none');
+        this.submit();
+    });
+});
     $(document).ready(function () {
         $("#ddlCivEdnId").change(function () {
             if ($("#NodalId").val() == "") {
@@ -106,33 +121,116 @@
     PrintDiv();
     });
 
-    function PrintDiv() {
-           let divToPrint = document.getElementById('APLogData');
-    let popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-    popupWin.document.open();
-    let table_style = document.getElementById("table_style").innerHTML;
-    popupWin.document.write('<style type="text/css">');
-        popupWin.document.write(table_style);
-        popupWin.document.write('</style>')
-    popupWin.document.title = 'AgendaPointLog';
-    popupWin.document.write('<html><body>' + divToPrint.innerHTML + '<div class="print-watermark">' + '@(ViewBag.ipadd)' + "" + '</html>');
-        popupWin.document.close();
-        popupWin.addEventListener('load', function () {popupWin.print(); });
+function PrintDiv() {
+
+    PrintContent(
+        "APLogData",
+        "table_style",
+        "AgendaPointLog"
+    );
+}
+
+function PrintChatDiv() {
+
+    PrintContent(
+        "ChatBox",
+        "table_style1",
+        "Agenda Point Noting Detail",
+        "Agenda Point Noting Detail"
+    );
+}
+
+async function PrintContent(
+    elementId,
+    printStyleId,
+    title,
+    pageHeading = ""
+) {
+
+    let IpAddress = $("#hdnIpAdd").val();
+
+    let divToPrint = document.getElementById(elementId);
+    let commonCSS = document.getElementById("openAgendaPtCSS");
+    let printCSS = document.getElementById(printStyleId);
+
+    if (!divToPrint || !commonCSS || !printCSS) {
+        console.error("Required print elements not found.");
+        return;
     }
 
-        function PrintChatDiv() {
-         let divToPrint = document.getElementById('ChatBox');
-        let popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-        popupWin.document.open();
-        let table_style = document.getElementById("table_style1").innerHTML;
-        popupWin.document.write('<style type="text/css">');
-            popupWin.document.write(table_style);
-            popupWin.document.write('</style>')
-        let pageHeading = '<h1 class="print-heading">Agenda Point Noting Detail</h1>';
-        popupWin.document.write('<html><body>' + pageHeading + divToPrint.innerHTML + '<div class="print-watermark">' + '@(ViewBag.ipadd)' + "" + '</html>');
-            popupWin.document.close();
-            popupWin.addEventListener('load', function () {popupWin.print(); });
+    let popupWin = window.open(
+        '',
+        '_blank',
+        'top=100,width=900,height=500,location=no'
+    );
+
+    if (!popupWin) {
+        console.error("Popup window blocked.");
+        return;
     }
+
+    let doc = popupWin.document;
+
+    doc.title = title;
+
+    // Add heading if required
+    if (pageHeading) {
+
+        let heading = doc.createElement("h1");
+
+        heading.className = "noting-print-heading";
+        heading.textContent = pageHeading;
+
+        doc.body.appendChild(heading);
+    }
+
+    // Add printing content
+    doc.body.appendChild(
+        doc.importNode(divToPrint, true)
+    );
+
+    // Add IP address watermark
+    let watermark = doc.createElement("div");
+
+    watermark.className = "noting-print-watermark";
+    watermark.textContent = IpAddress || "";
+
+    doc.body.appendChild(watermark);
+
+    // Load external CSS
+    function loadCSS(url) {
+
+        return new Promise(function (resolve, reject) {
+
+            let link = doc.createElement("link");
+
+            link.rel = "stylesheet";
+            link.href = url;
+
+            link.onload = resolve;
+            link.onerror = reject;
+
+            doc.head.appendChild(link);
+        });
+    }
+
+    try {
+
+        await Promise.all([
+            loadCSS(commonCSS.href),
+            loadCSS(printCSS.href)
+        ]);
+
+        await doc.fonts.ready;
+
+        popupWin.focus();
+        popupWin.print();
+
+    } catch (error) {
+
+        console.error("Print CSS loading failed.", error);
+    }
+}
 
 function PreviewPDF() {
     const input = document.getElementById("files");
@@ -219,13 +317,11 @@ function PreviewPDF() {
 
   
 
-
-               let message = '@message';
-    let messageStatus = '@messageStatus';
-    let messagemidStatus = '@messagemidStatus ';
-    if (message)
-			sweetAlert(message, messagemidStatus, messageStatus);
-
+var message = $("#hdnMessage").val();
+var messageStatus = $("#hdnMessageStatus").val();
+var messagemidStatus = $("#hdnMessagemidStatus").val();
+if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);
 
    
         $(document).ready(function () {
@@ -295,5 +391,4 @@ function PreviewPDF() {
             $('.notingprint').on('click', PrintChatDiv);
             $('#btnExport').on('click', function (e) { e.preventDefault(); PrintDiv(); });
         });
- 
  

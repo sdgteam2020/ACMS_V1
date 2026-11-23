@@ -27,7 +27,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Security;
-using static Org.BouncyCastle.Math.EC.ECCurve;
+
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -219,7 +219,6 @@ namespace IHSDC.WebApp.Controllers
                 ViewData["Roles"] = AllRoles;
                 ViewBag.sel_unit_id = EditUser.Unit_ID;
                 ViewBag.sel_roles_id = existsrole.Name;
-                ViewBag.pass = EditUser.PasswordHash;
                 ViewData["UserTypeId"] = EditUser.UserTypeId;
                 ViewData["UnitId"] = EditUser.Unit_ID;
                 var UnitData = db.dbo_tbl_Unit.Where(c => c.Unit_ID == EditUser.Unit_ID).Single();
@@ -329,7 +328,7 @@ namespace IHSDC.WebApp.Controllers
                 EditUser.PhoneNumber = model.ASCON;
                 EditUser.UserTypeId = model.UserTypeId;
                 EditUser.Unit_ID = model.Unit_ID;
-                EditUser.PasswordHash = model.Password;
+                //EditUser.PasswordHash = model.Password;
                 EditUser.UserName = model.Username;
                 EditUser.Email = string.Format("{0}@{1}", model.Username.ToLower(), Common.Configurations.Application.MailDomain);
                 try
@@ -1143,7 +1142,7 @@ namespace IHSDC.WebApp.Controllers
                         }
 
                         ApplicationUserRole Arole = new ApplicationUserRole();
-                     
+                        LogSignin(user.UserName, user.IntId, Session.SessionID);
                         LogVisit();
                       
                         if (SessionManager.RoleId == enum1.Administrator)
@@ -1181,7 +1180,15 @@ namespace IHSDC.WebApp.Controllers
                     case SignInStatus.RequiresVerification:
                         return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                     case SignInStatus.Failure:
-                       
+                        var Existuser = await UserManager.FindByNameAsync(model.Username);
+
+                        if (Existuser != null)
+                        {
+                            
+                            ModelState.AddModelError("", "Invalid Credential");
+                            return View(model);
+                        }
+                        Session["TempSession"] = model.Username;
                         return RedirectToAction("SignUp", new { User = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption(model.Username), DPass = IHSDC.WebApp.RepositryManager.EncryptionManager.Encryption("Admin123!") });
                     default:
                         Danger("Invalid login attempt.", true);
@@ -1293,6 +1300,10 @@ namespace IHSDC.WebApp.Controllers
 
         public ActionResult SignUp(string User, string DPass)
         {
+            if (string.IsNullOrWhiteSpace(Convert.ToString(Session["TempSession"])))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             string ModelUserName = "";
             string DefaultPass = "";
             try

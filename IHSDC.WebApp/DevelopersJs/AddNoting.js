@@ -136,36 +136,117 @@
     }
 
 
-    function PrintDiv() {
-           let divToPrint = document.getElementById('APLogData');
-    let popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-    popupWin.document.open();
-    let table_style = document.getElementById("table_style").innerHTML;
-    popupWin.document.write('<style type="text/css">');
-        popupWin.document.write(table_style);
-        popupWin.document.write('</style>')
-    popupWin.document.title = 'AgendaPointLog';
-    popupWin.document.write('<html><body>' + divToPrint.innerHTML + '<div class="noting-print-watermark">' + '@(ViewBag.ipadd)' + "" + '</div></body></html>');
-    popupWin.document.close();
-    popupWin.focus();
-    popupWin.print();
+
+function PrintDiv() {
+
+    PrintContent(
+        "APLogData",
+        "table_style",
+        "AgendaPointLog"
+    );
+}
+
+function PrintChatDiv() {
+
+    PrintContent(
+        "ChatBox",
+        "table_style1",
+        "Agenda Point Noting Detail",
+        "Agenda Point Noting Detail"
+    );
+}
+
+async function PrintContent(
+    elementId,
+    printStyleId,
+    title,
+    pageHeading = ""
+) {
+
+    let IpAddress = $("#hdnIpAdd").val();
+
+    let divToPrint = document.getElementById(elementId);
+    let commonCSS = document.getElementById("notingCSS");
+    let printCSS = document.getElementById(printStyleId);
+
+    if (!divToPrint || !commonCSS || !printCSS) {
+        console.error("Required print elements not found.");
+        return;
     }
 
-    function PrintChatDiv() {
-         let divToPrint = document.getElementById('ChatBox');
-    let popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-    popupWin.document.open();
-    let table_style = document.getElementById("table_style1").innerHTML;
-    popupWin.document.write('<style type="text/css">');
-        popupWin.document.write(table_style);
-        popupWin.document.write('</style>')
-    let pageHeading = '<h1 class="noting-print-heading">Agenda Point Noting Detail</h1>';
-    popupWin.document.write('<html><body>' + pageHeading + divToPrint.innerHTML + '<div class="noting-print-watermark">' + '@(ViewBag.ipadd)' + "" + '</div></body></html>');
-    popupWin.document.close();
-    popupWin.focus();
-    popupWin.print();
+    let popupWin = window.open(
+        '',
+        '_blank',
+        'top=100,width=900,height=500,location=no'
+    );
+
+    if (!popupWin) {
+        console.error("Popup window blocked.");
+        return;
     }
 
+    let doc = popupWin.document;
+
+    doc.title = title;
+
+    // Add heading if required
+    if (pageHeading) {
+
+        let heading = doc.createElement("h1");
+
+        heading.className = "noting-print-heading";
+        heading.textContent = pageHeading;
+
+        doc.body.appendChild(heading);
+    }
+
+    // Add printing content
+    doc.body.appendChild(
+        doc.importNode(divToPrint, true)
+    );
+
+    // Add IP address watermark
+    let watermark = doc.createElement("div");
+
+    watermark.className = "noting-print-watermark";
+    watermark.textContent = IpAddress || "";
+
+    doc.body.appendChild(watermark);
+
+    // Load external CSS
+    function loadCSS(url) {
+
+        return new Promise(function (resolve, reject) {
+
+            let link = doc.createElement("link");
+
+            link.rel = "stylesheet";
+            link.href = url;
+
+            link.onload = resolve;
+            link.onerror = reject;
+
+            doc.head.appendChild(link);
+        });
+    }
+
+    try {
+
+        await Promise.all([
+            loadCSS(commonCSS.href),
+            loadCSS(printCSS.href)
+        ]);
+
+        await doc.fonts.ready;
+
+        popupWin.focus();
+        popupWin.print();
+
+    } catch (error) {
+
+        console.error("Print CSS loading failed.", error);
+    }
+}
 
     $(function () {
         $('#ddlCivEdnId').multiselect({
@@ -215,6 +296,12 @@
             $("#txtComment").val("");
         });
 
+  
+var message = $("#hdnMessage").val();
+var messageStatus = $("#hdnMessageStatus").val();
+var messagemidStatus = $("#hdnMessagemidStatus").val();
+if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);
 
 
    
@@ -278,6 +365,38 @@
             }
         });
 
+$(document).ready(function () {
+
+    //$("#myForm").on("submit", async function (e) {
+    //    debugger;
+
+    //    e.preventDefault(); // stop normal submit
+
+    //    var $form = $(this);
+
+    //    // Validate actual form
+    //    if (!$form.valid()) {
+
+    //        return false;
+    //    }
+    //    this.submit();
+    //});
+    //$("#myForm2").on("submit", async function (e) {
+    //    debugger;
+    //    alert();
+    //    e.preventDefault(); // stop normal submit
+
+    //    var $form = $(this);
+
+    //    // Validate actual form
+    //    if (!$form.valid()) {
+
+    //        return false;
+    //    }
+    //    this.submit();
+    //});
+   
+});
    
         document.querySelectorAll('.noting-event-1').forEach(function (element) { element.addEventListener('change', function (event) { PreviewPDF(); }); });
         document.querySelectorAll('.noting-event-2').forEach(function (element) { element.addEventListener('keyup', function (event) { ValInData(this); }); });

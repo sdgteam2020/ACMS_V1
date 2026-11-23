@@ -31,7 +31,13 @@
 
         </div>
 
-        @using (Html.BeginForm("ScheduleLetter", "Schedule", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("ScheduleLetter", "Schedule",
+     FormMethod.Post,
+     new
+     {
+         id = "scheduleLetterForm",
+         enctype = "multipart/form-data"
+     }))
         {
 
             <div class="card-body mt-4 custom-card-body">
@@ -46,65 +52,134 @@
                         {
                             <div class="row custom-row">
 
+                                <!-- Type of Conference -->
                                 <div class="col-md-4">
+
                                     <label><b>Type of Conf</b></label>
-                                    @Html.DropDownListFor(m => m.TypeOfConfId, (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfConf(), "--Select Type of Conf --", new { @data_show_subtext = "true", @class = "select form-control dropdownsearch", @data_live_search = "true", @required = true })
+
+                                    @Html.DropDownListFor(
+                                        m => m.TypeOfConfId,
+                                        (new IHSDC.WebApp.Models.MasterModels()).LoadTypeOfConf(),
+                                        "--Select Type of Conf --",
+                                        new
+                                        {
+                                            @data_show_subtext = "true",
+                                            @class = "select form-control dropdownsearch",
+                                            @data_live_search = "true",
+                                            @required = true
+                                        })
+
+                                    @Html.ValidationMessageFor(
+                                        m => m.TypeOfConfId,
+                                        "",
+                                        new { @class = "text-danger" })
 
                                 </div>
-                                <label>
-                                    <b>
-                                        @Html.ValidationMessageFor(m => m.TypeOfConfId,"",new { @class = "text-danger" })
-                                    </b>
-                                </label>
+
+
+                                <!-- Start Date -->
                                 <div class="col-md-4">
+
                                     <label><b>Start Dt</b></label>
-                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control datepicker4 ", @required = true, @autocomplete = "off", @placeholder = "dd/mmm/yyyy" })
+
+                                    @Html.TextBoxFor(m => m.FromDate, new
+                                    {
+                                        @class = "form-control datepicker4",
+                                        @required = true,
+                                        @autocomplete = "off",
+                                        @placeholder = "dd/mmm/yyyy"
+                                    })
+
+                                    @Html.ValidationMessageFor(
+                                        m => m.FromDate,
+                                        "",
+                                        new { @class = "text-danger" })
 
                                 </div>
-                                <label>
-                                    <b>
-                                        @Html.ValidationMessageFor(m => m.FromDate,"", new { @class = "text-danger" })
-                                    </b>
-                                </label>
+
+
+                                <!-- End Date -->
                                 <div class="col-md-4">
+
                                     <label><b>End Dt</b></label>
-                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control datepicker4 validate", @required = true, @autocomplete = "off", @placeholder = "dd/mmm/yyyy" })
+
+                                    @Html.TextBoxFor(m => m.ToDate, new
+                                    {
+                                        @class = "form-control datepicker4 validate",
+                                        @required = true,
+                                        @autocomplete = "off",
+                                        @placeholder = "dd/mmm/yyyy"
+                                    })
+
+                                    @Html.ValidationMessageFor(
+                                        m => m.ToDate,
+                                        "",
+                                        new { @class = "text-danger" })
 
                                 </div>
-                                <label>
-                                    <b>
-                                        @Html.ValidationMessageFor(m => m.ToDate,"", new { @class = "text-danger" })
-                                    </b>
-                                </label>
-                                <div class="col-md-4">
-                                    <label><b> Subject / Title of Conf</b></label>
 
-                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @maxlength = "100", @required = true, @autocomplete = "off" })
+
+                                <!-- Subject -->
+                                <div class="col-md-4">
+
+                                    <label><b>Subject / Title of Conf</b></label>
+
+                                    @Html.TextBoxFor(m => m.Subject, new
+                                    {
+                                        @class = "form-control",
+                                        @maxlength = "100",
+                                        @required = true,
+                                        @autocomplete = "off"
+                                    })
+
+                                    @Html.ValidationMessageFor(
+                                        m => m.Subject,
+                                        "",
+                                        new { @class = "text-danger" })
 
                                 </div>
-                                <label>
-                                    <b>
-                                        @Html.ValidationMessageFor(m => m.Subject,"", new { @class = "text-danger" })
-                                    </b>
-                                </label>
+
+
+                                <!-- Reference Number -->
                                 <div class="col-md-4">
-                                    <label><b>Ref varter No with Dt</b></label>
-                                    @Html.TextBoxFor(m => m.ScheduleRefNoDt, new { @class = "form-control", @maxlength = "100", @required = true, @autocomplete = "off" })
+
+                                    <label><b>Ref Letter No with Dt</b></label>
+
+                                    @Html.TextBoxFor(m => m.ScheduleRefNoDt, new
+                                    {
+                                        @class = "form-control",
+                                        @maxlength = "100",
+                                        @required = true,
+                                        @autocomplete = "off"
+                                    })
+
+                                    @Html.ValidationMessageFor(
+                                        m => m.ScheduleRefNoDt,
+                                        "",
+                                        new { @class = "text-danger" })
 
                                 </div>
-                                <label>
-                                    <b>
-                                        @Html.ValidationMessageFor(m => m.ScheduleRefNoDt,"", new { @class = "text-danger" })
-                                    </b>
-                                </label>
+
+
+                                <!-- Remark -->
                                 <div class="col-md-4">
+
                                     <label><b>Remark</b></label>
-                                    @Html.TextBoxFor(m => m.Remark, new { @class = "form-control", @maxlength = "100", @required = true, @autocomplete = "off" })
-                                   
+
+                                    @Html.TextBoxFor(m => m.Remark, new
+                                    {
+                                        @class = "form-control",
+                                        @maxlength = "100",
+
+                                        @autocomplete = "off"
+                                    })
+
+                                    @Html.ValidationMessageFor(
+                                        m => m.Remark,
+                                        "",
+                                        new { @class = "text-danger" })
+
                                 </div>
-                                <label><b>
-    @Html.ValidationMessageFor(m => m.Remark,"", new { @class = "text-danger" })
-</b></label>
 
                             </div>
                             <div class="row custom-row">
@@ -333,12 +408,15 @@
 
 
                             </div>
+                            <span id="FileValidationSpan" class="text-danger d-none"></span>
                             <div class="row custom-row">
                                 <div class="col-md-4 custom-margin-top">
                                     <button type="submit" value="@ViewBag.ButtonName" name="btnval" class="btn btn-success saveAddScheduleLetter">@ViewBag.ButtonName</button>
                                 </div>
                             </div>
+
                         }
+
                         <hr />
 
 
@@ -440,6 +518,7 @@
                     </div>
                 </div>
             </div>
+            @Html.Partial("_ValidationScriptsPartial")
         }
     </div>
 </div>
@@ -450,8 +529,8 @@
 <script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+@*<script src="@Url.Content("~/Scripts/jquery.validate.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")

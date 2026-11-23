@@ -168,9 +168,9 @@ let row;
         }
 
 let today = new Date();
-let message = '@message';
-let messageStatus = '@messageStatus';
-let messagemidStatus = '@messagemidStatus';
-    if (message)
-            sweetAlert(message, messagemidStatus, messageStatus);
+var message = $("#hdnMessage").val();
+var messageStatus = $("#hdnMessageStatus").val();
+var messagemidStatus = $("#hdnMessagemidStatus").val();
+if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);
    

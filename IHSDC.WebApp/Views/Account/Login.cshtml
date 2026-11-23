@@ -18,10 +18,15 @@
     <title>ACMS - Login</title>
     <!-- Bootstrap core CSS-->
     <script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-    <script src="@Url.Content("~/Content/CustomJS/AviatorJS.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    @*<script src="@Url.Content("~/Content/CustomJS/AviatorJS.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
     <link href="@Url.Content("~/Content/css/dashboard.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
-    
 
+    <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+    <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+    <link href="@Url.Content("~/NewContent/vendor/fontawesome-free/css/all.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" type="text/css" media="only screen">
+    <link href="@Url.Content("~/NewContent/css/sb-admin.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
+    <link href="@Url.Content("~/DeveloperCSS/Login.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 </head>
 <header class="masthead">
 
@@ -42,178 +47,175 @@
         </div>
 
     </nav>
+    <div class="login-page">
 
-    <div class="body-content">
+        <div class="login-container">
 
-        <div class="row d-flex justify-content-center">
+            <!-- Left Panel -->
+            <div class="login-left">
 
-            <div class="col-12">
+                <div class="login-brand">
 
-                <div class="card ca custom-login-card">
+                    <h2>Welcome Back</h2>
 
-                    <div class="row g-0 custom-login-row">
+                    <p>Secure Application Portal</p>
 
-                        <div class="col-md-6 col-lg-5 d-none d-md-block">
+                </div>
 
-                            <img src="~/Images/meet.png"
-                                 alt="login form"
-                                 class="img-fluid custom-login-image" />
+                <img src="@Url.Content("~/Images/meet.png")"
+                     alt="ACMS Login"
+                     class="login-illustration" />
 
-                        </div>
+                <div class="login-security">
 
-                        <div class="col-md-6 col-lg-7 d-flex align-items-center custom-login-column">
+                    <i class="fa fa-lock"></i>
+                    Secure and authorized access
 
-                            <div class="p-3 p-lg-3 text-black card custom-login-form-card">
+                </div>
 
-                                <!-- Login Header -->
-                                <div class="card-header d-flex align-items-center mb-3 pb-1">
+            </div>
 
-                                    <span class="h5 fw-bold mb-0">
-                                        Login Here
-                                    </span>
+            <!-- Right Panel -->
+            <div class="login-right">
 
-                                </div>
+                <div class="login-heading">
 
+                    <h2>Sign in</h2>
 
-                                <div class="card-body custom-login-card-body">
+                    <p>Enter your credentials to continue.</p>
 
-                                    @using (Html.BeginForm(
-                                        "Login",
-                                        "Account",
-                                        new { ReturnUrl = ViewBag.ReturnUrl },
-                                        FormMethod.Post,
-                                        new { @class = "form-horizontal", role = "form" }))
-                                    {
-                                        @Html.AntiForgeryToken()
+                </div>
 
-                                        @Html.ValidationSummary(
-                                            true,
-                                            "",
-                                            new { @class = "text-danger" })
+                @using (Html.BeginForm(
+                    "Login",
+                    "Account",
+                    new { ReturnUrl = ViewBag.ReturnUrl },
+                    FormMethod.Post,
+                    new { id = "loginForm", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
 
-                                        <!-- Username -->
-                                        <div class="form-group">
+                    @Html.ValidationSummary(
+                        true,
+                        "",
+                        new { @class = "text-danger login-error" })
 
-                                            <div class="form-label-group custom-login-input">
+                    <!-- Username -->
+                    <div class="login-form-group">
 
-                                                @Html.TextBoxFor(
-                                                    m => m.Username,
-                                                    new
-                                                    {
-                                                        @class = "form-control",
-                                                        @autofocus = "autofocus",
-                                                        @autocomplete = "off"
-                                                    })
+                        @Html.LabelFor(m => m.Username)
 
-                                                <label for="Username">
-                                                    User Name
-                                                </label>
+                        <div class="login-input-wrapper">
 
-                                                @Html.ValidationMessageFor(
-                                                    m => m.Username,
-                                                    "",
-                                                    new { @class = "text-danger" })
+                            <i class="fa fa-user login-input-icon"></i>
 
-                                            </div>
-
-                                        </div>
-
-                                        <!-- Password -->
-                                        <div class="form-group">
-
-                                            <div class="form-label-group custom-login-input">
-
-                                                @Html.PasswordFor(
-                                                    m => m.Password,
-                                                    new
-                                                    {
-                                                        @class = "form-control",
-                                                        @id = "pass",
-                                                        @autocomplete = "off"
-                                                    })
-
-                                                <label for="pass">
-                                                    Password
-                                                </label>
-
-                                                @Html.ValidationMessageFor(
-                                                    m => m.Password,
-                                                    "",
-                                                    new { @class = "text-danger" })
-
-                                            </div>
-
-                                        </div>
-
-                                        <!-- Remember Me -->
-                                        <div class="form-group custom-remember-group">
-
-                                            <div class="checkbox custom-login-checkbox">
-
-                                                @Html.CheckBoxFor(m => m.RememberMe)
-
-                                                <label>Remember Me</label>
-
-                                                &nbsp;&nbsp;
-
-                                                <label>
-                                                    <input type="checkbox"
-                                                           id="chk"
-                                                           class="btn btn-outline-secondary" />
-                                                    &nbsp;Show password
-                                                </label>
-
-                                            </div>
-
-                                        </div>
-
-                                        <!-- Login Button -->
-                                        <div class="d-flex justify-content-center">
-
-                                            <div class="form-group">
-
-                                                <div class="col-md-offset-2 col-md-10 custom-login-button-container">
-
-                                                    <input type="submit"
-                                                           value="Log in"
-                                                           class="btn btn-primary custom-login-button" />
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    }
-
-                                </div>
-
-                            </div>
+                            @Html.TextBoxFor(
+                                m => m.Username,
+                                new
+                                {
+                                    @class = "form-control login-input",
+                                    @placeholder = "Enter username",
+                                    @maxlength = "30",
+                                    @minlength = "3",
+                                    @autocomplete = "off"
+                                })
 
                         </div>
+
+                        @Html.ValidationMessageFor(
+                            m => m.Username,
+                            "",
+                            new { @class = "text-danger login-validation" })
 
                     </div>
 
-                </div>
+                    <!-- Password -->
+                    <div class="login-form-group">
+
+                        <label for="pass">Password</label>
+
+                        <div class="login-input-wrapper">
+
+                            <i class="fa fa-lock login-input-icon"></i>
+
+                            @Html.PasswordFor(
+                                m => m.Password,
+                                new
+                                {
+                                    @class = "form-control login-input password-input",
+                                    @id = "pass",
+                                    @placeholder = "Enter password",
+                                    @maxlength = "64",
+                                    @minlength = "8",
+                                    @autocomplete = "off"
+                                })
+
+                            <button type="button"
+                                    id="togglePassword"
+                                    class="password-toggle"
+                                    aria-label="Show password"
+                                    aria-pressed="false">
+
+                                <i class="fa fa-eye"
+                                   id="passwordIcon"></i>
+
+                            </button>
+
+                        </div>
+
+                        @Html.ValidationMessageFor(
+                            m => m.Password,
+                            "",
+                            new { @class = "text-danger login-validation" })
+
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="login-options">
+
+                        <label class="remember-me">
+
+                            @Html.CheckBoxFor(m => m.RememberMe)
+
+                            <span>Remember me</span>
+
+                        </label>
+
+                    </div>
+
+                    <!-- Sign In Button -->
+                    <button type="submit"
+                            class="login-button">
+
+                        Sign in
+
+                    </button>
+
+                    <!-- Security Information -->
+                    <div class="login-footer">
+
+                        Authorized users only
+
+                    </div>
+                }
 
             </div>
 
         </div>
 
     </div>
+    <footer class="custom-login-footer">
 
-    <!-- Footer -->
-    <footer class="sticky-footer custom-login-footer">
+        <div class="container-fluid">
 
-        <div class="container my-auto">
+            <div class="text-center">
 
-            <div class="copyright text-center my-auto">
+                <p class="custom-login-footer-text">
 
-                <p class="mb-0 text-light custom-login-footer-text">
+                    Copyright &copy; 2023. Developed by
 
-                    Copyright © 2023. Developed by
-
-                    <span class="text-danger text-light">
-                        ASDC , DGIS
+                    <span class="footer-developer">
+                        ASDC, DGIS
                     </span>
 
                 </p>
@@ -225,15 +227,10 @@
     </footer>
 
 </header>
+@Html.Partial("_ValidationScriptsPartial")
 
-
-<script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+@*<script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-<link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
-<link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
-<link href="@Url.Content("~/NewContent/vendor/fontawesome-free/css/all.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" type="text/css" media="only screen">
-<link href="@Url.Content("~/NewContent/css/sb-admin.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
-<link href="@Url.Content("~/DeveloperCSS/Login.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+
 
 <script src="@Url.Content("~/DevelopersJs/Login.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

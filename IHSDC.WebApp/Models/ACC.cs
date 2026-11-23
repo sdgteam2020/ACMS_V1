@@ -1,10 +1,12 @@
-﻿using System;
+﻿using IHSDC.WebApp.Connection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using IHSDC.WebApp.Connection;
 
 namespace IHSDC.WebApp.Models
 {
@@ -76,25 +78,63 @@ namespace IHSDC.WebApp.Models
 
     public class ScheduleLetter : ACCCommon
     {
+        [Display(Name = "Type of Conference")]
         [Required(ErrorMessage = "Please select a type of conference.")]
-        public int TypeOfConfId { get; set; }
+        [Range(1, int.MaxValue,
+         ErrorMessage = "Please select a valid type of conference.")]
+        public int? TypeOfConfId { get; set; }
+
+
+        // Start Date
+        [Display(Name = "Start Date")]
+        [Required(ErrorMessage = "Start Date is required.")]
+        [ValidDate(ErrorMessage = "Enter a valid Start Date (dd/MMM/yyyy).")]
+        public string FromDate { get; set; }
+
+
+        // End Date
+        [Display(Name = "End Date")]
+        [Required(ErrorMessage = "End Date is required.")]
+        [ValidDate(ErrorMessage = "Enter a valid End Date (dd/MMM/yyyy).")]
+        public string ToDate { get; set; }
+
+
+        // Subject
+        [Display(Name = "Subject / Title of Conference")]
+        [Required(ErrorMessage = "Subject is required.")]
+        [StringLength(250, MinimumLength = 3,
+            ErrorMessage = "Subject must be between 3 and 250 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9 /().-]+$",
+            ErrorMessage = "Special characters are not allowed in Subject.")]
+        public string Subject { get; set; }
+
+
+        // Reference Letter Number with Date
+        [Display(Name = "Reference Letter No with Date")]
+        [Required(ErrorMessage = "Schedule Reference is required.")]
+        [StringLength(250, MinimumLength = 3,
+            ErrorMessage = "Schedule Reference must be between 3 and 250 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9 /().-]+$",
+            ErrorMessage = "Schedule Reference contains invalid characters.")]
+        public string ScheduleRefNoDt { get; set; }
+
+
+        // Remark (Optional)
+        [Display(Name = "Remark")]
+        [StringLength(250,
+            ErrorMessage = "Remark cannot exceed 250 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9 ,./()-]*$",
+            ErrorMessage = "Remark contains invalid characters.")]
+        public string Remark { get; set; }
         public string TypeOfConf { get; set; }
         public int ScheduleId { get; set; }
-        [Required(ErrorMessage = "FromDate is required.")]
-        public string FromDate { get; set; }
-        [Required(ErrorMessage = "ToDate is required.")]
-        public string ToDate { get; set; }
-        [Required(ErrorMessage = "Subject is required.")]
-        public string Subject { get; set; }
         public int Comd { get; set; }
         public string ComdName { get; set; }
         public string SubmitByComd { get; set; }
         public bool IsSubmit { get; set; }
         public bool IsNotification { get; set; }
-        [Required(ErrorMessage = "Remark is required.")]
-        public string Remark { get; set; }
-        [Required(ErrorMessage = "Schedule Reference is required.")]
-        public string ScheduleRefNoDt { get; set; }
+   
+       
         public int isClosed { get; set; }
         public IList<ScheduleLetter> ILScheduleLetter { get; set; }
         public string StatusName { get; set; }
@@ -112,9 +152,30 @@ namespace IHSDC.WebApp.Models
 
         public IList<UnitCRUD> IParticipateNewUsersCRUD { get; set; }
         public int LetterCreatedBy { get; set; }
+
     }
 
+    // Custom Date Validation Attribute
+    public class ValidDateAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            if (value == null ||
+                string.IsNullOrWhiteSpace(value.ToString()))
+            {
+                return true;
+            }
 
+            DateTime date;
+
+            return DateTime.TryParseExact(
+                value.ToString(),
+                "dd/MMM/yyyy",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out date);
+        }
+    }
     public class NotingDetail : ACCCommon
     {
         public int Id { get; set; }
@@ -139,8 +200,24 @@ namespace IHSDC.WebApp.Models
         public int ComdId { get; set; }
         public int Branch { get; set; }
         public string BranchName { get; set; }
+
+        [Required(ErrorMessage = "Please select a conference.")]
+        [Range(1, int.MaxValue,
+            ErrorMessage = "Please select a valid conference.")]
         public int Schedule_ID { get; set; }
+
+        [Required(ErrorMessage = "Please enter Title.")]
+        [StringLength(500, MinimumLength = 3,
+            ErrorMessage = "Subject must be between 3 and 500 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9 /().-]+$",
+            ErrorMessage = "Special characters are not allowed in Title.")]
         public string Title { get; set; }
+        [Required(ErrorMessage = "Please enter Sponsor.")]
+        public string UnitName { get; set; }
+        [StringLength(1000, MinimumLength = 3,
+            ErrorMessage = "Summary must be between 3 and 1000 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9 /().-]+$",
+            ErrorMessage = "Special characters are not allowed in Subject.")]
         public string Summary { get; set; }
         public int CategoryId { get; set; }
         public int SponsorCategoryId { get; set; }
@@ -160,8 +237,9 @@ namespace IHSDC.WebApp.Models
         public int Status { get; set; }
         public string FileName { get; set; }
         public string Upload { get; set; }
-        public string UploadPath { get; set; }
         public string WordFile { get; set; }
+        public string UploadPath { get; set; }
+       
         public string WordFilePath { get; set; }
         public Boolean FinalSubmitYN { get; set; }
         public Boolean IsView { get; set; }
@@ -169,9 +247,10 @@ namespace IHSDC.WebApp.Models
         public Boolean AllowEdit { get; set; }
         public int NodalViewId { get; set; }
         public string FromInbox { get; set; }
+
         public IList<InboxCRUD> ILInboxCRUD { get; set; }
     }
-
+   
     public class InboxCRUD : ACCCommon
     {
         public int ConfId { get; set; }
@@ -209,6 +288,11 @@ namespace IHSDC.WebApp.Models
         public Boolean AllowEdit { get; set; }
         public int NodalViewId { get; set; }
         public string FromInbox { get; set; }
+        [Required(ErrorMessage = "Please enter Comment.")]
+        [StringLength(1000, MinimumLength = 3,
+            ErrorMessage = "Comment must be between 3 and 500 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9 /().-]+$",
+            ErrorMessage = "Special characters are not allowed in Comment.")]
         public string Comment { get; set; }
         public string RefLetter { get; set; }
         public string SentID { get; set; }
@@ -224,7 +308,12 @@ namespace IHSDC.WebApp.Models
         public int Ord { get; set; }
         public int FwdId { get; set; }
         public int IsRead { get; set; }
+       
+        public string OpenDate { get; set; }
+      
         public Boolean RequestForUnfreeze { get; set; }
+        public CloseAgendaModel closeAgendaModel { get; set; }
+   
         public IList<InboxCRUD> ILInboxCRUD { get; set; }
         public IList<UnitCRUD> ILUnitCRUD { get; set; }
         public IList<NotingDetail> ILNotingCRUD { get; set; }
@@ -232,8 +321,16 @@ namespace IHSDC.WebApp.Models
 
         public IList<APSupportingDocu> ILAPSupportingDocu { get; set; }
     }
-
-
+    public class CloseAgendaModel
+    {
+        [Required(ErrorMessage = "Please enter CloseReason.")]
+        [StringLength(500, MinimumLength = 3,
+          ErrorMessage = "CloseReason must be between 3 and 500 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9 /().-]+$",
+          ErrorMessage = "Special characters are not allowed in CloseReason.")]
+        public string CloseReason { get; set; }
+    }
+    
     public class APSupportingDocu : ACCCommon
     {
         public int UploadBy { get; set; }

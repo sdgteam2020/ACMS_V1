@@ -1,7 +1,9 @@
 ﻿using IHSDC.Common.Models;
 using IHSDC.WebApp.Connection;
 using IHSDC.WebApp.Helper;
+using IHSDC.WebApp.Helper;
 using IHSDC.WebApp.Models;
+using iTextSharp.text.pdf;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,6 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using static IHSDC.WebApp.Filters.CustomFilters;
-using IHSDC.WebApp.Helper;
 
 namespace IHSDC.WebApp.Controllers
 {
@@ -334,6 +335,49 @@ namespace IHSDC.WebApp.Controllers
 
             try
             {
+                var pdfFile = Request.Files["Attachment"];
+
+                const int maxFileSize = 5 * 1024 * 1024;
+
+                
+                if (pdfFile != null && pdfFile.ContentLength > 0)
+                {
+                    string pdfExtension = Path.GetExtension(pdfFile.FileName);
+
+                    if (!string.Equals(pdfExtension, ".pdf",
+                        StringComparison.OrdinalIgnoreCase))
+                    {
+                        ModelState.AddModelError(
+                            "Upload",
+                            "Only PDF files are allowed.");
+                    }
+                    else if (pdfFile.ContentLength >= maxFileSize)
+                    {
+                        ModelState.AddModelError(
+                            "Upload",
+                            "PDF file must be less than 5 MB.");
+                    }
+                }
+                // Stop before writing any file if validation fails.
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            x => x.Key,
+                            x => x.Value.Errors
+                                .Select(e => e.ErrorMessage)
+                                .First()
+                        );
+
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Please correct the highlighted fields.",
+                        errors = errors
+                    });
+                }
+
                 NotingDetail Notingmodel = new NotingDetail();
                 Notingmodel.UserId = Convert.ToInt32(SessionManager.UserIntId);
                 Notingmodel.InboxId = model.Inbox_ID;

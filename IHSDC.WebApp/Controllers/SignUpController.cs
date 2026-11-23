@@ -92,7 +92,10 @@ namespace IHSDC.WebApp.Controllers
         [HttpGet]
         public ActionResult AddCorps(string id)
         {
-            
+            if (string.IsNullOrWhiteSpace(Convert.ToString(Session["TempSession"])))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             ViewBag.ButtonName = "Add";
             CorpsCRUD model = new CorpsCRUD();
             if (id != null && id != string.Empty)
@@ -116,6 +119,10 @@ namespace IHSDC.WebApp.Controllers
         [HttpPost]
         public ActionResult AddCorps(string id, CorpsCRUD model, string btnval)
         {
+            if (string.IsNullOrWhiteSpace(Convert.ToString(Session["TempSession"])))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             var data = con.CorpsCRUD(1, model);
             if (data[0].IsSuccess == true)
             {
@@ -145,6 +152,10 @@ namespace IHSDC.WebApp.Controllers
         [HttpGet]
         public ActionResult AddUnit(string id)
         {
+            if (string.IsNullOrWhiteSpace(Convert.ToString(Session["TempSession"])))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             ViewBag.corpsId = 1;
             ViewBag.BdeCatId = 1;
             ViewBag.SqnIdbind = 1;
@@ -309,6 +320,10 @@ namespace IHSDC.WebApp.Controllers
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(Convert.ToString(Session["TempSession"])))
+                {
+                    return RedirectToAction("Login", "Account");
+                }
                 ViewBag.ButtonName = "Add";
                 ApptCRUD model = new ApptCRUD();
                 if (id != null && id != string.Empty)

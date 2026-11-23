@@ -18,7 +18,7 @@
 <head>
     <link href="@Url.Content("~/DeveloperCSS/InboxNoting.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 </head>
-<script src="@Url.Content("~/NewContent/vendor/jquery/jquery-3.6.0.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+@*<script src="@Url.Content("~/NewContent/vendor/jquery/jquery-3.6.0.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
 
 <div class="container">
     <div class="card">
@@ -32,6 +32,9 @@
             </div>
 
         </div>
+        <input type="hidden" id="hdnMessage" value="@message" />
+        <input type="hidden" id="hdnMessageStatus" value="@messageStatus" />
+        <input type="hidden" id="hdnMessagemidStatus" value="@messagemidStatus" />
         @using (Html.BeginForm("AddInboxNotingFwd", "ACC", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="card-body">
@@ -214,7 +217,7 @@
         }
     </div>
 </div>
-<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+@*<script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
 <script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/CustomJS/AddUpdateFilter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/CustomJS/AviatorJS.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

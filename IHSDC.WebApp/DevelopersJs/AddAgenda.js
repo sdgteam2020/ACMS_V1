@@ -35,9 +35,9 @@ let watermarkText = $('#txtwaterMark').val();
         element.onkeyup = function () { ValInData(this); };
     });
 
-    document.querySelectorAll('.agenda-only-alphanumeric').forEach(function (element) {
-        element.onkeypress = function (event) { return onlyAlphaNumeric(event); };
-    });
+    //document.querySelectorAll('.agenda-only-alphanumeric').forEach(function (element) {
+    //    element.onkeypress = function (event) { return onlyAlphaNumeric(event); };
+    //});
 
     document.querySelectorAll('.agenda-count-title').forEach(function (element) {
         element.onkeyup = function () { updateCharacterCount(this); };
@@ -247,35 +247,33 @@ $(document).ready(function () {
         $('.dropdownsearch').select2();
 });
 
-    $(document).ready(function () {
+$(document).ready(function () {
+
     let table = $('#Agenda').DataTable({
         lengthChange: true,
-    pageLength: 50,
-    aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+        pageLength: 50,
 
-    dom: 'lBfrtip',
-    buttons: [
-    'copy',
-    'excel',
-    'csv',
+        aLengthMenu: [
+            [25, 50, 100, 150, 200, 250, -1],
+            [25, 50, 100, 150, 200, 250, "All"]
+        ],
 
-    {
-        text: 'PDF',
-    extend: 'pdfHtml5',
-    action: function (e, dt, node, config) {
-        PrintDiv();
+        // Q = SearchBuilder, B = Buttons
+        dom: 'lQBfrtip',
+
+        buttons: [
+            'copy',
+            'excel',
+            'csv',
+            {
+                text: 'PDF',
+                action: function (e, dt, node, config) {
+                    PrintDiv();
                 }
             },
-    'colvis',
-    ],
-
+            'colvis'
+        ]
     });
-
-
-    let buttonContainer = table.buttons().container().appendTo('#Agenda_wrapper .col-md-6:eq(0)');
-    let searchBuilderContainer = table.searchBuilder.container();
-    buttonContainer.insertBefore(table.table().container());
-    searchBuilderContainer.insertBefore(table.table().container());
 
 });
 
@@ -406,11 +404,11 @@ popupWin.document.write('<html><head>' + pageHeading + tableStyles + '</head><bo
 popupWin.document.close();
 }
 
-//let message = '@message';
-//let messageStatus = '@messageStatus';
-//let messagemidStatus = '@messagemidStatus ';
-//if (message)
-//    sweetAlert(message, messagemidStatus, messageStatus);
+var message = $("#hdnMessage").val();
+var messageStatus = $("#hdnMessageStatus").val();
+var messagemidStatus = $("#hdnMessagemidStatus").val();
+if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);
 
 
 $(document).ready(function () {
@@ -662,7 +660,7 @@ $(document).ready(function () {
     if (pdfUrl !== undefined) {
         if (pdfUrl) {
             pdfUrl += "?t=" + new Date().getTime();
-            console.log("Converted File Object:", pdfUrl);
+            /*console.log("Converted File Object:", pdfUrl);*/
             fetch(pdfUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -694,7 +692,7 @@ $(document).ready(function () {
                         }
                     }
 
-                    console.log("Converted File Object:", pdfFile);
+                    /*console.log("Converted File Object:", pdfFile);*/
 
                     const formData = new FormData();
                 })
@@ -710,29 +708,52 @@ $(document).ready(function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("myForm");
-    const btnSave = document.getElementById("btnSave");
+
+    const form = document.getElementById("AddAgendaForm");
     const wordFileInput = document.getElementById("Wordfiles");
     const wordFileError = document.getElementById("wordFileError");
-    const PdfFileInput = document.getElementById("files");
-    const PdfFileError = document.getElementById("PdfFileError");
+    const pdfFileInput = document.getElementById("files");
+    const pdfFileError = document.getElementById("PdfFileError");
 
+    // Stop if the form is not available on this page
+    if (!form) return;
+
+    // Check required HTML elements
+    if (!wordFileInput || !wordFileError || !pdfFileInput || !pdfFileError) {
+        console.error("File validation elements are missing.", {
+            wordFileInput, wordFileError, pdfFileInput, pdfFileError
+        });
+        return;
+    }
+
+    // Clear error when a file is selected
     function clearFileError(inputElement, errorElement) {
         inputElement.addEventListener("change", function () {
-            if (inputElement.files.length) {
+            if (inputElement.files.length > 0) {
                 errorElement.style.display = "none";
             }
         });
     }
 
-
     clearFileError(wordFileInput, wordFileError);
-    clearFileError(PdfFileInput, PdfFileError);
+    clearFileError(pdfFileInput, pdfFileError);
 
-    btnSave.addEventListener("click", function (e) {
+    // Form submit validation
+    form.addEventListener("submit", function (e) {
+        debugger;
+        const buttonName = ($("#SpnButtonName").text() || "").trim();
+        const uploadPath = ($("#SpnUploadFile").text() || "").trim();
+
+        // Update mode with existing uploaded file
+        if (buttonName === "Update" && uploadPath !== "") {
+            wordFileError.style.display = "none";
+            pdfFileError.style.display = "none";
+            return;
+        }
+
         let isValid = true;
 
-
+        // Word file validation
         if (!wordFileInput.files.length) {
             wordFileError.style.display = "block";
             isValid = false;
@@ -740,27 +761,20 @@ document.addEventListener("DOMContentLoaded", function () {
             wordFileError.style.display = "none";
         }
 
-
-        if (!PdfFileInput.files.length) {
-            PdfFileError.style.display = "block";
+        // PDF file validation
+        if (!pdfFileInput.files.length) {
+            pdfFileError.style.display = "block";
             isValid = false;
         } else {
-            PdfFileError.style.display = "none";
-        }
-
-        const buttonName = "@ViewBag.ButtonName";
-        const uploadPath = "@ViewBag.UploadPath";
-        if (buttonName === "Update" && uploadPath !== "") {
-
-            wordFileError.style.display = "none";
-            PdfFileError.style.display = "none";
-            return true;
+            pdfFileError.style.display = "none";
         }
 
         if (!isValid) {
             e.preventDefault();
-            return false;
+            return;
         }
+
+        // Valid: allow normal form submission
     });
 });
 
@@ -837,7 +851,7 @@ $("#suggestionBox").on("click", ".suggestionItem", function () {
                     }
                 }
 
-                console.log("Converted File Object:", pdfFile);
+               /* console.log("Converted File Object:", pdfFile);*/
 
                 const formData = new FormData();
             })
@@ -856,61 +870,60 @@ $('.CloseSearchpoup').on('click', function (e) {
 
 
 
-
 $(document).ready(function () {
+   
+    $("#AddAgendaForm").on("submit", async function (e) {
+        debugger;
+        
+        e.preventDefault(); // stop normal submit
 
-    const $form = $("#btnSave").closest("form");
+        var $form = $("#AddAgendaForm");
 
-    async function EncryptAgendaPayload(form) {
+        // Validate actual form
+        if (!$form.valid()) {
 
-        const payload = {};
+            return false;
+        }
 
-        // Collect all form fields
-        $(form).serializeArray().forEach(function (field) {
+        async function EncryptAgendaPayload(form) {
 
-            if (field.name === "__RequestVerificationToken") {
-                return;
-            }
+            const payload = {};
 
-            // Keeps first value for MVC checkbox true/false pairs
-            if (!Object.prototype.hasOwnProperty.call(
-                payload, field.name
-            )) {
-                payload[field.name] = field.value;
-            }
-        });
+            // Collect all form fields
+            $(form).serializeArray().forEach(function (field) {
 
-        payload.btnval = $("#btnSave").val();
+                if (field.name === "__RequestVerificationToken") {
+                    return;
+                }
 
-        // Convert complete form data into JSON
-        let jsonData = JSON.stringify(payload);
+                // Keeps first value for MVC checkbox true/false pairs
+                if (!Object.prototype.hasOwnProperty.call(
+                    payload, field.name
+                )) {
+                    payload[field.name] = field.value;
+                }
+            });
 
-        // Encrypt using your existing function
-        let encrypted = await encryptPayloadData(jsonData);
+            payload.btnval = $("#btnSave").val();
 
-        return encrypted;
-    }
+            // Convert complete form data into JSON
+            let jsonData = JSON.stringify(payload);
 
+            // Encrypt using your existing function
+            let encrypted = await encryptPayloadData(jsonData);
 
-    $form.on("submit", async function (e) {
-
+            return encrypted;
+        }
         const form = this;
 
         const Inbox_ID =
             parseInt($("#Inbox_ID").val(), 10) || 0;
 
-        // SAVE: Normal form submission
-        if (Inbox_ID === 0) {
-            return;
-        }
+        //// SAVE: Normal form submission
+        //if (Inbox_ID === 0) {
+        //    return;
+        //}
 
-        // UPDATE: AJAX encrypted submission
-        e.preventDefault();
-
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
 
         const $btn = $("#btnSave");
 
@@ -973,8 +986,9 @@ $(document).ready(function () {
             }
 
             // POST encrypted fields + optional files
+
             $.ajax({
-                url: "/ACC/UpdateAgendaEncrypted",
+                url: "/ACC/AddAgenda",
                 type: "POST",
                 data: requestData,
                 processData: false,
@@ -982,28 +996,58 @@ $(document).ready(function () {
                 dataType: "json",
 
                 success: function (response) {
-                    if (response.success) {
+
+                   /* console.log("Controller Response:", response);*/
+
+                    $("#FileValidationSpan")
+                        .addClass("d-none")
+                        .text("");
+
+                    if (response.success === false) {
+
+                        var firstError = Object.values(
+                            response.errors || {}
+                        )[0] || response.message || "Validation failed.";
+
+                        $("#FileValidationSpan")
+                            .text(firstError)
+                            .removeClass("d-none");
+
                         swal({
-                            title: "Update Successfully",
-                            text: "",
-                            type: "success",
-                            confirmButtonText: "OK",
-                            closeOnConfirm: true
-                        }, function (isConfirm) {
-                            if (isConfirm) {
-                                window.location.href = "/ACC/AddAgenda";
-                            }
+                            title: "Failed!",
+                            text: response.message ||
+                                "Please correct the highlighted fields.",
+                            type: "error",
+                            confirmButtonColor: "#DD6B55"
                         });
+
+                        return;
                     }
-                    else {
-                        sweetAlert("Error!", response.message, "error");
-                    }
+
+                    window.location.href = response.redirectUrl;
+                },
+
+                error: function (xhr, textStatus, errorThrown) {
+
+                    console.error("AJAX Status:", textStatus);
+                    console.error("HTTP Status:", xhr.status);
+                    console.error("Error:", errorThrown);
+                    console.error("Server Response:", xhr.responseText);
+
+                    swal({
+                        title: "Error!",
+                        text: xhr.responseJSON?.message ||
+                            "Unable to save Agenda. Please try again.",
+                        type: "error",
+                        confirmButtonColor: "#DD6B55"
+                    });
                 },
 
                 complete: function () {
                     $btn.prop("disabled", false);
                 }
             });
+
 
         } catch (error) {
 
@@ -1019,6 +1063,173 @@ $(document).ready(function () {
         }
 
     });
-
 });
+
+//$(document).ready(function () {
+
+//    const $form = $("#btnSave").closest("form");
+
+//    async function EncryptAgendaPayload(form) {
+
+//        const payload = {};
+
+//        // Collect all form fields
+//        $(form).serializeArray().forEach(function (field) {
+
+//            if (field.name === "__RequestVerificationToken") {
+//                return;
+//            }
+
+//            // Keeps first value for MVC checkbox true/false pairs
+//            if (!Object.prototype.hasOwnProperty.call(
+//                payload, field.name
+//            )) {
+//                payload[field.name] = field.value;
+//            }
+//        });
+
+//        payload.btnval = $("#btnSave").val();
+
+//        // Convert complete form data into JSON
+//        let jsonData = JSON.stringify(payload);
+
+//        // Encrypt using your existing function
+//        let encrypted = await encryptPayloadData(jsonData);
+
+//        return encrypted;
+//    }
+
+
+//    $form.on("submit", async function (e) {
+       
+//        const form = this;
+
+//        const Inbox_ID =
+//            parseInt($("#Inbox_ID").val(), 10) || 0;
+
+//        // SAVE: Normal form submission
+//        if (Inbox_ID === 0) {
+//            return;
+//        }
+
+//        // UPDATE: AJAX encrypted submission
+//        e.preventDefault();
+
+//        if (!form.checkValidity()) {
+//            form.reportValidity();
+//            return;
+//        }
+
+//        const $btn = $("#btnSave");
+
+//        if ($btn.prop("disabled")) {
+//            return;
+//        }
+
+//        $btn.prop("disabled", true);
+
+//        try {
+
+//            // Encrypt form fields
+//            let encrypted = await EncryptAgendaPayload(form);
+
+//            if (!encrypted) {
+//                throw new Error("Encryption failed.");
+//            }
+
+//            const requestData = new FormData();
+
+//            // Encrypted payload
+//            requestData.append("Payload", encrypted);
+
+//            // PDF file - send directly if selected
+//            const pdfInput = document.getElementById("files");
+
+//            requestData.append(
+//                "Upload",
+//                pdfInput && pdfInput.files.length > 0
+//                    ? pdfInput.files[0]
+//                    : new Blob([]),
+//                pdfInput && pdfInput.files.length > 0
+//                    ? pdfInput.files[0].name
+//                    : ""
+//            );
+
+//            // Second file: Word → Request.Files[1]
+//            const wordInput = document.getElementById("Wordfiles");
+
+//            requestData.append(
+//                "WordFile",
+//                wordInput && wordInput.files.length > 0
+//                    ? wordInput.files[0]
+//                    : new Blob([]),
+//                wordInput && wordInput.files.length > 0
+//                    ? wordInput.files[0].name
+//                    : ""
+//            );
+
+//            // Anti-forgery token
+//            const token = $form.find(
+//                'input[name="__RequestVerificationToken"]'
+//            ).val();
+
+//            if (token) {
+//                requestData.append(
+//                    "__RequestVerificationToken",
+//                    token
+//                );
+//            }
+
+//            // POST encrypted fields + optional files
+//            $.ajax({
+//                url: "/ACC/AddAgenda",
+//                type: "POST",
+//                data: requestData,
+//                processData: false,
+//                contentType: false,
+//                dataType: "json",
+
+//                success: function (response) {
+//                    if (response.success) {
+//                        swal({
+//                            title: "",
+//                            text: response.message ||
+//                                (buttonName === "Add"
+//                                    ? "Added successfully!"
+//                                    : "Updated successfully!"),
+//                            type: "success",
+//                            confirmButtonText: "OK",
+//                            closeOnConfirm: true
+//                        }, function (isConfirm) {
+//                            if (isConfirm) {
+//                                window.location.href = "/ACC/AddAgenda";
+//                            }
+//                        });
+//                    }
+//                    else {
+//                        sweetAlert("Error!", response.message, "error");
+//                    }
+//                },
+
+//                complete: function () {
+//                    $btn.prop("disabled", false);
+//                }
+//            });
+
+//        } catch (error) {
+
+//            $btn.prop("disabled", false);
+
+//            console.error(error);
+
+//            sweetAlert(
+//                "Encryption Failed!",
+//                error.message,
+//                "error"
+//            );
+//        }
+
+//    });
+
+//});
 

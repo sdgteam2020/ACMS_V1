@@ -1,44 +1,42 @@
-﻿
-    $("#chk").click(function () {
-            if ($(this).prop("checked")) {
-        $("#pass").attr("type", "text");
-            }
-    else {
+﻿document.addEventListener("DOMContentLoaded", function () {
 
-        $("#pass").attr("type", "password");
-            }
+    document.querySelectorAll(".restrict-copy-paste")
+        .forEach(function (field) {
+
+            ["copy", "paste", "cut", "drop", "contextmenu"]
+                .forEach(function (event) {
+
+                    field.addEventListener(event, function (e) {
+                        e.preventDefault();
+                    });
+
+                });
         });
-    $(document).ready(function () {
-        $("#pass").val("");
-        });
-    
+});
 
+document.addEventListener("DOMContentLoaded", function () {
 
+    const password = document.getElementById("pass");
+    const toggle = document.getElementById("togglePassword");
+    const icon = document.getElementById("passwordIcon");
 
+    if (!password || !toggle || !icon) return;
 
+    toggle.addEventListener("click", function () {
 
-    $("#chk").click(function () {
-            if ($(this).prop("checked")) {
-        $("#pass").attr("type", "text");
-            }
-    else {
+        const isHidden = password.type === "password";
 
-        $("#pass").attr("type", "password");
-            }
-        });
-    $(document).ready(function () {
-        $("#pass").val("");
-        });
+        password.type = isHidden ? "text" : "password";
 
-    let message = '@message';
-    let messageStatus = '@messageStatus';
-    let messagemidStatus = '@messagemidStatus';
-    if (message) {
-            if (message == "s") {
-        SubmitToken(this, '/Account/Login', 'Your Token is not connected. Connect Token and Login again', 'SubmitGEB2IC')
-    }
-    if (message == "b") {
-        SubmitToken(this, '/Account/Login', 'Public Key not Found. Ask Admin to install your public key.', 'SubmitGEB2IC')
-    }
-        }
+        icon.classList.toggle("fa-eye", !isHidden);
+        icon.classList.toggle("fa-eye-slash", isHidden);
 
+        toggle.setAttribute("aria-pressed", isHidden);
+
+        toggle.setAttribute(
+            "aria-label",
+            isHidden ? "Hide password" : "Show password"
+        );
+    });
+
+});

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Xml.Linq;
+
 using static IHSDC.WebApp.Filters.CustomFilters;
 using static iTextSharp.text.pdf.AcroFields;
 
@@ -188,7 +188,8 @@ namespace IHSDC.WebApp.Controllers
                     return Json(new
                     {
                         success = false,
-                        message = "Session expired."
+                        message = "Session expired.",
+                        errors = "Session expired."
                     });
                 }
 
@@ -200,13 +201,82 @@ namespace IHSDC.WebApp.Controllers
                     return Json(new
                     {
                         success = false,
-                        message = "Invalid request."
+                        message = "Invalid request.",
+                        errors = ""
                     });
                 }
                 else
                 {
-                    if (TryValidateModel(model))
+                    // =========================================
+                    // SERVER-SIDE MODEL VALIDATION
+                    // =========================================
+
+                    TryValidateModel(model);
+
+
+                    // Subject is also used as a folder name.
+                    // Reject characters that are invalid in Windows file names.
+                    if (!string.IsNullOrWhiteSpace(model.Subject))
                     {
+                        if (model.Subject.IndexOfAny(
+                                Path.GetInvalidFileNameChars()) >= 0 ||
+                            model.Subject.EndsWith("."))
+                        {
+                            ModelState.AddModelError(
+                                "Subject",
+                                "Subject contains invalid folder name characters."
+                            );
+                        }
+                    }
+
+
+                    // Handle missing dates if the DTO currently uses
+                    // non-nullable DateTime properties.
+                    if (object.Equals(model.FromDate, DateTime.MinValue))
+                    {
+                        ModelState.AddModelError(
+                            "FromDate",
+                            "Start date is required."
+                        );
+                    }
+
+                    if (object.Equals(model.ToDate, DateTime.MinValue))
+                    {
+                        ModelState.AddModelError(
+                            "ToDate",
+                            "End date is required."
+                        );
+                    }
+
+
+                    // =========================================
+                    // RETURN VALIDATION ERRORS
+                    // =========================================
+
+                    if (!ModelState.IsValid)
+                    {
+                        var errors = ModelState
+                            .Where(x => x.Value.Errors.Count > 0)
+                            .ToDictionary(
+                                x => x.Key,
+
+                                x => x.Value.Errors
+                                    .Select(e =>
+                                        string.IsNullOrWhiteSpace(e.ErrorMessage)
+                                            ? "Invalid value."
+                                            : e.ErrorMessage
+                                    )
+                                    .First()
+                            );
+
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Please correct the error field.",
+                            errors = errors
+                        });
+                    }
+
                         model.UserId = Convert.ToInt32(SessionManager.UserIntId);
                         model.Subject = model.Subject.TrimEnd();
                         if (btnval == "Add")
@@ -253,7 +323,7 @@ namespace IHSDC.WebApp.Controllers
 
                             }
                         }
-                    }
+                    
                 }
                 ViewBag.ButtonName = "Add";
 

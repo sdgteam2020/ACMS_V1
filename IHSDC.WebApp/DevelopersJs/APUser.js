@@ -1,5 +1,6 @@
 ﻿
-    $(document).ready(function () {
+$(document).ready(function () {
+    debugger;
         $('.BtnUserLog').click(function () {
             
             let row = $(this).closest('tr');
@@ -11,7 +12,7 @@
 
             
           $.ajax({
-            url: '@Url.Action("clientIp", "Master")',
+              url: "/Master/clientIp",
             type: 'GET',
             dataType: 'json',
             success: function(response) {

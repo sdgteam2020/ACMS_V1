@@ -41,11 +41,11 @@
         var unit_id = '@ViewBag.sel_unit_id';
         var roles_id = '@ViewBag.sel_roles_id';
         var user_id = '@ViewBag.UserId';
-        var pass = '@ViewBag.pass';
+        
         $("#Unit_ID").val(unit_id);
 
         $(".Roles").val(roles_id);
-        $("#Password").val(pass);
+       
         $("#UserId").val(user_id);
 
         $('#ComdId').val(@ViewBag.ComdId);

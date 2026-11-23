@@ -87,14 +87,24 @@ namespace IHSDC.WebApp.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Username is required.")]
         [Display(Name = "Username")]
+        [StringLength(30, MinimumLength = 3,
+        ErrorMessage = "Username must be between 5 and 30 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9._-]+$",
+        ErrorMessage = "Username contains invalid characters.")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [StringLength(64, MinimumLength = 8,
+            ErrorMessage = "Password must be between 8 and 64 characters.")]
+        [RegularExpression(
+            @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])\S+$",
+            ErrorMessage = "Password must include uppercase, lowercase, digit and special character.")]
         public string Password { get; set; }
+      
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }

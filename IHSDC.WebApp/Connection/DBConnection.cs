@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using IHSDC.WebApp.Models;
+﻿using IHSDC.Common.Database;
 using IHSDC.WebApp.Connection;
-using System.Text;
-using System.Web.Mvc;
+using IHSDC.WebApp.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Web;
 using System.Web.Configuration;
+using System.Web.Mvc;
 
 namespace IHSDC.WebApp.Connection
 {
     public class DBConnection : DbContext
     {
-        public DBConnection() : base("IHSDCAA7DBConnectionString")
+        public DBConnection() : base(SQLServer.GetConnectionString())
         {
 
         }
@@ -574,7 +575,7 @@ namespace IHSDC.WebApp.Connection
         {
             DataSet ds = new DataSet();
             DBConnection con = new DBConnection();
-            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["IHSDCAA7DBConnectionString"].ConnectionString))
+            using (SqlConnection conn = new SqlConnection(SQLServer.GetConnectionString()))
             {
                 SqlCommand sqlComm = new SqlCommand(procName, conn);
                 sqlComm.CommandType = CommandType.StoredProcedure;

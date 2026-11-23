@@ -49,7 +49,7 @@
     <link href="@Url.Content("~/Content/css/bootstrap-multiselect.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
     <link href="@Url.Content("~/DeveloperCSS/Layout.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"
           rel="stylesheet" />
-
+    <script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 </head>
 <body id="page-top" class="sidebar-toggled">
     <div class="header" id="myHeader">
@@ -468,7 +468,7 @@
             </footer>
 
             <!-- Chat dialog -->
-            <div id="asdcChat"
+            @*<div id="asdcChat"
                  class="asdc-chat"
                  role="dialog"
                  aria-modal="true"
@@ -498,7 +498,7 @@
                     <input id="asdcQuery" type="text" class="asdc-input" placeholder="Type your question…" autocomplete="off">
                     <button id="asdcSend" class="asdc-send" type="button">Send</button>
                 </div>
-            </div>
+            </div>*@
 
         </div>
 
@@ -527,7 +527,9 @@
     </div>
     <!-- Bootstrap core JavaScript-->
     <div class="hidden-section">
-        <script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        
+        <script src="~/Content/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/Content/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
         <script src="@Url.Content("~/NewContent/vendor/bootstrap/js/bootstrap.bundle.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <!-- Core plugin JavaScript-->
         <script src="@Url.Content("~/NewContent/vendor/jquery-easing/jquery.easing.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
@@ -549,7 +551,7 @@
         <script src="@Url.Content("~/NewContent/dataTable4/js/buttons.bootstrap4.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <script src="@Url.Content("~/NewContent/dataTable4/js/jszip.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         @*<script src="@Url.Content("~/NewContent/dataTable4/js/pdfmake.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
-        <script src="@Url.Content("~/NewContent/dataTable4/js/vfs_fonts.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+        @*<script src="@Url.Content("~/NewContent/dataTable4/js/vfs_fonts.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>*@
         <script src="@Url.Content("~/NewContent/dataTable4/js/buttons.html5.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <script src="@Url.Content("~/NewContent/dataTable4/js/buttons.print.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
         <script src="@Url.Content("~/NewContent/dataTable4/js/buttons.colVis.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

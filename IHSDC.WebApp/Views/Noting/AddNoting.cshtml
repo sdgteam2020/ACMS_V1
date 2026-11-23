@@ -13,11 +13,26 @@
     int sno = 0;
     int sno1 = 0;
 }
-
 <head>
-    <link href="@Url.Content("~/NewContent/dataTable4/css/select2.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+
+    <link href="@Url.Content("~/NewContent/dataTable4/css/select2.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"
+          rel="stylesheet" />
+
     <script src="@Url.Content("~/Content/css/SweetAlert2.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-    <link href="@Url.Content("~/DeveloperCSS/AddNoting.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
+
+    <link id="notingCSS"
+          href="@Url.Content("~/DeveloperCSS/AddNoting.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"
+          rel="stylesheet" />
+
+    <link id="table_style"
+          href="@Url.Content("~/DeveloperCSS/PrintA3.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"
+          rel="stylesheet"
+          media="not all" />
+
+    <link id="table_style1"
+          href="@Url.Content("~/DeveloperCSS/PrintA4.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"
+          rel="stylesheet"
+          media="not all" />
 
 </head>
 <div class="col">
@@ -31,8 +46,12 @@
 
 @using (Html.BeginForm("AddComment", "Noting", FormMethod.Post, new { enctype = "multipart/form-data", id = "myForm" }))
 {
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Inbox_ID)
-
+    <input type="hidden" id="hdnMessage" value="@message" />
+    <input type="hidden" id="hdnMessageStatus" value="@messageStatus" />
+    <input type="hidden" id="hdnMessagemidStatus" value="@messagemidStatus" />
+    <input type="hidden" id="hdnIpAdd" value="@(ViewBag.ipadd)" />
     <div class="card-body noting-inline-6">
 
         <div class="card">
@@ -383,13 +402,17 @@
                 <label class="noting-inline-25">Title : @ViewBag.ConfTitle</label>
 
                 @Html.TextAreaFor(m => m.Comment, new { id = "txtComment", @required = true, @class = "noting-inline-2 noting-event-5" })
+                @Html.ValidationMessageFor(
+                    m => m.Comment,
+                    "",
+                    new { @class = "text-danger" })
 
                 <div class="col-6">
                     @Html.TextBoxFor(m => m.Attachment, new { type = "file", id = "Attachmentfiles", accept = ".pdf", @class = "noting-event-6" }) &nbsp;
                     <div class="pdfup"> (Upload supporting docu/appx only with in 5MB) </div>
                 </div>
 
-                <span id="CommentError" class="text-danger noting-inline-26">Please Fill out the Comment</span>
+                <span id="CommentErrorOpen" class="text-danger noting-inline-26">Please Fill out the Comment</span>
                 <div class="modal-footer noting-inline-27">
                     <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
                     <button id="clearComment" class="btn btn-danger">Clear</button>
@@ -410,7 +433,7 @@
                 <h4 class="noting-inline-24">Reason for Open</h4>
                 <label class="noting-inline-25">Title : @ViewBag.ConfTitle</label>
                 @Html.TextAreaFor(m => m.OpenReason, new { id = "OpenReason", @required = true, @class = "noting-inline-3 noting-event-7" })
-
+                <span id="CommentErrorOpen" class="text-danger d-none">Please Fill Open Reason</span>
                 <span id="CommentError" class="text-danger noting-inline-26">Please Fill out the Comment</span>
                 <div class="modal-footer noting-inline-27">
                     <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
@@ -433,8 +456,12 @@
 
                 <h4 class="noting-inline-24">Reason for Close</h4>
                 <label class="noting-inline-25"><b>Title : @ViewBag.ConfTitle</b></label>
-                @Html.TextAreaFor(m => m.CloseReason, new { id = "CloseReason", @required = true, @class = "noting-inline-3 noting-event-8" })
 
+                @Html.TextAreaFor(m => m.closeAgendaModel.CloseReason, new { id = "CloseReason", @required = true, @class = "form-control noting-inline-3 noting-event-8" })
+                @Html.ValidationMessageFor(
+    m => m.closeAgendaModel.CloseReason,
+    "",
+    new { @class = "text-danger" })
                 <span id="CommentError" class="text-danger noting-inline-26">Please Fill out the Comment</span>
                 <div class="modal-footer noting-inline-27">
                     <button type="submit" value="Save" name="btnval" class="btn btn-success">Save</button>
@@ -506,7 +533,7 @@
     </div>
 
 }
-
+@Html.Partial("_ValidationScriptsPartial")
 
 
 <script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
@@ -532,5 +559,5 @@
     </head>
 
 
-  
+
 }

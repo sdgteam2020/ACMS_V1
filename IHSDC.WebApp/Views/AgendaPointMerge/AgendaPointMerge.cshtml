@@ -30,6 +30,9 @@
     <div class="card">
         @using (Html.BeginForm("AgendaPointMerge", "AgendaPointMerge", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+            <input type="hidden" id="hdnMessage" value="@message" />
+            <input type="hidden" id="hdnMessageStatus" value="@messageStatus" />
+            <input type="hidden" id="hdnMessagemidStatus" value="@messagemidStatus" />
             <div class="card-body agenda-card-body">
                 <input type="hidden" class="d-none" id="txtwaterMark" value=@Html.Raw(Json.Encode(watermarkText)) />
 

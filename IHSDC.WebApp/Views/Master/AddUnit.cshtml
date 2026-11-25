@@ -31,20 +31,20 @@
             <span id="corpsidbind" class="d-none">@ViewBag.corpsId</span>
             <span id="BdeCatIdbind" class="d-none">@ViewBag.BdeCatId</span>
             <span id="SqnIdbind" class="d-none">@ViewBag.SqnIdbind</span>
-
+            <span id="spnButtonName" class="d-none">@ViewBag.ButtonName</span>
             <input id="Command" name="Command" class="d-none" value="0" />
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="col custom-col-margin-left">
-            <label><b>Branch Name</b></label>
-            @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @maxlength = "50", @required = "required", @autocomplete = "off" })
+            <div class="col custom-col-margin-left">
+                <label><b>Branch Name</b></label>
+                @Html.TextBoxFor(m => m.UnitName, new { @class = "form-control", @maxlength = "50", @required = "required", @autocomplete = "off" })
 
-            @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "text-danger" })
-            <span id="UnitNameValidation"
-                  class="text-danger d-none"
-                  role="alert">
-            </span>
-        </div>
+                @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "text-danger" })
+                <span id="UnitNameValidation"
+                      class="text-danger d-none"
+                      role="alert">
+                </span>
+            </div>
             <div class="col custom-col-margin-left">
                 <label><b>Comd/PSOs Name</b></label>
                 @Html.DropDownListFor(m => m.ComdId, (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select Comd/PSOs --", new { @data_show_subtext = "true", @class = "select form-control", @required = "required", @data_live_search = "true", @maxlength = "20" })

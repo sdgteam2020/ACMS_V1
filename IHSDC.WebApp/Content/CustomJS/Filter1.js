@@ -22,6 +22,12 @@
 });
 
 function GetCorps() {
+    debugger;
+    let buttonName = $("#spnButtonName").html();
+
+    if (buttonName == "Add") {
+        return;
+    }
     var list = '';
     list = '<option value=1>-No Corps-</option>';
     $.ajax({

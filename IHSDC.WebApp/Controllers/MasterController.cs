@@ -3642,8 +3642,7 @@ namespace IHSDC.WebApp.Controllers
             }
 
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost]  
         public JsonResult GetCounterLog(int Procid, string Command)
         {
             try

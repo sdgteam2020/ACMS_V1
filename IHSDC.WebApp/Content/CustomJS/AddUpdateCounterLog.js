@@ -7,6 +7,7 @@ $('.BtnUserLog').click(function () {
     }
 });
 function GetUserLog(Procid, Aviator_ID) {
+    debugger;
     $.ajax({
         url: '/Master/GetCounterLog',
         type: 'POST',

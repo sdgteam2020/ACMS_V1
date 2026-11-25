@@ -1,5 +1,10 @@
 ﻿$(document).ready(function () {
-    GetCorps();
+    let buttonName = $("#spnButtonName").html();
+
+    if (buttonName == "Update") {
+        GetCorps();
+    }
+    
     $("#ComdId").change(function () {
         $("#Command").val($("#ComdId").val());
         GetCorps();
@@ -23,11 +28,7 @@
 
 function GetCorps() {
     debugger;
-    let buttonName = $("#spnButtonName").html();
-
-    if (buttonName == "Add") {
-        return;
-    }
+   
     var list = '';
     list = '<option value=1>-No Corps-</option>';
     $.ajax({

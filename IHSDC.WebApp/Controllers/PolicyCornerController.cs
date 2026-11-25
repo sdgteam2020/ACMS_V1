@@ -418,7 +418,7 @@ namespace IHSDC.WebApp.Controllers
                 List<FileList> fileList = fileNames.Select(fileName => new FileList
                 {
                     FileName = Path.GetFileName(fileName),
-                    FilePath = fileName,
+                    FilePath = "~/Policy/"+ FolderName+"/"+ Path.GetFileName(fileName),
                     FileType = DocType
                 }).ToList();
 

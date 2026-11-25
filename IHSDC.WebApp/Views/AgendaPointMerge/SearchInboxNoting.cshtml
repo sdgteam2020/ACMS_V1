@@ -22,6 +22,9 @@
 <link href="@Url.Content("~/DeveloperCSS/InboxNotingFwd.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 
 <div class="container">
+    <input type="hidden" id="hdnMessage" value="@message" />
+    <input type="hidden" id="hdnMessageStatus" value="@messageStatus" />
+    <input type="hidden" id="hdnMessagemidStatus" value="@messagemidStatus" />
     <div class="card">
 
         @using (Html.BeginForm("AddInboxNotingFwd", "AgendaPointMerge", FormMethod.Post, new { enctype = "multipart/form-data" }))

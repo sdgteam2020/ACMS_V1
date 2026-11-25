@@ -1,8 +1,9 @@
 ﻿let watermarkText = $('#txtwaterMark').val();
 
-    //let message = Html.Raw(Json.Encode(message));
-    //let messageStatus = Html.Raw(Json.Encode(messageStatus));
-    //let messagemidStatus = Html.Raw(Json.Encode(messagemidStatus));
+var message = $("#hdnMessage").val();
+var messageStatus = $("#hdnMessageStatus").val();
+var messagemidStatus = $("#hdnMessagemidStatus").val();
+
 
     $(document).ready(function () {
 

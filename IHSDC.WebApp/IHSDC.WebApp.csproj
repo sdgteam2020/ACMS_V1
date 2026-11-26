@@ -3287,6 +3287,7 @@
     <Content Include="Views\PolicyCorner\_SearchResults.cshtml" />
     <Content Include="Views\PolicyCorner\_ShowFile.cshtml" />
     <Content Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <Content Include="Views\Shared\_AddUnitForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

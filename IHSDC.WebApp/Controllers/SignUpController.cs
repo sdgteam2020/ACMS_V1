@@ -31,24 +31,25 @@ namespace IHSDC.WebApp.Controllers
             return Json(data);
         }
 
+
         public JsonResult LoadBdeCATbyId(string Alldata)
         {
             string[] all = Alldata.Split(',');
             int ComdId = 0;
             int CorpsId = 0;
-          
+
             if (all[0] == "null" || all[0] == "")
                 ComdId = 0;
             else
                 ComdId = Convert.ToInt32(all[0]);
-          
-           
+
+
             MasterModels masterModels = new MasterModels();
             var data = masterModels.LoadBdeCAT(ComdId, CorpsId);
             return Json(data);
         }
 
-        
+
         public JsonResult LoadUnitbyId(string Alldata)
         {
             try
@@ -293,15 +294,9 @@ namespace IHSDC.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddUnitNew(string id, UnitCRUD model, string btnval, string spnCorpUnit)
+        
+       public ActionResult AddUnitNew(UnitCRUD model, string btnval)
         {
-
-            string spnCorpUnitValue = spnCorpUnit;
-            model.CorpId = Convert.ToInt32(spnCorpUnitValue);
-            model.ComdId = model.ComdIdUnit;
-
-            model.UserId = 1;
-            TryValidateModel(model);
 
             if (!ModelState.IsValid)
             {
@@ -309,24 +304,19 @@ namespace IHSDC.WebApp.Controllers
                     .Where(x => x.Value.Errors.Count > 0)
                     .ToDictionary(
                         x => x.Key,
-
                         x => x.Value.Errors
-                            .Select(e =>
-                                string.IsNullOrWhiteSpace(e.ErrorMessage)
-                                    ? "Invalid value."
-                                    : e.ErrorMessage
-                            )
+                            .Select(e => e.ErrorMessage)
                             .First()
                     );
 
                 return Json(new
                 {
                     success = false,
-                    message = "Please correct the error field.",
+                    message = "Please correct the error fields.",
                     errors = errors
                 });
             }
-
+            model.UserId = 1;
             var data = con.UnitCRUDNew(1, model);
             if (data[0].IsSuccess == true)
             {

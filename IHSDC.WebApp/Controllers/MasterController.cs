@@ -2204,10 +2204,7 @@ namespace IHSDC.WebApp.Controllers
                 ComdId = 0;
             else
                 ComdId = Convert.ToInt32(all[0]);
-            //if (all[1] == "null")
-            //    CorpsId = 0;
-            //else
-            //    CorpsId = Convert.ToInt32(all[1]);
+            
             MasterModels masterModels = new MasterModels();
             var data = masterModels.LoadBdeCAT(ComdId, CorpsId);
             return Json(data);

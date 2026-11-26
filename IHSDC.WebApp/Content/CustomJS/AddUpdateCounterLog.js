@@ -15,7 +15,9 @@ function GetUserLog(Procid, Aviator_ID) {
         success: function (response) {
           
             if (response && response.length > 0) {
-                var table = $('<table>').addClass('table table-striped align-top').attr('id', 'aviatorTable').css('width', '100%').css('table-layout', 'auto');
+                var table = $('<table>')
+                    .addClass('table table-striped align-top custom-aviator-table')
+                    .attr('id', 'aviatorTable');
                 var thead = $('<thead>').addClass('bg-info text-white');
                 var headerRow = $('<tr>');  
                 headerRow.append($('<th>').addClass('bg-info text-white').text('Ser No'));
@@ -46,12 +48,30 @@ function GetUserLog(Procid, Aviator_ID) {
                 var formattedMonthTotal = MonthTotal % 1 === 0 ? MonthTotal.toFixed(0) : MonthTotal.toFixed(2);
                  
                 var footerRow = $('<tr>');
-                footerRow.append($('<td  style="border-top: 1px solid black;" colspan="3">').text('Total').addClass('bold-text'));
+                footerRow.append(
+                    $('<td>')
+                        .attr('colspan', 3)
+                        .addClass('bold-text top-border-black')
+                        .text('Total')
+                );
 
-                footerRow.append($('<td style="border-top: 1px solid black;"  >').text(formattedTodayTotal).addClass('bold-text'));      
-                footerRow.append($('<td style="border-top: 1px solid black;"  >').text(formattedMonthTotal).addClass('bold-text'));      
+                footerRow.append(
+                    $('<td>')
+                        .addClass('bold-text top-border-black')
+                        .text(formattedTodayTotal)
+                );
 
-                footerRow.append($('<td style="border-top: 1px solid black;"  >').text(formattedTotal).addClass('bold-text'));               
+                footerRow.append(
+                    $('<td>')
+                        .addClass('bold-text top-border-black')
+                        .text(formattedMonthTotal)
+                );
+
+                footerRow.append(
+                    $('<td>')
+                        .addClass('bold-text top-border-black')
+                        .text(formattedTotal)
+                );            
                 table.append(footerRow);
 
 
@@ -62,12 +82,7 @@ function GetUserLog(Procid, Aviator_ID) {
             } else {
                 var noRecordMessage = $('<p>')
                     .text('No record found')
-                    .css({
-                        'text-align': 'center',
-                        'font-weight': 'bold',
-                        'font-size': '20px',
-                        'color': 'red'
-                    });
+                    .addClass('no-record-message');
                     $('#aviatorTable').empty().append(noRecordMessage);
             }
         }

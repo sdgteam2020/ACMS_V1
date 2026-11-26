@@ -1,0 +1,78 @@
+﻿
+@model IHSDC.WebApp.Models.UnitCRUD
+
+@using (Html.BeginForm("AddUnitNew", "SignUp",
+    FormMethod.Post, new { id = "unitFormoutside" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="modal-body">
+
+    <div class="form-group">
+        <label>Comd/PSOs Name *</label>
+
+        @Html.DropDownListFor(
+            m => m.ComdId,
+            (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(),
+            "--Select--",
+            new { @class = "form-control" }
+        )
+
+        @Html.ValidationMessageFor(
+            m => m.ComdId,
+            "",
+            new { @class = "text-danger" }
+        )
+    </div>
+
+    <div class="form-group">
+        <label>DGs Name *</label>
+
+        @Html.DropDownListFor(
+            m => m.CorpsId,
+            Enumerable.Empty<SelectListItem>(),
+            "--Select--",
+            new
+                 {
+                id = "spnCorpUnit",
+                @class = "form-control"
+            }
+        )
+
+        @Html.ValidationMessageFor(
+            m => m.CorpsId,
+            "",
+            new { @class = "text-danger" }
+        )
+    </div>
+
+    <div class="form-group">
+        <label>Branch Name *</label>
+
+        @Html.TextBoxFor(
+            m => m.UnitName,
+            new
+                 {
+                @class = "form-control",
+                maxlength = "50"
+            }
+        )
+
+        @Html.ValidationMessageFor(
+            m => m.UnitName,
+            "",
+            new { @class = "text-danger" }
+        )
+    </div>
+
+</div>
+
+<div class="col-md-12 text-right">
+    <button type="submit"
+            name="btnval"
+            value="Add"
+            class="btn btn-success">
+        Add
+    </button>
+</div>
+}

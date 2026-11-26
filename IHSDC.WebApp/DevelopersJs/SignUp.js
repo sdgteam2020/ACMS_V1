@@ -77,9 +77,10 @@ $(document).ready(function () {
 
 
 
-        $('#spnCorpUnit').change(function () {
+    $('#spnCorpUnit').change(function () {
+       
             $("#CorpIdNew").val($('#spnCorpUnit').val());
-            BindBde($("#ComdIdUnit").val(), $("#CorpIdNew").val());
+            BindBde($("#ComdId").val(), $("#CorpId").val());
             BindUnitUnit($("#ComdIdUnit").val(), $("#CorpIdNew").val(), $("#BdeId").val());
         });
 
@@ -501,7 +502,7 @@ $("#chk").click(function () {
         $('#FullName, #UnitName').on('keyup', function () { ValInData(this); });
        
         $('#addunitmodel button[name="btnval"]').on('click', function (event) {
-            AddConfirmationBranch(this, '/SignUp/AddUnit', 'SignUp', event);
+          //  AddConfirmationBranch(this, '/SignUp/AddUnit', 'SignUp', event);
         });
         $('#btnNew').on('click', function () {
             location.href = '/Account/Login';       
@@ -510,42 +511,80 @@ $("#chk").click(function () {
     });
 
 document.getElementById('addbranch').addEventListener('click', function (e) {
-    debugger;
+
     e.preventDefault();
 
-
-    let url = this.getAttribute('data-url');
+    const url = '/SignUp/AddUnitNew';
 
     fetch(url)
         .then(response => {
             if (!response.ok) {
-                throw new Error("Unable to load form.");
+                throw new Error("Unable to load branch data.");
             }
-            return response.text();
+            return response.json();
         })
-        .then(html => {
+        .then(result => {
 
-            let modalBody = document.querySelector(
-                '#addunitmodel .modal-body'
-            );
+            // Bind branch list
+            if (result.ilUnitCrud && result.ilUnitCrud.length > 0) {
 
-            modalBody.innerHTML = html;
+                let htmlContent = `
+                    <div class="signup-style-19">
+                        <table class="table table-striped">
+                            <thead class="bg-info text-white">
+                                <tr>
+                                    <th>S/No</th>
+                                    <th>Branch Name</th>
+                                    <th>Corps</th>
+                                    <th>Command</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
 
-            let $form = $('#apptFormhoutside');
+                result.ilUnitCrud.forEach((item, index) => {
 
-            // Initialize validation for dynamically loaded form
-            if ($.validator && $.validator.unobtrusive) {
-                $form.removeData("validator");
-                $form.removeData("unobtrusiveValidation");
+                    htmlContent += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${item.UnitName}</td>
+                            <td>${item.Corps}</td>
+                            <td>${item.Command}</td>
+                        </tr>
+                    `;
+                });
 
-                $.validator.unobtrusive.parse($form);
+                htmlContent += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                document.querySelector(
+                    '#addunitmodel .modal-body-list'
+                ).innerHTML = htmlContent;
+
+            } else {
+
+                document.querySelector(
+                    '#addunitmodel .modal-body-list'
+                ).innerHTML = "<p>No branch records found.</p>";
             }
 
+            // Reset Add Branch form
+            $("#unitFormoutside")[0].reset();
+
+            // Clear validation messages
+            $("#unitFormoutside .text-danger").text("");
+
+            // Open modal AFTER binding data
             $('#addunitmodel').modal('show');
+
         })
-        .catch(error => console.error(
-            'Error loading AddUnit form:', error
-        ));
+        .catch(error => {
+            console.error('Error loading AddUnit form:', error);
+        });
+
 });
 
 $(document).ready(function () {
@@ -684,4 +723,93 @@ $(document).ready(function () {
 
     });
 
+});
+
+
+$(document).on("submit", "#unitFormoutside", function (e) {
+
+    e.preventDefault();
+
+    let $form = $(this);
+
+    // Client-side validation
+    if (!$form.valid()) {
+        return false;
+    }
+
+    // Get values using actual HTML IDs
+    let UnitName = $form.find("[name='unitCRUD.UnitName']").val();
+    let ComdIdUnit = $form.find("[name='unitCRUD.ComdIdUnit']").val();
+    let CorpId = $form.find("#spnCorpUnit").val();
+
+    // Get submit button value
+    let btnval = $form.find("button[type='submit']:focus").val() || "Add";
+
+    console.log("UnitName:", UnitName);
+    console.log("ComdIdUnit:", ComdIdUnit);
+    console.log("CorpId:", CorpId);
+    console.log("btnval:", btnval);
+
+    $("#UnitNameValidation").text("").addClass("d-none");
+
+    swal({
+        title: "Please Confirm",
+        text: "",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: btnval === "Add" ? "Yes, Add" : "Yes, Update",
+        closeOnCancel: true,
+        closeOnConfirm: false
+
+    }, function (isConfirm) {
+
+        if (!isConfirm) return;
+
+        $.ajax({
+            url: '/SignUp/AddUnitNew',
+            type: 'POST',
+            data: $form.serialize(),
+
+            success: function (response) {
+
+                console.log(response);
+
+                if (response && response.success === false) {
+
+                    let firstError = Object.values(response.errors || {})
+                        .flat()[0] || response.message || "Validation failed.";
+
+                    $("#UnitNameValidation")
+                        .text(firstError)
+                        .removeClass("d-none");
+
+                    swal("Failed!", response.message || "Validation failed.", "error");
+                    return;
+                }
+
+                swal({
+                    title: "Success!",
+                    text: "Added successfully!",
+                    type: "success"
+                }, function () {
+                    $('#addunitmodel').modal('hide');
+                    $form[0].reset();
+                });
+            },
+
+            error: function (xhr) {
+                console.error(xhr.responseText);
+
+                swal(
+                    "Request Failed!",
+                    "HTTP Status: " + xhr.status,
+                    "error"
+                );
+            }
+        });
+    });
+
+    return false;
 });

@@ -16,10 +16,9 @@
     <title>ACMS - SignUp</title>
 
     <script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-    <script src="@Url.Content("~/Content/CustomJS/AviatorJS.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+
     <link href="@Url.Content("~/Content/css/dashboard.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet">
 
-    <script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     <script src="@Url.Content("~/NewContent/vendor/jquery/jquery.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
@@ -27,15 +26,15 @@
     <link href="@Url.Content("~/NewContent/vendor/bootstrap/css/bootstrap.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
     <link href="@Url.Content("~/NewContent/vendor/fontawesome-free/css/all.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" type="text/css" media="only screen">
     <link href="@Url.Content("~/NewContent/css/sb-admin.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" media="only screen">
-    <script src="@Url.Content("~/Content/CustomJS/SignUpfmReg.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+    
     <script src="@Url.Content("~/NewContent/dataTable4/js/select2.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     <link href="@Url.Content("~/NewContent/dataTable4/css/select2.min.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     <link href="@Url.Content("~/DeveloperCSS/SignUp.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
     <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
     <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
-    <script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-    
+
+
 
 </head>
 <header class="masthead">
@@ -180,7 +179,7 @@
                                     <label class="signup-style-07">Branch</label><font class="signup-style-08">*</font>
 
 
-                                    <a id="addbranch" href="#" data-url="@Url.Action("AddUnit", "SignUp")" title="Click to Add New Branch in case your respective Branch is not already avbl in dropdown list.">
+                                    <a id="addbranch" href="#" data-url="@Url.Action("AddUnitNew", "SignUp")" title="Click to Add New Branch in case your respective Branch is not already avbl in dropdown list.">
 
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     </a>
@@ -243,54 +242,37 @@
                     </form>
                 }
             </div>
-         
+
             <div id="addunitmodel" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-center signup-style-10">
-                        <h5 class="modal-title">Add Branch</h5>
-                        <button type="button" class="btn-close-white signup-style-11" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-12">
+                <div class="modal-dialog modal-dialog-centered" role="document">
 
-                            <div class="col-md-12">
-                                <label><b>Comd/PSOs Name</b></label><font class="signup-style-08">*</font>
-                                @Html.DropDownList("ComdIdUnit", (new IHSDC.WebApp.Models.MasterModels()).LoadCommandName(), "--Select--", new { @data_show_subtext = "true", @class = "select form-control", @data_live_search = "true" })
-                            </div>
-                            <div class="col-md-12">
-                                <label><b>DGs Name</b></label><font class="signup-style-08">*</font>
+                    <div class="modal-content">
 
-                                <input type="text" class="d-none" id="CorpIdNew" />
+                        <div class="modal-header d-flex justify-content-center signup-style-10">
+                            <h5 class="modal-title">Add Branch</h5>
 
-                                <select id="spnCorpUnit" class="form-control d-flex"></select>
-                            </div>
-                            <div class="col-md-12">
-                                <label><b>Branch Name</b></label><font class="signup-style-08">*</font>
-
-                                <input type="text" class="form-control" id="UnitName" maxlength="50" />
-
-                            </div>
-                            <div class="col-md-12 text-right">
-                                <button type="button" value="Add" name="btnval" class="btn btn-success signup-style-12">Add</button>
-                            </div>
+                            <button type="button"
+                                    class="btn-close-white signup-style-11"
+                                    data-dismiss="modal">
+                                &times;
+                            </button>
                         </div>
-                    </div>
 
-                    <div class="modal-body-list">
+                        <!-- Partial View -->
+                        <div id="addUnitPartialContainer">
+                            @Html.Partial(
+                                "~/Views/Shared/_AddUnitForm.cshtml",
+                                new IHSDC.WebApp.Models.UnitCRUD()
+                            )
+                        </div>
 
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- Branch List -->
+                        <div class="modal-body-list"></div>
 
                     </div>
                 </div>
             </div>
-        </div>
 
 
             <div id="addApptModal" class="modal fade" tabindex="-1" role="dialog">
@@ -344,5 +326,8 @@
 </header>
 
 <script src="@Url.Content("~/DevelopersJs/SignUp.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+<script src="@Url.Content("~/DevelopersJs/EncryptePayload.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/Appt.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/DevelopersJs/Corps.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+
+<script src="@Url.Content("~/Content/CustomJS/SignUpfmReg.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>

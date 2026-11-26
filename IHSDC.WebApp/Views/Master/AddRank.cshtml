@@ -1,7 +1,9 @@
 ﻿@model IHSDC.WebApp.Models.RankCRUD
-@{
+@{  
+    var message = TempData["Message"] != null
+        ? TempData["Message"].ToString()
+        : string.Empty;
 
-    var message = TempData["Message"] ?? string.Empty;
     var messageStatus = TempData["messageStatus"] ?? string.Empty;
     var messagemidStatus = TempData["messagemidStatus"] ?? string.Empty;
 
@@ -11,6 +13,7 @@
 
 @{
     string myValue = @ViewBag.ButtonName;
+   
 }
 
 @Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
@@ -25,7 +28,11 @@
             @Html.Hidden("id", "model.RankId")
 
             @Html.Hidden("btnval", myValue)
-
+            <input type="hidden"
+                   id="mes"
+                   name="mes"
+                   value="@message" />
+         
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

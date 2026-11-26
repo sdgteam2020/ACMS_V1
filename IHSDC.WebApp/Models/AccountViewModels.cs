@@ -199,6 +199,12 @@ namespace IHSDC.WebApp.Models
           ErrorMessage = "Mobile number must contain exactly 10 digits.")]
         [Display(Name = "Mob No")]
         public string MobNo { get; set; }
+
+        public UnitCRUD unitCRUD { get; set; }
+        public RegisterViewModel()
+        {
+            unitCRUD = new UnitCRUD();  
+        }
     }
  
 

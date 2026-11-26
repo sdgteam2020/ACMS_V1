@@ -8,6 +8,7 @@
             $("#CorpId").val("1");
         }
         else {
+           
             $('#CorpId').val(1);
             $('#BdeId').val(1);
             BindCorpUnit($("#ComdId").val());
@@ -88,8 +89,8 @@ function BindCorpUnit(ComdId) {
 
 function BindBde(ComdId, CorpId) {
     debugger;
-    var data = ComdId + ',' + CorpId;
-   // var data =  CorpId;
+    //var data = ComdId + ',' + CorpId;
+    var data =  CorpId;
     var list = '';
     $.ajax({
         url: '/SignUp/LoadBdeCATbyId',

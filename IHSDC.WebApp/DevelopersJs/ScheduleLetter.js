@@ -1,17 +1,25 @@
 ﻿
             $("body").addClass("loading");
-            $(document).ready(function () {
-                let table = $('#Scheduleletter').DataTable({
-                    lengthChange: true,
-                    pageLength: 50,
-                    aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+$(document).ready(function () {
+    let table = $('#Scheduleletter').DataTable({
+        lengthChange: true,
+        pageLength: 50,
+        aLengthMenu: [[25, 50, 100, 150, 200, 250, -1], [25, 50, 100, 150, 200, 250, "All"]],
+        dom: 'BQlfrtip',
+        buttons: ['copy', 'excel', 'pdf', 'print']
+    });
 
-                });
-                let buttonContainer = table.buttons().container().appendTo('#Scheduleletter_wrapper .col-md-6:eq(0)');
-                let searchBuilderContainer = table.searchBuilder.container();
-                buttonContainer.insertBefore(table.table().container());
-                searchBuilderContainer.insertBefore(table.table().container());
-            });
+    let buttonContainer = table.buttons().container();
+    let searchBuilderContainer = table.searchBuilder.container();
+
+    if (buttonContainer && buttonContainer.length > 0) {
+        buttonContainer.insertBefore(table.table().container());
+    }
+
+    if (searchBuilderContainer && searchBuilderContainer.length > 0) {
+        searchBuilderContainer.insertBefore(table.table().container());
+    }
+});
         
         
             $(function () {

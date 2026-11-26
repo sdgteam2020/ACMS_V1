@@ -194,9 +194,9 @@ namespace IHSDC.WebApp.Models
         public int BdeId { get; set; }
 
         [Required]
-        [StringLength(10, MinimumLength = 3,
-            ErrorMessage = "Mob no must be between 3 and 5 number.")]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Mob No can only be numbers.")]
+        [Range(typeof(long), "1000000000", "9999999999",
+          ErrorMessage = "Mobile number must contain exactly 10 digits.")]
         [Display(Name = "Mob No")]
         public string MobNo { get; set; }
     }
@@ -409,13 +409,10 @@ namespace IHSDC.WebApp.Models
         public int CorpId { get; set; }
         public int BdeId { get; set; }
 
-        [Required]
-        [StringLength(10, MinimumLength = 3,
-            ErrorMessage = "mob no must be between 3 and 10 number.")]
+        [Required(ErrorMessage = "Mobile number is required.")]
+        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Mobile number must contain exactly 10 digits.")]
         [Display(Name = "Mob No")]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Mob No can only be numbers.")]
         public string MobNo { get; set; }
-
         public EditUserViewModel() { }
         public EditUserViewModel(ApplicationUser user)
         {

@@ -134,12 +134,11 @@ popupWin.document.close();
 
 
 let today = new Date();
-let message = Html.Raw(Json.Encode(message));
-let messageStatus = Html.Raw(Json.Encode(messageStatus));
-let messagemidStatus = Html.Raw(Json.Encode(messagemidStatus));
-    if (message)
-            sweetAlert(message, messagemidStatus, messageStatus);
-
+var message = $("#hdnMessage").val();
+var messageStatus = $("#hdnMessageStatus").val();
+var messagemidStatus = $("#hdnMessagemidStatus").val();
+if (message)
+    sweetAlert(message, messagemidStatus, messageStatus);
 
 
   

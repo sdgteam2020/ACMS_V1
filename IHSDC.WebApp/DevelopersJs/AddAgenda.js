@@ -715,22 +715,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const pdfFileInput = document.getElementById("files");
     const pdfFileError = document.getElementById("PdfFileError");
 
-    // Stop if the form is not available on this page
     if (!form) return;
 
-    // Check required HTML elements
-    if (!wordFileInput || !wordFileError || !pdfFileInput || !pdfFileError) {
-        console.error("File validation elements are missing.", {
-            wordFileInput, wordFileError, pdfFileInput, pdfFileError
-        });
-        return;
+    // Show or hide validation message
+    function showFileError(errorElement, show) {
+        if (errorElement) {
+            errorElement.style.display = show ? "block" : "none";
+        }
     }
 
     // Clear error when a file is selected
     function clearFileError(inputElement, errorElement) {
+        if (!inputElement || !errorElement) return;
+
         inputElement.addEventListener("change", function () {
             if (inputElement.files.length > 0) {
-                errorElement.style.display = "none";
+                showFileError(errorElement, false);
             }
         });
     }
@@ -738,43 +738,38 @@ document.addEventListener("DOMContentLoaded", function () {
     clearFileError(wordFileInput, wordFileError);
     clearFileError(pdfFileInput, pdfFileError);
 
+    // Validate file selection
+    function validateFile(inputElement, errorElement) {
+
+        if (!inputElement) return true;
+
+        const isValid = inputElement.files.length > 0;
+
+        showFileError(errorElement, !isValid);
+
+        return isValid;
+    }
+
     // Form submit validation
     form.addEventListener("submit", function (e) {
-        debugger;
+
         const buttonName = ($("#SpnButtonName").text() || "").trim();
         const uploadPath = ($("#SpnUploadFile").text() || "").trim();
 
         // Update mode with existing uploaded file
         if (buttonName === "Update" && uploadPath !== "") {
-            wordFileError.style.display = "none";
-            pdfFileError.style.display = "none";
+            showFileError(wordFileError, false);
+            showFileError(pdfFileError, false);
             return;
         }
 
-        let isValid = true;
+        const isWordValid = validateFile(wordFileInput, wordFileError);
+        const isPdfValid = validateFile(pdfFileInput, pdfFileError);
 
-        // Word file validation
-        if (!wordFileInput.files.length) {
-            wordFileError.style.display = "block";
-            isValid = false;
-        } else {
-            wordFileError.style.display = "none";
-        }
-
-        // PDF file validation
-        if (!pdfFileInput.files.length) {
-            pdfFileError.style.display = "block";
-            isValid = false;
-        } else {
-            pdfFileError.style.display = "none";
-        }
-
-        if (!isValid) {
+        if (!isWordValid || !isPdfValid) {
             e.preventDefault();
             return;
         }
-
-        // Valid: allow normal form submission
     });
 });
 

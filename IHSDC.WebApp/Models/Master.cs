@@ -61,7 +61,7 @@ namespace IHSDC.WebApp.Models
         [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
         ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
         public string PolicyRemarks { get; set; }     
-        [Required(ErrorMessage = "Please select a PDF file.")]
+   
        
         public string Upload { get; set; }
         [Required(ErrorMessage = "Please select a type of document.")]
@@ -116,12 +116,7 @@ namespace IHSDC.WebApp.Models
     {
         public int FolderControlId { get; set; }
         [Required(ErrorMessage = "Please select a folder name.")]
-        public int PolicyId { get; set; }
-        [Required(ErrorMessage = "Please enter the policy name.")]
-        [StringLength(50, MinimumLength = 3,
-            ErrorMessage = "Policy Name must be between 3 and 50 characters.")]
-        [RegularExpression(@"^[a-zA-Z0-9\s\-()._]*$",
-            ErrorMessage = "Only alphabets, numbers, spaces and special characters (-()._) are allowed.")]
+        public int PolicyId { get; set; }     
         public string PolicyName { get; set; }
 
         public string RefLetter { get; set; }

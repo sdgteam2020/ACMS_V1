@@ -1,10 +1,6 @@
-﻿
-    let messaget = '@ViewBag.ButtonName';
-
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $("#rankForm").on("submit", async function (e) {
-
+        debugger;
         e.preventDefault();
         let $form = $("#rankForm");
         if (!$form.valid()) {
@@ -12,10 +8,13 @@ $(document).ready(function () {
             return false;
         }
         let id = $("#id").val() || "";
+        let mes = $("#message").val();
+      
         let btnval = $("#btnval").val();
-        let buttonName = $(".saveAddApptConfirm").val() || "";
+        let buttonName = $(".saveAddRankConfirm").val() || "";
         let RankName = $("#RankName").val();
         let RankAbbreviation = $("#RankAbbreviation").val();
+        alert(mes);
     swal({
         title: "Please Confirm",
         text: "",

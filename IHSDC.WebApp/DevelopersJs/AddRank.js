@@ -8,13 +8,13 @@
             return false;
         }
         let id = $("#id").val() || "";
-        let mes = $("#message").val();
+     
       
         let btnval = $("#btnval").val();
         let buttonName = $(".saveAddRankConfirm").val() || "";
         let RankName = $("#RankName").val();
         let RankAbbreviation = $("#RankAbbreviation").val();
-        alert(mes);
+       
     swal({
         title: "Please Confirm",
         text: "",

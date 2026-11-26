@@ -409,14 +409,10 @@ namespace IHSDC.WebApp.Models
         public int CorpId { get; set; }
         public int BdeId { get; set; }
 
-        [Required]
-
-        [Range(typeof(long), "1000000000", "9999999999",
-    ErrorMessage = "Mobile number must contain exactly 10 digits.")]
+        [Required(ErrorMessage = "Mobile number is required.")]
+        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Mobile number must contain exactly 10 digits.")]
         [Display(Name = "Mob No")]
-        [RegularExpression(@"^[0-9]{10}+$", ErrorMessage = "Mob No can only be numbers.")]
         public string MobNo { get; set; }
-
         public EditUserViewModel() { }
         public EditUserViewModel(ApplicationUser user)
         {

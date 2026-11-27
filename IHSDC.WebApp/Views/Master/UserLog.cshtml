@@ -19,6 +19,7 @@
     </div>
     @using (Html.BeginForm("UserLog", "Master", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+    @Html.AntiForgeryToken()
         <div class="rcorners">
             <div class="row">
                 <div class="col-2">
@@ -92,7 +93,7 @@
 
 <script src="@Url.Content("~/Scripts/jquery-3.3.1.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <script src="@Url.Content("~/Content/CustomJS/DeleteConfirmation.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-<script src="@Url.Content("~/Content/CustomJS/AddUpdateFilter.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
+
 <script src="@Url.Content("~/Content/css/sweetalert.min.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
 <link href="@Url.Content("~/Content/css/sweetalert.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
 <link href="@Url.Content("~/NewContent/SearchDate/dataTables.dataTables.css")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion" rel="stylesheet" />
@@ -127,6 +128,5 @@
 
 
 <script src="@Url.Content("~/DevelopersJs/UserLog.js")?v=@IHSDC.WebApp.Helper.GlobalVersion.JSVersion"></script>
-
-
+<script src="~/Content/CustomJS/AddUpdateFilter.js"></script>
 
